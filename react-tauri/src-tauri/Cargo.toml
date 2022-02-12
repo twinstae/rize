@@ -1,0 +1,24 @@
+[package]
+name = "react-tauri"
+version = "0.1.0"
+description = "React Tauri Cross Platform App"
+license = ""
+repository = ""
+default-run = "react-tauri"
+edition = "2018"
+build = "src/build.rs"
+
+[build-dependencies]
+tauri-build = { version = "1.0.0-beta.3" }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = [ "derive" ] }
+
+[dependencies.tauri]
+version = "1.0.0-beta"
+features = ["api-all"]
+
+[features]
+default = [ "custom-protocol" ]
+custom-protocol = [ "tauri/custom-protocol" ]
