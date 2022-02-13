@@ -6,15 +6,18 @@ import MailListItem from "./MailListItem";
 import { TEST_MAIL } from "../test/fixtures";
 
 function renderWithDependency(component: React.ReactElement) {
-  const mockFn = vi.fn();
+  let history = ["/"];
+  const navigateMailDetail = (slug: string) => {
+    history.push("mail/" + slug);
+  };
 
   const result = render(component, {
     wrapper: DependenciesWrapper({
-      navigateMailDetail: mockFn,
+      navigateMailDetail,
       toNick: (member: IZONE) => "조구리",
     }),
   });
-  return { ...result, mockFn };
+  return { ...result, history };
 }
 
 describe("MailListItem", () => {
@@ -28,12 +31,10 @@ describe("MailListItem", () => {
   });
 
   it(`MailListItem을 클릭하면 id 에 해당하는 메일 상세 페이지로 이동한다`, () => {
-    const { mockFn: mockNavigateMailDetail } = renderWithDependency(
-      <MailListItem mail={TEST_MAIL} />
-    );
+    const { history } = renderWithDependency(<MailListItem mail={TEST_MAIL} />);
 
     fireEvent.click(screen.getByText(TEST_MAIL.subject));
 
-    expect(mockNavigateMailDetail).lastCalledWith(TEST_MAIL.id);
+    expect(history).toEqual(["/", "mail/" + TEST_MAIL.id]);
   });
 });
