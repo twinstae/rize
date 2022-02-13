@@ -1,6 +1,6 @@
-import { useQuery } from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
 
 export const createUseMailList =
-  (mailRepository: MailRepository) => (): ReturnType<typeof useQuery> => {
+  (mailRepository: MailRepository) => (): UseQueryResult<MailT[], Error> => {
     return useQuery("MailList", () => mailRepository.getAllMailList());
   };

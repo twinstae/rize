@@ -22,3 +22,5 @@ yarn-error.log*
 
 src/test/test_pm_list.json
 public/pm_list.json
+
+dist

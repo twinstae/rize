@@ -50,9 +50,13 @@
       "active": false
     },
     "allowlist": {
-      "all": true,
       "fs": {
-        "scope": ["$APP/*"]
+        "all": true,
+        "scope": ["$APP/*", "$DOWNLOAD/*"]
+      },
+      "http": {
+        "all": true,
+        "scope": ["http://localhost:3000/*"]
       }
     },
     "windows": [

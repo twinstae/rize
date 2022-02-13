@@ -1,17 +1,23 @@
 import React from "react";
-import { fs } from "@tauri-apps/api";
-import tauriMailRepository from "./mailList/tauriMailRepository";
+import fsMailRepository from "./mailList/fsMailRepository";
 import { createUseMailList } from "./mailList/useMailList";
-const useMailList = createUseMailList(tauriMailRepository);
+
+const useMailList = createUseMailList(fsMailRepository);
 
 function App() {
-  const result = useMailList();
+  const { isLoading, data, error } = useMailList();
 
-  if (result.isLoading) return <span>로딩중</span>;
+  if (isLoading) return <span>로딩중</span>;
 
-  if (result.error) return <span>{JSON.stringify(result.error)}</span>;
+  if (error) return <span>{JSON.stringify(error)}</span>;
 
-  return <h1>테스트 {JSON.stringify(result.data)}</h1>;
+  return (
+    <ul>
+      {data?.map((mail) => (
+        <li>{mail.subject}</li>
+      ))}
+    </ul>
+  );
 }
 
 export default App;
