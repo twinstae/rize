@@ -34,3 +34,9 @@ interface Index {
 }
 
 type CreateIndex = (mailList: MailT[]) => Index;
+
+interface MailRepository {
+  getAllMailList: () => Promise<MailT[]>;
+}
+
+type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
