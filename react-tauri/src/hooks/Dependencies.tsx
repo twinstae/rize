@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { createWrapper } from "./util";
 
 type DependencyT = {
   setTag?: (tag: string) => void;
@@ -13,11 +14,9 @@ export function useDependencies() {
   return dependencies as Required<typeof dependencies>;
 }
 
-export const DependenciesWrapper =
-  (dependencies: Partial<ReturnType<typeof useDependencies>>) =>
-  ({ children }: ChildrenProps) =>
-    (
-      <Dependencies.Provider value={dependencies}>
-        {children}
-      </Dependencies.Provider>
-    );
+export const DependenciesWrapper = (
+  dependencies: Partial<ReturnType<typeof useDependencies>>
+) =>
+  createWrapper(Dependencies.Provider, {
+    value: dependencies,
+  });

@@ -1,9 +1,10 @@
 import { QueryClient, QueryClientProvider } from "react-query";
+import { createWrapper } from "./util";
 
 const queryClient = new QueryClient();
-const QueryWrapper: WrapperT = ({ children }) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-);
+const QueryWrapper = createWrapper(QueryClientProvider, {
+  client: queryClient,
+});
 
 const testQueryClient = new QueryClient({
   defaultOptions: {
@@ -12,8 +13,9 @@ const testQueryClient = new QueryClient({
     },
   },
 });
-export const TestQueryWrapper: WrapperT = ({ children }) => (
-  <QueryClientProvider client={testQueryClient}>{children}</QueryClientProvider>
-);
+
+export const TestQueryWrapper = createWrapper(QueryClientProvider, {
+  client: testQueryClient,
+});
 
 export default QueryWrapper;
