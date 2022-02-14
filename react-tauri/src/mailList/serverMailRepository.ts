@@ -1,6 +1,4 @@
 import { http } from "@tauri-apps/api";
-import { TEST_MAIL, TEST_MAIL_2 } from "../test/fixtures";
-
 const serverMailRepository: MailRepository = {
   getAllMailList: async () =>
     http

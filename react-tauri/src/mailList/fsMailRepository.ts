@@ -1,5 +1,4 @@
 import { fs } from "@tauri-apps/api";
-import TEST_MAIL_LIST from "../test/test_pm_list.json";
 
 const fsMailRepository: MailRepository = {
   getAllMailList: async () => {
