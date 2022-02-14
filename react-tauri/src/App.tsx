@@ -1,8 +1,8 @@
 import React from "react";
-import fsMailRepository from "./mailList/fsMailRepository";
+import fakeMailRepository from "./mailList/fakeMailRepository";
 import { createUseMailList } from "./mailList/useMailList";
 
-const useMailList = createUseMailList(fsMailRepository);
+const useMailList = createUseMailList(fakeMailRepository);
 
 function App() {
   const { isLoading, data, error } = useMailList();

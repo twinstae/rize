@@ -3,10 +3,7 @@ import TEST_PM_LIST from "../test/test_pm_list.json";
 import { createUseMailList } from "./useMailList";
 import { renderHook } from "@testing-library/react-hooks";
 import { TestQueryWrapper } from "../hooks/QueryWrapper";
-
-const fakeMailRepository: MailRepository = {
-  getAllMailList: async () => TEST_PM_LIST as MailT[],
-};
+import fakeMailRepository from "./fakeMailRepository";
 
 const useMailList = createUseMailList(fakeMailRepository);
 
