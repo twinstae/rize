@@ -1,23 +1,9 @@
 import React from "react";
-import fakeMailRepository from "./mailList/fakeMailRepository";
-import { createUseMailList } from "./mailList/useMailList";
 
-const useMailList = createUseMailList(fakeMailRepository);
+import MailListPage from "./pages/mailList/index";
 
 function App() {
-  const { isLoading, data, error } = useMailList();
-
-  if (isLoading) return <span>로딩중</span>;
-
-  if (error) return <span>{JSON.stringify(error)}</span>;
-
-  return (
-    <ul>
-      {data?.map((mail) => (
-        <li>{mail.subject}</li>
-      ))}
-    </ul>
-  );
+  return <MailListPage />;
 }
 
 export default App;

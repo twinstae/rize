@@ -5,11 +5,15 @@ import { pipeWrapper } from "./hooks/util";
 import { ThemeWrapper } from "./theme/useTheme";
 import QueryWrapper from "./hooks/QueryWrapper";
 import { DependenciesWrapper } from "./hooks/Dependencies";
+import "./index.css";
 
 const Wrapper = pipeWrapper(
   ThemeWrapper,
   QueryWrapper,
-  DependenciesWrapper({})
+  DependenciesWrapper({
+    toNick: (name: string) => name,
+    navigate: (path: string) => {},
+  })
 );
 
 ReactDOM.render(
