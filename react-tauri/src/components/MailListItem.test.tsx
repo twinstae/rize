@@ -1,23 +1,22 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, vi } from "vitest";
+import { describe, it } from "vitest";
 import { DependenciesWrapper } from "../hooks/Dependencies";
 import MailListItem from "./MailListItem";
 import { TEST_MAIL } from "../test/fixtures";
+import { toMailDetail } from "../router/paths";
+import { useFakeNavigation } from "../router/useNavigation";
 
 function renderWithDependency(component: React.ReactElement) {
-  let history = ["/"];
-  const navigateMailDetail = (slug: string) => {
-    history.push("mail/" + slug);
-  };
+  const { current, navigate } = useFakeNavigation();
 
   const result = render(component, {
     wrapper: DependenciesWrapper({
-      navigateMailDetail,
+      navigate,
       toNick: (member: IZONE) => "조구리",
     }),
   });
-  return { ...result, history };
+  return { ...result, current };
 }
 
 describe("MailListItem", () => {
@@ -31,10 +30,10 @@ describe("MailListItem", () => {
   });
 
   it(`MailListItem을 클릭하면 id 에 해당하는 메일 상세 페이지로 이동한다`, () => {
-    const { history } = renderWithDependency(<MailListItem mail={TEST_MAIL} />);
+    const { current } = renderWithDependency(<MailListItem mail={TEST_MAIL} />);
 
     fireEvent.click(screen.getByText(TEST_MAIL.subject));
 
-    expect(history).toEqual(["/", "mail/" + TEST_MAIL.id]);
+    expect(current()).toBe(toMailDetail(TEST_MAIL.id));
   });
 });

@@ -3,7 +3,7 @@ import { createWrapper } from "./util";
 
 type DependencyT = {
   setTag?: (tag: string) => void;
-  navigateMailDetail?: (mailId: string) => void;
+  navigate?: (path: string) => void;
   toNick?: (member: IZONE) => string;
 };
 

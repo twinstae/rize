@@ -7,9 +7,9 @@ import { DependenciesWrapper, useDependencies } from "./Dependencies";
 
 function TestComponent() {
   //2. 의존성을 사용하는 컴포넌트에서 useDependencies로 가져오고
-  const { navigateMailDetail } = useDependencies();
+  const { navigate } = useDependencies();
 
-  return <button onClick={() => navigateMailDetail("test")}>테스트버튼</button>;
+  return <button onClick={() => navigate("test")}>테스트버튼</button>;
 }
 
 describe("DependeciesWrapper", () => {
@@ -17,7 +17,7 @@ describe("DependeciesWrapper", () => {
     const mockFn = vi.fn();
     // 3. 컴포넌트를 render할 때 의존성을 제공한 DependenciesWrapper로 감싸준다
     render(<TestComponent />, {
-      wrapper: DependenciesWrapper({ navigateMailDetail: mockFn }),
+      wrapper: DependenciesWrapper({ navigate: mockFn }),
     });
 
     fireEvent.click(screen.getByText("테스트버튼"));
