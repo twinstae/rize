@@ -1,29 +1,18 @@
-// import { useNavigator } from "@karrotframe/navigator";
+import { Params } from "react-router-dom";
 
-// export const useKarrotNavigation = (): Navigation => {
-//   const { push, pop, replace } = useNavigator();
-
-//   return {
-//     navigate: push,
-//     goBack: pop,
-//     redirect: replace,
-//   };
-// };
-
-interface Navigation {
+export interface Navigation {
+  params: () => Readonly<Params<string>>;
+  current: () => string;
   navigate: (path: string) => void;
   goBack: () => void;
   redirect: (path: string) => void;
 }
 
-interface FakeNavigation extends Navigation {
-  current: () => string;
-}
-
-export const useFakeNavigation = (): FakeNavigation => {
+export const useFakeNavigation = (): Navigation => {
   const history = ["/"];
 
   return {
+    params: () => ({ mailId: "m123" }),
     current: () => {
       return history[history.length - 1];
     },

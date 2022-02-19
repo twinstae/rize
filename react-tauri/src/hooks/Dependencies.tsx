@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import { Navigation } from "../router/useNavigation";
 import { createWrapper } from "./util";
 
 type DependencyT = {
   setTag?: (tag: string) => void;
-  navigate?: (path: string) => void;
+  navigation?: Navigation;
   toNick?: (member: IZONE) => string;
 };
 

@@ -1,15 +1,18 @@
 import React from "react";
-import MailListPage from "./pages/mailList/index";
 import { ROOT } from "./router/paths";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import MailListPage from "./pages/mailList/index";
+import MailDetailPage from "./pages/mailDetail";
 
 function App() {
   return (
-    <MemoryRouter>
-      <Routes>
-        <Route path={ROOT} element={<MailListPage />} />
-      </Routes>
-    </MemoryRouter>
+    <Routes>
+      <Route path="mail">
+        <Route path=":id" element={<MailDetailPage />} />
+      </Route>
+
+      <Route path={ROOT} element={<MailListPage />} />
+    </Routes>
   );
 }
 

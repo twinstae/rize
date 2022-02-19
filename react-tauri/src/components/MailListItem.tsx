@@ -31,13 +31,13 @@ interface MailListItemProps {
 }
 
 function MailListItem({ mail, style }: MailListItemProps) {
-  const { navigate, toNick } = useDependencies();
+  const { navigation, toNick } = useDependencies();
 
   return (
     <li
       className={liCss()}
       style={style}
-      onClick={() => navigate(toMailDetail(mail.id))}
+      onClick={() => navigation.navigate(toMailDetail(mail.id))}
     >
       <div style={{ padding: "14px" }}>
         <span>{toNick(mail.member)}</span>

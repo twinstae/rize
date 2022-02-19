@@ -5,24 +5,31 @@ import { pipeWrapper } from "./hooks/util";
 import { ThemeWrapper } from "./theme/useTheme";
 import QueryWrapper from "./hooks/QueryWrapper";
 import { DependenciesWrapper } from "./hooks/Dependencies";
+import useRRDNavigation from "./router/useRRDNavigation";
 import "./index.css";
+import { MemoryRouter } from "react-router-dom";
 
-const Wrapper = pipeWrapper(
-  ThemeWrapper,
-  QueryWrapper,
-  DependenciesWrapper({
-    toNick: (name: string) => name,
-    navigate: (path: string) => {},
-  })
-);
+const Wrapper: WrapperT = ({ children }) => {
+  const navigation = useRRDNavigation();
+  const MergedWrapper = pipeWrapper(
+    ThemeWrapper,
+    QueryWrapper,
+    DependenciesWrapper({
+      toNick: (name: string) => name,
+      navigation,
+    })
+  );
+
+  console.log(navigation.current());
+
+  return <MergedWrapper>{children}</MergedWrapper>;
+};
 
 ReactDOM.render(
-  <Wrapper>
-    <App />
-  </Wrapper>,
+  <MemoryRouter>
+    <Wrapper>
+      <App />
+    </Wrapper>
+  </MemoryRouter>,
   document.getElementById("root")
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
