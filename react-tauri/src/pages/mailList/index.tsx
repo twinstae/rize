@@ -1,13 +1,8 @@
-import { css } from "@stitches/core";
 import React from "react";
 import MailListItem from "../../components/MailListItem";
 import fakeMailRepository from "../../mailList/fakeMailRepository";
 import { createUseMailList } from "../../mailList/useMailList";
 import { List, ListRowRenderer } from "react-virtualized";
-
-const mailListCss = css({
-  padding: "0",
-});
 
 const useMailList = createUseMailList(fakeMailRepository);
 
@@ -24,7 +19,6 @@ function MailListPage() {
 
   return (
     <List
-      className={mailListCss()}
       width={500}
       height={660}
       rowCount={data.length}
