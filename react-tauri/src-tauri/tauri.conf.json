@@ -52,7 +52,7 @@
     "allowlist": {
       "fs": {
         "all": true,
-        "scope": ["$APP/*", "$DOWNLOAD/*"]
+        "scope": ["$APP/*", "$DOWNLOAD/pm_list.json", "$DOWNLOAD/mail_body_dict.json", "$DOWNLOAD/local_*.txt"]
       },
       "http": {
         "all": true,
