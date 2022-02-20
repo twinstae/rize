@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { pipeWrapper } from "./hooks/util";
-import { ThemeWrapper } from "./theme/useTheme";
+import { ThemeWrapper } from "./hooks/useTheme";
 import QueryWrapper from "./hooks/QueryWrapper";
 import { DependenciesWrapper } from "./hooks/Dependencies";
 import useRRDNavigation from "./router/useRRDNavigation";
-import "./index.css";
 import { HashRouter } from "react-router-dom";
 import useUsernameService from "./username/useUsernameService";
+import "./index.css";
 
 const Wrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();

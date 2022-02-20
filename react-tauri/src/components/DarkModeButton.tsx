@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "../theme/useTheme";
+import { useTheme } from "../hooks/useTheme";
 import { withTranslation } from "react-i18next";
 
 interface RawDarkModeButtonProps extends TranslationProps {}

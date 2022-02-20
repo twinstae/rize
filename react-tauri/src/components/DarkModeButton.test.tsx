@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe } from "vitest";
-import { ThemeWrapper } from "../theme/useTheme";
+import { ThemeWrapper } from "../hooks/useTheme";
 import { RawDarkModeButton } from "./DarkModeButton";
 
 describe("DarkModeButton", () => {
