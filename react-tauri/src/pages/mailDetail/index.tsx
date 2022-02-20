@@ -19,6 +19,7 @@ function MailDetailPage() {
     const body = usernameService.replaceUsername(data.body);
     return (
       <div
+        style={{ lineHeight: "1.4rem" }}
         dangerouslySetInnerHTML={{
           __html: body,
         }}
