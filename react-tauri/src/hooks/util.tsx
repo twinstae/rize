@@ -13,14 +13,21 @@ export const pipeWrapper = (...WrapperList: WrapperT[]): WrapperT => {
     WrapperList.reduce((acc, Wrapper) => <Wrapper>{acc}</Wrapper>, children);
 };
 
-export const renderQuery: <D>(
+type RenderQueryT = <D>(
   query: UseQueryResult<D, Error>,
-  render: (data: D) => JSX.Element
-) => JSX.Element = (query, render) => {
+  render: (data: D) => JSX.Element,
+  onError?: (error: Error) => JSX.Element
+) => JSX.Element;
+
+export const renderQuery: RenderQueryT = (
+  query,
+  render,
+  onError = (error) => <span>{JSON.stringify(error)}</span>
+) => {
   const { data, isLoading, error } = query;
   if (isLoading || data === undefined) return <span>로딩중</span>;
 
-  if (error) return <span>{JSON.stringify(error)}</span>;
+  if (error) return onError(error);
 
   return render(data);
 };

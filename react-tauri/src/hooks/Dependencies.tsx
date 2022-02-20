@@ -7,6 +7,7 @@ type DependencyT = {
   navigation?: Navigation;
   toNick?: (member: IZONE) => string;
   usernameService?: UsernameServiceT;
+  Image?: ({ path }: { path: string }) => JSX.Element;
 };
 
 export const Dependencies = React.createContext<DependencyT>({});

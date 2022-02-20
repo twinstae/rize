@@ -8,7 +8,7 @@ type MailT = {
 
 type MailBodyT = {
   body: string;
-  image: string;
+  images: string[];
 };
 
 type IZONE =

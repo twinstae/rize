@@ -4,7 +4,7 @@ import { renderQuery } from "../../hooks/util";
 import useMailList from "../../mailList/useMailList";
 
 function MailDetailPage() {
-  const { navigation, usernameService } = useDependencies();
+  const { navigation, usernameService, Image } = useDependencies();
   const params = navigation.params();
 
   if (!params.id) {
@@ -17,13 +17,24 @@ function MailDetailPage() {
     if (data === undefined) return <div>메일이 없습니다</div>;
 
     const body = usernameService.replaceUsername(data.body);
+    const parts = body.split("{이미지}");
     return (
-      <div
-        style={{ lineHeight: "1.4rem" }}
-        dangerouslySetInnerHTML={{
-          __html: body,
-        }}
-      ></div>
+      <section>
+        {parts.map((part, i) => (
+          <div>
+            <div
+              style={{
+                lineHeight: "1.4rem",
+                padding: "1rem",
+              }}
+              dangerouslySetInnerHTML={{
+                __html: part,
+              }}
+            ></div>
+            {i < parts.length - 1 && <Image path={data.images[i]} />}
+          </div>
+        ))}
+      </section>
     );
   });
 }
