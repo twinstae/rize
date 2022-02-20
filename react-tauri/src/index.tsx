@@ -9,6 +9,7 @@ import useRRDNavigation from "./router/useRRDNavigation";
 import { HashRouter } from "react-router-dom";
 import useUsernameService from "./username/useUsernameService";
 import "./index.css";
+import i18n from "./i18n/i18n";
 
 const Wrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
