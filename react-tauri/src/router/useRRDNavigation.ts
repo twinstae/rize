@@ -5,12 +5,8 @@ const useRRDNavigation = (): Navigation => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   return {
-    params: () => {
-      return useParams();
-    },
-    current: () => {
-      return pathname;
-    },
+    params: useParams,
+    current: () => pathname,
     navigate: (path: string) => {
       navigate(path);
     },
