@@ -31,7 +31,7 @@ interface MailListItemProps {
 }
 
 function MailListItem({ mail, style }: MailListItemProps) {
-  const { navigation, toNick } = useDependencies();
+  const { navigation, toNick, usernameService } = useDependencies();
 
   return (
     <li
@@ -43,7 +43,9 @@ function MailListItem({ mail, style }: MailListItemProps) {
         <span>{toNick(mail.member)}</span>
         <h3 className={titleCss()}>{mail.subject}</h3>
         <span className={timestampCss()}>{mail.time}</span>
-        <p className={descriptionCss()}>{mail.preview}</p>
+        <p className={descriptionCss()}>
+          {usernameService.replaceUsername(mail.preview)}
+        </p>
       </div>
     </li>
   );

@@ -7,7 +7,8 @@ import QueryWrapper from "./hooks/QueryWrapper";
 import { DependenciesWrapper } from "./hooks/Dependencies";
 import useRRDNavigation from "./router/useRRDNavigation";
 import "./index.css";
-import { MemoryRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
+import useUsernameService from "./username/useUsernameService";
 
 const Wrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
@@ -17,19 +18,18 @@ const Wrapper: WrapperT = ({ children }) => {
     DependenciesWrapper({
       toNick: (name: string) => name,
       navigation,
+      usernameService: useUsernameService(),
     })
   );
-
-  console.log(navigation.current());
 
   return <MergedWrapper>{children}</MergedWrapper>;
 };
 
 ReactDOM.render(
-  <MemoryRouter>
+  <HashRouter>
     <Wrapper>
       <App />
     </Wrapper>
-  </MemoryRouter>,
+  </HashRouter>,
   document.getElementById("root")
 );

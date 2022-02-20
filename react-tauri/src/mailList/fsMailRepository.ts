@@ -8,6 +8,13 @@ const fsMailRepository: MailRepository = {
       })
       .then(JSON.parse);
   },
+  getMailBodyDict: async () => {
+    return fs
+      .readTextFile("./mail_body_dict.json", {
+        dir: fs.BaseDirectory.Download,
+      })
+      .then(JSON.parse);
+  },
 };
 
 export default fsMailRepository;

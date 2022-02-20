@@ -6,6 +6,7 @@ type DependencyT = {
   setTag?: (tag: string) => void;
   navigation?: Navigation;
   toNick?: (member: IZONE) => string;
+  usernameService?: UsernameServiceT;
 };
 
 export const Dependencies = React.createContext<DependencyT>({});

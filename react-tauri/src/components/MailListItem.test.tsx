@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it } from "vitest";
 import { DependenciesWrapper } from "../hooks/Dependencies";
 import MailListItem from "./MailListItem";
-import { TEST_MAIL } from "../test/fixtures";
+import { DummyUsernameService, TEST_MAIL } from "../test/fixtures";
 import { toMailDetail } from "../router/paths";
 import { useFakeNavigation } from "../router/useNavigation";
 
@@ -14,6 +14,7 @@ function renderWithDependency(component: React.ReactElement) {
     wrapper: DependenciesWrapper({
       navigation,
       toNick: (member: IZONE) => "조구리",
+      usernameService: DummyUsernameService,
     }),
   });
   return { ...result, navigation };
