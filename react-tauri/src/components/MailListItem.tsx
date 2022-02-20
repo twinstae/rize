@@ -40,9 +40,9 @@ function MailListItem({ mail, style }: MailListItemProps) {
       onClick={() => navigation.navigate(toMailDetail(mail.id))}
     >
       <div style={{ padding: "14px" }}>
-        <span>{toNick(mail.member)}</span>
+        <span>{toNick(mail.member)} </span>
+        <span className={timestampCss()}> {mail.time}</span>
         <h3 className={titleCss()}>{mail.subject}</h3>
-        <span className={timestampCss()}>{mail.time}</span>
         <p className={descriptionCss()}>
           {usernameService.replaceUsername(mail.preview)}
         </p>

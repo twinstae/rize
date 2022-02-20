@@ -17,7 +17,7 @@ function MailListPage() {
         width={500}
         height={660}
         rowCount={data.length}
-        rowHeight={128}
+        rowHeight={110}
         rowRenderer={rowRenderer}
       />
     );
