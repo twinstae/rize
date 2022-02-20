@@ -12,24 +12,24 @@ import "./index.css";
 
 const Wrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
-  const MergedWrapper = pipeWrapper(
-    ThemeWrapper,
-    QueryWrapper,
-    DependenciesWrapper({
-      toNick: (name: string) => name,
-      navigation,
-      usernameService: useUsernameService(),
-    })
-  );
+  const MergedWrapper = DependenciesWrapper({
+    toNick: (name: string) => name,
+    navigation,
+    usernameService: useUsernameService(),
+  });
 
   return <MergedWrapper>{children}</MergedWrapper>;
 };
 
 ReactDOM.render(
   <HashRouter>
-    <Wrapper>
-      <App />
-    </Wrapper>
+    <QueryWrapper>
+      <ThemeWrapper>
+        <Wrapper>
+          <App />
+        </Wrapper>
+      </ThemeWrapper>
+    </QueryWrapper>
   </HashRouter>,
   document.getElementById("root")
 );
