@@ -6,6 +6,11 @@ type MailT = {
   preview: string;
 };
 
+type MailBodyT = {
+  body: string;
+  image: string;
+};
+
 type IZONE =
   | "권은비"
   | "미야와키 사쿠라"
@@ -37,6 +42,20 @@ type CreateIndex = (mailList: MailT[]) => Index;
 
 interface MailRepository {
   getAllMailList: () => Promise<MailT[]>;
+  getMailBodyDict: () => Promise<Record<string, MailBodyT>>;
 }
 
 type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
+
+type UsernameServiceT = {
+  before: string;
+  after: string;
+  setBefore: (newBefore: string) => void;
+  setAfter: (newAfter: string) => void;
+  replaceUsername: (text: string) => string;
+};
+
+interface StorageRepository {
+  getItem: (key: string) => Promise<string | null>;
+  setItem: (key: string, value: string) => Promise<void>;
+}
