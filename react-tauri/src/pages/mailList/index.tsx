@@ -1,31 +1,27 @@
 import React from "react";
 import MailListItem from "../../components/MailListItem";
-import fakeMailRepository from "../../mailList/fakeMailRepository";
-import { createUseMailList } from "../../mailList/useMailList";
 import { List, ListRowRenderer } from "react-virtualized";
-
-const useMailList = createUseMailList(fakeMailRepository);
+import { renderQuery } from "../../hooks/util";
+import useMailList from "../../mailList/useMailList";
 
 function MailListPage() {
-  const { isLoading, data, error } = useMailList();
+  const query = useMailList().mailList;
 
-  if (isLoading || data === undefined) return <span>로딩중</span>;
+  return renderQuery(query, (data) => {
+    const rowRenderer: ListRowRenderer = ({ key, index, style }) => {
+      return <MailListItem key={key} mail={data[index]} style={style} />;
+    };
 
-  if (error) return <span>{JSON.stringify(error)}</span>;
-
-  const rowRenderer: ListRowRenderer = ({ key, index, style }) => {
-    return <MailListItem key={key} mail={data[index]} style={style} />;
-  };
-
-  return (
-    <List
-      width={500}
-      height={660}
-      rowCount={data.length}
-      rowHeight={128}
-      rowRenderer={rowRenderer}
-    />
-  );
+    return (
+      <List
+        width={500}
+        height={660}
+        rowCount={data.length}
+        rowHeight={128}
+        rowRenderer={rowRenderer}
+      />
+    );
+  });
 }
 
 export default MailListPage;
