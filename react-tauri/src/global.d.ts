@@ -48,8 +48,13 @@ interface MailRepository {
 type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
 
 type UsernameServiceT = {
+  isSuccess: boolean;
   before: string;
   after: string;
+  mutation: {
+    isLoading: boolean;
+    mutate: (v: { key: string; value: string }) => void;
+  };
   setBefore: (newBefore: string) => void;
   setAfter: (newAfter: string) => void;
   replaceUsername: (text: string) => string;

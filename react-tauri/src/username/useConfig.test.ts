@@ -2,22 +2,8 @@ import { waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { TestQueryWrapper } from "../hooks/QueryWrapper";
 import { waitForMutation } from "../test/util";
+import fakeStorageRepo from "./fakeStorageRepo";
 import useConfig from "./useConfig";
-
-interface FakeRepository extends StorageRepository {
-  _storage: Record<string, string>;
-}
-
-const fakeStorageRepo: FakeRepository = {
-  _storage: {},
-  async getItem(key) {
-    return this._storage[key];
-  },
-  async setItem(key, value: string) {
-    this._storage[key] = value;
-    return;
-  },
-};
 
 describe("useConfig", () => {
   it("config를 가져올 수 있다", async () => {
