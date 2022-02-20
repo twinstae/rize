@@ -18,10 +18,15 @@ export const TEST_MAIL_2: MailT = {
     "좋은아침😊💕 이침엔 핫초코지👍ㅎ おはよう😊💕 朝ホットチョコレートか👍",
 };
 
-export const DummyUsernameService = {
+export const DummyUsernameService: UsernameServiceT = {
   before: "테스트",
   after: "테스트",
   setBefore: vi.fn(),
   setAfter: vi.fn(),
+  isSuccess: true,
+  mutation: {
+    isLoading: true,
+    mutate: vi.fn(),
+  },
   replaceUsername: (text: string) => text,
 };

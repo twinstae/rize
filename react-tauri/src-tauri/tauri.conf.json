@@ -50,9 +50,12 @@
       "active": false
     },
     "allowlist": {
+      "path": {
+        "all": true
+      },
       "fs": {
         "all": true,
-        "scope": ["$APP/*", "$DOWNLOAD/pm_list.json", "$DOWNLOAD/mail_body_dict.json", "$DOWNLOAD/local_*.txt"]
+        "scope": ["$APP/*", "$DOWNLOAD/*.jpeg","$DOWNLOAD/pm_list.json", "$DOWNLOAD/mail_body_dict.json", "$DOWNLOAD/local_*.txt"]
       },
       "http": {
         "all": true,
