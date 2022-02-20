@@ -7,9 +7,11 @@ export const createUseUsernameService: (
   repo: StorageRepository
 ) => () => UsernameServiceT = (repo) => () => {
   const query = useConfig(repo);
-  const [before, after] = query.data
-    ? query.data[USERNAME_KEY]
-    : ["<위즈원>", "위즈원"];
+
+  const [before, after] =
+    query.data && query.data[USERNAME_KEY]
+      ? query.data[USERNAME_KEY]
+      : ["<위즈원>", "위즈원"];
 
   const regex = new RegExp(before, "g");
   return {
