@@ -14,6 +14,7 @@ export const createUseSearch =
 
     return {
       mailIdSet: searchResultSet,
+      isInResult: (id: string) => searchResultSet.has(id),
       search: setKeyword,
     };
   };

@@ -33,4 +33,14 @@ describe("useSearch", () => {
       searchKeyword("노래").then([TEST_MAIL.id]);
     });
   });
+
+  it("isInResult는 검색 결과에 있는 id만 true를 반환한다", () => {
+    const { result } = renderHook(() => useSearch(ORIGINAL_LIST));
+
+    act(() => {
+      result.current.search("노래");
+    });
+    expect(result.current.isInResult(TEST_MAIL.id)).toBe(true);
+    expect(result.current.isInResult(TEST_MAIL_2.id)).toBe(false);
+  });
 });
