@@ -12,6 +12,9 @@ const liCss = css({
 const titleCss = css({
   padding: 0,
   margin: "0.25rem 0",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
 });
 
 const timestampCss = css({
@@ -43,9 +46,12 @@ function MailListItem({ mail, style }: MailListItemProps) {
         <span>{toNick(mail.member)} </span>
         <span className={timestampCss()}> {mail.time}</span>
         <h3 className={titleCss()}>{mail.subject}</h3>
-        <p className={descriptionCss()}>
-          {usernameService.replaceUsername(mail.preview)}
-        </p>
+        <p
+          className={descriptionCss()}
+          dangerouslySetInnerHTML={{
+            __html: usernameService.replaceUsername(mail.preview),
+          }}
+        ></p>
       </div>
     </li>
   );
