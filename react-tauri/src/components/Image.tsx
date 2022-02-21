@@ -1,35 +1,21 @@
 import React from "react";
-import { fs } from "@tauri-apps/api";
+import { downloadDir, join } from "@tauri-apps/api/path";
+import { convertFileSrc } from "@tauri-apps/api/tauri";
 import { useQuery } from "react-query";
-import { renderQuery } from "../hooks/util";
-import { b2a } from "../base64";
+import { withSuspense } from "../hooks/util";
 
 interface Props {
   path: string;
 }
 
-export const encode = (uint8array: Uint8Array) => {
-  const output = [];
-  for (let i = 0, { length } = uint8array; i < length; i++)
-    output.push(String.fromCharCode(uint8array[i]));
-  return b2a(output.join(""));
-};
-
 function Image({ path }: Props) {
-  const query = useQuery<Uint8Array, Error>(["image", path], async () => {
-    return fs.readBinaryFile("output/" + path, {
-      dir: fs.BaseDirectory.Download,
-    });
+  const { data } = useQuery<string, Error>(["image", path], async () => {
+    const dir = await downloadDir();
+    const filePath = await join(dir, "output/" + path);
+    return convertFileSrc(filePath);
   });
 
-  return renderQuery(
-    query,
-    (data) => {
-      const src = "data:image/jpeg;base64," + encode(data);
-      return <img src={src} width="100%" />;
-    },
-    (error) => <span>{path} 에서 파일을 찾지 못했습니다.</span>
-  );
+  return <img src={data} width="100%" />;
 }
 
-export default Image;
+export default withSuspense(Image);

@@ -55,11 +55,15 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$APP/*", "$DOWNLOAD/*.jpeg","$DOWNLOAD/pm_list.json", "$DOWNLOAD/mail_body_dict.json", "$DOWNLOAD/local_*.txt"]
+        "scope": ["$APP/*", "$DOWNLOAD/output/img/*","$DOWNLOAD/pm_list.json", "$DOWNLOAD/mail_body_dict.json", "$DOWNLOAD/local_*.txt"]
       },
       "http": {
         "all": true,
         "scope": ["http://localhost:3000/*"]
+      },
+      "protocol": {
+        "asset": true,
+        "assetScope": ["$DOWNLOAD/output/img/*"]
       }
     },
     "windows": [
@@ -72,7 +76,7 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self'"
+      "csp":"default-src 'self'; img-src 'self' asset: https://asset.localhost"
     }
   }
 }
