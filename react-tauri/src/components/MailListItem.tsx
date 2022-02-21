@@ -30,29 +30,31 @@ const descriptionCss = css({
 
 interface MailListItemProps {
   mail: MailT;
-  style: CSSProperties;
+  style?: CSSProperties;
+  hide?: boolean;
 }
 
-function MailListItem({ mail, style }: MailListItemProps) {
+function MailListItem({ mail, style, hide = false }: MailListItemProps) {
   const { navigation, toNick, usernameService } = useDependencies();
+  const Link = navigation.Link;
 
   return (
-    <li
-      className={liCss()}
-      style={style}
-      onClick={() => navigation.navigate(toMailDetail(mail.id))}
-    >
-      <div style={{ padding: "14px" }}>
-        <span>{toNick(mail.member)} </span>
-        <span className={timestampCss()}> {mail.time}</span>
-        <h3 className={titleCss()}>{mail.subject}</h3>
-        <p
-          className={descriptionCss()}
-          dangerouslySetInnerHTML={{
-            __html: usernameService.replaceUsername(mail.preview),
-          }}
-        ></p>
-      </div>
+    <li className={liCss()} style={style}>
+      <Link to={toMailDetail(mail.id)}>
+        <div style={{ padding: "14px" }}>
+          <span>{toNick(mail.member)} </span>
+          <span className={timestampCss()}> {mail.time}</span>
+          <h3 className={titleCss()}>{mail.subject}</h3>
+          {hide ? null : (
+            <p
+              className={descriptionCss()}
+              dangerouslySetInnerHTML={{
+                __html: usernameService.replaceUsername(mail.preview),
+              }}
+            ></p>
+          )}
+        </div>
+      </Link>
     </li>
   );
 }

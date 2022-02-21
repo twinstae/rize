@@ -1,4 +1,5 @@
-import { Params } from "react-router-dom";
+import React from "react";
+import { Link, Params } from "react-router-dom";
 
 export interface Navigation {
   params: () => Readonly<Params<string>>;
@@ -6,6 +7,9 @@ export interface Navigation {
   navigate: (path: string) => void;
   goBack: () => void;
   redirect: (path: string) => void;
+  Link:
+    | ((props: { to: string; children: JSX.Element }) => JSX.Element)
+    | typeof Link;
 }
 
 export const useFakeNavigation = (): Navigation => {
@@ -25,5 +29,7 @@ export const useFakeNavigation = (): Navigation => {
     redirect: (path: string) => {
       history[history.length - 1] = path;
     },
+    Link: (props: { to: string; children: JSX.Element }) =>
+      React.createElement("a", { href: props.to }, props.children),
   };
 };

@@ -1,4 +1,6 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { styled } from "@stitches/react";
+import React from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Navigation } from "./useNavigation";
 
 const useRRDNavigation = (): Navigation => {
@@ -16,6 +18,12 @@ const useRRDNavigation = (): Navigation => {
     redirect: (path: string) => {
       navigate(path, { replace: true });
     },
+    Link: ({ to, children }: { to: string; children: JSX.Element }) =>
+      React.createElement(
+        Link,
+        { to, style: { color: "black", textDecoration: "none" } },
+        children
+      ),
   };
 };
 
