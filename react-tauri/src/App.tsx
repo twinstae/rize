@@ -8,11 +8,11 @@ import Test from "./test/Test";
 function App() {
   return (
     <Routes>
-      <Route path="mail" element={<MailListPage />}>
+      <Route path="mail">
         <Route path=":id" element={<MailDetailPage />} />
       </Route>
-
-      <Route path={ROOT} element={<Test />} />
+      <Route path={ROOT} element={<MailListPage />} />
+      <Route path="test" element={<Test />} />
     </Routes>
   );
 }
