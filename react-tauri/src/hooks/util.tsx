@@ -31,3 +31,11 @@ export const renderQuery: RenderQueryT = (
 
   return render(data);
 };
+
+export const SuspenseWrapper = createWrapper(React.Suspense, {
+  fallback: <span>로딩 중</span>,
+});
+
+export const withSuspense: <T>(Component: React.FC<T>) => React.FC<T> =
+  (Component) => (props) =>
+    SuspenseWrapper({ children: <Component {...props} /> });

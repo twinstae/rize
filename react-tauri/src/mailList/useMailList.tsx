@@ -9,10 +9,15 @@ interface MailListResult {
 export const createUseMailList =
   (mailRepository: MailRepository) => (): MailListResult => {
     return {
-      mailList: useQuery("MailList", () => mailRepository.getAllMailList()),
+      mailList: useQuery("MailList", () => mailRepository.getAllMailList(), {
+        staleTime: 1000 * 60 * 60,
+        suspense: true,
+      }),
       mailById: (id) =>
         useQuery("MailBodyDict", () => mailRepository.getMailBodyDict(), {
           select: (mailBodyDict) => mailBodyDict[id],
+          staleTime: 1000 * 60 * 60,
+          suspense: true,
         }),
     };
   };
