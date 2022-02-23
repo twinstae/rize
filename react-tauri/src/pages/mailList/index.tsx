@@ -3,7 +3,6 @@ import MailListItem from "../../components/MailListItem";
 import { List } from "react-virtualized";
 import { withSuspense } from "../../hooks/util";
 import useMailList from "../../mailList/useMailList";
-import { useDependencies } from "../../hooks/Dependencies";
 import { useSearchParams } from "react-router-dom";
 
 function MailListPage() {
@@ -11,18 +10,21 @@ function MailListPage() {
   const [searchParams] = useSearchParams();
   const mailId = searchParams.get("mailId");
 
+  const getIndex = (mailList: MailT[]) =>
+    Math.min(
+      mailList.findIndex((mail) => mailId === mail.id) + 5,
+      mailList.length - 1
+    );
+
   return data ? (
     <List
-      width={500}
+      width={400}
       height={660}
       rowCount={data.length}
       rowHeight={110}
-      rowRenderer={({ key, index, style }) => {
-        return <MailListItem key={key} mail={data[index]} style={style} />;
-      }}
-      scrollToIndex={Math.min(
-        data.findIndex((mail) => mailId === mail.id) + 5,
-        data.length - 1
+      scrollToIndex={getIndex(data)}
+      rowRenderer={({ key, index, style }) => (
+        <MailListItem key={key} mail={data[index]} style={style} />
       )}
     />
   ) : null;
