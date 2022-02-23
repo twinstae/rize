@@ -3,6 +3,7 @@ import { useDependencies } from "../hooks/Dependencies";
 import { toMailDetail } from "../router/paths";
 
 import { css } from "@stitches/core";
+import ProfileImage from "./ProfileImage";
 
 const liCss = css({
   borderBottom: "1px solid lightgrey",
@@ -42,6 +43,7 @@ function MailListItem({ mail, style, hide = false }: MailListItemProps) {
     <li className={liCss()} style={style}>
       <Link to={toMailDetail(mail.id)}>
         <div style={{ padding: "14px" }}>
+          <ProfileImage member={mail.member} />
           <span>{toNick(mail.member)} </span>
           <span className={timestampCss()}> {mail.time}</span>
           <h3 className={titleCss()}>{mail.subject}</h3>

@@ -6,16 +6,17 @@ import { withSuspense } from "../hooks/util";
 
 interface Props {
   path: string;
+  style: React.CSSProperties;
 }
 
-function Image({ path }: Props) {
+const Image: React.FC<Props> = ({ path, style }) => {
   const { data } = useQuery<string, Error>(["image", path], async () => {
     const dir = await downloadDir();
     const filePath = await join(dir, "output/" + path);
     return convertFileSrc(filePath);
   });
 
-  return <img src={data} width="100%" />;
-}
+  return <img src={data} style={style} />;
+};
 
 export default withSuspense(Image);

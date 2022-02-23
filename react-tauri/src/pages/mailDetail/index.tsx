@@ -17,7 +17,7 @@ function MailDetailPage() {
   const body = usernameService.replaceUsername(mailBody ? mailBody.body : "");
   const parts = body.split("{이미지}");
   function getPath(index: number) {
-    return mailBody ? mailBody.images[index] : "./img/404.jpeg";
+    return mailBody ? mailBody.images[index] : "img/404.jpeg";
   }
 
   return (
@@ -37,7 +37,9 @@ function MailDetailPage() {
               __html: part,
             }}
           ></div>
-          {i < parts.length - 1 && <Image path={getPath(i)} />}
+          {i < parts.length - 1 && (
+            <Image path={getPath(i)} style={{ width: "100%" }} />
+          )}
         </div>
       ))}
     </section>

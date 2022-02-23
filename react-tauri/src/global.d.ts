@@ -23,7 +23,8 @@ type IZONE =
   | "혼다 히토미"
   | "조유리"
   | "안유진"
-  | "장원영";
+  | "장원영"
+  | "운영팀";
 
 type ChildrenProps = {
   children: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
