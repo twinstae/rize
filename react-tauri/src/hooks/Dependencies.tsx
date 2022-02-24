@@ -7,13 +7,10 @@ type DependencyT = {
   navigation?: Navigation;
   toNick?: (member: IZONE) => string;
   usernameService?: UsernameServiceT;
-  Image?: ({
-    path,
-    style,
-  }: {
+  Image?: React.FC<{
     path: string;
     style: React.CSSProperties;
-  }) => JSX.Element;
+  }>;
 };
 
 export const Dependencies = React.createContext<DependencyT>({});
