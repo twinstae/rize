@@ -10,6 +10,8 @@ import useUsernameService from "./username/useUsernameService";
 import "./index.css";
 import Image from "./components/Image";
 import i18n from "./i18n/i18n";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./theme/theme";
 
 const Wrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
@@ -18,19 +20,22 @@ const Wrapper: WrapperT = ({ children }) => {
     navigation,
     usernameService: useUsernameService(),
     Image,
+    setTag: console.log,
   });
   return <MergedWrapper>{children}</MergedWrapper>;
 };
 
 ReactDOM.render(
-  <HashRouter>
-    <QueryWrapper>
-      <ThemeWrapper>
-        <Wrapper>
-          <App />
-        </Wrapper>
-      </ThemeWrapper>
-    </QueryWrapper>
-  </HashRouter>,
+  <ChakraProvider theme={theme}>
+    <HashRouter>
+      <QueryWrapper>
+        <ThemeWrapper>
+          <Wrapper>
+            <App />
+          </Wrapper>
+        </ThemeWrapper>
+      </QueryWrapper>
+    </HashRouter>
+  </ChakraProvider>,
   document.getElementById("root")
 );
