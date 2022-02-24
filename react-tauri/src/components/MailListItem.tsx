@@ -2,32 +2,29 @@ import React, { CSSProperties } from "react";
 import { useDependencies } from "../hooks/Dependencies";
 import { toMailDetail } from "../router/paths";
 
-import { css } from "@stitches/core";
+import styled from "@emotion/styled";
 import ProfileImage from "./ProfileImage";
 
-const liCss = css({
-  borderBottom: "1px solid lightgrey",
-  listStyle: "none",
-});
+const Wrapper = styled.li`
+  border-bottom: 1px solid lightgrey;
+  list-style: none;
+`;
 
-const titleCss = css({
-  padding: 0,
-  margin: "0.25rem 0",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  whiteSpace: "nowrap",
-});
+const Title = styled.h3`
+  padding: 0;
+  margin: 0.25rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+`;
 
-const timestampCss = css({
-  color: "darkgray",
-});
-
-const descriptionCss = css({
-  margin: "0.25rem 0 ",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  whiteSpace: "nowrap",
-});
+const Description = styled.p`
+  margin: 0.25rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
 
 interface MailListItemProps {
   mail: MailT;
@@ -40,24 +37,29 @@ function MailListItem({ mail, style, hide = false }: MailListItemProps) {
   const Link = navigation.Link;
 
   return (
-    <li className={liCss()} style={style}>
+    <Wrapper style={style}>
       <Link to={toMailDetail(mail.id)}>
         <div style={{ padding: "14px" }}>
           <ProfileImage member={mail.member} />
-          <span>{toNick(mail.member)} </span>
-          <span className={timestampCss()}> {mail.time}</span>
-          <h3 className={titleCss()}>{mail.subject}</h3>
+          <span style={{ fontWeight: 500 }}>{toNick(mail.member)} </span>
+          <span
+            style={{
+              color: "darkgray",
+            }}
+          >
+            {mail.time}
+          </span>
+          <Title>{mail.subject}</Title>
           {hide ? null : (
-            <p
-              className={descriptionCss()}
+            <Description
               dangerouslySetInnerHTML={{
                 __html: usernameService.replaceUsername(mail.preview),
               }}
-            ></p>
+            ></Description>
           )}
         </div>
       </Link>
-    </li>
+    </Wrapper>
   );
 }
 
