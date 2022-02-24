@@ -1,33 +1,43 @@
 import React from "react";
-import MailListItem from "../../components/MailListItem";
-import { List } from "react-virtualized";
+import MailList from "../../components/MailList";
 import { withSuspense } from "../../hooks/util";
-import useMailList from "../../mailList/useMailList";
-import { useSearchParams } from "react-router-dom";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import styled from "@emotion/styled";
+import LeftDrawler from "../../components/LeftDrawler";
+
+const AppBar = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.5rem;
+`;
 
 function MailListPage() {
-  const { data } = useMailList().mailList;
-  const [searchParams] = useSearchParams();
-  const mailId = searchParams.get("mailId");
+  return (
+    <div style={{ overflowY: "hidden" }}>
+      <AppBar>
+        <LeftDrawler />
+      </AppBar>
+      <Tabs isFitted colorScheme="izone">
+        <TabList>
+          <Tab>전체</Tab>
+          <Tab>읽지 않음</Tab>
+          <Tab>중요</Tab>
+        </TabList>
 
-  const getIndex = (mailList: MailT[]) =>
-    Math.min(
-      mailList.findIndex((mail) => mailId === mail.id) + 5,
-      mailList.length - 1
-    );
-
-  return data ? (
-    <List
-      width={400}
-      height={660}
-      rowCount={data.length}
-      rowHeight={110}
-      scrollToIndex={getIndex(data)}
-      rowRenderer={({ key, index, style }) => (
-        <MailListItem key={key} mail={data[index]} style={style} />
-      )}
-    />
-  ) : null;
+        <TabPanels>
+          <TabPanel style={{ padding: "0.5rem" }}>
+            <MailList mode="all" />
+          </TabPanel>
+          <TabPanel style={{ padding: "0.5rem" }}>
+            <MailList mode="unread" />
+          </TabPanel>
+          <TabPanel style={{ padding: "0.5rem" }}>
+            <MailList mode="favorite" />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </div>
+  );
 }
 
 export default withSuspense(MailListPage);

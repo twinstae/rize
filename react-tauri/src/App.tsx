@@ -1,7 +1,7 @@
 import React from "react";
 import { ROOT } from "./router/paths";
 import { Routes, Route } from "react-router-dom";
-import MailListPage from "./pages/mailList/index";
+import MailListPage from "./pages/mailList";
 import MailDetailPage from "./pages/mailDetail";
 import Test from "./test/Test";
 
