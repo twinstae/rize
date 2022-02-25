@@ -19,6 +19,10 @@ const theme = extendTheme({
       900: "#B83280",
     },
   },
+  config: {
+    initialColorMode: "light",
+    useSystemColorMode: false,
+  },
 });
 
 export default theme;

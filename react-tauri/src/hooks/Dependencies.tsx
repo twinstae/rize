@@ -7,6 +7,8 @@ type DependencyT = {
   navigation?: Navigation;
   toNick?: (member: IZONE) => string;
   usernameService?: UsernameServiceT;
+  isDark?: boolean;
+  toggleDark?: () => void;
   Image?: React.FC<{
     path: string;
     style: React.CSSProperties;
@@ -21,8 +23,5 @@ export function useDependencies() {
 }
 
 export const DependenciesWrapper = (
-  dependencies: Partial<ReturnType<typeof useDependencies>>
-) =>
-  createWrapper(Dependencies.Provider, {
-    value: dependencies,
-  });
+  value: Partial<ReturnType<typeof useDependencies>>
+) => createWrapper(Dependencies.Provider, { value });
