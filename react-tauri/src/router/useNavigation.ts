@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Params } from "react-router-dom";
+import { Link, Navigate, Params } from "react-router-dom";
 
 export interface Navigation {
   params: () => Readonly<Params<string>>;
@@ -30,6 +30,10 @@ export const useFakeNavigation = (): Navigation => {
       history[history.length - 1] = path;
     },
     Link: (props: { to: string; children: JSX.Element }) =>
-      React.createElement("a", { href: props.to }, props.children),
+      React.createElement(
+        "a",
+        { href: props.to, onClick: () => history.push(props.to) },
+        props.children
+      ),
   };
 };

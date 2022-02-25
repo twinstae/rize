@@ -15,6 +15,7 @@ function renderWithDependency(component: React.ReactElement) {
       navigation,
       toNick: (member: IZONE) => "조구리",
       usernameService: DummyUsernameService,
+      Image: ({ path, style }) => <span>{path}</span>,
     }),
   });
   return { ...result, navigation };
