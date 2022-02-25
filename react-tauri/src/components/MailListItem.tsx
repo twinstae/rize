@@ -4,10 +4,10 @@ import { toMailDetail } from "../router/paths";
 
 import styled from "@emotion/styled";
 import ProfileImage from "./ProfileImage";
+import { Divider } from "@chakra-ui/react";
 
 const Wrapper = styled.li`
-  border-bottom: 1px solid lightgrey;
-  list-style: none;
+  padding: 0.5rem;
 `;
 
 const Title = styled.h3`
@@ -38,8 +38,8 @@ function MailListItem({ mail, style, hide = false }: MailListItemProps) {
 
   return (
     <Wrapper style={style}>
-      <Link to={toMailDetail(mail.id)}>
-        <div style={{ padding: "14px" }}>
+      <Link to={toMailDetail(mail.id)} style={{ padding: "14px" }}>
+        <div>
           <ProfileImage member={mail.member} />
           <span style={{ fontWeight: 500 }}>{toNick(mail.member)} </span>
           <span
@@ -59,6 +59,7 @@ function MailListItem({ mail, style, hide = false }: MailListItemProps) {
           )}
         </div>
       </Link>
+      <Divider />
     </Wrapper>
   );
 }
