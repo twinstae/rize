@@ -13,7 +13,7 @@ const AppBar = styled.div`
 
 function MailListPage() {
   return (
-    <div style={{ overflowY: "hidden" }}>
+    <div style={{ overflow: "hidden" }}>
       <AppBar>
         <LeftDrawler />
       </AppBar>
