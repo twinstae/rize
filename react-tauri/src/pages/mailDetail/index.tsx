@@ -35,7 +35,6 @@ function MailDetailPage() {
   return (
     <Wrapper>
       <Button
-        colorScheme="izone"
         leftIcon={<ArrowBackIcon />}
         onClick={() => navigation.navigate(mail ? "/?mailId=" + mail.id : "/")}
       >

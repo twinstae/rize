@@ -37,30 +37,28 @@ function MailListItem({ mail, style, hide = false }: MailListItemProps) {
   const Link = navigation.Link;
 
   return (
-    <Wrapper style={style}>
-      <Link to={toMailDetail(mail.id)} style={{ padding: "14px" }}>
-        <div>
-          <ProfileImage member={mail.member} />
-          <span style={{ fontWeight: 500 }}>{toNick(mail.member)} </span>
-          <span
-            style={{
-              color: "darkgray",
+    <Link to={toMailDetail(mail.id)}>
+      <Wrapper style={style}>
+        <ProfileImage member={mail.member} />
+        <span style={{ fontWeight: 500 }}>{toNick(mail.member)} </span>
+        <span
+          style={{
+            color: "darkgray",
+          }}
+        >
+          {mail.time}
+        </span>
+        <Title>{mail.subject}</Title>
+        {hide ? null : (
+          <Description
+            dangerouslySetInnerHTML={{
+              __html: usernameService.replaceUsername(mail.preview),
             }}
-          >
-            {mail.time}
-          </span>
-          <Title>{mail.subject}</Title>
-          {hide ? null : (
-            <Description
-              dangerouslySetInnerHTML={{
-                __html: usernameService.replaceUsername(mail.preview),
-              }}
-            ></Description>
-          )}
-        </div>
-      </Link>
-      <Divider />
-    </Wrapper>
+          ></Description>
+        )}
+        <Divider />
+      </Wrapper>
+    </Link>
   );
 }
 

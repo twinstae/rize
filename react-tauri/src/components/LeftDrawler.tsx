@@ -18,12 +18,7 @@ function LeftDrawler() {
 
   return (
     <>
-      <Button
-        colorScheme="izone"
-        onClick={onOpen}
-        ref={btnRef}
-        leftIcon={<HamburgerIcon />}
-      >
+      <Button onClick={onOpen} ref={btnRef} leftIcon={<HamburgerIcon />}>
         메뉴
       </Button>
       <Drawer

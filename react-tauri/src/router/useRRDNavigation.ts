@@ -18,11 +18,7 @@ const useRRDNavigation = (): Navigation => {
       navigate(path, { replace: true });
     },
     Link: ({ to, children }: { to: string; children: JSX.Element }) =>
-      React.createElement(
-        Link,
-        { to, style: { color: "black", textDecoration: "none" } },
-        children
-      ),
+      React.createElement(Link, { to }, children),
   };
 };
 

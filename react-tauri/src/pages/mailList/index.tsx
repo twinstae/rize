@@ -4,6 +4,7 @@ import { withSuspense } from "../../hooks/util";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import LeftDrawler from "../../components/LeftDrawler";
+import DarkModeButton from "../../components/DarkModeButton";
 
 const AppBar = styled.div`
   width: 100%;
@@ -16,8 +17,9 @@ function MailListPage() {
     <div style={{ overflow: "hidden" }}>
       <AppBar>
         <LeftDrawler />
+        <DarkModeButton />
       </AppBar>
-      <Tabs isFitted colorScheme="izone">
+      <Tabs isFitted colorScheme="red">
         <TabList>
           <Tab>전체</Tab>
           <Tab>읽지 않음</Tab>
