@@ -7,7 +7,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  IconButton,
+  Button,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import MemberList from "./MemberList";
@@ -18,12 +18,14 @@ function LeftDrawler() {
 
   return (
     <>
-      <IconButton
+      <Button
+        colorScheme="izone"
         onClick={onOpen}
         ref={btnRef}
-        aria-label="메뉴"
-        icon={<HamburgerIcon />}
-      />
+        leftIcon={<HamburgerIcon />}
+      >
+        메뉴
+      </Button>
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -32,7 +34,9 @@ function LeftDrawler() {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">메뉴</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px" color="izone.500">
+            메뉴
+          </DrawerHeader>
           <DrawerCloseButton>닫기</DrawerCloseButton>
           <DrawerBody>
             <MemberList />
