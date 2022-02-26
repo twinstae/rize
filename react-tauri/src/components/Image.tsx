@@ -16,6 +16,8 @@ const Image: React.FC<Props> = ({ path, style }) => {
     return convertFileSrc(filePath);
   });
 
+  if (data === undefined) return <span>로딩 중</span>;
+
   return <img src={data} style={style} />;
 };
 

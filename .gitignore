@@ -1,2 +1,5 @@
 react-tauri/src/test/test_mail_body_dict.json
 react-tauri/public/mail_body_dict.json
+react-tauri/src/test/all_tag_list.json
+react-tauri/src/test/mail_to_tag_dict.json
+react-tauri/src/test/tag_to_mail_dict.json
