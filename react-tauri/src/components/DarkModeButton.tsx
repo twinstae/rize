@@ -3,6 +3,7 @@ import { withTranslation } from "react-i18next";
 import { strs } from "../i18n/i18n";
 import { useDependencies } from "../hooks/Dependencies";
 import { Button } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 interface RawDarkModeButtonProps extends TranslationProps {}
 
@@ -11,7 +12,8 @@ export const RawDarkModeButton = ({ t }: RawDarkModeButtonProps) => {
 
   return (
     <Button onClick={() => toggleDark()} marginLeft="2">
-      {t(isDark ? strs.다크 : strs.컬러)}
+      {isDark ? <MoonIcon /> : <SunIcon />}
+      {t(isDark ? strs.다크 : strs.밝게)}
     </Button>
   );
 };
