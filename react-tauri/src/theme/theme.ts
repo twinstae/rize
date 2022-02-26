@@ -1,9 +1,9 @@
-import { extendTheme, theme as baseTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   fonts: {
-    heading: '"Noto Sans KR", "Noto Sans JP", "Noto Color Emoji", sans-serif',
-    body: '"Noto Sans KR", "Noto Sans JP", "Noto Color Emoji", sans-serif',
+    heading: '"Pretendard", "Noto Sans JP", "Noto Color Emoji", sans-serif',
+    body: '"Pretendard", "Noto Sans JP", "Noto Color Emoji", sans-serif',
   },
   colors: {
     izone: {
