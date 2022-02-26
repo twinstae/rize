@@ -3,6 +3,7 @@ import { Navigation } from "../router/useNavigation";
 import { createWrapper } from "./util";
 
 type DependencyT = {
+  tag?: string;
   setTag?: (tag: string) => void;
   navigation?: Navigation;
   toNick?: (member: string) => string;

@@ -44,6 +44,8 @@ type CreateIndex = (mailList: MailT[]) => Index;
 interface MailRepository {
   getAllMailList: () => Promise<MailT[]>;
   getMailBodyDict: () => Promise<Record<string, MailBodyT>>;
+  getTagToMailDict: () => Promise<Record<string, string[]>>;
+  getMailToTagDict: () => Promise<Record<string, string[]>>;
 }
 
 type WrapperT = ({ children }: ChildrenProps) => JSX.Element;

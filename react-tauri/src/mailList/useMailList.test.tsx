@@ -9,7 +9,7 @@ import { render, waitFor } from "@testing-library/react";
 const useMailList = createUseMailList(fakeMailRepository);
 
 function Data() {
-  const query = useMailList().mailList("all");
+  const query = useMailList().mailList("all", "");
   return (
     <span>{JSON.stringify(query.data ? query.data[0] : "데이터 없음")}</span>
   );

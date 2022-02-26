@@ -57,3 +57,6 @@ export const memberNameDict: Record<number, IZONE> = {
   11: "이채연",
   12: "운영팀",
 };
+
+export const toOriginalName = (raw: string) =>
+  memberNameDict[nameToNumberDict[raw]];

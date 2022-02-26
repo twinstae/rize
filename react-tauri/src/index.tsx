@@ -12,10 +12,14 @@ import i18n from "./i18n/i18n";
 import { ChakraProvider, useColorMode } from "@chakra-ui/react";
 import theme from "./theme/theme";
 import { memberNameDict, nameToNumberDict } from "./constants";
+import { atom, useAtom } from "jotai";
+
+const currentTagAtom = atom("");
 
 const Wrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [tag, setTag] = useAtom(currentTagAtom);
 
   return (
     <Dependencies.Provider
@@ -26,7 +30,8 @@ const Wrapper: WrapperT = ({ children }) => {
         Image,
         isDark: colorMode === "dark",
         toggleDark: toggleColorMode,
-        setTag: console.log,
+        tag,
+        setTag,
       }}
     >
       {children}
