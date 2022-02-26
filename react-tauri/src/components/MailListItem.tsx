@@ -8,6 +8,7 @@ import { Divider } from "@chakra-ui/react";
 
 const Wrapper = styled.li`
   padding: 0.5rem;
+  border-bottom: 1px solid var(--chakra-colors-gray-300);
 `;
 
 const Title = styled.h3`
@@ -37,28 +38,29 @@ function MailListItem({ mail, style, hide = false }: MailListItemProps) {
   const Link = navigation.Link;
 
   return (
-    <Link to={toMailDetail(mail.id)}>
-      <Wrapper style={style}>
-        <ProfileImage member={mail.member} />
-        <span style={{ fontWeight: 500 }}>{toNick(mail.member)} </span>
-        <span
-          style={{
-            color: "darkgray",
-          }}
-        >
-          {mail.time}
-        </span>
-        <Title>{mail.subject}</Title>
-        {hide ? null : (
-          <Description
-            dangerouslySetInnerHTML={{
-              __html: usernameService.replaceUsername(mail.preview),
+    <Wrapper style={style}>
+      <Link to={toMailDetail(mail.id)}>
+        <>
+          <ProfileImage member={mail.member} />
+          <span style={{ fontWeight: 500 }}>{toNick(mail.member)} </span>
+          <span
+            style={{
+              color: "darkgray",
             }}
-          ></Description>
-        )}
-        <Divider />
-      </Wrapper>
-    </Link>
+          >
+            {mail.time}
+          </span>
+          <Title>{mail.subject}</Title>
+          {hide ? null : (
+            <Description
+              dangerouslySetInnerHTML={{
+                __html: usernameService.replaceUsername(mail.preview),
+              }}
+            ></Description>
+          )}
+        </>
+      </Link>
+    </Wrapper>
   );
 }
 

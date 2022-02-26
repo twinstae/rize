@@ -1,32 +1,23 @@
 import React from "react";
+import { nameToNumberDict } from "../constants";
 import { useDependencies } from "../hooks/Dependencies";
 
 interface Props {
-  member: IZONE;
+  member: string;
 }
 
-const nameToNumberDict: Record<IZONE, number> = {
-  장원영: 0,
-  "미야와키 사쿠라": 1,
-  조유리: 2,
-  최예나: 3,
-  안유진: 4,
-  "야부키 나코": 5,
-  권은비: 6,
-  강혜원: 7,
-  "혼다 히토미": 8,
-  김채원: 9,
-  김민주: 10,
-  이채연: 11,
-  운영팀: 12,
-};
+function getPath(member: string) {
+  if (member === "운영팀") return "img/izone-logo.png";
+
+  return `img/profile/${nameToNumberDict[member]}.jpg`;
+}
 
 const ProfileImage: React.FC<Props> = ({ member }) => {
   const { Image } = useDependencies();
 
   return (
     <Image
-      path={`img/profile/${nameToNumberDict[member]}.jpg`}
+      path={getPath(member)}
       style={{
         width: "3rem",
         float: "left",

@@ -11,6 +11,7 @@ import Image from "./components/Image";
 import i18n from "./i18n/i18n";
 import { ChakraProvider, useColorMode } from "@chakra-ui/react";
 import theme from "./theme/theme";
+import { memberNameDict, nameToNumberDict } from "./constants";
 
 const Wrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
@@ -19,7 +20,7 @@ const Wrapper: WrapperT = ({ children }) => {
   return (
     <Dependencies.Provider
       value={{
-        toNick: (name: string) => name,
+        toNick: (member: string) => memberNameDict[nameToNumberDict[member]],
         navigation,
         usernameService: useUsernameService(),
         Image,

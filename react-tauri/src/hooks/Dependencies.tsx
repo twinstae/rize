@@ -5,7 +5,7 @@ import { createWrapper } from "./util";
 type DependencyT = {
   setTag?: (tag: string) => void;
   navigation?: Navigation;
-  toNick?: (member: IZONE) => string;
+  toNick?: (member: string) => string;
   usernameService?: UsernameServiceT;
   isDark?: boolean;
   toggleDark?: () => void;

@@ -1,6 +1,6 @@
 type MailT = {
   id: string;
-  member: IZONE;
+  member: string;
   time: string;
   subject: string;
   preview: string;
