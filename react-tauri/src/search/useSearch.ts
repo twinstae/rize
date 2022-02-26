@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import createFlexSearchIndex from "./createFlexSearchIndex";
 
 export const createUseSearch =
@@ -14,7 +14,11 @@ export const createUseSearch =
 
     return {
       mailIdSet: searchResultSet,
-      isInResult: (id: string) => searchResultSet.has(id),
+      isInResult: useCallback(
+        (id: string) => searchResultSet.has(id),
+        [searchResultSet]
+      ),
+      keyword,
       search: setKeyword,
     };
   };
