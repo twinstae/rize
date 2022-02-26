@@ -68,11 +68,7 @@ function AppBar() {
         <>
           <LeftDrawler />
           <DarkModeButton />
-          <Button
-            onClick={onOpen}
-            leftIcon={<SearchIcon color="gray.300" />}
-            marginLeft="2"
-          >
+          <Button onClick={onOpen} leftIcon={<SearchIcon />} marginLeft="2">
             {keyword || "검색"}
           </Button>
         </>

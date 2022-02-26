@@ -1,5 +1,5 @@
 import React from "react";
-import { MEMBER_LIST, nameToNumberDict } from "../constants";
+import { nameToNumberDict } from "../constants";
 import { useDependencies } from "../hooks/Dependencies";
 
 interface Props {

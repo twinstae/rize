@@ -1,18 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import App from "./App";
+import ReactDOM from "react-dom";
 import QueryWrapper from "./hooks/QueryWrapper";
-import { Dependencies, DependenciesWrapper } from "./hooks/Dependencies";
-import useRRDNavigation from "./router/useRRDNavigation";
-import { HashRouter } from "react-router-dom";
+import { Dependencies } from "./hooks/Dependencies";
 import useUsernameService from "./username/useUsernameService";
-import "./index.css";
-import Image from "./components/Image";
-import i18n from "./i18n/i18n";
+import useRRDNavigation from "./router/useRRDNavigation";
 import { ChakraProvider, useColorMode } from "@chakra-ui/react";
-import theme from "./theme/theme";
 import { memberNameDict, nameToNumberDict } from "./constants";
+import { HashRouter } from "react-router-dom";
+import Image from "./components/Image";
 import { atom, useAtom } from "jotai";
+import theme from "./theme/theme";
+import i18n from "./i18n/i18n";
+import "./index.css";
 
 const currentTagAtom = atom("");
 

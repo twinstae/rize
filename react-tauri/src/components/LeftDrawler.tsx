@@ -11,10 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import MemberList from "./MemberList";
-import { useDependencies } from "../hooks/Dependencies";
-
 function LeftDrawler() {
-  const { tag } = useDependencies();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
 
@@ -32,7 +29,7 @@ function LeftDrawler() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px" color="izone.500">
-            {tag || "메뉴"}
+            메뉴
           </DrawerHeader>
           <DrawerCloseButton margin="2" aria-label="닫기">
             <CloseIcon />

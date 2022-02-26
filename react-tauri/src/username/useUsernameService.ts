@@ -29,6 +29,8 @@ export const createUseUsernameService: (
   };
 };
 
-const useUsernameService = createUseUsernameService(fakeStorageRepo);
+export const usefakeUserNameService = createUseUsernameService(fakeStorageRepo);
+
+const useUsernameService = usefakeUserNameService;
 
 export default useUsernameService;
