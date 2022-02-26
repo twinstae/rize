@@ -21,4 +21,8 @@ const Image: React.FC<Props> = ({ path, style }) => {
   return <img src={data} style={style} />;
 };
 
+export const MockImage: React.FC<Props> = ({ path, style }) => (
+  <span>{path}</span>
+);
+
 export default withSuspense(Image);

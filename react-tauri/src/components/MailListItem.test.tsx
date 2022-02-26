@@ -6,6 +6,7 @@ import MailListItem from "./MailListItem";
 import { DummyUsernameService, TEST_MAIL } from "../test/fixtures";
 import { toMailDetail } from "../router/paths";
 import { useFakeNavigation } from "../router/useNavigation";
+import { MockImage } from "./Image";
 
 function renderWithDependency(component: React.ReactElement) {
   const navigation = useFakeNavigation();
@@ -15,7 +16,7 @@ function renderWithDependency(component: React.ReactElement) {
       navigation,
       toNick: (member) => "조구리",
       usernameService: DummyUsernameService,
-      Image: ({ path, style }) => <span>{path}</span>,
+      Image: MockImage,
     }),
   });
   return { ...result, navigation };

@@ -24,7 +24,8 @@ function MailList({ mode }: Props) {
       mailList.length - 1
     );
 
-  const { isInResult } = useSearch();
+  const allMailList = useMailList().mailList("all", "");
+  const { isInResult } = useSearch(allMailList.data!);
   const { data } = useMailList().mailList(mode, tag);
   const result = data!.filter((mail) => isInResult(mail.id));
 

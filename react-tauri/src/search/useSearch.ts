@@ -5,26 +5,25 @@ import createFlexSearchIndex from "./createFlexSearchIndex";
 
 export const keywordAtom = atom("");
 
-export const createUseSearch = (createIndex: CreateIndex) => () => {
-  const { data } = useMailList().mailList("all", "");
-  const [keyword, setKeyword] = useAtom(keywordAtom);
+export const createUseSearch =
+  (createIndex: CreateIndex) => (data: MailT[]) => {
+    const [keyword, setKeyword] = useAtom(keywordAtom);
+    const index = useMemo(() => createIndex(data), [data]);
 
-  const index = useMemo(() => createIndex(data!), [data]);
+    const searchResultSet = useMemo(
+      () => index.search(keyword),
+      [index, keyword]
+    );
 
-  const searchResultSet = useMemo(
-    () => index.search(keyword),
-    [index, keyword]
-  );
-
-  return {
-    mailIdSet: searchResultSet,
-    isInResult: useCallback(
-      (id: string) => searchResultSet.has(id),
-      [searchResultSet]
-    ),
-    keyword,
-    search: setKeyword,
+    return {
+      mailIdSet: searchResultSet,
+      isInResult: useCallback(
+        (id: string) => searchResultSet.has(id),
+        [searchResultSet]
+      ),
+      keyword,
+      search: setKeyword,
+    };
   };
-};
 
 export default createUseSearch(createFlexSearchIndex);
