@@ -4,7 +4,6 @@ import { toMailDetail } from "../router/paths";
 
 import styled from "@emotion/styled";
 import ProfileImage from "./ProfileImage";
-import { Divider } from "@chakra-ui/react";
 
 const Wrapper = styled.li`
   padding: 0.5rem;
@@ -27,38 +26,33 @@ const Description = styled.p`
   white-space: nowrap;
 `;
 
+const DatiTimeText = styled.span`
+  color: darkgray;
+`;
+
 interface MailListItemProps {
   mail: MailT;
   style?: CSSProperties;
-  hide?: boolean;
 }
 
-function MailListItem({ mail, style, hide = false }: MailListItemProps) {
+function MailListItem({ mail, style }: MailListItemProps) {
   const { navigation, toNick, usernameService } = useDependencies();
   const Link = navigation.Link;
 
   return (
     <Wrapper style={style}>
       <Link to={toMailDetail(mail.id)}>
-        <>
-          <ProfileImage member={mail.member} />
-          <span style={{ fontWeight: 500 }}>{toNick(mail.member)} </span>
-          <span
-            style={{
-              color: "darkgray",
-            }}
-          >
-            {mail.time}
-          </span>
+        <div>
+          <ProfileImage member={mail.member} size="base" />
+          <strong>{toNick(mail.member)} </strong>
+          <DatiTimeText>{mail.time}</DatiTimeText>
           <Title>{mail.subject}</Title>
-          {hide ? null : (
-            <Description
-              dangerouslySetInnerHTML={{
-                __html: usernameService.replaceUsername(mail.preview),
-              }}
-            ></Description>
-          )}
-        </>
+          <Description
+            dangerouslySetInnerHTML={{
+              __html: usernameService.replaceUsername(mail.preview),
+            }}
+          ></Description>
+        </div>
       </Link>
     </Wrapper>
   );

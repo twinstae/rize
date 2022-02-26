@@ -13,7 +13,7 @@ function renderWithDependency(component: React.ReactElement) {
   const result = render(component, {
     wrapper: DependenciesWrapper({
       navigation,
-      toNick: (member: IZONE) => "조구리",
+      toNick: (member) => "조구리",
       usernameService: DummyUsernameService,
       Image: ({ path, style }) => <span>{path}</span>,
     }),

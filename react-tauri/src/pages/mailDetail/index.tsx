@@ -26,7 +26,7 @@ function MailDetailPage() {
   const mailId = navigation.params().id!;
 
   const mail = useMailList()
-    .mailList("all")
+    .mailList("all", "")
     .data?.find((mail) => mail.id === mailId);
   const mailBodyQuery = useMailList().mailById(mailId);
 
@@ -44,8 +44,8 @@ function MailDetailPage() {
       <Wrapper>
         {mail ? (
           <>
-            <ProfileImage member={mail.member} />
-            <span style={{ fontWeight: 500 }}>{toNick(mail.member)} </span>
+            <ProfileImage member={mail.member} size="base" />
+            <strong>{toNick(mail.member)} </strong>
             <span
               style={{
                 color: "darkgray",
