@@ -1,5 +1,4 @@
 import { Atom, atom, useAtom } from "jotai";
-import { useMemo } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { MEMBER_LIST, toOriginalName } from "../constants";
 import fakeMailRepository from "./fakeMailRepository";

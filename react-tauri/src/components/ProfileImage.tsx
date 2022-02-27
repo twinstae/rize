@@ -1,5 +1,5 @@
 import React from "react";
-import { nameToNumberDict } from "../constants";
+import { toOriginalName } from "../constants";
 import { useDependencies } from "../hooks/Dependencies";
 
 interface Props {
@@ -11,7 +11,7 @@ function getPath(member: string) {
   if (member === "") return "img/izone-logo.png";
   if (member === "운영팀") return "img/izone-logo.png";
 
-  return `img/profile/${nameToNumberDict[member]}.jpg`;
+  return `img/profile/one-the-story/${toOriginalName(member)}.jpg`;
 }
 
 const sizes = {

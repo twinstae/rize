@@ -3,10 +3,10 @@ import App from "./App";
 import ReactDOM from "react-dom";
 import QueryWrapper from "./hooks/QueryWrapper";
 import { Dependencies } from "./hooks/Dependencies";
-import useUsernameService from "./username/useUsernameService";
 import useRRDNavigation from "./router/useRRDNavigation";
+import useUsernameService from "./username/useUsernameService";
 import { ChakraProvider, useColorMode } from "@chakra-ui/react";
-import { memberNameDict, nameToNumberDict } from "./constants";
+import { toOriginalName } from "./constants";
 import { HashRouter } from "react-router-dom";
 import Image from "./components/Image";
 import { atom, useAtom } from "jotai";
@@ -24,7 +24,7 @@ const Wrapper: WrapperT = ({ children }) => {
   return (
     <Dependencies.Provider
       value={{
-        toNick: (member: string) => memberNameDict[nameToNumberDict[member]],
+        toNick: toOriginalName,
         navigation,
         usernameService: useUsernameService(),
         Image,

@@ -46,6 +46,8 @@ interface MailRepository {
   getMailBodyDict: () => Promise<Record<string, MailBodyT>>;
   getTagToMailDict: () => Promise<Record<string, string[]>>;
   getMailToTagDict: () => Promise<Record<string, string[]>>;
+  saveTagToMailDict: (dict: Record<string, string[]>) => void;
+  saveMailToTagDict: (dict: Record<string, string[]>) => void;
 }
 
 type WrapperT = ({ children }: ChildrenProps) => JSX.Element;

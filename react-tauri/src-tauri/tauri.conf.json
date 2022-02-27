@@ -55,7 +55,7 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$APP/*", "$DOWNLOAD/output/img/*","$DOWNLOAD/pm_list.json", "$DOWNLOAD/mail_body_dict.json", "$DOWNLOAD/local_*.txt"]
+        "scope": ["$APP/*", "$DOWNLOAD/output/img/*","$DOWNLOAD/pm_list.json", "$DOWNLOAD/mail_body_dict.json", "$DOWNLOAD/local_*.txt", "$DOWNLOAD/all_tag_list.json", "$DOWNLOAD/tag_to_mail_dict.json", "$DOWNLOAD/mail_to_tag_dict.json"]
       },
       "http": {
         "all": true,
