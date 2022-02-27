@@ -11,7 +11,7 @@ import { HashRouter } from "react-router-dom";
 import Image from "./components/Image";
 import { atom, useAtom } from "jotai";
 import theme from "./theme/theme";
-import i18n from "./i18n/i18n";
+import "./i18n/i18n";
 import "./index.css";
 
 const currentTagAtom = atom("");
