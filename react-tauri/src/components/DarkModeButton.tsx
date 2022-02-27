@@ -11,7 +11,7 @@ export const RawDarkModeButton = ({ t }: RawDarkModeButtonProps) => {
   const { isDark, toggleDark } = useDependencies();
 
   return (
-    <Button onClick={() => toggleDark()} marginLeft="2">
+    <Button onClick={() => toggleDark()} marginLeft="2" variant="ghost">
       {isDark ? <MoonIcon /> : <SunIcon />}
       {t(isDark ? strs.다크 : strs.밝게)}
     </Button>
