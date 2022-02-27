@@ -27,10 +27,8 @@ function MailDetailPage() {
 
   const mail = useMailList()
     .mailList("all", "")
-    .data?.find((mail) => mail.id === mailId);
-  const mailBodyQuery = useMailList().mailById(mailId);
-
-  const mailBody = mailBodyQuery.data;
+    .find((mail) => mail.id === mailId);
+  const mailBody = useMailList().mailById(mailId);
 
   return (
     <Wrapper>

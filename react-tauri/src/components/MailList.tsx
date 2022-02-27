@@ -26,9 +26,9 @@ function MailList({ mode, setCount }: Props) {
     );
 
   const allMailList = useMailList().mailList("all", "");
-  const { isInResult } = useSearch(allMailList.data!);
-  const { data } = useMailList().mailList(mode, tag);
-  const result = data!.filter((mail) => isInResult(mail.id));
+  const { isInResult } = useSearch(allMailList);
+  const mailList = useMailList().mailList(mode, tag);
+  const result = mailList.filter((mail) => isInResult(mail.id));
 
   useEffect(() => {
     setCount(result!.length);
@@ -46,7 +46,7 @@ function MailList({ mode, setCount }: Props) {
             <MailListItem key={key} mail={result[index]} style={style} />
           )}
         />
-      ) : data!.length > result.length ? (
+      ) : allMailList.length > result.length ? (
         <NoSearchResult />
       ) : (
         <span>메일이 없습니다</span>

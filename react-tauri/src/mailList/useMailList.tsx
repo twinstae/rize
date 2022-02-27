@@ -1,11 +1,11 @@
 import { Atom, atom, useAtom } from "jotai";
-import { useQuery, UseQueryResult } from "react-query";
 import { MEMBER_LIST, toOriginalName } from "../constants";
+import atomWithAsyncInit from "../hooks/atomWithAsyncInit";
 import fakeMailRepository from "./fakeMailRepository";
 
 interface MailListResult {
-  mailList: (mode: TabMode, tag: string) => UseQueryResult<MailT[], Error>;
-  mailById: (id: string) => UseQueryResult<MailBodyT | undefined, Error>;
+  mailList: (mode: TabMode, tag: string) => MailT[];
+  mailById: (id: string) => MailBodyT;
   tagsById: (id: string) => string[];
   isFavoritedById: (id: string) => boolean;
   isUnreadById: (id: string) => boolean;
@@ -15,19 +15,13 @@ const STALE_TIME = 1000 * 60 * 60;
 const UNREAD = "읽지 않음";
 const FAVORITE = "💖";
 
-const atomWithAsyncInit: <T>(init: () => Promise<T>, fallback: T) => Atom<T> = (
-  init,
-  fallback
-) => {
-  const baseAtom = atom(fallback);
-  baseAtom.onMount = (setValue) => {
-    init().then(setValue);
-  };
-
-  return baseAtom;
-};
-
 export const createUseMailList = (mailRepository: MailRepository) => {
+  const mailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
+  const mailBodyDictAtom = atomWithAsyncInit(
+    mailRepository.getMailBodyDict,
+    {}
+  );
+
   const tagToMailDictAtom = atomWithAsyncInit(mailRepository.getTagToMailDict, {
     [UNREAD]: [],
     [FAVORITE]: [],
@@ -46,6 +40,8 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   );
 
   return (): MailListResult => {
+    const [mailList] = useAtom(mailListAtom);
+    const [mailBodyDict] = useAtom(mailBodyDictAtom);
     const [tagToMailDict] = useAtom(tagToMailDictAtom);
     const [mailToTagDict] = useAtom(mailToTagDictAtom);
     const [unreadMailSet] = useAtom(unreadMailSetAtom);
@@ -75,19 +71,11 @@ export const createUseMailList = (mailRepository: MailRepository) => {
 
     return {
       mailList: (mode, tag) => {
-        return useQuery("MailList", () => mailRepository.getAllMailList(), {
-          staleTime: STALE_TIME,
-          suspense: true,
-          select: (items) =>
-            items.filter((item) => byMode(mode)(item) && byTag(tag)(item)),
-        });
+        return mailList.filter(
+          (item) => byMode(mode)(item) && byTag(tag)(item)
+        );
       },
-      mailById: (id) =>
-        useQuery("MailBodyDict", () => mailRepository.getMailBodyDict(), {
-          staleTime: STALE_TIME,
-          suspense: true,
-          select: (mailBodyDict) => mailBodyDict[id],
-        }),
+      mailById: (id) => mailBodyDict[id] || {},
       tagsById: (id) => mailToTagDict[id] || [],
       isFavoritedById: (id) => favotireMailSet.has(id),
       isUnreadById: (id) => unreadMailSet.has(id),
