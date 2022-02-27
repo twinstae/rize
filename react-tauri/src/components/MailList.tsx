@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MailListItem from "./MailListItem";
 import { List } from "react-virtualized";
 import { withSuspense } from "../hooks/util";
@@ -11,9 +11,10 @@ import { useDependencies } from "../hooks/Dependencies";
 
 interface Props {
   mode: TabMode;
+  setCount: (count: number) => void;
 }
 
-function MailList({ mode }: Props) {
+function MailList({ mode, setCount }: Props) {
   const { tag } = useDependencies();
   const [searchParams] = useSearchParams();
   const mailId = searchParams.get("mailId");
@@ -29,6 +30,9 @@ function MailList({ mode }: Props) {
   const { data } = useMailList().mailList(mode, tag);
   const result = data!.filter((mail) => isInResult(mail.id));
 
+  useEffect(() => {
+    setCount(result!.length);
+  }, [result]);
   return (
     <UnorderedList padding={0} margin={0}>
       {result.length !== 0 ? (

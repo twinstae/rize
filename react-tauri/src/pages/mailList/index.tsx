@@ -12,6 +12,16 @@ function MailListPage() {
   const { isDark } = useDependencies();
   const [tabIndex, setTabIndex] = React.useState(0);
 
+  const [allCount, setAllCount] = React.useState(0);
+  const [unreadCount, setUnreadCount] = React.useState(0);
+  const [favoriteCount, setFavoriteCount] = React.useState(0);
+
+  const setCount = {
+    all: setAllCount,
+    unread: setUnreadCount,
+    favorite: setFavoriteCount,
+  };
+
   return (
     <div style={{ overflow: "hidden" }}>
       <AppBar />
@@ -22,15 +32,15 @@ function MailListPage() {
         onChange={setTabIndex}
       >
         <TabList>
-          <Tab>전체</Tab>
-          <Tab>읽지 않음</Tab>
-          <Tab>중요</Tab>
+          <Tab>전체 {allCount}</Tab>
+          <Tab>읽지 않음 {unreadCount}</Tab>
+          <Tab>중요 {favoriteCount}</Tab>
         </TabList>
 
         <TabPanels>
           {modes.map((mode) => (
             <TabPanel style={{ padding: "0.5rem" }} key={mode}>
-              <MailList mode={modes[tabIndex]} />
+              <MailList mode={mode} setCount={setCount[mode]} />
             </TabPanel>
           ))}
         </TabPanels>
