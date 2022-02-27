@@ -3,27 +3,21 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Button,
+  HStack,
   InputRightElement,
   IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import styled from "@emotion/styled";
 import LeftDrawler from "./LeftDrawler";
 import DarkModeButton from "./DarkModeButton";
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import _ from "lodash";
 import { useAtom } from "jotai";
 import { keywordAtom } from "../search/useSearch";
-
-const Wrapper = styled.div`
-  width: 100%;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 0.5rem;
-`;
+import SelectedTag from "./SelectedTag";
 
 function AppBar() {
-  const [keyword, search] = useAtom(keywordAtom);
+  const [, search] = useAtom(keywordAtom);
 
   const debounceSearch = _.debounce((text) => search(text), 300);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,14 +25,19 @@ function AppBar() {
   };
   const { isOpen, onClose, onOpen } = useDisclosure();
 
+  function handleClose() {
+    onClose();
+    search("");
+  }
+
   function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Escape") {
-      onClose();
+      handleClose();
     }
   }
 
   return (
-    <Wrapper>
+    <HStack padding="2" borderBottom="1px solid #e2e8f0">
       {isOpen ? (
         <InputGroup>
           <InputLeftElement
@@ -59,8 +58,9 @@ function AppBar() {
               icon={<CloseIcon />}
               h="1.75rem"
               size="sm"
-              onClick={onClose}
+              onClick={handleClose}
               aria-label="검색창 닫기"
+              variant="ghost"
             />
           </InputRightElement>
         </InputGroup>
@@ -68,12 +68,19 @@ function AppBar() {
         <>
           <LeftDrawler />
           <DarkModeButton />
-          <Button onClick={onOpen} leftIcon={<SearchIcon />} marginLeft="2">
-            {keyword || "검색"}
-          </Button>
+          <SelectedTag />
+          <IconButton
+            position="absolute"
+            right="3"
+            variant="ghost"
+            onClick={onOpen}
+            icon={<SearchIcon />}
+            marginLeft="2"
+            aria-label="검색"
+          />
         </>
       )}
-    </Wrapper>
+    </HStack>
   );
 }
 
