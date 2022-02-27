@@ -22,7 +22,7 @@ const Image: React.FC<Props> = ({ path, style }) => {
 };
 
 export const MockImage: React.FC<Props> = ({ path, style }) => (
-  <span>{path}</span>
+  <span style={style}>{path}</span>
 );
 
 export default withSuspense(Image);

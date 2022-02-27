@@ -1,5 +1,5 @@
-import { StarIcon } from "@chakra-ui/icons";
 import React from "react";
+import { StarIcon } from "@chakra-ui/icons";
 import useMailList from "../mailList/useMailList";
 
 interface FavoriteStarProps {
