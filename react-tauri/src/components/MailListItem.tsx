@@ -4,10 +4,22 @@ import { toMailDetail } from "../router/paths";
 
 import styled from "@emotion/styled";
 import ProfileImage from "./ProfileImage";
+import TagList from "./TagList";
+import { HStack } from "@chakra-ui/react";
+import FavoriteStar from "./FavoriteStar";
+import useMailList from "../mailList/useMailList";
 
 const Wrapper = styled.li`
   padding: 0.5rem;
   border-bottom: 1px solid var(--chakra-colors-gray-300);
+
+  &.unread::before {
+    content: "●";
+    color: #f06d9c;
+    position: absolute;
+    margin-top: -8px;
+    text-shadow: 1px 1px 5px gray;
+  }
 `;
 
 const Title = styled.h3`
@@ -39,14 +51,21 @@ function MailListItem({ mail, style }: MailListItemProps) {
   const { navigation, toNick, usernameService } = useDependencies();
   const Link = navigation.Link;
 
+  const isUnread = useMailList().isUnreadById(mail.id);
   return (
-    <Wrapper style={style}>
+    <Wrapper style={style} className={isUnread ? "unread" : undefined}>
       <Link to={toMailDetail(mail.id)}>
         <div>
           <ProfileImage member={mail.member} size="base" />
-          <strong>{toNick(mail.member)} </strong>
-          <DatiTimeText>{mail.time}</DatiTimeText>
+          <HStack>
+            <span>{toNick(mail.member)} </span>
+            <DatiTimeText>{mail.time}</DatiTimeText>
           <Title>{mail.subject}</Title>
+            <FavoriteStar id={mail.id} />
+          </HStack>
+          <Title>
+            <strong>{mail.subject}</strong>
+          </Title>
           <Description
             dangerouslySetInnerHTML={{
               __html: usernameService.replaceUsername(mail.preview),

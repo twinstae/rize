@@ -6,6 +6,9 @@ import fakeMailRepository from "./fakeMailRepository";
 interface MailListResult {
   mailList: (mode: TabMode, tag: string) => UseQueryResult<MailT[], Error>;
   mailById: (id: string) => UseQueryResult<MailBodyT | undefined, Error>;
+  tagsById: (id: string) => string[];
+  isFavoritedById: (id: string) => boolean;
+  isUnreadById: (id: string) => boolean;
 }
 
 const STALE_TIME = 1000 * 60 * 60;
@@ -30,6 +33,11 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     [FAVORITE]: [],
   });
 
+  const mailToTagDictAtom = atomWithAsyncInit(
+    mailRepository.getMailToTagDict,
+    {}
+  );
+
   const unreadMailSetAtom = atom(
     (get) => new Set(get(tagToMailDictAtom)[UNREAD])
   );
@@ -39,6 +47,7 @@ export const createUseMailList = (mailRepository: MailRepository) => {
 
   return (): MailListResult => {
     const [tagToMailDict] = useAtom(tagToMailDictAtom);
+    const [mailToTagDict] = useAtom(mailToTagDictAtom);
     const [unreadMailSet] = useAtom(unreadMailSetAtom);
     const [favotireMailSet] = useAtom(favotireMailSetAtom);
 
@@ -79,6 +88,9 @@ export const createUseMailList = (mailRepository: MailRepository) => {
           suspense: true,
           select: (mailBodyDict) => mailBodyDict[id],
         }),
+      tagsById: (id) => mailToTagDict[id] || [],
+      isFavoritedById: (id) => favotireMailSet.has(id),
+      isUnreadById: (id) => unreadMailSet.has(id),
     };
   };
 };
