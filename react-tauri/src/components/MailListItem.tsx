@@ -60,7 +60,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
           <HStack>
             <span>{toNick(mail.member)} </span>
             <DatiTimeText>{mail.time}</DatiTimeText>
-          <Title>{mail.subject}</Title>
+            <TagList id={mail.id} />
             <FavoriteStar id={mail.id} />
           </HStack>
           <Title>
