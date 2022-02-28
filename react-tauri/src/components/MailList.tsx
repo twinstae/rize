@@ -19,7 +19,7 @@ function MailList({ mode, setCount }: Props) {
   const [searchParams] = useSearchParams();
   const mailId = searchParams.get("mailId");
 
-  const getIndex = (mailList: MailT[]) =>
+  const getIndex = (mailList: RawMailT[]) =>
     Math.min(
       mailList.findIndex((mail) => mailId === mail.id) + 4,
       mailList.length - 1

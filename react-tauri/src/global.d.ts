@@ -1,9 +1,14 @@
-type MailT = {
+type RawMailT = {
   id: string;
   member: string;
   time: string;
   subject: string;
   preview: string;
+};
+
+type MailT = RawMailT & {
+  isFavorited: boolean;
+  isUnread: boolean;
 };
 
 type MailBodyT = {
@@ -39,10 +44,10 @@ interface Index {
   search: (keyword: string) => Set<Id>;
 }
 
-type CreateIndex = (mailList: MailT[]) => Index;
+type CreateIndex = (mailList: RawMailT[]) => Index;
 
 interface MailRepository {
-  getAllMailList: () => Promise<MailT[]>;
+  getAllMailList: () => Promise<RawMailT[]>;
   getMailBodyDict: () => Promise<Record<string, MailBodyT>>;
   getTagToMailDict: () => Promise<Record<string, string[]>>;
   getMailToTagDict: () => Promise<Record<string, string[]>>;

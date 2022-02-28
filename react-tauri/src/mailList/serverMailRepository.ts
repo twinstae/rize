@@ -14,7 +14,8 @@ const writeJSONfile =
     });
 
 const serverMailRepository: MailRepository = {
-  getAllMailList: async () => readJSONfile("pm_list.json") as Promise<MailT[]>,
+  getAllMailList: async () =>
+    readJSONfile("pm_list.json") as Promise<RawMailT[]>,
   getMailBodyDict: async () =>
     readJSONfile("mail_body_dict.json") as Promise<Record<string, MailBodyT>>,
   getMailToTagDict: async () =>

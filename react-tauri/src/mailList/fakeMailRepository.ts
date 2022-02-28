@@ -7,7 +7,7 @@ let tag_to_mail_dict: Record<string, string[]> = TAG_TO_MAIL_DICT;
 let mail_to_tag_dict: Record<string, string[]> = MAIL_TO_TAG_DICT;
 
 const fakeMailRepository: MailRepository = {
-  getAllMailList: async () => TEST_MAIL_LIST as MailT[],
+  getAllMailList: async () => TEST_MAIL_LIST as RawMailT[],
   getMailBodyDict: async () => TEST_MAIL_BODY_DICT as Record<string, MailBodyT>,
   getTagToMailDict: async () => tag_to_mail_dict,
   getMailToTagDict: async () => mail_to_tag_dict,

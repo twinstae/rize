@@ -3,13 +3,12 @@ import { StarIcon } from "@chakra-ui/icons";
 import useMailList from "../mailList/useMailList";
 
 interface FavoriteStarProps {
-  id: string;
+  isFavorited: boolean;
 }
 
-function FavoriteStar({ id }: FavoriteStarProps) {
-  const isFavorited = useMailList().isFavoritedById(id);
+function FavoriteStar({ isFavorited }: FavoriteStarProps) {
   return isFavorited ? (
-    <StarIcon color="gold" position="absolute" right="3" />
+    <StarIcon color="gold" position="absolute" right="3" aria-label="중요" />
   ) : null;
 }
 

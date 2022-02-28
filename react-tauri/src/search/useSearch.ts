@@ -5,7 +5,7 @@ import createFlexSearchIndex from "./createFlexSearchIndex";
 export const keywordAtom = atom("");
 
 export const createUseSearch =
-  (createIndex: CreateIndex) => (data: MailT[]) => {
+  (createIndex: CreateIndex) => (data: RawMailT[]) => {
     const [keyword, setKeyword] = useAtom(keywordAtom);
     const index = useMemo(() => createIndex(data), [data]);
 

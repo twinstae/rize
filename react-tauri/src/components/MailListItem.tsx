@@ -51,9 +51,8 @@ function MailListItem({ mail, style }: MailListItemProps) {
   const { navigation, toNick, usernameService } = useDependencies();
   const Link = navigation.Link;
 
-  const isUnread = useMailList().isUnreadById(mail.id);
   return (
-    <Wrapper style={style} className={isUnread ? "unread" : undefined}>
+    <Wrapper style={style} className={mail.isUnread ? "unread" : undefined}>
       <Link to={toMailDetail(mail.id)}>
         <div>
           <ProfileImage member={mail.member} size="base" />
@@ -61,7 +60,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
             <span>{toNick(mail.member)} </span>
             <DatiTimeText>{mail.time}</DatiTimeText>
             <TagList id={mail.id} />
-            <FavoriteStar id={mail.id} />
+            <FavoriteStar isFavorited={mail.isFavorited} />
           </HStack>
           <Title>
             <strong>{mail.subject}</strong>

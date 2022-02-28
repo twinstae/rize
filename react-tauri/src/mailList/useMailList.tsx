@@ -8,15 +8,13 @@ interface MailListResult {
   mailList: (mode: TabMode, tag: string) => MailT[];
   mailById: (id: string) => MailBodyT;
   tagsById: (id: string) => string[];
-  isFavoritedById: (id: string) => boolean;
-  isUnreadById: (id: string) => boolean;
 }
 
 const UNREAD = "읽지 않음";
 const FAVORITE = "💖";
 
 export const createUseMailList = (mailRepository: MailRepository) => {
-  const mailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
+  const rawMailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
   const mailBodyDictAtom = atomWithAsyncInit(
     mailRepository.getMailBodyDict,
     {}
@@ -32,33 +30,37 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     {}
   );
 
-  const unreadMailSetAtom = atom(
-    (get) => new Set(get(tagToMailDictAtom)[UNREAD])
-  );
-  const favotireMailSetAtom = atom(
-    (get) => new Set(get(tagToMailDictAtom)[FAVORITE])
-  );
+  const mailListAtom = atom((get) => {
+    const rawMailList = get(rawMailListAtom);
+    const tagToMailDict = get(tagToMailDictAtom);
+
+    const unreadSet = new Set(tagToMailDict[UNREAD]);
+    const favoriteSet = new Set(tagToMailDict[FAVORITE]);
+    return rawMailList.map((mail) => ({
+      ...mail,
+      isFavorited: favoriteSet.has(mail.id),
+      isUnread: unreadSet.has(mail.id),
+    }));
+  });
 
   return (): MailListResult => {
     const [mailList] = useAtom(mailListAtom);
     const [mailBodyDict] = useAtom(mailBodyDictAtom);
     const [tagToMailDict] = useAtom(tagToMailDictAtom);
     const [mailToTagDict] = useAtom(mailToTagDictAtom);
-    const [unreadMailSet] = useAtom(unreadMailSetAtom);
-    const [favotireMailSet] = useAtom(favotireMailSetAtom);
 
-    const byMode: (mode: TabMode) => (item: MailT) => boolean = (mode) => {
+    const byMode: (mode: TabMode) => (mail: MailT) => boolean = (mode) => {
       if (mode === "unread") {
-        return (mail) => unreadMailSet.has(mail.id);
+        return (mail) => mail.isUnread;
       }
       if (mode === "favorite") {
-        return (mail) => favotireMailSet.has(mail.id);
+        return (mail) => mail.isFavorited;
       }
 
       return () => true;
     };
 
-    const byTag: (tag: string) => (item: MailT) => boolean = (tag) => {
+    const byTag: (tag: string) => (item: RawMailT) => boolean = (tag) => {
       if (MEMBER_LIST.includes(tag)) {
         return (mail) => toOriginalName(mail.member) === tag;
       }
@@ -79,8 +81,6 @@ export const createUseMailList = (mailRepository: MailRepository) => {
       },
       mailById: (id) => mailBodyDict[id] || {},
       tagsById: (id) => mailToTagDict[id] || [],
-      isFavoritedById: (id) => favotireMailSet.has(id),
-      isUnreadById: (id) => unreadMailSet.has(id),
     };
   };
 };

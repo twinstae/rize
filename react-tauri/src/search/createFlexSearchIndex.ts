@@ -1,6 +1,6 @@
 import { Document } from "flexsearch";
 
-const createFlexSearchIndex: CreateIndex = (mailList: MailT[]) => {
+const createFlexSearchIndex: CreateIndex = (mailList: RawMailT[]) => {
   const index = new Document({
     document: {
       id: "id",
