@@ -1,4 +1,5 @@
-import { Atom, atom, useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
+import { useMemo } from "react";
 import { MEMBER_LIST, toOriginalName } from "../constants";
 import atomWithAsyncInit from "../hooks/atomWithAsyncInit";
 import fakeMailRepository from "./fakeMailRepository";
@@ -11,7 +12,6 @@ interface MailListResult {
   isUnreadById: (id: string) => boolean;
 }
 
-const STALE_TIME = 1000 * 60 * 60;
 const UNREAD = "읽지 않음";
 const FAVORITE = "💖";
 
@@ -71,8 +71,10 @@ export const createUseMailList = (mailRepository: MailRepository) => {
 
     return {
       mailList: (mode, tag) => {
-        return mailList.filter(
-          (item) => byMode(mode)(item) && byTag(tag)(item)
+        return useMemo(
+          () =>
+            mailList.filter((item) => byMode(mode)(item) && byTag(tag)(item)),
+          [mailList, mode, tag]
         );
       },
       mailById: (id) => mailBodyDict[id] || {},
