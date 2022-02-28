@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Button, Divider } from "@chakra-ui/react";
+import { Divider, IconButton } from "@chakra-ui/react";
 import MailBody from "../../components/MailBody";
 import { useDependencies } from "../../hooks/Dependencies";
 import { withSuspense } from "../../hooks/util";
@@ -32,12 +32,12 @@ function MailDetailPage() {
 
   return (
     <Wrapper>
-      <Button
-        leftIcon={<ArrowBackIcon />}
+      <IconButton
+        variant="ghost"
+        icon={<ArrowBackIcon />}
         onClick={() => navigation.navigate(mail ? "/?mailId=" + mail.id : "/")}
-      >
-        돌아가기
-      </Button>
+        aria-label="돌아가기"
+      />
 
       <Wrapper>
         {mail ? (
