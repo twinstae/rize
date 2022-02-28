@@ -1,12 +1,15 @@
 import { vi } from "vitest";
 
-export const TEST_MAIL: RawMailT = {
+export const TEST_MAIL: MailT = {
   id: "m340",
   member: "조유리",
   time: "2019/01/22 10:29",
   subject: "위즈원 뭐해율",
   preview:
     "여러분 뭐하고 계셨어요 !? 전 지금 노래 듣구 있답니다. 제가 요즘 푹 빠진",
+  isFavorited: false,
+  isUnread: false,
+  tags: ["율리스트"],
 };
 
 export const TEST_MAIL_2: RawMailT = {

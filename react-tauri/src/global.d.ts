@@ -9,6 +9,7 @@ type RawMailT = {
 type MailT = RawMailT & {
   isFavorited: boolean;
   isUnread: boolean;
+  tags: string[];
 };
 
 type MailBodyT = {

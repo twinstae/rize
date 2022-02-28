@@ -7,7 +7,6 @@ import fakeMailRepository from "./fakeMailRepository";
 interface MailListResult {
   mailList: (mode: TabMode, tag: string) => MailT[];
   mailById: (id: string) => MailBodyT;
-  tagsById: (id: string) => string[];
 }
 
 const UNREAD = "읽지 않음";
@@ -31,8 +30,10 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   );
 
   const mailListAtom = atom((get) => {
+    console.log("update");
     const rawMailList = get(rawMailListAtom);
     const tagToMailDict = get(tagToMailDictAtom);
+    const mailToTagDict = get(mailToTagDictAtom);
 
     const unreadSet = new Set(tagToMailDict[UNREAD]);
     const favoriteSet = new Set(tagToMailDict[FAVORITE]);
@@ -40,6 +41,7 @@ export const createUseMailList = (mailRepository: MailRepository) => {
       ...mail,
       isFavorited: favoriteSet.has(mail.id),
       isUnread: unreadSet.has(mail.id),
+      tags: mailToTagDict[mail.id] || [],
     }));
   });
 
@@ -47,7 +49,6 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     const [mailList] = useAtom(mailListAtom);
     const [mailBodyDict] = useAtom(mailBodyDictAtom);
     const [tagToMailDict] = useAtom(tagToMailDictAtom);
-    const [mailToTagDict] = useAtom(mailToTagDictAtom);
 
     const byMode: (mode: TabMode) => (mail: MailT) => boolean = (mode) => {
       if (mode === "unread") {
@@ -60,7 +61,7 @@ export const createUseMailList = (mailRepository: MailRepository) => {
       return () => true;
     };
 
-    const byTag: (tag: string) => (item: RawMailT) => boolean = (tag) => {
+    const byTag: (tag: string) => (item: MailT) => boolean = (tag) => {
       if (MEMBER_LIST.includes(tag)) {
         return (mail) => toOriginalName(mail.member) === tag;
       }
@@ -71,16 +72,17 @@ export const createUseMailList = (mailRepository: MailRepository) => {
       return (mail) => tagToMailDict[tag].includes(mail.id);
     };
 
+    console.log("useMailList");
     return {
       mailList: (mode, tag) => {
+        console.log(mode, tag, "computed");
         return useMemo(
           () =>
             mailList.filter((item) => byMode(mode)(item) && byTag(tag)(item)),
           [mailList, mode, tag]
         );
       },
-      mailById: (id) => mailBodyDict[id] || {},
-      tagsById: (id) => mailToTagDict[id] || [],
+      mailById: (id) => mailBodyDict[id] || { body: "", images: [] },
     };
   };
 };

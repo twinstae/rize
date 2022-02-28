@@ -1,13 +1,11 @@
 import React from "react";
 import { Tag, ListItem, UnorderedList, HStack } from "@chakra-ui/react";
-import useMailList from "../mailList/useMailList";
 
 interface TagListProps {
-  id: string;
+  tags: string[];
 }
 
-function TagList({ id }: TagListProps) {
-  const tags = useMailList().tagsById(id);
+function TagList({ tags }: TagListProps) {
   return (
     <UnorderedList styleType="none">
       <HStack>

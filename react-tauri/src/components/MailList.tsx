@@ -1,21 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MailListItem from "./MailListItem";
 import { List } from "react-virtualized";
 import { withSuspense } from "../hooks/util";
 import { useSearchParams } from "react-router-dom";
 import { UnorderedList } from "@chakra-ui/react";
 import NoSearchResult from "./NoSearchResult";
-import useSearch from "../search/useSearch";
-import useMailList from "../mailList/useMailList";
-import { useDependencies } from "../hooks/Dependencies";
-
 interface Props {
-  mode: TabMode;
-  setCount: (count: number) => void;
+  allMailList: MailT[];
+  result: MailT[];
 }
 
-function MailList({ mode, setCount }: Props) {
-  const { tag } = useDependencies();
+function MailList({ allMailList, result }: Props) {
   const [searchParams] = useSearchParams();
   const mailId = searchParams.get("mailId");
 
@@ -25,14 +20,6 @@ function MailList({ mode, setCount }: Props) {
       mailList.length - 1
     );
 
-  const allMailList = useMailList().mailList("all", "");
-  const { isInResult } = useSearch(allMailList);
-  const mailList = useMailList().mailList(mode, tag);
-  const result = mailList.filter((mail) => isInResult(mail.id));
-
-  useEffect(() => {
-    setCount(result!.length);
-  }, [result]);
   return (
     <UnorderedList padding={0} margin={0}>
       {result.length !== 0 ? (

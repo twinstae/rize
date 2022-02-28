@@ -7,7 +7,6 @@ import ProfileImage from "./ProfileImage";
 import TagList from "./TagList";
 import { HStack } from "@chakra-ui/react";
 import FavoriteStar from "./FavoriteStar";
-import useMailList from "../mailList/useMailList";
 
 const Wrapper = styled.li`
   padding: 0.5rem;
@@ -59,7 +58,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
           <HStack>
             <span>{toNick(mail.member)} </span>
             <DatiTimeText>{mail.time}</DatiTimeText>
-            <TagList id={mail.id} />
+            <TagList tags={mail.tags} />
             <FavoriteStar isFavorited={mail.isFavorited} />
           </HStack>
           <Title>
