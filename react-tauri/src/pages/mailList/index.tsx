@@ -11,10 +11,7 @@ import useMailList from "../../mailList/useMailList";
 const modes: TabMode[] = ["all", "unread", "favorite"];
 
 function MailListPage() {
-  const { isDark } = useDependencies();
-  const { tag } = useDependencies();
-
-  console.log("test");
+  const { isDark, tag } = useDependencies();
 
   const mailData = useMailList();
 

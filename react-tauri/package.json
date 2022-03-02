@@ -51,7 +51,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri:dev": "tauri dev"
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri dev --debug"
   },
   "browserslist": {
     "production": [

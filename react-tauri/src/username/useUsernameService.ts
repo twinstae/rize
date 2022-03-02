@@ -1,4 +1,5 @@
 import fakeStorageRepo from "./fakeStorageRepo";
+import fsStorageRepo from "./fsStorageRepo";
 import useConfig from "./useConfig";
 
 const USERNAME_KEY = "username";
@@ -31,6 +32,6 @@ export const createUseUsernameService: (
 
 export const usefakeUserNameService = createUseUsernameService(fakeStorageRepo);
 
-const useUsernameService = usefakeUserNameService;
+const useUsernameService = createUseUsernameService(fsStorageRepo);
 
 export default useUsernameService;
