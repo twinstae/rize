@@ -7,10 +7,11 @@ import {
   InputRightElement,
   IconButton,
   useDisclosure,
+  CloseButton,
 } from "@chakra-ui/react";
 import LeftDrawler from "./LeftDrawler";
 import DarkModeButton from "./DarkModeButton";
-import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import _ from "lodash";
 import { useAtom } from "jotai";
 import { keywordAtom } from "../search/useSearch";
@@ -54,13 +55,11 @@ function AppBar() {
             onChange={handleChange}
           />
           <InputRightElement>
-            <IconButton
-              icon={<CloseIcon />}
+            <CloseButton
               h="1.75rem"
               size="sm"
               onClick={handleClose}
               aria-label="검색창 닫기"
-              variant="ghost"
             />
           </InputRightElement>
         </InputGroup>
