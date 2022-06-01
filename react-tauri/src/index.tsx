@@ -16,7 +16,7 @@ import "./index.css";
 
 const currentTagAtom = atom("");
 
-const Wrapper: WrapperT = ({ children }) => {
+const DependencyWrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
   const { colorMode, toggleColorMode } = useColorMode();
   const [tag, setTag] = useAtom(currentTagAtom);
@@ -43,9 +43,9 @@ ReactDOM.render(
   <ChakraProvider theme={theme}>
     <HashRouter>
       <QueryWrapper>
-        <Wrapper>
+        <DependencyWrapper>
           <App />
-        </Wrapper>
+        </DependencyWrapper>
       </QueryWrapper>
     </HashRouter>
   </ChakraProvider>,
