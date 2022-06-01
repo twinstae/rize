@@ -1,14 +1,14 @@
 import React from "react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { Divider, IconButton } from "@chakra-ui/react";
-import MailBody from "../../components/MailBody";
-import { useDependencies } from "../../hooks/Dependencies";
-import { withSuspense } from "../../hooks/util";
-import useMailList from "../../mailList/useMailList";
+import MailBody from "../components/MailBody";
+import { useDependencies } from "../hooks/Dependencies";
+import { withSuspense } from "../hooks/util";
+import useMailList from "../mailList/useMailList";
 import styled from "@emotion/styled";
-import ProfileImage from "../../components/ProfileImage";
+import ProfileImage from "../components/ProfileImage";
 import { useAtom } from "jotai";
-import { keywordAtom } from "../../search/useSearch";
+import { keywordAtom } from "../search/useSearch";
 
 const Title = styled.h3`
   padding: 0;
