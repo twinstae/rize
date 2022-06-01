@@ -1,19 +1,20 @@
 import React from "react";
 import { ROOT } from "./router/paths";
-import { Routes, Route } from "react-router-dom";
-import MailListPage from "./pages/mailList";
-import MailDetailPage from "./pages/mailDetail";
+import {  Route } from "react-router-dom";
+import MailListPage from "./pages/MailListPage";
+import MailDetailPage from "./pages/MailDetailPage";
+import Home from "./pages/Home";
 import Test from "./test/Test";
+import { IonRouterOutlet } from "@ionic/react";
 
 function App() {
   return (
-    <Routes>
-      <Route path="mail">
-        <Route path=":id" element={<MailDetailPage />} />
-      </Route>
-      <Route path={ROOT} element={<MailListPage />} />
-      <Route path="test" element={<Test />} />
-    </Routes>
+    <IonRouterOutlet>
+      <Route path="/" component={Home} />
+      <Route path="/mail" component={MailListPage}/>
+      <Route path="/mail/id" component={MailDetailPage} />
+      <Route path="/test" component={Test} />
+    </IonRouterOutlet>
   );
 }
 
