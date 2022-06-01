@@ -11,6 +11,7 @@
     "@radix-ui/react-tooltip": "^0.1.6",
     "@stitches/react": "^1.2.6",
     "@tauri-apps/api": "^1.0.0-rc.0",
+    "@xstate/test": "^0.5.1",
     "flexsearch": "^0.7.21",
     "framer-motion": "^6.2.7",
     "i18next": "^21.6.11",
@@ -21,7 +22,8 @@
     "react-i18next": "^11.15.4",
     "react-query": "^3.34.15",
     "react-router-dom": "^6.2.1",
-    "react-virtualized": "^9.22.3"
+    "react-virtualized": "^9.22.3",
+    "xstate": "^4.31.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
