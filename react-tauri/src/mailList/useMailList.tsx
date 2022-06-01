@@ -2,7 +2,7 @@ import { atom, useAtom } from "jotai";
 import { useMemo } from "react";
 import { MEMBER_LIST, toOriginalName } from "../constants";
 import atomWithAsyncInit from "../hooks/atomWithAsyncInit";
-import fsMailRepository from "./fsMailRepository";
+import fakeMailRepository from "./fakeMailRepository";
 
 interface MailListResult {
   mailList: (mode: TabMode, tag: string) => MailT[];
@@ -87,6 +87,6 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   };
 };
 
-const useMailList = createUseMailList(fsMailRepository);
+const useMailList = createUseMailList(fakeMailRepository);
 
 export default useMailList;

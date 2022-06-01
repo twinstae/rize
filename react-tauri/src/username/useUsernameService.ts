@@ -12,7 +12,7 @@ export const createUseUsernameService: (
   const [before, after] =
     query.data && query.data[USERNAME_KEY]
       ? query.data[USERNAME_KEY]
-      : ["<위즈원>", "위즈원"];
+      : ["{_nickname_}", "위즈원"];
 
   const regex = new RegExp(before, "g");
   return {
