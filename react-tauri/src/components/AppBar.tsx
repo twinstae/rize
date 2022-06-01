@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Input,
   InputGroup,
@@ -9,19 +9,21 @@ import {
   useDisclosure,
   CloseButton,
 } from "@chakra-ui/react";
-import LeftDrawler from "./LeftDrawler";
-import DarkModeButton from "./DarkModeButton";
 import { SearchIcon } from "@chakra-ui/icons";
-import _ from "lodash";
-import { useAtom } from "jotai";
+import DarkModeButton from "./DarkModeButton";
+import LeftDrawler from "./LeftDrawler";
 import { keywordAtom } from "../search/useSearch";
 import SelectedTag from "./SelectedTag";
+import { useAtom } from "jotai";
+import _ from "lodash";
 
 function AppBar() {
-  const [, search] = useAtom(keywordAtom);
+  const [keyword, search] = useAtom(keywordAtom);
+  const [keywordInput, setKeywordInput] = useState("");
 
-  const debounceSearch = _.debounce((text) => search(text), 300);
+  const debounceSearch = _.debounce((text) => search(text), 500);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeywordInput(e.target.value);
     debounceSearch(e.target.value);
   };
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -36,6 +38,13 @@ function AppBar() {
       handleClose();
     }
   }
+
+  useEffect(() => {
+    if (keyword) {
+      onOpen();
+      setKeywordInput(keyword);
+    }
+  }, []);
 
   return (
     <HStack padding="2" borderBottom="1px solid #e2e8f0">
@@ -52,6 +61,7 @@ function AppBar() {
             htmlSize={16}
             width="90%"
             onKeyUp={handleKeyUp}
+            value={keywordInput}
             onChange={handleChange}
           />
           <InputRightElement>

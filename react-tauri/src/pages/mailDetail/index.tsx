@@ -7,6 +7,8 @@ import { withSuspense } from "../../hooks/util";
 import useMailList from "../../mailList/useMailList";
 import styled from "@emotion/styled";
 import ProfileImage from "../../components/ProfileImage";
+import { useAtom } from "jotai";
+import { keywordAtom } from "../../search/useSearch";
 
 const Title = styled.h3`
   padding: 0;
@@ -29,13 +31,18 @@ function MailDetailPage() {
     .mailList("all", "")
     .find((mail) => mail.id === mailId);
   const mailBody = useMailList().mailById(mailId);
+  const [keyword] = useAtom(keywordAtom);
 
   return (
     <Wrapper>
       <IconButton
         variant="ghost"
         icon={<ArrowBackIcon />}
-        onClick={() => navigation.navigate(mail ? "/?mailId=" + mail.id : "/")}
+        onClick={() =>
+          navigation.navigate(
+            mail ? "/?mailId=" + mail.id + "&search=" + keyword : "/"
+          )
+        }
         aria-label="돌아가기"
       />
 
