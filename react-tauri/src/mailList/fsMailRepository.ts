@@ -1,4 +1,5 @@
 import { fs } from "@tauri-apps/api";
+import { MailRepository } from "./types";
 
 const readJSONfile = (path: string) =>
   fs

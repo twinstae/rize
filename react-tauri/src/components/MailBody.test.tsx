@@ -5,11 +5,12 @@ import { DependenciesWrapper } from "../hooks/Dependencies";
 import { DummyUsernameService } from "../test/fixtures";
 import { MockImage } from "./Image";
 import MailBody from "./MailBody";
+import fsStorageRepo from "../config/fsStorageRepo";
 
 function renderWithDependency(component: React.ReactElement) {
   return render(component, {
     wrapper: DependenciesWrapper({
-      usernameService: DummyUsernameService,
+      storageRepo: fsStorageRepo,
       Image: MockImage,
     }),
   });

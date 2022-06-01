@@ -1,6 +1,12 @@
 import React from "react";
 import { UseQueryResult } from "react-query";
 
+type ChildrenProps = {
+  children: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+};
+
+export type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
+
 export const createWrapper = <P extends Record<string, any>>(
   Provider: React.FC<P>,
   props: P

@@ -17,6 +17,10 @@ i18n.use(initReactI18next).init({
   },
 });
 
+export type TranslationProps = {
+  t: (text: string) => string;
+};
+
 export const strs = ko.translation;
 
 export default i18n;

@@ -2,7 +2,7 @@ import { fs } from "@tauri-apps/api";
 import { StorageRepository } from "../global";
 import { JsonValue } from "../types/json";
 
-const createFsStorageRepository = (key: string): StorageRepository => {
+export const createFsStorageRepository = (key: string): StorageRepository<JsonValue> => {
   return {
     getItem: async () => {
       return fs.readTextFile(`local_${key}.txt`, {
@@ -24,4 +24,4 @@ const createFsStorageRepository = (key: string): StorageRepository => {
   }
 }
 
-export default createFsStorageRepository;
+export default createFsStorageRepository('config');

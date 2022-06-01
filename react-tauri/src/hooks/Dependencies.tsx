@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { UsernameServiceT } from "../global";
+import { StorageRepository } from "../global";
 import { Navigation } from "../router/useNavigation";
+import { JsonValue } from "../types/json";
 import { createWrapper } from "./util";
 
 type DependencyT = {
@@ -8,7 +9,7 @@ type DependencyT = {
   setTag?: (tag: string) => void;
   navigation?: Navigation;
   toNick?: (member: string) => string;
-  usernameService?: UsernameServiceT;
+  storageRepo?: StorageRepository<JsonValue>;
   isDark?: boolean;
   toggleDark?: () => void;
   Image?: React.FC<{

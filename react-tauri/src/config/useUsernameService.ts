@@ -1,12 +1,10 @@
 import { UsernameServiceT } from "../global";
-import useConfig, { ConfigT, useFakeConfig } from "./useConfig";
+import useConfig from "./useConfig";
 
 const USERNAME_KEY = "username";
 
-export const createUseUsernameService: (
-  useConfig: () => ConfigT
-) => () => UsernameServiceT = () => () => {
-  const config = useConfig();
+export const useUsernameService: () => UsernameServiceT = () => {
+  const config = useConfig()
 
   const [before, after] = (config.get(USERNAME_KEY) ?? ["{_nickname_}", "위즈원"])  as [string, string];
 
@@ -23,9 +21,5 @@ export const createUseUsernameService: (
     replaceUsername: (text: string) => text.replace(regex, after),
   };
 };
-
-export const usefakeUserNameService = createUseUsernameService(useFakeConfig);
-
-const useUsernameService = createUseUsernameService(useConfig);
 
 export default useUsernameService;

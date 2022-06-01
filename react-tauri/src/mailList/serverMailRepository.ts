@@ -1,17 +1,19 @@
 import { http } from "@tauri-apps/api";
+import { MailRepository, RawMailT, MailBodyT } from "./types";
 
 const readJSONfile: (path: string) => Promise<unknown> = (path) =>
   http.fetch("http://localhost:3000/" + path).then((res) => res.data);
 
 const writeJSONfile =
-  (path: string) => async (dict: Record<string, string[]>) =>
-    http.fetch("http://localhost:3000/" + path, {
+  (path: string) => async (dict: Record<string, string[]>) => {
+    await http.fetch("http://localhost:3000/" + path, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: http.Body.json(dict),
-    });
+    })
+  };
 
 const serverMailRepository: MailRepository = {
   getAllMailList: async () =>

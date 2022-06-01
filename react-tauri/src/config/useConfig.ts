@@ -1,34 +1,24 @@
 import { useAtom, WritableAtom } from "jotai";
-import { StorageRepository } from "../global";
+import { useMemo } from "react";
 import atomWithPersit from "../hooks/atomWithPersist";
+import { useDependencies } from "../hooks/Dependencies";
 import { JsonObject, JsonValue } from "../types/json";
-import fakeStorageRepo from "./fakeStorageRepo";
 
-export const createConfigAtom = (storageRepo: StorageRepository<JsonValue>) => {
-  return atomWithPersit({}, storageRepo) as WritableAtom<JsonObject, unknown, void>
+const useConfigAtom = () => {
+  const { storageRepo } = useDependencies()
+  return useMemo(() => atomWithPersit({}, storageRepo) as WritableAtom<JsonObject, unknown, void>, [storageRepo])
 }
 
-export const createUseConfig = (configAtom: WritableAtom<JsonObject, (key: string, value: JsonValue)=>void>) => {
-  return () => {
-    const [config, setConfig] = useAtom(configAtom);
+export const useConfig = () => {
+  const [config, setConfig] = useAtom(useConfigAtom());
 
-    return {
-      get: (key: string) => config[key],
-      set: (key: string, value: JsonValue) => {
-        setConfig(() => ({ ...config, [key]: value }));
-      },
-    };
-  }
+  return {
+    get: (key: string) => config[key],
+    set: (key: string, value: JsonValue) => {
+      setConfig(() => ({ ...config, [key]: value }));
+    },
+  };
 }
-
-
-const fakeConfigAtom = createConfigAtom(fakeStorageRepo)
-
-export const useFakeConfig = createUseConfig(fakeConfigAtom)
-
-const configAtom = fakeConfigAtom
-
-const useConfig = createUseConfig(configAtom)
 
 export type ConfigT = {
   get: (key: string) => JsonValue | undefined;

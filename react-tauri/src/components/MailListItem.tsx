@@ -8,6 +8,9 @@ import TagList from "./TagList";
 import { HStack } from "@chakra-ui/react";
 import FavoriteStar from "./FavoriteStar";
 
+import useUsernameService from "../config/useUsernameService";
+import { MailT } from "../mailList/types";
+
 const Wrapper = styled.li`
   padding: 0.5rem;
   border-bottom: 1px solid var(--chakra-colors-gray-300);
@@ -47,9 +50,11 @@ interface MailListItemProps {
 }
 
 function MailListItem({ mail, style }: MailListItemProps) {
-  const { navigation, toNick, usernameService } = useDependencies();
+  const { navigation, toNick } = useDependencies();
   const Link = navigation.Link;
 
+  const usernameService = useUsernameService()
+  
   return (
     <Wrapper style={style} className={mail.isUnread ? "unread" : undefined}>
       <Link to={toMailDetail(mail.id)}>

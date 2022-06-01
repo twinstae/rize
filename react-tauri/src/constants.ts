@@ -11,7 +11,9 @@ export const MEMBER_LIST = [
   "조유리",
   "안유진",
   "장원영",
-];
+] as const;
+
+export type IZONE = typeof MEMBER_LIST[number]
 
 export const nameToNumberDict: Record<string, number> = {
   장원영: 0,
@@ -42,7 +44,7 @@ export const nameToNumberDict: Record<string, number> = {
   운영팀: 12,
 };
 
-export const memberNameDict: Record<number, IZONE> = {
+export const memberNameDict: Record<number, IZONE | "운영팀"> = {
   0: "장원영",
   1: "미야와키 사쿠라",
   2: "조유리",
@@ -60,3 +62,7 @@ export const memberNameDict: Record<number, IZONE> = {
 
 export const toOriginalName = (raw: string) =>
   memberNameDict[nameToNumberDict[raw]];
+
+
+export const modes = ["all", "unread", "favorite"] as const
+export type TabMode = typeof modes[number]

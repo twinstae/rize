@@ -1,5 +1,7 @@
 import { atom, useAtom } from "jotai";
 import { useCallback, useMemo } from "react";
+import { CreateIndex } from "../global";
+import { RawMailT } from "../mailList/types";
 import createFlexSearchIndex from "./createFlexSearchIndex";
 
 export const keywordAtom = atom("");

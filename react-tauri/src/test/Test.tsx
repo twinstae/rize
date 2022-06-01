@@ -1,15 +1,17 @@
 import React from "react";
 import { useQuery } from "react-query";
 import fsMailRepository from "../mailList/fsMailRepository";
-import fsStorageRepo from "../username/fsStorageRepo";
+import { createFsStorageRepository } from "../config/fsStorageRepo";
+
+const fsStorageRepo = createFsStorageRepository("test")
 
 const testSuites: [string, () => Promise<boolean>][] = [
   [
     "파일 스토리지에 쓰고 읽어올 수 있다",
     async () => {
       const now = new Date().toISOString();
-      await fsStorageRepo.setItem("test", now);
-      const result = await fsStorageRepo.getItem("test");
+      await fsStorageRepo.setItem(now);
+      const result = await fsStorageRepo.getItem();
       return result === now;
     },
   ],

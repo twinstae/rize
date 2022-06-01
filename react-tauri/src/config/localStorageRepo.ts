@@ -1,10 +1,17 @@
-const localStorageRepo: StorageRepository = {
-  getItem: async (key: string) => {
-    return localStorage.getItem(key);
-  },
-  setItem: async (key: string, value: string) => {
-    return localStorage.setItem(key, value);
-  },
+import { StorageRepository } from "../global";
+import { JsonValue } from "../types/json";
+
+export const createLocalStorageRepository = (key: string): StorageRepository<JsonValue> => {
+  return {
+    getItem: async () => {
+      const saved = localStorage.getItem(key)
+      if (saved) return JSON.parse(saved) as JsonValue
+      return undefined;
+    },
+    setItem: async (value: JsonValue) => {
+      localStorage.setItem(key, JSON.stringify(value));
+    },
+  }
 };
 
-export default localStorageRepo;
+export default createLocalStorageRepository('config');

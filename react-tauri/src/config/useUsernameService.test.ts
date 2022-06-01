@@ -1,18 +1,18 @@
 import { waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-import { TestQueryWrapper } from "../hooks/QueryWrapper";
-import { waitForMutation } from "../test/util";
-import { useFakeConfig } from './useConfig';
-import { createUseUsernameService } from "./useUsernameService";
+import { DependenciesWrapper } from "../hooks/Dependencies";
+import fakeStorageRepo from "./fakeStorageRepo";
+import useUsernameService from "./useUsernameService";
 
-const fakeConfig = useFakeConfig()
-fakeConfig.set("username", ["<위즈원>", "wiz*one"])
-
-const useUsernameService = createUseUsernameService(useFakeConfig);
+fakeStorageRepo.setItem({
+  username: ["<위즈원>", "wiz*one"]
+})
 
 const renderUseUsernameService = () => {
   return renderHook(() => useUsernameService(), {
-    wrapper: TestQueryWrapper,
+    wrapper: DependenciesWrapper({
+      storageRepo: fakeStorageRepo
+    })
   });
 };
 

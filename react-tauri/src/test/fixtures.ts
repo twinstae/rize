@@ -1,4 +1,6 @@
 import { vi } from "vitest";
+import { UsernameServiceT } from "../global";
+import { MailT, RawMailT } from "../mailList/types";
 
 export const TEST_MAIL: MailT = {
   id: "m340",
@@ -26,10 +28,5 @@ export const DummyUsernameService: UsernameServiceT = {
   after: "테스트",
   setBefore: vi.fn(),
   setAfter: vi.fn(),
-  isSuccess: true,
-  mutation: {
-    isLoading: true,
-    mutate: vi.fn(),
-  },
   replaceUsername: (text: string) => text,
 };

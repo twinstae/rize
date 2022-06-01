@@ -7,6 +7,7 @@ import { TEST_MAIL } from "../test/fixtures";
 import { toMailDetail } from "../router/paths";
 import { useFakeNavigation } from "../router/useNavigation";
 import { MockImage } from "./Image";
+import fakeStorageRepo from "../config/fakeStorageRepo";
 
 function renderWithDependency(component: React.ReactElement) {
   const navigation = useFakeNavigation();
@@ -16,6 +17,7 @@ function renderWithDependency(component: React.ReactElement) {
       navigation,
       toNick: (member) => "조구리",
       Image: MockImage,
+      storageRepo: fakeStorageRepo
     }),
   });
   return { ...result, navigation };

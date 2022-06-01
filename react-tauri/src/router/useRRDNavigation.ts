@@ -1,21 +1,21 @@
-import React from "react";
-import { Link, useLocation, useHistory, useParams } from "react-router-dom";
+import React, { ReactNode } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Navigation } from "./useNavigation";
 
 const useRRDNavigation = (): Navigation => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   return {
     params: useParams,
     current: () => pathname,
     navigate: (path: string) => {
-      history.push(path);
+      navigate(path);
     },
     goBack: () => {
-      history.goBack();
+      navigate(-1);
     },
     redirect: (path: string) => {
-      history.replace(path, { replace: true });
+      navigate(path, { replace: true });
     },
     Link: ({ to, children }: { to: string; children: JSX.Element }) =>
       React.createElement(Link, { to }, children),

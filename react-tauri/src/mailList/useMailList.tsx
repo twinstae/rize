@@ -1,7 +1,9 @@
 import { atom, useAtom } from "jotai";
 import { useMemo } from "react";
-import { MEMBER_LIST, toOriginalName } from "../constants";
+import { IZONE, MEMBER_LIST, TabMode, toOriginalName } from "../constants";
+import { MailBodyT, MailRepository, MailT } from "./types";
 import atomWithAsyncInit from "../hooks/atomWithAsyncInit";
+import atomWithPersit from "../hooks/atomWithPersist";
 import fakeMailRepository from "./fakeMailRepository";
 
 interface MailListResult {
@@ -19,18 +21,28 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     {}
   );
 
-  const tagToMailDictAtom = atomWithAsyncInit(mailRepository.getTagToMailDict, {
+  const tagToMailDictAtom = atomWithPersit({
     [UNREAD]: [],
     [FAVORITE]: [],
+  } as Record<string, string[]>, {
+    getItem: mailRepository.getTagToMailDict,
+    setItem: mailRepository.saveTagToMailDict,
   });
 
-  const mailToTagDictAtom = atomWithAsyncInit(
-    mailRepository.getMailToTagDict,
-    {}
-  );
+  const mailToTagDictAtom = atom((get) => {
+    const tagToMailDict = get(tagToMailDictAtom);
+
+    return Object.entries(tagToMailDict).reduce((acc, entry) => {
+      entry[1]!.forEach(mailId => {
+        const oldTags = acc.get(mailId) ?? []
+        oldTags.push(entry[0])
+        acc.set(mailId, oldTags)
+      })
+      return acc
+    }, new Map())
+  });
 
   const mailListAtom = atom((get) => {
-    console.log("update");
     const rawMailList = get(rawMailListAtom);
     const tagToMailDict = get(tagToMailDictAtom);
     const mailToTagDict = get(mailToTagDictAtom);
@@ -41,7 +53,7 @@ export const createUseMailList = (mailRepository: MailRepository) => {
       ...mail,
       isFavorited: favoriteSet.has(mail.id),
       isUnread: unreadSet.has(mail.id),
-      tags: mailToTagDict[mail.id] || [],
+      tags: mailToTagDict.get(mail.id) ?? [],
     }));
   });
 
@@ -62,27 +74,25 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     };
 
     const byTag: (tag: string) => (item: MailT) => boolean = (tag) => {
-      if (MEMBER_LIST.includes(tag)) {
+      if (MEMBER_LIST.includes(tag as IZONE)) {
         return (mail) => toOriginalName(mail.member) === tag;
       }
 
       if (tag === "" || tagToMailDict[tag] === undefined) {
         return () => true;
       }
-      return (mail) => tagToMailDict[tag].includes(mail.id);
+      return (mail) => tagToMailDict[tag]!.includes(mail.id);
     };
 
-    console.log("useMailList");
     return {
       mailList: (mode, tag) => {
-        console.log(mode, tag, "computed");
         return useMemo(
           () =>
             mailList.filter((item) => byMode(mode)(item) && byTag(tag)(item)),
           [mailList, mode, tag]
         );
       },
-      mailById: (id) => mailBodyDict[id] || { body: "", images: [] },
+      mailById: (id) => mailBodyDict[id] ?? { body: "", images: [] },
     };
   };
 };

@@ -1,49 +1,37 @@
 import React from "react";
 import App from "./App";
 import ReactDOM from "react-dom";
+import { atom, useAtom } from "jotai";
+import useRRDNavigation from "./router/useRRDNavigation";
+import Image from "./components/Image";
 import QueryWrapper from "./hooks/QueryWrapper";
 import { Dependencies } from "./hooks/Dependencies";
-import useRRDNavigation from "./router/useRRDNavigation";
-import useUsernameService from "./config/useUsernameService";
 import { toOriginalName } from "./constants";
-import Image from "./components/Image";
-import { atom, useAtom } from "jotai";
-import "./theme/variables.css"
 import "./i18n/i18n";
 import "./index.css";
-import '@ionic/react/css/core.css';
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
 
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
-import { IonApp, setupIonicReact } from "@ionic/react";
-import { IonReactRouter } from '@ionic/react-router'
-import { WrapperT } from "./global";
-setupIonicReact();
+import fsStorageRepo from "./config/fsStorageRepo";
+import { ChakraProvider, useColorMode } from "@chakra-ui/react";
+import theme from './theme/theme'
+import { HashRouter } from "react-router-dom";
+import { WrapperT } from "./hooks/util";
 
 const currentTagAtom = atom("");
 
 const DependencyWrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
-  const { colorMode, toggleColorMode } = useColorMode();
   const [tag, setTag] = useAtom(currentTagAtom);
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Dependencies.Provider
       value={{
+        storageRepo: fsStorageRepo,
         toNick: toOriginalName,
         navigation,
-        usernameService: useUsernameService(),
-        Image,
         isDark: colorMode === "dark",
         toggleDark: toggleColorMode,
+        Image,
         tag,
         setTag,
       }}
@@ -54,14 +42,14 @@ const DependencyWrapper: WrapperT = ({ children }) => {
 };
 
 ReactDOM.render(
-  <IonApp>
-    <IonReactRouter>
+  <ChakraProvider theme={theme}>
+    <HashRouter>
       <QueryWrapper>
         <DependencyWrapper>
           <App />
         </DependencyWrapper>
       </QueryWrapper>
-    </IonReactRouter>
-  </IonApp>,
+    </HashRouter>
+  </ChakraProvider>,
   document.getElementById("root")
 );

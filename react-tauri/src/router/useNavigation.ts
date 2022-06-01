@@ -1,15 +1,14 @@
-import React from "react";
-import { Link, Navigate, Params } from "react-router-dom";
+import { jsx } from "@emotion/react";
+import React, { ReactNode } from "react";
 
 export interface Navigation {
-  params: () => Readonly<Params<string>>;
+  params: () => Readonly<{[key:string]: string | undefined}>;
   current: () => string;
   navigate: (path: string) => void;
   goBack: () => void;
   redirect: (path: string) => void;
   Link:
     | ((props: { to: string; children: JSX.Element }) => JSX.Element)
-    | typeof Link;
 }
 
 export const useFakeNavigation = (): Navigation => {
