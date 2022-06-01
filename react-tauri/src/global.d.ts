@@ -1,3 +1,5 @@
+import { JsonObject, JsonValue } from "./types/json";
+
 type RawMailT = {
   id: string;
   member: string;
@@ -59,21 +61,16 @@ interface MailRepository {
 type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
 
 type UsernameServiceT = {
-  isSuccess: boolean;
   before: string;
   after: string;
-  mutation: {
-    isLoading: boolean;
-    mutate: (v: { key: string; value: string }) => void;
-  };
   setBefore: (newBefore: string) => void;
   setAfter: (newAfter: string) => void;
   replaceUsername: (text: string) => string;
 };
 
-interface StorageRepository {
-  getItem: (key: string) => Promise<string | null>;
-  setItem: (key: string, value: string) => Promise<void>;
+interface StorageRepository<T> {
+  getItem: () => Promise<T | undefined>;
+  setItem: (value: T) => Promise<void>;
 }
 
 type TabMode = "all" | "unread" | "favorite";
