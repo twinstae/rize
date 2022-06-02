@@ -1,10 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
-  fonts: {
-    heading: '"Pretendard", "Noto Sans JP", "Noto Color Emoji", sans-serif',
-    body: '"Pretendard", "Noto Sans JP", "Noto Color Emoji", sans-serif',
-  },
   colors: {
     izone: {
       50: "#fff5f7",
@@ -21,7 +17,7 @@ const theme = extendTheme({
   },
   config: {
     initialColorMode: "light",
-    useSystemColorMode: false,
+    useSystemColorMode: true,
   },
 });
 
