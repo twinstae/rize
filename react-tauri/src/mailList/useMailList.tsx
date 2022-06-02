@@ -5,10 +5,12 @@ import { MailBodyT, MailRepository, MailT } from "./types";
 import atomWithAsyncInit from "../hooks/atomWithAsyncInit";
 import atomWithPersit from "../hooks/atomWithPersist";
 import fakeMailRepository from "./fakeMailRepository";
+import fsMailRepository from "./fsMailRepository";
 
 interface MailListResult {
   mailList: (mode: TabMode, tag: string) => MailT[];
   mailById: (id: string) => MailBodyT;
+  addTagToMail: (tag: string, mail: string) => void;
 }
 
 const UNREAD = "읽지 않음";
@@ -60,7 +62,7 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   return (): MailListResult => {
     const [mailList] = useAtom(mailListAtom);
     const [mailBodyDict] = useAtom(mailBodyDictAtom);
-    const [tagToMailDict] = useAtom(tagToMailDictAtom);
+    const [tagToMailDict, setTagToMailDict] = useAtom(tagToMailDictAtom);
 
     const byMode: (mode: TabMode) => (mail: MailT) => boolean = (mode) => {
       if (mode === "unread") {
@@ -93,6 +95,13 @@ export const createUseMailList = (mailRepository: MailRepository) => {
         );
       },
       mailById: (id) => mailBodyDict[id] ?? { body: "", images: [] },
+      addTagToMail: (tag: string, mail: string) => {
+        setTagToMailDict((old: Record<string, string[]>) => {
+          const newDict = JSON.parse(JSON.stringify(old))
+          newDict[tag].push(mail)
+          return newDict
+        })
+      }
     };
   };
 };
