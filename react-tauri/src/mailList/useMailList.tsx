@@ -11,10 +11,13 @@ interface MailListResult {
   mailList: (mode: TabMode, tag: string) => MailT[];
   mailById: (id: string) => MailBodyT;
   addTagToMail: (tag: string, mail: string) => void;
+  removeTagFromMail: (tag: string, mail: string) => void;
 }
 
-const UNREAD = "읽지 않음";
-const FAVORITE = "💖";
+export const UNREAD = "읽지 않음";
+export const FAVORITE = "💖";
+
+const jsonClone: <T>(old: T) => T = (old) => JSON.parse(JSON.stringify(old))
 
 export const createUseMailList = (mailRepository: MailRepository) => {
   const rawMailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
@@ -95,10 +98,18 @@ export const createUseMailList = (mailRepository: MailRepository) => {
         );
       },
       mailById: (id) => mailBodyDict[id] ?? { body: "", images: [] },
-      addTagToMail: (tag: string, mail: string) => {
+      addTagToMail: (tag: string, targetMailId: string) => {
         setTagToMailDict((old: Record<string, string[]>) => {
-          const newDict = JSON.parse(JSON.stringify(old))
-          newDict[tag].push(mail)
+          const newDict = jsonClone(old);
+
+          (newDict[tag] ?? []).push(targetMailId)
+          return newDict
+        })
+      },
+      removeTagFromMail: (tag: string, targetMailId: string) => {
+        setTagToMailDict((old: Record<string, string[]>) => {
+          const newDict = jsonClone(old);
+          newDict[tag] = (newDict[tag] || []).filter(mailId => targetMailId !== mailId)
           return newDict
         })
       }
