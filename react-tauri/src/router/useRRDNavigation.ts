@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Navigation } from "./useNavigation";
 

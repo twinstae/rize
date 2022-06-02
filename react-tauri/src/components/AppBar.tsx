@@ -8,6 +8,7 @@ import {
   IconButton,
   useDisclosure,
   CloseButton,
+  Tooltip,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import DarkModeButton from "./DarkModeButton";
@@ -65,12 +66,14 @@ function AppBar() {
             onChange={handleChange}
           />
           <InputRightElement>
-            <CloseButton
-              h="1.75rem"
-              size="sm"
-              onClick={handleClose}
-              aria-label="검색창 닫기"
-            />
+            <Tooltip label="검색창 닫기">
+              <CloseButton
+                h="1.75rem"
+                size="sm"
+                onClick={handleClose}
+                aria-label="검색창 닫기"
+              />
+            </Tooltip>
           </InputRightElement>
         </InputGroup>
       ) : (
@@ -78,15 +81,17 @@ function AppBar() {
           <LeftDrawler />
           <DarkModeButton />
           <SelectedTag />
-          <IconButton
-            position="absolute"
-            right="3"
-            variant="ghost"
-            onClick={onOpen}
-            icon={<SearchIcon />}
-            marginLeft="2"
-            aria-label="검색"
-          />
+          <Tooltip label="검색">
+            <IconButton
+              position="absolute"
+              right="3"
+              variant="ghost"
+              onClick={onOpen}
+              icon={<SearchIcon />}
+              marginLeft="2"
+              aria-label="검색"
+            />
+          </Tooltip>
         </>
       )}
     </HStack>

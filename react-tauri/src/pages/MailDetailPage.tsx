@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Divider, IconButton } from "@chakra-ui/react";
+import { Divider, IconButton, Tooltip } from "@chakra-ui/react";
 import MailBody from "../components/MailBody";
 import { useDependencies } from "../hooks/Dependencies";
 import { withSuspense } from "../hooks/util";
@@ -34,18 +34,19 @@ function MailDetailPage() {
   const [keyword] = useAtom(keywordAtom);
 
   return (
-    <Wrapper>
-      <IconButton
-        variant="ghost"
-        icon={<ArrowBackIcon />}
-        onClick={() =>
-          navigation.navigate(
-            mail ? "/?mailId=" + mail.id + "&search=" + keyword : "/"
-          )
-        }
-        aria-label="돌아가기"
-      />
-
+    <div style={{padding: "0.5rem"}}>
+      <Tooltip label="돌아가기">
+        <IconButton
+          variant="ghost"
+          icon={<ArrowBackIcon />}
+          onClick={() =>
+            navigation.navigate(
+              mail ? "/?mailId=" + mail.id + "&search=" + keyword : "/"
+            )
+          }
+          aria-label="돌아가기"
+        />
+      </Tooltip>
       <Wrapper>
         {mail ? (
           <>
@@ -64,7 +65,7 @@ function MailDetailPage() {
       </Wrapper>
       <Divider />
       {mailBody && <MailBody mailBody={mailBody} />}
-    </Wrapper>
+    </div>
   );
 }
 

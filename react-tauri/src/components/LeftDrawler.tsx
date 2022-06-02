@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -8,22 +8,30 @@ import {
   DrawerCloseButton,
   useDisclosure,
   IconButton,
-} from "@chakra-ui/react";
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
-import MemberList from "./MemberList";
+  Button,
+  Tooltip,
+} from '@chakra-ui/react';
+import { CloseIcon, HamburgerIcon, SettingsIcon } from '@chakra-ui/icons';
+import MemberList from './MemberList';
+import paths from '../router/paths';
+import { useDependencies } from '../hooks/Dependencies';
+
 function LeftDrawler() {
+  const { navigation } = useDependencies()
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
-      <IconButton
-        variant="ghost"
-        onClick={onOpen}
-        ref={btnRef}
-        icon={<HamburgerIcon />}
-        aria-label="메뉴"
-      />
+      <Tooltip label="메뉴">
+        <IconButton
+          variant="ghost"
+          onClick={onOpen}
+          ref={btnRef}
+          icon={<HamburgerIcon />}
+          aria-label="메뉴"
+        />
+      </Tooltip>
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -40,6 +48,15 @@ function LeftDrawler() {
           </DrawerCloseButton>
           <DrawerBody>
             <MemberList />
+            <Button
+              marginTop="4"
+              leftIcon={<SettingsIcon />}
+              onClick={()=>{
+                navigation.navigate(paths.CONFIG)
+              }}
+            >
+              설정
+            </Button>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

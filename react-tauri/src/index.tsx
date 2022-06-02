@@ -10,11 +10,11 @@ import { toOriginalName } from "./constants";
 import "./i18n/i18n";
 import "./index.css";
 
-import fsStorageRepo from "./config/fsStorageRepo";
 import { ChakraProvider, useColorMode } from "@chakra-ui/react";
 import theme from './theme/theme'
 import { HashRouter } from "react-router-dom";
 import { WrapperT } from "./hooks/util";
+import fakeStorageRepo from "./config/fakeStorageRepo";
 
 const currentTagAtom = atom("");
 
@@ -26,7 +26,7 @@ const DependencyWrapper: WrapperT = ({ children }) => {
   return (
     <Dependencies.Provider
       value={{
-        storageRepo: fsStorageRepo,
+        storageRepo: fakeStorageRepo,
         toNick: toOriginalName,
         navigation,
         isDark: colorMode === "dark",
