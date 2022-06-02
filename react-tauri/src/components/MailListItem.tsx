@@ -8,7 +8,7 @@ import TagList from "./TagList";
 import { HStack } from "@chakra-ui/react";
 import FavoriteStar from "./FavoriteStar";
 
-import useUsernameService from "../config/useUsernameService";
+import useUsername from "../config/useUsername";
 import { MailT } from "../mailList/types";
 
 const Wrapper = styled.li`
@@ -53,7 +53,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
   const { navigation, toNick } = useDependencies();
   const Link = navigation.Link;
 
-  const usernameService = useUsernameService()
+  const usernameService = useUsername()
   
   return (
     <Wrapper style={style} className={mail.isUnread ? "unread" : undefined}>

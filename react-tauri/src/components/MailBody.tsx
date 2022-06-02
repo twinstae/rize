@@ -1,5 +1,5 @@
 import React from "react";
-import useUsernameService from "../config/useUsernameService";
+import useUsername from "../config/useUsername";
 import { useDependencies } from "../hooks/Dependencies";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 function MailBody({ mailBody }: Props) {
   const { Image } = useDependencies();
-  const usernameService = useUsernameService();
+  const usernameService = useUsername();
   const body = usernameService.replaceUsername(mailBody.body);
   const parts = body.split("{이미지}");
   function getPath(index: number) {

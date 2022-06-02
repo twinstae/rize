@@ -8,7 +8,7 @@ interface Index {
 type CreateIndex = (mailList: RawMailT[]) => Index;
 
 
-type UsernameServiceT = {
+type UsernameT = {
   before: string;
   after: string;
   setBefore: (newBefore: string) => void;

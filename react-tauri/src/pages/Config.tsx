@@ -5,6 +5,7 @@ import React from 'react';
 import { useDependencies } from '../hooks/Dependencies';
 import paths from '../router/paths';
 import FontConfig from './config/FontConfig';
+import NickNameConfig from './config/NickNameConfig';
 const Wrapper = styled.header`
   padding: 0.5rem;
   position: -webkit-sticky; /* Safari */
@@ -38,6 +39,7 @@ const Config = () => {
         align='stretch'
       >
         <FontConfig />
+        <NickNameConfig />
       </VStack>
     </div>
   );

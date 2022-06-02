@@ -1,9 +1,9 @@
-import { UsernameServiceT } from "../global";
+import { UsernameT } from "../global";
 import useConfig from "./useConfig";
 
 const USERNAME_KEY = "username";
 
-export const useUsernameService: () => UsernameServiceT = () => {
+export const useUsername: () => UsernameT = () => {
   const config = useConfig()
 
   const [before, after] = (config.get(USERNAME_KEY) ?? ["{_nickname_}", "위즈원"])  as [string, string];
@@ -22,4 +22,4 @@ export const useUsernameService: () => UsernameServiceT = () => {
   };
 };
 
-export default useUsernameService;
+export default useUsername;
