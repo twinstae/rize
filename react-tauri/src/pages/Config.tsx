@@ -40,7 +40,6 @@ const Config = () => {
         spacing={4}
         align='stretch'
       >
-        <FontConfig />
         <NickNameConfig />
         <ProfileConfig />
       </VStack>
