@@ -39,7 +39,6 @@ const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme }) => {
         marginRight: '0.5rem',
       }}
       width={sizes[size]*4}
-      height={sizes[size]*4}
     />
   );
 };

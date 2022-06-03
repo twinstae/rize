@@ -16,7 +16,6 @@ type DependencyT = {
     path: string;
     style: React.CSSProperties;
     width: number;
-    height: number;
   }>;
 };
 

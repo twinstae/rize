@@ -10,10 +10,9 @@ interface Props {
   path: string;
   style: React.CSSProperties;
   width: number;
-  height: number;
 }
 
-const TauriImage: React.FC<Props> = ({ path, style, width, height }) => {
+const TauriImage: React.FC<Props> = ({ path, style, width }) => {
   const { data } = useQuery<string, Error>(['image', path], async () => {
     const dir = await downloadDir();
     const filePath = await join(dir, 'output/' + path);
@@ -24,7 +23,6 @@ const TauriImage: React.FC<Props> = ({ path, style, width, height }) => {
       borderRadius='full'
       src={data ?? `https://via.placeholder.com/${width}`}
       width={width}
-      height={height}
       style={style}
     />
   );
