@@ -1,13 +1,14 @@
-import React from "react";
-import { useQuery } from "react-query";
-import fsMailRepository from "../mailList/fsMailRepository";
-import { createFsStorageRepository } from "../config/fsStorageRepo";
+import React from 'react';
+import { useQuery } from 'react-query';
 
-const fsStorageRepo = createFsStorageRepository("test")
+import { createFsStorageRepository } from '../config/fsStorageRepo';
+import fsMailRepository from '../mailList/fsMailRepository';
+
+const fsStorageRepo = createFsStorageRepository('test');
 
 const testSuites: [string, () => Promise<boolean>][] = [
   [
-    "파일 스토리지에 쓰고 읽어올 수 있다",
+    '파일 스토리지에 쓰고 읽어올 수 있다',
     async () => {
       const now = new Date().toISOString();
       await fsStorageRepo.setItem(now);
@@ -16,17 +17,17 @@ const testSuites: [string, () => Promise<boolean>][] = [
     },
   ],
   [
-    "fsMailRepository로 pm_list.json을 가져올 수 있다",
+    'fsMailRepository로 pm_list.json을 가져올 수 있다',
     async () => {
       const result = await fsMailRepository.getAllMailList();
-      return Array.prototype.isPrototypeOf(result);
+      return (Array.isArray(result));
     },
   ],
   [
-    "fsMailRepository로 mail_body_dict.json을 가져올 수 있다",
+    'fsMailRepository로 mail_body_dict.json을 가져올 수 있다',
     async () => {
       const result = await fsMailRepository.getMailBodyDict();
-      return Object.prototype.isPrototypeOf(result);
+      return typeof result === 'object';
     },
   ],
 ];
@@ -38,14 +39,14 @@ const execute = async ([message, func]: [
   try {
     const passed = await func();
     return [message, passed];
-  } catch (e: any) {
-    return [message + "\n" + JSON.stringify(e), false];
+  } catch (e: unknown) {
+    return [message + '\n' + JSON.stringify(e), false];
   }
 };
 
 function Test() {
   const { isSuccess, data } = useQuery<[string, boolean][], Error>(
-    "test",
+    'test',
     async () => Promise.all(testSuites.map(execute))
   );
 
@@ -56,8 +57,8 @@ function Test() {
   return (
     <ul>
       {data?.map(([message, passed]) => (
-        <li key={message} style={{ color: passed ? "green" : "red" }}>
-          {passed ? "✔️ 통과" : "❌ 실패"} : {message}
+        <li key={message} style={{ color: passed ? 'green' : 'red' }}>
+          {passed ? '✔️ 통과' : '❌ 실패'} : {message}
         </li>
       ))}
     </ul>

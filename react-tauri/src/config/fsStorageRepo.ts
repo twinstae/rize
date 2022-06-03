@@ -1,6 +1,7 @@
-import { fs } from "@tauri-apps/api";
-import { StorageRepository } from "../global";
-import { JsonValue } from "../types/json";
+import { fs } from '@tauri-apps/api';
+
+import { StorageRepository } from '../global';
+import { JsonValue } from '../types/json';
 
 export const createFsStorageRepository = (key: string): StorageRepository<JsonValue> => {
   return {
@@ -8,7 +9,7 @@ export const createFsStorageRepository = (key: string): StorageRepository<JsonVa
       return fs.readTextFile(`local_${key}.txt`, {
         dir: fs.BaseDirectory.Download,
       }).then(JSON.parse)
-        .catch(e => undefined) as Promise<JsonValue | undefined>;
+        .catch(() => undefined) as Promise<JsonValue | undefined>;
     },
     setItem: async (value: JsonValue) => {
       return fs.writeFile(
@@ -21,7 +22,7 @@ export const createFsStorageRepository = (key: string): StorageRepository<JsonVa
         }
       );
     },
-  }
-}
+  };
+};
 
 export default createFsStorageRepository('config');

@@ -1,20 +1,22 @@
-import React from "react";
-import MailList from "../components/MailList";
-import { withSuspense } from "../hooks/util";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import _ from "lodash";
-import { useDependencies } from "../hooks/Dependencies";
-import AppBar from "../components/AppBar";
-import useSearch from "../search/useSearch";
-import useMailList from "../mailList/useMailList";
-import { modes } from "../constants";
+import { Tab, TabList, TabPanel,TabPanels, Tabs } from '@chakra-ui/react';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
 
-function MailListPage() {
+import AppBar from '../components/AppBar';
+import MailList from '../components/MailList';
+import { modes } from '../constants';
+import { useDependencies } from '../hooks/Dependencies';
+import { withSuspense } from '../hooks/util';
+import { strs, TranslationProps } from '../i18n/i18n';
+import useMailList from '../mailList/useMailList';
+import useSearch from '../search/useSearch';
+
+function MailListPage({ t }: TranslationProps) {
   const { isDark, tag } = useDependencies();
 
   const mailData = useMailList();
 
-  const allMailList = mailData.mailList("all", "");
+  const allMailList = mailData.mailList('all', '');
   const { isInResult } = useSearch(allMailList);
 
   const results = modes
@@ -22,18 +24,18 @@ function MailListPage() {
     .map((data) => data.filter((mail) => isInResult(mail.id)));
 
   return (
-    <div style={{ overflow: "hidden" }}>
+    <div style={{ overflow: 'hidden' }}>
       <AppBar />
-      <Tabs isFitted colorScheme={isDark ? "pink" : "izone"}>
+      <Tabs isFitted colorScheme={isDark ? 'pink' : 'izone'}>
         <TabList>
-          <Tab>전체 {results[0].length}</Tab>
-          <Tab>읽지 않음 {results[1].length}</Tab>
-          <Tab>중요 {results[2].length}</Tab>
+          <Tab>{t(strs.전체)} {results[0].length}</Tab>
+          <Tab>{t(strs.읽지_않음)} {results[1].length}</Tab>
+          <Tab>{t(strs.중요)} {results[2].length}</Tab>
         </TabList>
 
         <TabPanels>
           {modes.map((mode, i) => (
-            <TabPanel style={{ padding: "0.5rem" }} key={mode}>
+            <TabPanel style={{ padding: '0.5rem' }} key={mode}>
               <MailList allMailList={allMailList} result={results[i]} />
             </TabPanel>
           ))}
@@ -43,4 +45,4 @@ function MailListPage() {
   );
 }
 
-export default withSuspense(MailListPage);
+export default withTranslation()(withSuspense(MailListPage));

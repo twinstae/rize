@@ -1,15 +1,14 @@
-import React, { CSSProperties } from "react";
-import { useDependencies } from "../hooks/Dependencies";
-import { toMailDetail } from "../router/paths";
+import { HStack } from '@chakra-ui/react';
+import styled from '@emotion/styled';
+import React, { CSSProperties } from 'react';
 
-import styled from "@emotion/styled";
-import ProfileImage from "./ProfileImage";
-import TagList from "./TagList";
-import { HStack } from "@chakra-ui/react";
-import FavoriteStar from "./FavoriteStar";
-
-import useUsername from "../config/useUsername";
-import { MailT } from "../mailList/types";
+import useUsername from '../config/useUsername';
+import { useDependencies } from '../hooks/Dependencies';
+import { MailT } from '../mailList/types';
+import { toMailDetail } from '../router/paths';
+import FavoriteStar from './FavoriteStar';
+import ProfileImage from './ProfileImage';
+import TagList from './TagList';
 
 const Wrapper = styled.li`
   padding: 0.5rem;
@@ -53,10 +52,10 @@ function MailListItem({ mail, style }: MailListItemProps) {
   const { navigation, toNick } = useDependencies();
   const Link = navigation.Link;
 
-  const usernameService = useUsername()
+  const usernameService = useUsername();
   
   return (
-    <Wrapper style={style} className={mail.isUnread ? "unread" : undefined}>
+    <Wrapper style={style} className={mail.isUnread ? 'unread' : undefined}>
       <Link to={toMailDetail(mail.id)}>
         <div>
           <ProfileImage member={mail.member} size="base" />

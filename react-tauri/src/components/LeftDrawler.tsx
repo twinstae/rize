@@ -1,23 +1,24 @@
-import React, { useRef } from 'react';
+import { CloseIcon, HamburgerIcon, SettingsIcon } from '@chakra-ui/icons';
 import {
+  Button,
   Drawer,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
   IconButton,
-  Button,
   Tooltip,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { CloseIcon, HamburgerIcon, SettingsIcon } from '@chakra-ui/icons';
-import MemberList from './MemberList';
-import paths from '../router/paths';
+import React, { useRef } from 'react';
+
 import { useDependencies } from '../hooks/Dependencies';
+import paths from '../router/paths';
+import MemberList from './MemberList';
 
 function LeftDrawler() {
-  const { navigation } = useDependencies()
+  const { navigation } = useDependencies();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
 
@@ -52,7 +53,7 @@ function LeftDrawler() {
               marginTop="4"
               leftIcon={<SettingsIcon />}
               onClick={()=>{
-                navigation.navigate(paths.CONFIG)
+                navigation.navigate(paths.CONFIG);
               }}
             >
               설정

@@ -1,18 +1,18 @@
-import { useAtom, WritableAtom } from "jotai";
-import { useMemo } from "react";
-import atomWithPersit from "../hooks/atomWithPersist";
-import { useDependencies } from "../hooks/Dependencies";
-import { JsonObject, JsonValue } from "../types/json";
+import { useAtom, WritableAtom } from 'jotai';
 
-let atom: WritableAtom<JsonObject, unknown, void> | undefined
+import atomWithPersit from '../hooks/atomWithPersist';
+import { useDependencies } from '../hooks/Dependencies';
+import { JsonObject, JsonValue } from '../types/json';
+
+let atom: WritableAtom<JsonObject, unknown, void> | undefined;
 
 const useConfigAtom = () => {
-  const { storageRepo } = useDependencies()
+  const { storageRepo } = useDependencies();
   if(atom === undefined){
-    atom = atomWithPersit({}, storageRepo) as WritableAtom<JsonObject, unknown, void>
+    atom = atomWithPersit({}, storageRepo) as WritableAtom<JsonObject, unknown, void>;
   }
   return atom; 
-}
+};
 
 export const useConfig = () => {
   const [config, setConfig] = useAtom(useConfigAtom());
@@ -23,7 +23,7 @@ export const useConfig = () => {
       setConfig(() => ({ ...config, [key]: value }));
     },
   };
-}
+};
 
 export type ConfigT = {
   get: (key: string) => JsonValue | undefined;

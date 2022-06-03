@@ -1,6 +1,7 @@
-import React from 'react'
-import { ArrowBackIcon } from '@chakra-ui/icons'
-import { Tooltip, IconButton } from '@chakra-ui/react'
+import { ArrowBackIcon } from '@chakra-ui/icons';
+import { IconButton,Tooltip } from '@chakra-ui/react';
+import React from 'react';
+
 import { useDependencies } from '../hooks/Dependencies';
 
 
@@ -16,7 +17,7 @@ function BackButton() {
         aria-label="돌아가기"
       />
     </Tooltip>
-  )
+  );
 }
 
-export default BackButton
+export default BackButton;

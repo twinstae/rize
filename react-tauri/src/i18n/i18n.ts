@@ -1,7 +1,8 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import ko from "./ko.json";
-import en from "./en.json";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+import en from './en.json';
+import ko from './ko.json';
 
 const resources = {
   ko,
@@ -10,8 +11,8 @@ const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: "ko",
-  fallbackLng: "ko",
+  lng: 'ko',
+  fallbackLng: 'ko',
   interpolation: {
     escapeValue: false,
   },
@@ -21,6 +22,8 @@ export type TranslationProps = {
   t: (text: string) => string;
 };
 
-export const strs = ko.translation;
+type TranslationKeys = Record<keyof typeof ko.translation, keyof typeof ko.translation>
+
+export const strs = Object.fromEntries(Object.keys(ko.translation).map(key => [key, key])) as TranslationKeys;
 
 export default i18n;

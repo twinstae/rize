@@ -1,7 +1,8 @@
-import React from "react";
-import { IZONE, MEMBER_LIST } from "../constants";
-import { useDependencies } from "../hooks/Dependencies";
-import ProfileImage from "./ProfileImage";
+import React from 'react';
+
+import { IZONE, MEMBER_LIST } from '../constants';
+import { useDependencies } from '../hooks/Dependencies';
+import ProfileImage from './ProfileImage';
 
 function SelectedTag() {
   const { tag } = useDependencies();

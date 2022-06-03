@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from "react";
+import { SearchIcon } from '@chakra-ui/icons';
 import {
+  CloseButton,
+  HStack,
+  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
-  HStack,
   InputRightElement,
-  IconButton,
-  useDisclosure,
-  CloseButton,
   Tooltip,
-} from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
-import DarkModeButton from "./DarkModeButton";
-import LeftDrawler from "./LeftDrawler";
-import { keywordAtom } from "../search/useSearch";
-import SelectedTag from "./SelectedTag";
-import { useAtom } from "jotai";
-import _ from "lodash";
+  useDisclosure,
+} from '@chakra-ui/react';
+import { useAtom } from 'jotai';
+import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { withTranslation } from 'react-i18next';
 
-function AppBar() {
+import { strs, TranslationProps } from '../i18n/i18n';
+import { keywordAtom } from '../search/useSearch';
+import DarkModeButton from './DarkModeButton';
+import LeftDrawler from './LeftDrawler';
+import SelectedTag from './SelectedTag';
+
+function AppBar({ t }: TranslationProps) {
   const [keyword, search] = useAtom(keywordAtom);
-  const [keywordInput, setKeywordInput] = useState("");
+  const [keywordInput, setKeywordInput] = useState('');
 
   const debounceSearch = _.debounce((text) => search(text), 500);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,11 +34,11 @@ function AppBar() {
 
   function handleClose() {
     onClose();
-    search("");
+    search('');
   }
 
   function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       handleClose();
     }
   }
@@ -53,12 +56,13 @@ function AppBar() {
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
-            children={<SearchIcon color="gray.300" />}
-          />
+          >
+            <SearchIcon color="gray.300" />
+          </InputLeftElement>
           <Input
             autoFocus
             type="text"
-            placeholder="검색하기"
+            placeholder={t(strs.검색하기)}
             htmlSize={16}
             width="90%"
             onKeyUp={handleKeyUp}
@@ -66,12 +70,12 @@ function AppBar() {
             onChange={handleChange}
           />
           <InputRightElement>
-            <Tooltip label="검색창 닫기">
+            <Tooltip label={t(strs.검색창_닫기)}>
               <CloseButton
                 h="1.75rem"
                 size="sm"
                 onClick={handleClose}
-                aria-label="검색창 닫기"
+                aria-label={t(strs.검색창_닫기)}
               />
             </Tooltip>
           </InputRightElement>
@@ -81,7 +85,7 @@ function AppBar() {
           <LeftDrawler />
           <DarkModeButton />
           <SelectedTag />
-          <Tooltip label="검색">
+          <Tooltip label={t(strs.검색)}>
             <IconButton
               position="absolute"
               right="3"
@@ -89,7 +93,7 @@ function AppBar() {
               onClick={onOpen}
               icon={<SearchIcon />}
               marginLeft="2"
-              aria-label="검색"
+              aria-label={t(strs.검색)}
             />
           </Tooltip>
         </>
@@ -98,4 +102,4 @@ function AppBar() {
   );
 }
 
-export default AppBar;
+export default withTranslation()(AppBar);

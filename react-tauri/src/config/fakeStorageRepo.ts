@@ -1,5 +1,5 @@
-import { StorageRepository } from "../global";
-import { JsonObject, JsonValue } from "../types/json";
+import { StorageRepository } from '../global';
+import { JsonObject, JsonValue } from '../types/json';
 
 interface FakeRepository extends StorageRepository<JsonValue> {
   _storage: JsonObject;
@@ -15,8 +15,8 @@ export const createFakeStorageRepo = (key: string) => {
       this._storage[key] = value;
       return;
     },
-  }
-}
+  };
+};
 
 const fakeStorageRepo: FakeRepository = createFakeStorageRepo('config');
 

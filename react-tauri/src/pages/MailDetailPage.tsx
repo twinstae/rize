@@ -1,16 +1,14 @@
-import React from "react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Divider, IconButton, Tooltip } from "@chakra-ui/react";
-import MailBody from "../components/MailBody";
-import { useDependencies } from "../hooks/Dependencies";
-import { withSuspense } from "../hooks/util";
-import useMailList from "../mailList/useMailList";
-import styled from "@emotion/styled";
-import ProfileImage from "../components/ProfileImage";
-import { useAtom } from "jotai";
-import { keywordAtom } from "../search/useSearch";
-import FavoriteStar from "../components/FavoriteStar";
-import BackButton from "../components/BackButton";
+import { Divider } from '@chakra-ui/react';
+import styled from '@emotion/styled';
+import React from 'react';
+
+import BackButton from '../components/BackButton';
+import FavoriteStar from '../components/FavoriteStar';
+import MailBody from '../components/MailBody';
+import ProfileImage from '../components/ProfileImage';
+import { useDependencies } from '../hooks/Dependencies';
+import { withSuspense } from '../hooks/util';
+import useMailList from '../mailList/useMailList';
 
 const Title = styled.h3`
   padding: 0;
@@ -27,15 +25,15 @@ const Wrapper = styled.header`
 
 function MailDetailPage() {
   const { navigation, toNick } = useDependencies();
-  const mailId = navigation.params().id!;
+  const mailId = navigation.params().id ?? 'm25731';
 
   const mail = useMailList()
-    .mailList("all", "")
+    .mailList('all', '')
     .find((mail) => mail.id === mailId);
   const mailBody = useMailList().mailById(mailId);
 
   return (
-    <div style={{padding: "0.5rem"}}>
+    <div style={{padding: '0.5rem'}}>
       <BackButton />
       <Wrapper>
         {mail ? (
@@ -45,7 +43,7 @@ function MailDetailPage() {
             <strong>{toNick(mail.member)} </strong>
             <span
               style={{
-                color: "darkgray",
+                color: 'darkgray',
               }}
             >
               {mail.time}

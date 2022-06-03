@@ -1,11 +1,11 @@
-import { atom, useAtom } from "jotai";
-import { useMemo } from "react";
-import { IZONE, MEMBER_LIST, TabMode, toOriginalName } from "../constants";
-import { MailBodyT, MailRepository, MailT } from "./types";
-import atomWithAsyncInit from "../hooks/atomWithAsyncInit";
-import atomWithPersit from "../hooks/atomWithPersist";
-import fakeMailRepository from "./fakeMailRepository";
-import fsMailRepository from "./fsMailRepository";
+import { atom, useAtom } from 'jotai';
+import { useMemo } from 'react';
+
+import { IZONE, MEMBER_LIST, TabMode, toOriginalName } from '../constants';
+import atomWithAsyncInit from '../hooks/atomWithAsyncInit';
+import atomWithPersit from '../hooks/atomWithPersist';
+import fakeMailRepository from './fakeMailRepository';
+import { MailBodyT, MailRepository, MailT } from './types';
 
 interface MailListResult {
   mailList: (mode: TabMode, tag: string) => MailT[];
@@ -14,10 +14,10 @@ interface MailListResult {
   removeTagFromMail: (tag: string, mail: string) => void;
 }
 
-export const UNREAD = "읽지 않음";
-export const FAVORITE = "💖";
+export const UNREAD = '읽지 않음';
+export const FAVORITE = '💖';
 
-const jsonClone: <T>(old: T) => T = (old) => JSON.parse(JSON.stringify(old))
+const jsonClone: <T>(old: T) => T = (old) => JSON.parse(JSON.stringify(old));
 
 export const createUseMailList = (mailRepository: MailRepository) => {
   const rawMailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
@@ -38,13 +38,13 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     const tagToMailDict = get(tagToMailDictAtom);
 
     return Object.entries(tagToMailDict).reduce((acc, entry) => {
-      entry[1]!.forEach(mailId => {
-        const oldTags = acc.get(mailId) ?? []
-        oldTags.push(entry[0])
-        acc.set(mailId, oldTags)
-      })
-      return acc
-    }, new Map())
+      (entry[1] ?? []).forEach(mailId => {
+        const oldTags = acc.get(mailId) ?? [];
+        oldTags.push(entry[0]);
+        acc.set(mailId, oldTags);
+      });
+      return acc;
+    }, new Map());
   });
 
   const mailListAtom = atom((get) => {
@@ -68,10 +68,10 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     const [tagToMailDict, setTagToMailDict] = useAtom(tagToMailDictAtom);
 
     const byMode: (mode: TabMode) => (mail: MailT) => boolean = (mode) => {
-      if (mode === "unread") {
+      if (mode === 'unread') {
         return (mail) => mail.isUnread;
       }
-      if (mode === "favorite") {
+      if (mode === 'favorite') {
         return (mail) => mail.isFavorited;
       }
 
@@ -83,10 +83,10 @@ export const createUseMailList = (mailRepository: MailRepository) => {
         return (mail) => toOriginalName(mail.member) === tag;
       }
 
-      if (tag === "" || tagToMailDict[tag] === undefined) {
+      if (tag === '' || tagToMailDict[tag] === undefined) {
         return () => true;
       }
-      return (mail) => tagToMailDict[tag]!.includes(mail.id);
+      return (mail) => (tagToMailDict[tag] ?? []).includes(mail.id);
     };
 
     return {
@@ -97,21 +97,21 @@ export const createUseMailList = (mailRepository: MailRepository) => {
           [mailList, mode, tag]
         );
       },
-      mailById: (id) => mailBodyDict[id] ?? { body: "", images: [] },
+      mailById: (id) => mailBodyDict[id] ?? { body: '', images: [] },
       addTagToMail: (tag: string, targetMailId: string) => {
         setTagToMailDict((old: Record<string, string[]>) => {
           const newDict = jsonClone(old);
 
-          (newDict[tag] ?? []).push(targetMailId)
-          return newDict
-        })
+          (newDict[tag] ?? []).push(targetMailId);
+          return newDict;
+        });
       },
       removeTagFromMail: (tag: string, targetMailId: string) => {
         setTagToMailDict((old: Record<string, string[]>) => {
           const newDict = jsonClone(old);
-          newDict[tag] = (newDict[tag] || []).filter(mailId => targetMailId !== mailId)
-          return newDict
-        })
+          newDict[tag] = (newDict[tag] || []).filter(mailId => targetMailId !== mailId);
+          return newDict;
+        });
       }
     };
   };

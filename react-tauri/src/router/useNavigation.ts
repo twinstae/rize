@@ -1,5 +1,4 @@
-import { jsx } from "@emotion/react";
-import React, { ReactNode } from "react";
+import React from 'react';
 
 export interface Navigation {
   params: () => Readonly<{[key:string]: string | undefined}>;
@@ -12,10 +11,10 @@ export interface Navigation {
 }
 
 export const useFakeNavigation = (): Navigation => {
-  const history = ["/"];
+  const history = ['/'];
 
   return {
-    params: () => ({ mailId: "m123" }),
+    params: () => ({ mailId: 'm123' }),
     current: () => {
       return history[history.length - 1];
     },
@@ -30,7 +29,7 @@ export const useFakeNavigation = (): Navigation => {
     },
     Link: (props: { to: string; children: JSX.Element }) =>
       React.createElement(
-        "a",
+        'a',
         { href: props.to, onClick: () => history.push(props.to) },
         props.children
       ),

@@ -1,4 +1,4 @@
-import { Atom, atom } from "jotai";
+import { Atom, atom } from 'jotai';
 
 const atomWithAsyncInit: <T>(init: () => Promise<T>, fallback: T) => Atom<T> = (
   init,

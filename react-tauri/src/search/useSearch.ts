@@ -1,10 +1,11 @@
-import { atom, useAtom } from "jotai";
-import { useCallback, useMemo } from "react";
-import { CreateIndex } from "../global";
-import { RawMailT } from "../mailList/types";
-import createFlexSearchIndex from "./createFlexSearchIndex";
+import { atom, useAtom } from 'jotai';
+import { useCallback, useMemo } from 'react';
 
-export const keywordAtom = atom("");
+import { CreateIndex } from '../global';
+import { RawMailT } from '../mailList/types';
+import createFlexSearchIndex from './createFlexSearchIndex';
+
+export const keywordAtom = atom('');
 
 export const createUseSearch =
   (createIndex: CreateIndex) => (data: RawMailT[]) => {

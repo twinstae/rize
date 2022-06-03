@@ -1,11 +1,12 @@
-import React from "react";
-import { withTranslation } from "react-i18next";
-import { strs, TranslationProps } from "../i18n/i18n";
-import { useDependencies } from "../hooks/Dependencies";
-import { Button } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { Button } from '@chakra-ui/react';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
 
-interface RawDarkModeButtonProps extends TranslationProps {}
+import { useDependencies } from '../hooks/Dependencies';
+import { strs, TranslationProps } from '../i18n/i18n';
+
+type RawDarkModeButtonProps = TranslationProps
 
 export const RawDarkModeButton = ({ t }: RawDarkModeButtonProps) => {
   const { isDark, toggleDark } = useDependencies();

@@ -1,4 +1,4 @@
-import { RawMailT } from "./mailList/types";
+import { RawMailT } from './mailList/types';
 
 type Id = string | number;
 interface Index {

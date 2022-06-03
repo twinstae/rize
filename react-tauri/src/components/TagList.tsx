@@ -1,6 +1,7 @@
-import React from "react";
-import { Tag, ListItem, UnorderedList, HStack } from "@chakra-ui/react";
-import { FAVORITE } from "../mailList/useMailList";
+import { HStack,ListItem, Tag, UnorderedList } from '@chakra-ui/react';
+import React from 'react';
+
+import { FAVORITE } from '../mailList/useMailList';
 
 interface TagListProps {
   tags: string[];

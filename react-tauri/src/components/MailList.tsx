@@ -1,11 +1,12 @@
-import React from "react";
-import MailListItem from "./MailListItem";
-import { List } from "react-virtualized";
-import { withSuspense } from "../hooks/util";
-import { UnorderedList } from "@chakra-ui/react";
-import NoSearchResult from "./NoSearchResult";
-import { useDependencies } from "../hooks/Dependencies";
-import { MailT, RawMailT } from "../mailList/types";
+import { UnorderedList } from '@chakra-ui/react';
+import React from 'react';
+import { List } from 'react-virtualized';
+
+import { useDependencies } from '../hooks/Dependencies';
+import { withSuspense } from '../hooks/util';
+import { MailT, RawMailT } from '../mailList/types';
+import MailListItem from './MailListItem';
+import NoSearchResult from './NoSearchResult';
 interface Props {
   allMailList: MailT[];
   result: MailT[];
@@ -13,7 +14,7 @@ interface Props {
 
 function MailList({ allMailList, result }: Props) {
   const { navigation } = useDependencies();
-  const { mailId } = navigation.params()
+  const { mailId } = navigation.params();
 
   const getIndex = (mailList: RawMailT[]) =>
     Math.min(

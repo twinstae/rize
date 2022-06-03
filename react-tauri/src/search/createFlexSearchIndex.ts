@@ -1,14 +1,16 @@
-import { Document } from "flexsearch";
-import { CreateIndex } from "../global";
-import { RawMailT } from "../mailList/types";
+import { Document } from 'flexsearch';
+
+import { CreateIndex } from '../global';
+import { RawMailT } from '../mailList/types';
 
 const createFlexSearchIndex: CreateIndex = (mailList: RawMailT[]) => {
   const index = new Document({
     document: {
-      id: "id",
-      index: ["subject", "preview"],
+      id: 'id',
+      index: ['subject', 'preview'],
     },
-    encode: (str: string) => str.replace(/[\x00-\x7F]/g, "").split(""),
+    // eslint-disable-next-line no-control-regex
+    encode: (str: string) => str.replace(/[\x00-\x7F]/g, '').split(''),
   });
 
   mailList.forEach((mail) => index.add(mail));

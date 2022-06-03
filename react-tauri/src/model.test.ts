@@ -1,7 +1,7 @@
-import { createMachine } from 'xstate';
-import { createModel } from '@xstate/test';
 import { screen, waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { createModel } from '@xstate/test';
+import { createMachine } from 'xstate';
 
 const toggleMachine = createMachine({
   id: 'toggle',
@@ -12,7 +12,7 @@ const toggleMachine = createMachine({
         TOGGLE: 'active'
       },
       meta: {
-        test: () => waitFor(() => screen.getByText("off"))
+        test: () => waitFor(() => screen.getByText('off'))
       }
     },
     active: {
@@ -20,7 +20,7 @@ const toggleMachine = createMachine({
         TOGGLE: 'inactive'
       },
       meta: {
-        test: () => waitFor(() => screen.getByText("on"))
+        test: () => waitFor(() => screen.getByText('on'))
       }
     }
   }
@@ -41,10 +41,10 @@ function init(){
   function render(state: boolean){
     button.innerHTML = state ? 'on' : 'off';
   }
-  button.onclick = (e) => {
+  button.onclick = () => {
     state = !state;
     render(state);
-  }
+  };
   render(state);
 
   document.body.appendChild(button);

@@ -1,6 +1,7 @@
-import React from 'react';
 import { createIcon, StarIcon } from '@chakra-ui/icons';
 import { IconButton } from '@chakra-ui/react';
+import React from 'react';
+
 import useMailList, { FAVORITE } from '../mailList/useMailList';
 
 const EmpryStarIcon = createIcon({
@@ -24,9 +25,9 @@ function FavoriteStar({ isFavorited, mailId }: FavoriteStarProps) {
       borderRadius="full"
       icon={<StarIcon color="gold" />}
       onClick={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        removeTagFromMail(FAVORITE, mailId)
+        e.preventDefault();
+        e.stopPropagation();
+        removeTagFromMail(FAVORITE, mailId);
       }}
       aria-label="중요"
     />
@@ -38,9 +39,9 @@ function FavoriteStar({ isFavorited, mailId }: FavoriteStarProps) {
       borderRadius="full"
       icon={<EmpryStarIcon color="gray.400" />}
       onClick={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        addTagToMail(FAVORITE, mailId)
+        e.preventDefault();
+        e.stopPropagation();
+        addTagToMail(FAVORITE, mailId);
       }}
       aria-label="중요 표시하기"
     />

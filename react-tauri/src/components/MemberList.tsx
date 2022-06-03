@@ -1,7 +1,8 @@
-import React from "react";
-import { MEMBER_LIST } from "../constants";
-import { useDependencies } from "../hooks/Dependencies";
-import ProfileImage from "./ProfileImage";
+import React from 'react';
+
+import { MEMBER_LIST } from '../constants';
+import { useDependencies } from '../hooks/Dependencies';
+import ProfileImage from './ProfileImage';
 
 interface MemberListItemProps {
   name: string;
@@ -19,11 +20,11 @@ function MemberListItem({ name, text }: MemberListItemProps) {
           setTag(name);
         }}
         style={{
-          width: "16rem",
-          textAlign: "left",
-          borderLeft: "2px solid " + (selected ? "#ff69b4" : "lightgrey"),
-          padding: "0.5rem 1rem",
-          transition: "border 125ms ease",
+          width: '16rem',
+          textAlign: 'left',
+          borderLeft: '2px solid ' + (selected ? '#ff69b4' : 'lightgrey'),
+          padding: '0.5rem 1rem',
+          transition: 'border 125ms ease',
         }}
         aria-selected={selected}
       >
@@ -37,7 +38,7 @@ function MemberList() {
   return (
     <ul
       style={{
-        listStyle: "none",
+        listStyle: 'none',
       }}
     >
       <MemberListItem name="" text="전체" />

@@ -1,10 +1,10 @@
-import { ArrowBackIcon } from '@chakra-ui/icons';
-import { IconButton, StackDivider, Tooltip, VStack, Text } from '@chakra-ui/react';
+
+import { StackDivider, Text, VStack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React from 'react';
+
 import BackButton from '../components/BackButton';
 import { useDependencies } from '../hooks/Dependencies';
-import paths from '../router/paths';
 import NickNameConfig from './config/NickNameConfig';
 import ProfileConfig from './config/ProfileConfig';
 

@@ -1,6 +1,7 @@
-import React from "react";
-import useUsername from "../config/useUsername";
-import { useDependencies } from "../hooks/Dependencies";
+import React from 'react';
+
+import useUsername from '../config/useUsername';
+import { useDependencies } from '../hooks/Dependencies';
 
 interface Props {
   mailBody: {
@@ -13,9 +14,9 @@ function MailBody({ mailBody }: Props) {
   const { Image } = useDependencies();
   const usernameService = useUsername();
   const body = usernameService.replaceUsername(mailBody.body);
-  const parts = body.split("{이미지}");
+  const parts = body.split('{이미지}');
   function getPath(index: number) {
-    return mailBody ? mailBody.images[index] : "img/404.jpeg";
+    return mailBody ? mailBody.images[index] : 'img/404.jpeg';
   }
 
   return (
@@ -24,8 +25,8 @@ function MailBody({ mailBody }: Props) {
         <div key={part + i}>
           <div
             style={{
-              lineHeight: "1.6rem",
-              padding: "1rem",
+              lineHeight: '1.6rem',
+              padding: '1rem',
             }}
             dangerouslySetInnerHTML={{
               __html: part,
@@ -34,7 +35,7 @@ function MailBody({ mailBody }: Props) {
           {i < parts.length - 1 && (
             <Image
               path={getPath(i)}
-              style={{ width: "100%", borderRadius: "0.5rem" }}
+              style={{ width: '100%', borderRadius: '0.5rem' }}
             />
           )}
         </div>

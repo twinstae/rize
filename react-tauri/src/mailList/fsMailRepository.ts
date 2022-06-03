@@ -1,5 +1,6 @@
-import { fs } from "@tauri-apps/api";
-import { MailRepository } from "./types";
+import { fs } from '@tauri-apps/api';
+
+import { MailRepository } from './types';
 
 const readJSONfile = (path: string) =>
   fs
@@ -21,12 +22,12 @@ const writeJSONfile =
     );
 
 const fsMailRepository: MailRepository = {
-  getAllMailList: async () => readJSONfile("pm_list.json"),
-  getMailBodyDict: async () => readJSONfile("mail_body_dict.json"),
-  getTagToMailDict: async () => readJSONfile("tag_to_mail_dict.json"),
-  getMailToTagDict: async () => readJSONfile("mail_to_tag_dict.json"),
-  saveMailToTagDict: writeJSONfile("mail_to_tag_dict.json"),
-  saveTagToMailDict: writeJSONfile("tag_to_mail_dict.json"),
+  getAllMailList: async () => readJSONfile('pm_list.json'),
+  getMailBodyDict: async () => readJSONfile('mail_body_dict.json'),
+  getTagToMailDict: async () => readJSONfile('tag_to_mail_dict.json'),
+  getMailToTagDict: async () => readJSONfile('mail_to_tag_dict.json'),
+  saveMailToTagDict: writeJSONfile('mail_to_tag_dict.json'),
+  saveTagToMailDict: writeJSONfile('tag_to_mail_dict.json'),
 };
 
 export default fsMailRepository;

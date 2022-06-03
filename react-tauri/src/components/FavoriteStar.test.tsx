@@ -1,16 +1,18 @@
-import { render, screen } from "@testing-library/react";
-import FavoriteStar from "./FavoriteStar";
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 
-describe("DarkModeButton", () => {
-  it(`DarkModeButton을 클릭하면 밝게에서 다크로 변한다`, () => {
+import FavoriteStar from './FavoriteStar';
+
+describe('DarkModeButton', () => {
+  it('DarkModeButton을 클릭하면 밝게에서 다크로 변한다', () => {
     render(<FavoriteStar isFavorited={true} mailId="t1"/>);
 
-    screen.getByLabelText("중요");
+    screen.getByLabelText('중요');
   });
 
-  it(`DarkModeButton을 영어로 번역할 수 있다`, async () => {
+  it('DarkModeButton을 영어로 번역할 수 있다', async () => {
     render(<FavoriteStar isFavorited={false} mailId="t1"/>);
 
-    expect(screen.queryByLabelText("중요")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('중요')).not.toBeInTheDocument();
   });
 });

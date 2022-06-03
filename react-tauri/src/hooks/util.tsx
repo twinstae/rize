@@ -1,16 +1,17 @@
-import React from "react";
-import { UseQueryResult } from "react-query";
+import React from 'react';
+import { UseQueryResult } from 'react-query';
 
 type ChildrenProps = {
-  children: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+  children: React.ReactElement<unknown, string | React.JSXElementConstructor<unknown>>
 };
 
 export type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
 
-export const createWrapper = <P extends Record<string, any>>(
+export const createWrapper = <P extends Record<string, unknown>>(
   Provider: React.FC<P>,
   props: P
 ): WrapperT => {
+  // eslint-disable-next-line react/display-name
   return ({ children }) => <Provider {...props}>{children}</Provider>;
 };
 
@@ -46,19 +47,19 @@ export const withSuspense: <T>(Component: React.FC<T>) => React.FC<T> =
   (Component) => (props) =>
     SuspenseWrapper({ children: <Component {...props} /> });
 
-export const shuffle = (array: Array<any>) => {
+export const shuffle: <T>(array: Array<T>) => Array<T> = (array) => {
 
   let curId = array.length;
   // There remain elements to shuffle
   while (0 !== curId) {
     // Pick a remaining element
-    let randId = Math.floor(Math.random() * curId);
+    const randId = Math.floor(Math.random() * curId);
     curId -= 1;
     // Swap it with the current element.
-    let tmp = array[curId];
+    const tmp = array[curId];
     array[curId] = array[randId];
     array[randId] = tmp;
   }
 
-  return array
-}
+  return array;
+};
