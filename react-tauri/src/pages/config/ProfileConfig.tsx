@@ -1,4 +1,4 @@
-import { Radio, RadioGroup,VStack } from '@chakra-ui/react';
+import { HStack, Radio, RadioGroup,VStack } from '@chakra-ui/react';
 import { t } from 'i18next';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
@@ -16,7 +16,10 @@ function ProfileConfig() {
   const { profile, setProfile, profileList } = useProfile();
   return (
     <VStack align="stretch">
-      <ConfigHeading title={t(strs.프로필_바꾸기)}/>
+      <ConfigHeading title={t(strs.프로필_바꾸기) + ' : ' + profile}/>
+      <HStack spacing="0.5">
+        {MEMBER_LIST.map(member => <ProfileImage key={member} member={member} size="sm" theme={profile}/> )}
+      </HStack>
       <RadioGroup value={profile} onChange={(selected) => {
         setProfile(selected);
       }}>

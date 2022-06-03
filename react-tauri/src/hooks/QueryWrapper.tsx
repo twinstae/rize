@@ -2,7 +2,17 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { createWrapper } from './util';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchInterval: false,
+      staleTime: 1000 * 60 * 60,
+    }
+  }
+});
 const QueryWrapper = createWrapper(QueryClientProvider, {
   client: queryClient,
 });

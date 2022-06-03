@@ -22,7 +22,7 @@ function getPath(member: string, theme?: string) {
 }
 
 const sizes = {
-  base: 3.25,
+  base: 3,
   md: 2,
   sm: 1.5,
 };
@@ -38,8 +38,8 @@ const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme }) => {
         borderRadius: '50%',
         marginRight: '0.5rem',
       }}
-      width={sizes[size]*16}
-      height={sizes[size]*16}
+      width={sizes[size]*4}
+      height={sizes[size]*4}
     />
   );
 };
