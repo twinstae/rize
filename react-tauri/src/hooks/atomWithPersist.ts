@@ -5,7 +5,9 @@ import { StorageRepository } from '../global';
 const atomWithPersit = <T>(fallback: T, repo: StorageRepository<T>) => {
   const baseAtom = atom(fallback);
   baseAtom.onMount = (setValue) => {
-    repo.getItem().then(v => setValue(() => v ?? fallback));
+    repo.getItem().then(v => {
+      setValue(() => v ?? fallback);
+    });
   };
   const derivedAtom = atom(
     (get) => get(baseAtom),

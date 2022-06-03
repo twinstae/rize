@@ -16,6 +16,8 @@ type DependencyT = {
   Image?: React.FC<{
     path: string;
     style: React.CSSProperties;
+    width: number;
+    height: number;
   }>;
 };
 

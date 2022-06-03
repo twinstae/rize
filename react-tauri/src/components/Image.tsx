@@ -8,9 +8,11 @@ import { withSuspense } from '../hooks/util';
 interface Props {
   path: string;
   style: React.CSSProperties;
+  width: number;
+  height: number;
 }
 
-const Image: React.FC<Props> = ({ path, style }) => {
+const Image: React.FC<Props> = ({ path, style, width, height }) => {
   const { data } = useQuery<string, Error>(['image', path], async () => {
     const dir = await downloadDir();
     const filePath = await join(dir, 'output/' + path);
@@ -19,7 +21,7 @@ const Image: React.FC<Props> = ({ path, style }) => {
 
   if (data === undefined) return <span>로딩 중</span>;
 
-  return <img src={data} style={style} />;
+  return <img src={data} style={style} width={width} height={height} />;
 };
 
 export const MockImage: React.FC<Props> = ({ path, style }) => (

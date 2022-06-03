@@ -26,7 +26,6 @@ const DependencyWrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
   const [tag, setTag] = useAtom(currentTagAtom);
   const { colorMode, toggleColorMode } = useColorMode();
-
   return (
     <Dependencies.Provider
       value={{

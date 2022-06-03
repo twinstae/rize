@@ -1,6 +1,25 @@
 {
   "translation": {
     "다크": "DARK",
-    "밝게": "LIGHT"
+    "밝게": "LIGHT",
+    "검색하기": "Search",
+    "검색창_닫기": "Close Search Bar",
+    "검색": "Search",
+    "전체": "All",
+    "읽지_않음": "Unread",
+    "중요": "Favorite",
+    "닉네임_바꾸기": "Change Nickname",
+    "에서": "from",
+    "으로": "to",
+    "예시": "Example",
+    "프로필_바꾸기": "Change Profile",
+    "설정": "Settings",
+    "언어": "Languages",
+    "언어_선택하기": "select language",
+    "ko": "Korean 한국어",
+    "en": "English",
+    "jp": "Japanese",
+    "메뉴": "Menu",
+    "닫기": "Close"
   }
 }

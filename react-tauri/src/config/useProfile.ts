@@ -16,7 +16,6 @@ const profileList: readonly string[] = [
 ];
 
 function useProfile() {
-  
   const config = useConfig();
 
   return {

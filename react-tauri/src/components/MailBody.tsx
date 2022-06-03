@@ -36,6 +36,8 @@ function MailBody({ mailBody }: Props) {
             <Image
               path={getPath(i)}
               style={{ width: '100%', borderRadius: '0.5rem' }}
+              width={416}
+              height={316}
             />
           )}
         </div>

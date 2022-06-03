@@ -59,11 +59,11 @@ function MailListItem({ mail, style }: MailListItemProps) {
       <Link to={toMailDetail(mail.id)}>
         <div>
           <ProfileImage member={mail.member} size="base" />
+          <FavoriteStar isFavorited={mail.isFavorited} mailId={mail.id} />
           <HStack>
             <span>{toNick(mail.member)} </span>
             <DatiTimeText>{mail.time}</DatiTimeText>
             <TagList tags={mail.tags} />
-            <FavoriteStar isFavorited={mail.isFavorited} mailId={mail.id} />
           </HStack>
           <Title>
             <strong>{mail.subject}</strong>

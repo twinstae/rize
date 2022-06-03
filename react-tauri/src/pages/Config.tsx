@@ -1,10 +1,12 @@
 
-import { StackDivider, Text, VStack } from '@chakra-ui/react';
+import { HStack, StackDivider, VStack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React from 'react';
 
 import BackButton from '../components/BackButton';
+import DarkModeButton from '../components/DarkModeButton';
 import { useDependencies } from '../hooks/Dependencies';
+import LangConfig from './config/LangConfig';
 import NickNameConfig from './config/NickNameConfig';
 import ProfileConfig from './config/ProfileConfig';
 
@@ -15,6 +17,7 @@ const Wrapper = styled.header`
   top: 0;
   background-color: var(${props => props.theme ? '--chakra-colors-gray-800' : '--chakra-colors-white'});
   z-index: 999;
+  border-bottom: 1px solid lightgray;
 `;
 
 const Config = () => {
@@ -22,8 +25,10 @@ const Config = () => {
   return (
     <div>
       <Wrapper theme={isDark}>
-        <BackButton />
-        <Text fontSize="2xl" fontWeight="bold" paddingLeft="2">설정</Text>
+        <HStack>
+          <BackButton />
+          <DarkModeButton />
+        </HStack>
       </Wrapper>
       <VStack
         overflowY="scroll"
@@ -35,6 +40,7 @@ const Config = () => {
       >
         <NickNameConfig />
         <ProfileConfig />
+        <LangConfig />
       </VStack>
     </div>
   );

@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import fakeStorageRepo from '../config/fakeStorageRepo';
 import en from './en.json';
 import ko from './ko.json';
 
@@ -16,6 +17,10 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false,
   },
+});
+
+fakeStorageRepo.getItem().then(config => {
+  i18n.changeLanguage((config as { lang: string}).lang);
 });
 
 export type TranslationProps = {

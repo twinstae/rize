@@ -12,25 +12,27 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useRef } from 'react';
+import { withTranslation } from 'react-i18next';
 
 import { useDependencies } from '../hooks/Dependencies';
+import { strs, TranslationProps } from '../i18n/i18n';
 import paths from '../router/paths';
 import MemberList from './MemberList';
 
-function LeftDrawler() {
+function LeftDrawler({t}: TranslationProps) {
   const { navigation } = useDependencies();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
-      <Tooltip label="메뉴">
+      <Tooltip label={t(strs.메뉴)}>
         <IconButton
           variant="ghost"
           onClick={onOpen}
           ref={btnRef}
           icon={<HamburgerIcon />}
-          aria-label="메뉴"
+          aria-label={t(strs.메뉴)}
         />
       </Tooltip>
       <Drawer
@@ -42,9 +44,9 @@ function LeftDrawler() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px" color="izone.500">
-            메뉴
+            {t(strs.메뉴)}
           </DrawerHeader>
-          <DrawerCloseButton margin="2" aria-label="닫기">
+          <DrawerCloseButton margin="2" aria-label={t(strs.닫기)}>
             <CloseIcon />
           </DrawerCloseButton>
           <DrawerBody>
@@ -56,7 +58,7 @@ function LeftDrawler() {
                 navigation.navigate(paths.CONFIG);
               }}
             >
-              설정
+              {t(strs.설정)}
             </Button>
           </DrawerBody>
         </DrawerContent>
@@ -65,4 +67,4 @@ function LeftDrawler() {
   );
 }
 
-export default LeftDrawler;
+export default withTranslation()(LeftDrawler);

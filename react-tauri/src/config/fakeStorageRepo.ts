@@ -7,7 +7,11 @@ interface FakeRepository extends StorageRepository<JsonValue> {
 
 export const createFakeStorageRepo = (key: string) => {
   return {
-    _storage: {} as JsonObject,
+    _storage: {
+      config: {
+        lang: 'en'
+      }
+    } as JsonObject,
     async getItem() {
       return this._storage[key];
     },

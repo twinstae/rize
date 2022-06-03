@@ -32,7 +32,6 @@ function MailListPage({ t }: TranslationProps) {
           <Tab>{t(strs.읽지_않음)} {results[1].length}</Tab>
           <Tab>{t(strs.중요)} {results[2].length}</Tab>
         </TabList>
-
         <TabPanels>
           {modes.map((mode, i) => (
             <TabPanel style={{ padding: '0.5rem' }} key={mode}>
