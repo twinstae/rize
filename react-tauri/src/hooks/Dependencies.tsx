@@ -9,7 +9,6 @@ type DependencyT = {
   tag?: string;
   setTag?: (tag: string) => void;
   navigation?: Navigation;
-  toNick?: (member: string) => string;
   storageRepo?: StorageRepository<JsonValue>;
   isDark?: boolean;
   toggleDark?: () => void;

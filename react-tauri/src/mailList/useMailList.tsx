@@ -1,10 +1,11 @@
 import { atom, useAtom } from 'jotai';
 import { useMemo } from 'react';
 
-import { IZONE, MEMBER_LIST, TabMode, toOriginalName } from '../constants';
+import { IZONE, MEMBER_LIST, memberNameDict, TabMode } from '../constants';
 import atomWithAsyncInit from '../hooks/atomWithAsyncInit';
 import atomWithPersit from '../hooks/atomWithPersist';
 import fakeMailRepository from './fakeMailRepository';
+import fsMailRepository from './fsMailRepository';
 import { MailBodyT, MailRepository, MailT } from './types';
 
 interface MailListResult {
@@ -12,6 +13,7 @@ interface MailListResult {
   mailById: (id: string) => MailBodyT;
   addTagToMail: (tag: string, mail: string) => void;
   removeTagFromMail: (tag: string, mail: string) => void;
+  toOriginalName: (member: string) => IZONE | '운영팀'
 }
 
 export const UNREAD = '읽지 않음';
@@ -23,6 +25,11 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   const rawMailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
   const mailBodyDictAtom = atomWithAsyncInit(
     mailRepository.getMailBodyDict,
+    {}
+  );
+
+  const nameToNumberDictAtom = atomWithAsyncInit(
+    mailRepository.getMemberNameDict,
     {}
   );
 
@@ -65,7 +72,11 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   return (): MailListResult => {
     const [mailList] = useAtom(mailListAtom);
     const [mailBodyDict] = useAtom(mailBodyDictAtom);
+    const [nameToNumberDict] = useAtom(nameToNumberDictAtom);
     const [tagToMailDict, setTagToMailDict] = useAtom(tagToMailDictAtom);
+
+
+    const toOriginalName = (raw: string) => memberNameDict[nameToNumberDict[raw]];
 
     const byMode: (mode: TabMode) => (mail: MailT) => boolean = (mode) => {
       if (mode === 'unread') {
@@ -112,11 +123,12 @@ export const createUseMailList = (mailRepository: MailRepository) => {
           newDict[tag] = (newDict[tag] || []).filter(mailId => targetMailId !== mailId);
           return newDict;
         });
-      }
+      },
+      toOriginalName
     };
   };
 };
 
-const useMailList = createUseMailList(fakeMailRepository);
+const useMailList = createUseMailList(fsMailRepository);
 
 export default useMailList;

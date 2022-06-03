@@ -4,9 +4,10 @@ import { StorageRepository } from '../global';
 import { JsonValue } from '../types/json';
 
 export const createFsStorageRepository = (key: string): StorageRepository<JsonValue> => {
+  const path = `output/local_${key}.txt`;
   return {
     getItem: async () => {
-      return fs.readTextFile(`local_${key}.txt`, {
+      return fs.readTextFile(path, {
         dir: fs.BaseDirectory.Download,
       }).then(JSON.parse)
         .catch(() => undefined) as Promise<JsonValue | undefined>;
@@ -14,7 +15,7 @@ export const createFsStorageRepository = (key: string): StorageRepository<JsonVa
     setItem: async (value: JsonValue) => {
       return fs.writeFile(
         {
-          path: `local_${key}.txt`,
+          path: path,
           contents: JSON.stringify(value),
         },
         {

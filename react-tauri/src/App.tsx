@@ -1,5 +1,6 @@
 import './i18n/i18n';
 import './index.css';
+import 'react-virtualized/styles.css';
 
 import { ChakraProvider, useColorMode } from '@chakra-ui/react';
 import { atom, useAtom } from 'jotai';
@@ -7,9 +8,9 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 
-import Image from './components/Image';
+import TauriImage from './components/Image';
 import fakeStorageRepo from './config/fakeStorageRepo';
-import { toOriginalName } from './constants';
+import fsStorageRepo from './config/fsStorageRepo';
 import { Dependencies } from './hooks/Dependencies';
 import QueryWrapper from './hooks/QueryWrapper';
 import { WrapperT } from './hooks/util';
@@ -29,12 +30,11 @@ const DependencyWrapper: WrapperT = ({ children }) => {
   return (
     <Dependencies.Provider
       value={{
-        storageRepo: fakeStorageRepo,
-        toNick: toOriginalName,
+        storageRepo: fsStorageRepo,
         navigation,
         isDark: colorMode === 'dark',
         toggleDark: toggleColorMode,
-        Image,
+        Image: TauriImage,
         tag,
         setTag,
       }}

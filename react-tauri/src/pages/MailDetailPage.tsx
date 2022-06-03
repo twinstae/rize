@@ -24,11 +24,11 @@ const Wrapper = styled.header`
 `;
 
 function MailDetailPage() {
-  const { navigation, toNick } = useDependencies();
+  const { navigation } = useDependencies();
   const mailId = navigation.params().id ?? 'm25731';
 
-  const mail = useMailList()
-    .mailList('all', '')
+  const { mailList, toOriginalName } = useMailList();
+  const mail = mailList('all', '')
     .find((mail) => mail.id === mailId);
   const mailBody = useMailList().mailById(mailId);
 
@@ -40,9 +40,12 @@ function MailDetailPage() {
           <>
             <FavoriteStar isFavorited={mail.isFavorited} mailId={mail.id}/>
             <ProfileImage member={mail.member} size="base" />
-            <strong>{toNick(mail.member)} </strong>
+            <strong>{toOriginalName(mail.member)} </strong>
             <span
               style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
                 color: 'darkgray',
               }}
             >

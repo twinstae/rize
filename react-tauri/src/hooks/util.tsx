@@ -7,7 +7,7 @@ type ChildrenProps = {
 
 export type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
 
-export const createWrapper = <P extends Record<string, unknown>>(
+export const createWrapper = <P extends {[key:string]: any}>(
   Provider: React.FC<P>,
   props: P
 ): WrapperT => {

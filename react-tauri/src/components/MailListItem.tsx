@@ -5,6 +5,7 @@ import React, { CSSProperties } from 'react';
 import useUsername from '../config/useUsername';
 import { useDependencies } from '../hooks/Dependencies';
 import { MailT } from '../mailList/types';
+import useMailList from '../mailList/useMailList';
 import { toMailDetail } from '../router/paths';
 import FavoriteStar from './FavoriteStar';
 import ProfileImage from './ProfileImage';
@@ -41,6 +42,9 @@ const Description = styled.p`
 
 const DatiTimeText = styled.span`
   color: darkgray;
+  position: absolute;
+  top: 0.5rem;
+  right: 3rem;
 `;
 
 interface MailListItemProps {
@@ -49,7 +53,8 @@ interface MailListItemProps {
 }
 
 function MailListItem({ mail, style }: MailListItemProps) {
-  const { navigation, toNick } = useDependencies();
+  const { navigation } = useDependencies();
+  const { toOriginalName } = useMailList();
   const Link = navigation.Link;
 
   const usernameService = useUsername();
@@ -61,7 +66,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
           <ProfileImage member={mail.member} size="base" />
           <FavoriteStar isFavorited={mail.isFavorited} mailId={mail.id} />
           <HStack>
-            <span>{toNick(mail.member)} </span>
+            <span>{toOriginalName(mail.member)} </span>
             <DatiTimeText>{mail.time}</DatiTimeText>
             <TagList tags={mail.tags} />
           </HStack>

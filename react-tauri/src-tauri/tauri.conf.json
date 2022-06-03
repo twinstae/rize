@@ -1,7 +1,7 @@
 {
   "package": {
     "productName": "react-tauri",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "build": {
     "distDir": "../dist",
@@ -55,7 +55,7 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$APP/*", "$DOWNLOAD/output/img/*","$DOWNLOAD/pm_list.json", "$DOWNLOAD/mail_body_dict.json", "$DOWNLOAD/local_*.txt", "$DOWNLOAD/all_tag_list.json", "$DOWNLOAD/tag_to_mail_dict.json", "$DOWNLOAD/mail_to_tag_dict.json"]
+        "scope": ["$APP/*", "$DOWNLOAD/output/*"]
       },
       "http": {
         "all": true,

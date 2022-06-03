@@ -16,7 +16,6 @@ function renderWithDependency(component: React.ReactElement) {
   const result = render(component, {
     wrapper: DependenciesWrapper({
       navigation,
-      toNick: () => '조구리',
       Image: MockImage,
       storageRepo: fakeStorageRepo
     }),

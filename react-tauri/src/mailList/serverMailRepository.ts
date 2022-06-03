@@ -21,6 +21,7 @@ const serverMailRepository: MailRepository = {
     readJSONfile('pm_list.json') as Promise<RawMailT[]>,
   getMailBodyDict: async () =>
     readJSONfile('mail_body_dict.json') as Promise<Record<string, MailBodyT>>,
+  getMemberNameDict: async () => readJSONfile('member_name.json') as Promise<Record<string, number>>,
   getMailToTagDict: async () =>
     readJSONfile('mail_to_tag_dict.json') as Promise<Record<string, string[]>>,
   saveMailToTagDict: writeJSONfile('mail_to_tag_dict.json'),

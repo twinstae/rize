@@ -1,4 +1,5 @@
 import MAIL_TO_TAG_DICT from '../test/mail_to_tag_dict.json';
+import MEMBER_NAME from '../test/member_name.json';
 import TAG_TO_MAIL_DICT from '../test/tag_to_mail_dict.json';
 import TEST_MAIL_BODY_DICT from '../test/test_mail_body_dict.json';
 import TEST_MAIL_LIST from '../test/test_pm_list.json';
@@ -12,6 +13,7 @@ const fakeMailRepository: MailRepository = {
   getMailBodyDict: async () => TEST_MAIL_BODY_DICT as Record<string, MailBodyT>,
   getTagToMailDict: async () => tag_to_mail_dict,
   getMailToTagDict: async () => mail_to_tag_dict,
+  getMemberNameDict: async () => MEMBER_NAME as Record<string, number>,
   saveMailToTagDict: async (dict: Record<string, string[]>) => {
     mail_to_tag_dict = dict;
   },

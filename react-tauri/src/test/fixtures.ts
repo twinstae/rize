@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 
-import { UsernameServiceT } from '../global';
+import { UsernameT } from '../global';
 import { MailT, RawMailT } from '../mailList/types';
 
 export const TEST_MAIL: MailT = {
@@ -24,7 +24,7 @@ export const TEST_MAIL_2: RawMailT = {
     '좋은아침😊💕 이침엔 핫초코지👍ㅎ おはよう😊💕 朝ホットチョコレートか👍',
 };
 
-export const DummyUsernameService: UsernameServiceT = {
+export const DummyUsernameService: UsernameT = {
   before: '테스트',
   after: '테스트',
   setBefore: vi.fn(),
