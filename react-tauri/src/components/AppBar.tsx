@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useAtom } from 'jotai';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 
@@ -21,14 +21,14 @@ import DarkModeButton from './DarkModeButton';
 import LeftDrawler from './LeftDrawler';
 import SelectedTag from './SelectedTag';
 
+const debounceSearch = debounce((text, search) => search(text), 200);
 function AppBar({ t }: TranslationProps) {
   const [keyword, search] = useAtom(keywordAtom);
   const [keywordInput, setKeywordInput] = useState('');
 
-  const debounceSearch = _.debounce((text) => search(text), 500);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywordInput(e.target.value);
-    debounceSearch(e.target.value);
+    debounceSearch(e.target.value, search);
   };
   const { isOpen, onClose, onOpen } = useDisclosure();
 
