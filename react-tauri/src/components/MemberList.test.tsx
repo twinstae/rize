@@ -5,8 +5,8 @@ import { describe, it } from 'vitest';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import { MEMBER_LIST } from '../constants';
 import { DependenciesWrapper } from '../hooks/Dependencies';
-import { MockImage } from './Image';
 import MemberList from './MemberList';
+import { MockImage } from './TauriImage';
 
 describe('MemberList', () => {
   describe('멤버를 클릭하면, 그 멤버의 태그가 선택된다', () => {

@@ -7,8 +7,8 @@ import { DependenciesWrapper } from '../hooks/Dependencies';
 import { toMailDetail } from '../router/paths';
 import { useFakeNavigation } from '../router/useNavigation';
 import { TEST_MAIL } from '../test/fixtures';
-import { MockImage } from './Image';
 import MailListItem from './MailListItem';
+import { MockImage } from './TauriImage';
 
 function renderWithDependency(component: React.ReactElement) {
   const navigation = useFakeNavigation();

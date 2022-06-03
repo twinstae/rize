@@ -8,7 +8,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 
-import TauriImage from './components/Image';
+import TauriImage from './components/TauriImage';
 import fakeStorageRepo from './config/fakeStorageRepo';
 import fsStorageRepo from './config/fsStorageRepo';
 import { Dependencies } from './hooks/Dependencies';
