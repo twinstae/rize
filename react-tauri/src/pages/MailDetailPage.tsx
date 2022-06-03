@@ -9,6 +9,8 @@ import styled from "@emotion/styled";
 import ProfileImage from "../components/ProfileImage";
 import { useAtom } from "jotai";
 import { keywordAtom } from "../search/useSearch";
+import FavoriteStar from "../components/FavoriteStar";
+import BackButton from "../components/BackButton";
 
 const Title = styled.h3`
   padding: 0;
@@ -31,25 +33,14 @@ function MailDetailPage() {
     .mailList("all", "")
     .find((mail) => mail.id === mailId);
   const mailBody = useMailList().mailById(mailId);
-  const [keyword] = useAtom(keywordAtom);
 
   return (
     <div style={{padding: "0.5rem"}}>
-      <Tooltip label="돌아가기">
-        <IconButton
-          variant="ghost"
-          icon={<ArrowBackIcon />}
-          onClick={() =>
-            navigation.navigate(
-              mail ? "/?mailId=" + mail.id + "&search=" + keyword : "/"
-            )
-          }
-          aria-label="돌아가기"
-        />
-      </Tooltip>
+      <BackButton />
       <Wrapper>
         {mail ? (
           <>
+            <FavoriteStar isFavorited={mail.isFavorited} mailId={mail.id}/>
             <ProfileImage member={mail.member} size="base" />
             <strong>{toNick(mail.member)} </strong>
             <span

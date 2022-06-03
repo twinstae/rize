@@ -2,9 +2,9 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { IconButton, StackDivider, Tooltip, VStack, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React from 'react';
+import BackButton from '../components/BackButton';
 import { useDependencies } from '../hooks/Dependencies';
 import paths from '../router/paths';
-import FontConfig from './config/FontConfig';
 import NickNameConfig from './config/NickNameConfig';
 import ProfileConfig from './config/ProfileConfig';
 
@@ -18,18 +18,11 @@ const Wrapper = styled.header`
 `;
 
 const Config = () => {
-  const { navigation, isDark } = useDependencies();
+  const { isDark } = useDependencies();
   return (
     <div>
       <Wrapper theme={isDark}>
-        <Tooltip label="돌아가기">
-          <IconButton
-            variant="ghost"
-            icon={<ArrowBackIcon />}
-            onClick={() => navigation.navigate(paths.MAIL_LIST)}
-            aria-label="돌아가기"
-          />
-        </Tooltip>
+        <BackButton />
         <Text fontSize="2xl" fontWeight="bold" paddingLeft="2">설정</Text>
       </Wrapper>
       <VStack
