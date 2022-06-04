@@ -1,18 +1,29 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
+import { DependenciesWrapper } from '../hooks/Dependencies';
+import fakeMailRepository from '../mailList/fakeMailRepository';
+import useMailList, { createUseMailList } from '../mailList/useMailList';
 import FavoriteStar from './FavoriteStar';
 
-describe('DarkModeButton', () => {
-  it('DarkModeButton을 클릭하면 밝게에서 다크로 변한다', () => {
-    render(<FavoriteStar isFavorited={true} mailId="t1"/>);
 
-    screen.getByLabelText('중요');
-  });
+function Story() {
+  const { mailById } = useMailList();
+  const mail = mailById('m25731');
+  if (mail === undefined) return null;
+  return (
+    <FavoriteStar mail={mail}/>
+  );
+}
 
-  it('DarkModeButton을 영어로 번역할 수 있다', async () => {
-    render(<FavoriteStar isFavorited={false} mailId="t1"/>);
+describe('FavoriteStar', () => {
+  it('중요 표시하기 버튼을 누르면 중요 표시가 된다', async () => {
+    render(<Story />, {
+      wrapper: DependenciesWrapper({ useMailList: createUseMailList(fakeMailRepository) }),
+    });
 
-    expect(screen.queryByLabelText('중요')).not.toBeInTheDocument();
+    fireEvent.click(await screen.findByLabelText('중요 표시하기'));
+    fireEvent.click(await screen.findByLabelText('중요'));
+    expect(screen.getByLabelText('중요 표시하기')).toBeInTheDocument();
   });
 });

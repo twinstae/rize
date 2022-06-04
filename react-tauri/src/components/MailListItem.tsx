@@ -6,7 +6,7 @@ import useUsername from '../config/useUsername';
 import { useDependencies } from '../hooks/Dependencies';
 import { MailT } from '../mailList/types';
 import useMailList from '../mailList/useMailList';
-import paths, { toMailDetail } from '../router/paths';
+import { toMailDetail } from '../router/paths';
 import FavoriteStar from './FavoriteStar';
 import ProfileImage from './ProfileImage';
 import TagList from './TagList';
@@ -69,9 +69,9 @@ function MailListItem({ mail, style }: MailListItemProps) {
           }, { replace: true });
         }}>
           <ProfileImage member={mail.member} size="base" />
-          <FavoriteStar isFavorited={mail.isFavorited} mailId={mail.id} />
+          <FavoriteStar mail={mail}/>
           <HStack>
-            <span>{toOriginalName(mail.member)} </span>
+            <span>{toOriginalName(mail.member) || mail.member}</span>
             <DatiTimeText>{mail.time}</DatiTimeText>
             <TagList tags={mail.tags} />
           </HStack>

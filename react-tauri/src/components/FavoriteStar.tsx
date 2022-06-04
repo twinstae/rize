@@ -11,38 +11,44 @@ const EmpryStarIcon = createIcon({
 });
 
 interface FavoriteStarProps {
-  isFavorited: boolean;
-  mailId: string;
+  mail: {
+    isFavorited: boolean,
+    id: string,
+  }
 }
 
-function FavoriteStar({ isFavorited, mailId }: FavoriteStarProps) {
+function FavoriteStar({ mail }: FavoriteStarProps) {
   const { addTagToMail, removeTagFromMail } = useMailList();
-  return isFavorited ? (
+  const toggleFavorite = () => {
+    if(mail.isFavorited){
+      removeTagFromMail(FAVORITE, mail.id);
+    } else {
+      addTagToMail(FAVORITE, mail.id);
+    }
+  };
+  
+  const commonProps = {
+    variant: 'ghost',
+    position: 'absolute',
+    right: '3',
+    borderRadius: 'full',
+    onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite();
+    }
+  } as const;
+
+  return mail.isFavorited ? (
     <IconButton
-      variant="ghost"
-      position="absolute"
-      right="3"
-      borderRadius="full"
+      {...commonProps}
       icon={<StarIcon color="gold" />}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        removeTagFromMail(FAVORITE, mailId);
-      }}
       aria-label="중요"
     />
   ) : (
     <IconButton
-      variant="ghost"
-      position="absolute"
-      right="3"
-      borderRadius="full"
+      {...commonProps}
       icon={<EmpryStarIcon color="gray.400" />}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        addTagToMail(FAVORITE, mailId);
-      }}
       aria-label="중요 표시하기"
     />
   );

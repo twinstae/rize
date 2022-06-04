@@ -25,20 +25,18 @@ const Wrapper = styled.header`
 
 function MailDetailPage() {
   const { navigation } = useDependencies();
+  const { toOriginalName, mailById } = useMailList();
   const mailId = navigation.params().id ?? 'm25731';
 
-  const { mailList, toOriginalName } = useMailList();
-  const mail = mailList('all', '')
-    .find((mail) => mail.id === mailId);
-  const mailBody = useMailList().mailById(mailId);
+  const mail = mailById(mailId);
 
   return (
     <div style={{padding: '0.5rem'}}>
       <BackButton />
       <Wrapper>
-        {mail ? (
+        {mail && (
           <>
-            <FavoriteStar isFavorited={mail.isFavorited} mailId={mail.id}/>
+            <FavoriteStar mail={mail} />
             <ProfileImage member={mail.member} size="base" />
             <strong>{toOriginalName(mail.member)} </strong>
             <span
@@ -53,10 +51,10 @@ function MailDetailPage() {
             </span>
             <Title>{mail.subject}</Title>
           </>
-        ) : null}
+        )}
       </Wrapper>
       <Divider />
-      {mailBody && <MailBody mailBody={mailBody} />}
+      {mail && <MailBody mailBody={mail} />}
     </div>
   );
 }
