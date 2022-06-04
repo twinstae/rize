@@ -30,6 +30,3 @@ export const memberNameDict: Record<number, IZONE | '운영팀'> = {
   11: '이채연',
   12: '운영팀',
 };
-
-export const modes = ['all', 'unread', 'favorite'] as const;
-export type TabMode = typeof modes[number]

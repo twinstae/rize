@@ -1,10 +1,11 @@
 import { atom, useAtom } from 'jotai';
 import { useMemo } from 'react';
 
-import { IZONE, MEMBER_LIST, memberNameDict, TabMode } from '../constants';
+import { IZONE } from '../constants';
 import atomWithAsyncInit from '../hooks/atomWithAsyncInit';
 import atomWithPersit from '../hooks/atomWithPersist';
 import { useDependencies } from '../hooks/Dependencies';
+import { addTagToMail, filterByModeAndTag, removeTagFromMail, reverseTagToMail, TabMode, toOriginalName } from './mailListModel';
 import { MailBodyT, MailRepository, MailT } from './types';
 
 export interface MailListResult {
@@ -17,8 +18,6 @@ export interface MailListResult {
 
 export const UNREAD = '읽지 않음';
 export const FAVORITE = '💖';
-
-const jsonClone: <T>(old: T) => T = (old) => JSON.parse(JSON.stringify(old));
 
 export const createUseMailList = (mailRepository: MailRepository) => {
   const rawMailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
@@ -43,25 +42,20 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   const mailToTagDictAtom = atom((get) => {
     const tagToMailDict = get(tagToMailDictAtom);
 
-    return Object.entries(tagToMailDict).reduce((acc, entry) => {
-      (entry[1] ?? []).forEach(mailId => {
-        const oldTags = acc.get(mailId) ?? [];
-        oldTags.push(entry[0]);
-        acc.set(mailId, oldTags);
-      });
-      return acc;
-    }, new Map());
+    return reverseTagToMail(tagToMailDict);
   });
 
   const mailListAtom = atom((get) => {
     const rawMailList = get(rawMailListAtom);
     const tagToMailDict = get(tagToMailDictAtom);
     const mailToTagDict = get(mailToTagDictAtom);
+    const nameToNumberDict = get(nameToNumberDictAtom);
 
     const unreadSet = new Set(tagToMailDict[UNREAD]);
     const favoriteSet = new Set(tagToMailDict[FAVORITE]);
     return rawMailList.map((mail) => ({
       ...mail,
+      member: toOriginalName(nameToNumberDict)(mail.member),
       isFavorited: favoriteSet.has(mail.id),
       isUnread: unreadSet.has(mail.id),
       tags: mailToTagDict.get(mail.id) ?? [],
@@ -74,37 +68,11 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     const [nameToNumberDict] = useAtom(nameToNumberDictAtom);
     const [tagToMailDict, setTagToMailDict] = useAtom(tagToMailDictAtom);
 
-
-    const toOriginalName = (raw: string) => memberNameDict[nameToNumberDict[raw]];
-
-    const byMode: (mode: TabMode) => (mail: MailT) => boolean = (mode) => {
-      if (mode === 'unread') {
-        return (mail) => mail.isUnread;
-      }
-      if (mode === 'favorite') {
-        return (mail) => mail.isFavorited;
-      }
-
-      return () => true;
-    };
-
-    const byTag: (tag: string) => (item: MailT) => boolean = (tag) => {
-      if (MEMBER_LIST.includes(tag as IZONE)) {
-        return (mail) => toOriginalName(mail.member) === tag;
-      }
-
-      if (tag === '' || tagToMailDict[tag] === undefined) {
-        return () => true;
-      }
-      return (mail) => (tagToMailDict[tag] ?? []).includes(mail.id);
-    };
-
     return {
       mailList: (mode, tag) => {
         return useMemo(
-          () =>
-            mailList.filter((item) => byMode(mode)(item) && byTag(tag)(item)),
-          [mailList, mode, tag]
+          () => mailList.filter(filterByModeAndTag(tagToMailDict)(mode,tag)),
+          [mailList, tagToMailDict, mode, tag]
         );
       },
       mailById: (id) => {
@@ -120,21 +88,12 @@ export const createUseMailList = (mailRepository: MailRepository) => {
         return undefined;
       },
       addTagToMail: (tag: string, targetMailId: string) => {
-        setTagToMailDict((old: Record<string, string[]>) => {
-          const newDict = jsonClone(old);
-
-          (newDict[tag] ?? []).push(targetMailId);
-          return newDict;
-        });
+        setTagToMailDict(addTagToMail(tag, targetMailId));
       },
       removeTagFromMail: (tag: string, targetMailId: string) => {
-        setTagToMailDict((old: Record<string, string[]>) => {
-          const newDict = jsonClone(old);
-          newDict[tag] = (newDict[tag] || []).filter(mailId => targetMailId !== mailId);
-          return newDict;
-        });
+        setTagToMailDict(removeTagFromMail(tag, targetMailId));
       },
-      toOriginalName
+      toOriginalName: toOriginalName(nameToNumberDict)
     };
   };
 };

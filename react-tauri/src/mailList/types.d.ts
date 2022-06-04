@@ -1,6 +1,8 @@
+import { IZONE } from '../constants';
+
 export type RawMailT = {
   id: string;
-  member: string;
+  member: IZONE | '운영팀';
   time: string;
   subject: string;
   preview: string;
