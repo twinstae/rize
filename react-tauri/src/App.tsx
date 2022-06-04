@@ -3,15 +3,14 @@ import './index.css';
 import 'react-virtualized/styles.css';
 
 import { ChakraProvider, useColorMode } from '@chakra-ui/react';
-import { atom, useAtom } from 'jotai';
 import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import TauriImage from './components/TauriImage';
 import fsStorageRepo from './config/fsStorageRepo';
-import { Dependencies } from './hooks/Dependencies';
+import { DependenciesWrapper } from './hooks/Dependencies';
 import QueryWrapper from './hooks/QueryWrapper';
-import { WrapperT } from './hooks/util';
+import { createWrapper, pipeWrapper } from './hooks/util';
 import fsMailRepository from './mailList/fsMailRepository';
 import { createUseMailList } from './mailList/useMailList';
 import Config from './pages/Config';
@@ -21,46 +20,30 @@ import paths from './router/paths';
 import useRRDNavigation from './router/useRRDNavigation';
 import theme from './theme/theme';
 
-const currentTagAtom = atom('');
 const useMailList = createUseMailList(fsMailRepository);
 
-const DependencyWrapper: WrapperT = ({ children }) => {
-  const navigation = useRRDNavigation();
-  const [tag, setTag] = useAtom(currentTagAtom);
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <Dependencies.Provider
-      value={{
-        storageRepo: fsStorageRepo,
-        navigation,
-        isDark: colorMode === 'dark',
-        toggleDark: toggleColorMode,
-        Image: TauriImage,
-        tag,
-        setTag,
-        useMailList
-      }}
-    >
-      {children}
-    </Dependencies.Provider>
-  );
-};
+const Wrapper = pipeWrapper(
+  createWrapper(ChakraProvider, { theme }),
+  HashRouter,
+  QueryWrapper,
+  DependenciesWrapper({
+    storageRepo: fsStorageRepo,
+    useNavigationImpl: useRRDNavigation,
+    Image: TauriImage,
+    useColorMode,
+    useMailList
+  }),
+);
 
 const App = () => (
-  <ChakraProvider theme={theme}>
-    <HashRouter>
-      <QueryWrapper>
-        <DependencyWrapper>
-          <Routes>
-            <Route path={paths.CONFIG} element={<Config />} />
-            <Route path={paths.MAIL_LIST} element={<MailListPage />} />
-            <Route path={paths.MAIL_DETAIL} element={<MailDetailPage />} />
-            <Route path={paths.ROOT} element={<MailListPage />} />
-          </Routes>
-        </DependencyWrapper>
-      </QueryWrapper>
-    </HashRouter>
-  </ChakraProvider>
+  <Wrapper>
+    <Routes>
+      <Route path={paths.CONFIG} element={<Config />} />
+      <Route path={paths.MAIL_LIST} element={<MailListPage />} />
+      <Route path={paths.MAIL_DETAIL} element={<MailDetailPage />} />
+      <Route path={paths.ROOT} element={<MailListPage />} />
+    </Routes>
+  </Wrapper>
 );
 
 export default App;

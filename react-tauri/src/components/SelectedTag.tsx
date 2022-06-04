@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { IZONE, MEMBER_LIST } from '../constants';
-import { useDependencies } from '../hooks/Dependencies';
+import useTag from '../mailList/useTag';
 import ProfileImage from './ProfileImage';
 
 function SelectedTag() {
-  const { tag } = useDependencies();
+  const [tag] = useTag();
   return tag ? (
     <>
       {MEMBER_LIST.includes(tag as IZONE) && <ProfileImage member={tag} size="sm" />}

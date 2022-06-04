@@ -15,8 +15,10 @@ describe('DarkModeButton', () => {
         return (
           <Dependencies.Provider
             value={{
-              isDark,
-              toggleDark: () => setDark((prev) => !prev),
+              useColorMode: () => ({
+                colorMode: isDark ? 'dark' : 'light',
+                toggleColorMode: () => setDark((prev) => !prev),
+              }),
             }}
           >
             {children}

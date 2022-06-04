@@ -12,20 +12,19 @@ import { TEST_MAIL } from '../test/fixtures';
 import MailListItem from './MailListItem';
 import { MockImage } from './TauriImage';
 
-
-
 function renderWithDependency(component: React.ReactElement) {
-  const navigation = useFakeNavigation();
   const useMailList = createUseMailList(fakeMailRepository);
+  const navigation = useFakeNavigation();
 
   const result = render(component, {
     wrapper: DependenciesWrapper({
-      navigation,
+      useNavigationImpl: () => navigation,
       Image: MockImage,
       storageRepo: fakeStorageRepo,
-      useMailList
-    })
+      useMailList,
+    }),
   });
+
   return { ...result, navigation };
 }
 

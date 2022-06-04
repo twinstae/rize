@@ -14,26 +14,21 @@ describe('MemberList', () => {
   describe('멤버를 클릭하면, 그 멤버의 태그가 선택된다', () => {
     MEMBER_LIST.forEach((name) => {
       it(`${name} 클릭하면 ${name} 태그가 선택된다`, () => {
-        let nowTag = '';
-        const setTag = (tag: string) => {
-          nowTag = tag;
-        };
-
         const useMailList = createUseMailList(fakeMailRepository);
 
         render(<MemberList />, {
           wrapper: DependenciesWrapper({
             storageRepo: fakeStorageRepo,
-            tag: nowTag,
-            setTag,
             Image: MockImage,
             useMailList
           }),
         });
+        const theMember = screen.getByText(name);
+        expect(theMember.getAttribute('aria-selected')).toBe(false);
+        
+        fireEvent.click(theMember);
 
-        fireEvent.click(screen.getByText(name));
-
-        expect(nowTag).toBe(name);
+        expect(theMember.getAttribute('aria-selected')).toBe(true);
       });
     });
   });

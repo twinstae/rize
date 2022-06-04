@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { useDependencies } from '../hooks/Dependencies';
+
 export interface Navigation {
   params: () => Readonly<{[key:string]: string | undefined}>;
   useSearchParams: typeof useSearchParams;
@@ -43,3 +45,11 @@ export const useFakeNavigation = (): Navigation => {
       ),
   };
 };
+
+function useNavigation(){
+  const { useNavigationImpl } = useDependencies();
+
+  return useNavigationImpl();
+}
+
+export default useNavigation;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { MEMBER_LIST } from '../constants';
-import { useDependencies } from '../hooks/Dependencies';
+import useTag from '../mailList/useTag';
 import ProfileImage from './ProfileImage';
 
 interface MemberListItemProps {
@@ -10,7 +10,7 @@ interface MemberListItemProps {
 }
 
 function MemberListItem({ name, text }: MemberListItemProps) {
-  const { tag, setTag } = useDependencies();
+  const [tag, setTag] = useTag();
 
   const selected = name === tag;
   return (

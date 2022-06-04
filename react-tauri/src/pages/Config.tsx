@@ -5,7 +5,7 @@ import React from 'react';
 
 import BackButton from '../components/BackButton';
 import DarkModeButton from '../components/DarkModeButton';
-import { useDependencies } from '../hooks/Dependencies';
+import useDarkMode from '../theme/useDarkMode';
 import LangConfig from './config/LangConfig';
 import NickNameConfig from './config/NickNameConfig';
 import ProfileConfig from './config/ProfileConfig';
@@ -21,7 +21,7 @@ const Wrapper = styled.header`
 `;
 
 const Config = () => {
-  const { isDark } = useDependencies();
+  const { isDark } = useDarkMode();
   return (
     <div>
       <Wrapper theme={isDark}>

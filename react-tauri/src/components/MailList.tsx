@@ -2,9 +2,9 @@ import { UnorderedList } from '@chakra-ui/react';
 import React from 'react';
 import { List } from 'react-virtualized';
 
-import { useDependencies } from '../hooks/Dependencies';
 import { withSuspense } from '../hooks/util';
 import { MailT, RawMailT } from '../mailList/types';
+import useNavigation from '../router/useNavigation';
 import MailListItem from './MailListItem';
 import NoSearchResult from './NoSearchResult';
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 function MailList({ allMailList, result }: Props) {
-  const { navigation } = useDependencies();
+  const navigation = useNavigation();
   const [searchParams] = navigation.useSearchParams();
 
   const getIndex = (mailList: RawMailT[]) =>

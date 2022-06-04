@@ -6,9 +6,9 @@ import BackButton from '../components/BackButton';
 import FavoriteStar from '../components/FavoriteStar';
 import MailBody from '../components/MailBody';
 import ProfileImage from '../components/ProfileImage';
-import { useDependencies } from '../hooks/Dependencies';
 import { withSuspense } from '../hooks/util';
 import useMailList from '../mailList/useMailList';
+import useNavigation from '../router/useNavigation';
 
 const Title = styled.h3`
   padding: 0;
@@ -24,7 +24,7 @@ const Wrapper = styled.header`
 `;
 
 function MailDetailPage() {
-  const { navigation } = useDependencies();
+  const navigation = useNavigation();
   const { toOriginalName, mailById } = useMailList();
   const mailId = navigation.params().id ?? 'm25731';
 

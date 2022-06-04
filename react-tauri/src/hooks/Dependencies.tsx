@@ -7,12 +7,12 @@ import { JsonValue } from '../types/json';
 import { createWrapper } from './util';
 
 type DependencyT = {
-  tag?: string;
-  setTag?: (tag: string) => void;
-  navigation?: Navigation;
+  useNavigationImpl?: () => Navigation;
   storageRepo?: StorageRepository<JsonValue>;
-  isDark?: boolean;
-  toggleDark?: () => void;
+  useColorMode?: () => {
+    colorMode: 'light' | 'dark',
+    toggleColorMode: () => void,
+  };
   Image?: React.FC<{
     path: string;
     style: React.CSSProperties;

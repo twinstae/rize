@@ -9,7 +9,7 @@ export const createFakeStorageRepo = (key: string) => {
   return {
     _storage: {
       config: {
-        lang: 'en'
+        lang: 'ko'
       }
     } as JsonObject,
     async getItem() {

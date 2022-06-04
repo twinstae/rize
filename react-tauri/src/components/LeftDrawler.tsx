@@ -14,13 +14,13 @@ import {
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useDependencies } from '../hooks/Dependencies';
 import { strs } from '../i18n/i18n';
 import paths from '../router/paths';
+import useNavigation from '../router/useNavigation';
 import MemberList from './MemberList';
 
 function LeftDrawler() {
-  const { navigation } = useDependencies();
+  const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
@@ -55,7 +55,7 @@ function LeftDrawler() {
             <Button
               marginTop="4"
               leftIcon={<SettingsIcon />}
-              onClick={()=>{
+              onClick={() => {
                 navigation.navigate(paths.CONFIG);
               }}
             >

@@ -1,12 +1,11 @@
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { IconButton,Tooltip } from '@chakra-ui/react';
+import { IconButton, Tooltip } from '@chakra-ui/react';
 import React from 'react';
 
-import { useDependencies } from '../hooks/Dependencies';
-
+import useNavigation from '../router/useNavigation';
 
 function BackButton() {
-  const { navigation } = useDependencies();
+  const navigation = useNavigation();
 
   return (
     <Tooltip label="돌아가기">
