@@ -5,4 +5,5 @@ export default {
   MAIL_LIST: '/mail',
   MAIL_DETAIL: '/mail/:id',
   CONFIG: '/config',
+  TEST: '/test'
 };

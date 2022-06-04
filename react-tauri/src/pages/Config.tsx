@@ -9,6 +9,7 @@ import useDarkMode from '../theme/useDarkMode';
 import LangConfig from './config/LangConfig';
 import NickNameConfig from './config/NickNameConfig';
 import ProfileConfig from './config/ProfileConfig';
+import TestingButton from './config/TestingButton';
 
 const Wrapper = styled.header`
   padding: 0.5rem;
@@ -41,6 +42,7 @@ const Config = () => {
         <NickNameConfig />
         <ProfileConfig />
         <LangConfig />
+        <TestingButton />
       </VStack>
     </div>
   );

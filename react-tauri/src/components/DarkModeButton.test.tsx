@@ -6,6 +6,8 @@ import { Dependencies } from '../hooks/Dependencies';
 import en from '../i18n/en.json';
 import i18n from '../i18n/i18n';
 import { RawDarkModeButton } from './DarkModeButton';
+
+
 describe('DarkModeButton', () => {
   const renderComponent = () => {
     return render(<RawDarkModeButton />, {

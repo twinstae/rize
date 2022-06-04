@@ -1,12 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { MemoryRouter } from 'react-router-dom';
 
-import { createWrapper } from '../hooks/util';
 import useRRDNavigation from './useRRDNavigation';
 
 const renderNavigationHook = () =>
   renderHook(() => useRRDNavigation(), {
-    wrapper: createWrapper(MemoryRouter, {}),
+    wrapper: MemoryRouter,
   });
 
 describe('useNavigation 계약', () => {

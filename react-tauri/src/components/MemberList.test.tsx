@@ -24,11 +24,11 @@ describe('MemberList', () => {
           }),
         });
         const theMember = screen.getByText(name);
-        expect(theMember.getAttribute('aria-selected')).toBe(false);
+        expect(theMember.getAttribute('aria-selected')).toBe('false');
         
         fireEvent.click(theMember);
 
-        expect(theMember.getAttribute('aria-selected')).toBe(true);
+        expect(theMember.getAttribute('aria-selected')).toBe('true');
       });
     });
   });
