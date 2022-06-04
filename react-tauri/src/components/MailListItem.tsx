@@ -6,7 +6,7 @@ import useUsername from '../config/useUsername';
 import { useDependencies } from '../hooks/Dependencies';
 import { MailT } from '../mailList/types';
 import useMailList from '../mailList/useMailList';
-import { toMailDetail } from '../router/paths';
+import paths, { toMailDetail } from '../router/paths';
 import FavoriteStar from './FavoriteStar';
 import ProfileImage from './ProfileImage';
 import TagList from './TagList';
@@ -55,6 +55,7 @@ interface MailListItemProps {
 function MailListItem({ mail, style }: MailListItemProps) {
   const { navigation } = useDependencies();
   const { toOriginalName } = useMailList();
+  const [ , setSearchParams] = navigation.useSearchParams();
   const Link = navigation.Link;
 
   const usernameService = useUsername();
@@ -62,7 +63,11 @@ function MailListItem({ mail, style }: MailListItemProps) {
   return (
     <Wrapper style={style} className={mail.isUnread ? 'unread' : undefined}>
       <Link to={toMailDetail(mail.id)}>
-        <div>
+        <div onClick={() => {
+          setSearchParams({
+            mailId: mail.id
+          }, { replace: true });
+        }}>
           <ProfileImage member={mail.member} size="base" />
           <FavoriteStar isFavorited={mail.isFavorited} mailId={mail.id} />
           <HStack>

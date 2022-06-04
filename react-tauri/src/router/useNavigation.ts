@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export interface Navigation {
   params: () => Readonly<{[key:string]: string | undefined}>;
+  useSearchParams: typeof useSearchParams;
   current: () => string;
   navigate: (path: string) => void;
   goBack: () => void;
@@ -15,6 +17,7 @@ export const useFakeNavigation = (): Navigation => {
 
   return {
     params: () => ({ mailId: 'm123' }),
+    searchParams: { mailId: 'm123' },
     current: () => {
       return history[history.length - 1];
     },

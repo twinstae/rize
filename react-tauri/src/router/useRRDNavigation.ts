@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Navigation } from './useNavigation';
 
 const useRRDNavigation = (): Navigation => {
   const navigate = useNavigate();
+
   const { pathname } = useLocation();
   return {
     params: useParams,
+    useSearchParams,
     current: () => pathname,
     navigate: (path: string) => {
       navigate(path);

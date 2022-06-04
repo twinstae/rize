@@ -14,14 +14,14 @@ interface Props {
 
 function MailList({ allMailList, result }: Props) {
   const { navigation } = useDependencies();
-  const { mailId } = navigation.params();
+  const [searchParams] = navigation.useSearchParams();
 
   const getIndex = (mailList: RawMailT[]) =>
     Math.min(
-      mailList.findIndex((mail) => mailId === mail.id) + 4,
+      mailList.findIndex((mail) => searchParams.get('mailId') === mail.id) + 4,
       mailList.length - 1
     );
-
+    
   return (
     <UnorderedList padding={0} margin={0}>
       {result.length !== 0 ? (
