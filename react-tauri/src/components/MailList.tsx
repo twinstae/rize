@@ -1,4 +1,4 @@
-import { UnorderedList } from '@chakra-ui/react';
+import { Box, SkeletonCircle, SkeletonText, UnorderedList } from '@chakra-ui/react';
 import React from 'react';
 import { List } from 'react-virtualized';
 
@@ -41,7 +41,14 @@ function MailList({ allMailList, result }: Props) {
       ) : allMailList.length > result.length ? (
         <NoSearchResult />
       ) : (
-        <span>메일이 없습니다</span>
+        <Box>
+          {Array(8).fill(0).map((_, i) => (
+            <Box key={i} color="gray.500">
+              <SkeletonCircle size="10" float="left" m="2"/> IZ*ONE RIZE
+              <SkeletonText noOfLines={2} height="16" mt="8"/>
+            </Box>
+          ))}
+        </Box>
       )}
     </UnorderedList>
   );

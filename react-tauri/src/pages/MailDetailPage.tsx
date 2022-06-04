@@ -1,4 +1,10 @@
-import { Divider } from '@chakra-ui/react';
+import {
+  Box,
+  Divider,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+} from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -23,6 +29,11 @@ const Wrapper = styled.header`
   padding: 0.5rem;
 `;
 
+const skeletonCommon = {
+  startColor: 'izone.500',
+  endColor: 'izone.400'
+};
+
 function MailDetailPage() {
   const navigation = useNavigation();
   const { toOriginalName, mailById } = useMailList();
@@ -31,10 +42,10 @@ function MailDetailPage() {
   const mail = mailById(mailId);
 
   return (
-    <div style={{padding: '0.5rem'}}>
+    <div style={{ padding: '0.5rem' }}>
       <BackButton />
       <Wrapper>
-        {mail && (
+        {mail ? (
           <>
             <FavoriteStar mail={mail} />
             <ProfileImage member={mail.member} size="base" />
@@ -51,10 +62,39 @@ function MailDetailPage() {
             </span>
             <Title>{mail.subject}</Title>
           </>
+        ) : (
+          <SkeletonCircle size="10" {...skeletonCommon}/>
         )}
       </Wrapper>
       <Divider />
-      {mail && <MailBody mailBody={mail} />}
+      {mail ? (
+        <MailBody mailBody={mail} />
+      ) : (
+        <Box>
+          <SkeletonText
+            {...skeletonCommon}
+            mt="4"
+            p="4"
+            noOfLines={2}
+            spacing="4"
+          />
+          <Skeleton
+            {...skeletonCommon}
+            mt="4"
+            p="8"
+            height="240px"
+          />
+          <SkeletonText
+            {...skeletonCommon}
+            mt="4"
+            p="4"
+            noOfLines={20}
+            spacing="4"
+          />
+        </Box>
+      )}
+
+      <BackButton />
     </div>
   );
 }
