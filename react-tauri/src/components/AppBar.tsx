@@ -2,7 +2,6 @@ import { SearchIcon } from '@chakra-ui/icons';
 import {
   CloseButton,
   HStack,
-  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
@@ -18,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { strs } from '../i18n/i18n';
 import { keywordAtom } from '../search/useSearch';
 import DarkModeButton from './DarkModeButton';
+import IconButtonWithTooltip from './IconButtonWithTooltip';
 import LeftDrawler from './LeftDrawler';
 import SelectedTag from './SelectedTag';
 
@@ -87,17 +87,14 @@ function AppBar() {
           <LeftDrawler />
           <DarkModeButton />
           <SelectedTag />
-          <Tooltip label={t(strs.검색)}>
-            <IconButton
-              position="absolute"
-              right="3"
-              variant="ghost"
-              onClick={onOpen}
-              icon={<SearchIcon />}
-              marginLeft="2"
-              aria-label={t(strs.검색)}
-            />
-          </Tooltip>
+          <IconButtonWithTooltip
+            position="absolute"
+            right="3"
+            onClick={onOpen}
+            icon={<SearchIcon />}
+            marginLeft="2"
+            aria-label={t(strs.검색)}
+          />
         </>
       )}
     </HStack>

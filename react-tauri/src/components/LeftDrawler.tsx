@@ -7,41 +7,30 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  IconButton,
-  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
-import React, { useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { strs } from '../i18n/i18n';
 import paths from '../router/paths';
 import useNavigation from '../router/useNavigation';
+import IconButtonWithTooltip from './IconButtonWithTooltip';
 import MemberList from './MemberList';
 
 function LeftDrawler() {
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
 
   return (
     <>
-      <Tooltip label={t(strs.메뉴)}>
-        <IconButton
-          variant="ghost"
-          onClick={onOpen}
-          ref={btnRef}
-          icon={<HamburgerIcon />}
-          aria-label={t(strs.메뉴)}
-        />
-      </Tooltip>
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
+      <IconButtonWithTooltip
+        onClick={onOpen}
+        icon={<HamburgerIcon />}
+        aria-label={t(strs.메뉴)}
+      />
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px" color="izone.500">

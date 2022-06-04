@@ -1,7 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next, useTranslation as useNextTranslation } from 'react-i18next';
 
-import fsStorageRepo from '../config/fsStorageRepo';
 import en from './en.json';
 import ko from './ko.json';
 
@@ -19,9 +18,6 @@ i18n.use(initReactI18next).init({
   },
 });
 
-fsStorageRepo.getItem().then(config => {
-  i18n.changeLanguage((config as { lang: string}).lang);
-});
 
 export type TranslationProps = {
   t: (text: string) => string;
