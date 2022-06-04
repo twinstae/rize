@@ -1,10 +1,9 @@
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Button } from '@chakra-ui/react';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useDependencies } from '../hooks/Dependencies';
-import { strs } from '../i18n/i18n';
+import { strs, useTranslation } from '../i18n/i18n';
 
 export const RawDarkModeButton = () => {
   const { t } = useTranslation();

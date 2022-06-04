@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { initReactI18next, useTranslation as useNextTranslation } from 'react-i18next';
 
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import en from './en.json';
@@ -30,5 +30,7 @@ export type TranslationProps = {
 type TranslationKeys = Record<keyof typeof ko.translation, keyof typeof ko.translation>
 
 export const strs = Object.fromEntries(Object.keys(ko.translation).map(key => [key, key])) as TranslationKeys;
+
+export const useTranslation = useNextTranslation;
 
 export default i18n;
