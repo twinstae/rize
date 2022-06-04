@@ -5,8 +5,7 @@ import 'react-virtualized/styles.css';
 import { ChakraProvider, useColorMode } from '@chakra-ui/react';
 import { atom, useAtom } from 'jotai';
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import TauriImage from './components/TauriImage';
 import fakeStorageRepo from './config/fakeStorageRepo';

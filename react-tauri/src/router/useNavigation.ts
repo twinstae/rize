@@ -17,7 +17,12 @@ export const useFakeNavigation = (): Navigation => {
 
   return {
     params: () => ({ mailId: 'm123' }),
-    searchParams: { mailId: 'm123' },
+    useSearchParams: () => {
+      const searchParam = new URLSearchParams();
+      return [searchParam, (newInit) => { 
+        Object.entries(newInit).forEach(([key, value]) => searchParam.set(key, value));
+      }];
+    },
     current: () => {
       return history[history.length - 1];
     },
@@ -32,7 +37,7 @@ export const useFakeNavigation = (): Navigation => {
     },
     Link: (props: { to: string; children: JSX.Element }) =>
       React.createElement(
-        'a',
+        'span',
         { href: props.to, onClick: () => history.push(props.to) },
         props.children
       ),
