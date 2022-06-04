@@ -4,13 +4,12 @@ import { useMemo } from 'react';
 import { IZONE, MEMBER_LIST, memberNameDict, TabMode } from '../constants';
 import atomWithAsyncInit from '../hooks/atomWithAsyncInit';
 import atomWithPersit from '../hooks/atomWithPersist';
-import fakeMailRepository from './fakeMailRepository';
-import fsMailRepository from './fsMailRepository';
+import { useDependencies } from '../hooks/Dependencies';
 import { MailBodyT, MailRepository, MailT } from './types';
 
-interface MailListResult {
+export interface MailListResult {
   mailList: (mode: TabMode, tag: string) => MailT[];
-  mailById: (id: string) => MailBodyT;
+  mailById: (id: string) => MailT & MailBodyT | undefined;
   addTagToMail: (tag: string, mail: string) => void;
   removeTagFromMail: (tag: string, mail: string) => void;
   toOriginalName: (member: string) => IZONE | '운영팀'
@@ -108,7 +107,18 @@ export const createUseMailList = (mailRepository: MailRepository) => {
           [mailList, mode, tag]
         );
       },
-      mailById: (id) => mailBodyDict[id] ?? { body: '', images: [] },
+      mailById: (id) => {
+        const mail = mailList.find((mail) => mail.id === id);
+        const mailBody = mailBodyDict[id];
+        if (mail && mailBody) {
+          return {
+            ...mail,
+            ...mailBody
+          };
+        }
+
+        return undefined;
+      },
       addTagToMail: (tag: string, targetMailId: string) => {
         setTagToMailDict((old: Record<string, string[]>) => {
           const newDict = jsonClone(old);
@@ -129,6 +139,9 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   };
 };
 
-const useMailList = createUseMailList(fsMailRepository);
+function useMailList(){
+  const { useMailList } = useDependencies();
+  return useMailList();
+}
 
 export default useMailList;

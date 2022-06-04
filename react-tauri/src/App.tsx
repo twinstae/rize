@@ -8,11 +8,12 @@ import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import TauriImage from './components/TauriImage';
-import fakeStorageRepo from './config/fakeStorageRepo';
 import fsStorageRepo from './config/fsStorageRepo';
 import { Dependencies } from './hooks/Dependencies';
 import QueryWrapper from './hooks/QueryWrapper';
 import { WrapperT } from './hooks/util';
+import fsMailRepository from './mailList/fsMailRepository';
+import { createUseMailList } from './mailList/useMailList';
 import Config from './pages/Config';
 import MailDetailPage from './pages/MailDetailPage';
 import MailListPage from './pages/MailListPage';
@@ -21,6 +22,7 @@ import useRRDNavigation from './router/useRRDNavigation';
 import theme from './theme/theme';
 
 const currentTagAtom = atom('');
+const useMailList = createUseMailList(fsMailRepository);
 
 const DependencyWrapper: WrapperT = ({ children }) => {
   const navigation = useRRDNavigation();
@@ -36,6 +38,7 @@ const DependencyWrapper: WrapperT = ({ children }) => {
         Image: TauriImage,
         tag,
         setTag,
+        useMailList
       }}
     >
       {children}

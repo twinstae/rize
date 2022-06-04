@@ -31,6 +31,9 @@ function MailList({ allMailList, result }: Props) {
           rowCount={result.length}
           rowHeight={100}
           scrollToIndex={getIndex(result)}
+          style={{
+            overflowY: 'scroll'
+          }}
           rowRenderer={({ key, index, style }) => (
             <MailListItem key={key} mail={result[index]} style={style} />
           )}

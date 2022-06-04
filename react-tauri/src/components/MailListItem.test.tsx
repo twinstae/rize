@@ -4,21 +4,27 @@ import { describe, it } from 'vitest';
 
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
+import fakeMailRepository from '../mailList/fakeMailRepository';
+import { createUseMailList } from '../mailList/useMailList';
 import { toMailDetail } from '../router/paths';
 import { useFakeNavigation } from '../router/useNavigation';
 import { TEST_MAIL } from '../test/fixtures';
 import MailListItem from './MailListItem';
 import { MockImage } from './TauriImage';
 
+
+
 function renderWithDependency(component: React.ReactElement) {
   const navigation = useFakeNavigation();
+  const useMailList = createUseMailList(fakeMailRepository);
 
   const result = render(component, {
     wrapper: DependenciesWrapper({
       navigation,
       Image: MockImage,
-      storageRepo: fakeStorageRepo
-    }),
+      storageRepo: fakeStorageRepo,
+      useMailList
+    })
   });
   return { ...result, navigation };
 }
@@ -28,7 +34,7 @@ describe('MailListItem', () => {
     renderWithDependency(<MailListItem mail={TEST_MAIL} style={{}} />);
 
     screen.getByText(TEST_MAIL.subject);
-    screen.getByText('조구리');
+    screen.getByText('조유리');
     screen.getByText(TEST_MAIL.preview);
     screen.getByText(TEST_MAIL.time);
   });

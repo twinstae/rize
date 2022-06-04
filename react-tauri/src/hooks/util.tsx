@@ -7,6 +7,7 @@ type ChildrenProps = {
 
 export type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createWrapper = <P extends {[key:string]: any}>(
   Provider: React.FC<P>,
   props: P

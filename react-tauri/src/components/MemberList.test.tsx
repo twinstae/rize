@@ -5,6 +5,8 @@ import { describe, it } from 'vitest';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import { MEMBER_LIST } from '../constants';
 import { DependenciesWrapper } from '../hooks/Dependencies';
+import fakeMailRepository from '../mailList/fakeMailRepository';
+import { createUseMailList } from '../mailList/useMailList';
 import MemberList from './MemberList';
 import { MockImage } from './TauriImage';
 
@@ -17,12 +19,15 @@ describe('MemberList', () => {
           nowTag = tag;
         };
 
+        const useMailList = createUseMailList(fakeMailRepository);
+
         render(<MemberList />, {
           wrapper: DependenciesWrapper({
             storageRepo: fakeStorageRepo,
             tag: nowTag,
             setTag,
             Image: MockImage,
+            useMailList
           }),
         });
 

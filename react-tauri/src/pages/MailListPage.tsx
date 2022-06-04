@@ -13,15 +13,15 @@ import useSearch from '../search/useSearch';
 
 function MailListPage() {
   const { isDark, tag } = useDependencies();
+  const { mailList } = useMailList();
   const { t } = useTranslation();
 
-  const mailData = useMailList();
 
-  const allMailList = mailData.mailList('all', '');
+  const allMailList = mailList('all', '');
   const { isInResult } = useSearch(allMailList);
 
   const results = modes
-    .map((mode) => mailData.mailList(mode, tag))
+    .map((mode) => mailList(mode, tag))
     .map((data) => data.filter((mail) => isInResult(mail.id)));
 
   return (
