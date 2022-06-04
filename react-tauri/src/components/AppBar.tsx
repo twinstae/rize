@@ -13,18 +13,20 @@ import {
 import { useAtom } from 'jotai';
 import debounce from 'lodash/debounce';
 import React, { useEffect, useState } from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-import { strs, TranslationProps } from '../i18n/i18n';
+import { strs } from '../i18n/i18n';
 import { keywordAtom } from '../search/useSearch';
 import DarkModeButton from './DarkModeButton';
 import LeftDrawler from './LeftDrawler';
 import SelectedTag from './SelectedTag';
 
 const debounceSearch = debounce((text, search) => search(text), 200);
-function AppBar({ t }: TranslationProps) {
+
+function AppBar() {
   const [keyword, search] = useAtom(keywordAtom);
   const [keywordInput, setKeywordInput] = useState('');
+  const { t } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywordInput(e.target.value);
@@ -102,4 +104,4 @@ function AppBar({ t }: TranslationProps) {
   );
 }
 
-export default withTranslation()(AppBar);
+export default AppBar;

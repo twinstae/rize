@@ -1,12 +1,13 @@
 import { Box, FormLabel, Input, VStack } from '@chakra-ui/react';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import useUsername from '../../config/useUsername';
-import { strs, TranslationProps } from '../../i18n/i18n';
+import { strs } from '../../i18n/i18n';
 import ConfigHeading from './ConfigHeading';
 
-function NickNameConfig({t}: TranslationProps) {
+function NickNameConfig() {
+  const { t } = useTranslation();
   const {before, after, setBefore, setAfter, replaceUsername} = useUsername();
 
   return (
@@ -25,4 +26,4 @@ function NickNameConfig({t}: TranslationProps) {
   );
 }
 
-export default withTranslation()(NickNameConfig);
+export default NickNameConfig;

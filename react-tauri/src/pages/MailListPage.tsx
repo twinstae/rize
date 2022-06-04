@@ -1,18 +1,19 @@
 import { Tab, TabList, TabPanel,TabPanels, Tabs } from '@chakra-ui/react';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import AppBar from '../components/AppBar';
 import MailList from '../components/MailList';
 import { modes } from '../constants';
 import { useDependencies } from '../hooks/Dependencies';
 import { withSuspense } from '../hooks/util';
-import { strs, TranslationProps } from '../i18n/i18n';
+import { strs } from '../i18n/i18n';
 import useMailList from '../mailList/useMailList';
 import useSearch from '../search/useSearch';
 
-function MailListPage({ t }: TranslationProps) {
+function MailListPage() {
   const { isDark, tag } = useDependencies();
+  const { t } = useTranslation();
 
   const mailData = useMailList();
 
@@ -44,4 +45,4 @@ function MailListPage({ t }: TranslationProps) {
   );
 }
 
-export default withTranslation()(withSuspense(MailListPage));
+export default withSuspense(MailListPage);

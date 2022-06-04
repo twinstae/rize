@@ -1,7 +1,6 @@
 import { HStack, Radio, RadioGroup,VStack } from '@chakra-ui/react';
-import { t } from 'i18next';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import ProfileImage from '../../components/ProfileImage';
 import useProfile from '../../config/useProfile';
@@ -14,6 +13,8 @@ const shuffledIndex = shuffle([0,1,2,3,4,5,6,7,8,9,10,11]);
 
 function ProfileConfig() {
   const { profile, setProfile, profileList } = useProfile();
+  const { t } = useTranslation();
+  
   return (
     <VStack align="stretch">
       <ConfigHeading title={t(strs.프로필_바꾸기) + ' : ' + profile}/>
@@ -35,4 +36,4 @@ function ProfileConfig() {
   );
 }
 
-export default withTranslation()(ProfileConfig);
+export default ProfileConfig;

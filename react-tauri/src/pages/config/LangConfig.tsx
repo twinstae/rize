@@ -1,13 +1,14 @@
 import { Box, Select } from '@chakra-ui/react';
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import useLang from '../../config/useLang';
-import { strs, TranslationProps } from '../../i18n/i18n';
+import { strs } from '../../i18n/i18n';
 import ConfigHeading from './ConfigHeading';
 
-function LangConfig({t}: TranslationProps) {
+function LangConfig() {
   const {lang, setLang, langList} = useLang();
+  const { t } = useTranslation();
   return (
     <Box>
       <ConfigHeading title={t(strs.언어)}/>
@@ -22,4 +23,4 @@ function LangConfig({t}: TranslationProps) {
   );
 }
 
-export default withTranslation()(LangConfig);
+export default LangConfig;

@@ -1,4 +1,5 @@
-import i18n from '../i18n/i18n';
+import { useTranslation } from 'react-i18next';
+
 import useConfig from './useConfig';
 
 const langList = [
@@ -15,6 +16,7 @@ function isLang(value: unknown){
 
 function useLang() {
   const config = useConfig();
+  const { i18n } = useTranslation();
 
   const lang = (config.get('lang') ?? defaultLang) as string;
 

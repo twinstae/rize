@@ -12,17 +12,18 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useRef } from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { useDependencies } from '../hooks/Dependencies';
-import { strs, TranslationProps } from '../i18n/i18n';
+import { strs } from '../i18n/i18n';
 import paths from '../router/paths';
 import MemberList from './MemberList';
 
-function LeftDrawler({t}: TranslationProps) {
+function LeftDrawler() {
   const { navigation } = useDependencies();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -67,4 +68,4 @@ function LeftDrawler({t}: TranslationProps) {
   );
 }
 
-export default withTranslation()(LeftDrawler);
+export default LeftDrawler;
