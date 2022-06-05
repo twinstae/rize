@@ -5,6 +5,7 @@
   "dependencies": {
     "@capacitor/android": "^3.5.1",
     "@capacitor/core": "^3.5.1",
+    "@capacitor/filesystem": "^1.1.0",
     "@capacitor/ios": "^3.5.1",
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.5",
@@ -59,11 +60,13 @@
     "vitest": "^0.3.2"
   },
   "scripts": {
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "build:tauri": "vite build --config='vite.config.tauri.js'",
+    "build:cap": "vite build --config='vite.config.capacitor.js'",
+    "build": "tsc && concurrently -k \"yarn build:tauri\" \"yarn build:cap\"",
     "dev": "concurrently -k \"vite\" \"tauri dev\"",
     "tauri:build": "tauri dev --debug",
-    "lint": "eslint --ext ts,tsx src"
+    "lint": "eslint --ext ts,tsx src",
+    "build:full": ""
   },
   "browserslist": {
     "production": [

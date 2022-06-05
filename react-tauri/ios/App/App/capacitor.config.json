@@ -1,6 +1,6 @@
 {
 	"appId": "com.lec.rize",
 	"appName": "rize",
-	"webDir": "dist",
-	"bundledWebRuntime": false
+	"webDir": "capacitor/dist",
+	"bundledWebRuntime": true
 }

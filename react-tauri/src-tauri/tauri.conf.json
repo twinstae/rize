@@ -1,10 +1,10 @@
 {
   "package": {
-    "productName": "react-tauri",
+    "productName": "rize",
     "version": "0.1.1"
   },
   "build": {
-    "distDir": "../dist",
+    "distDir": "../tauri/dist",
     "devPath": "http://localhost:3000",
     "beforeDevCommand": "",
     "beforeBuildCommand": ""
@@ -13,7 +13,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.lec.rize",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
