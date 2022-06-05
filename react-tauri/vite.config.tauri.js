@@ -4,6 +4,6 @@ import viteCommon from './vite-common';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  root: './tauri',
+  root: './src/tauri',
   ...viteCommon,
 });

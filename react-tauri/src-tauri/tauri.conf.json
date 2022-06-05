@@ -4,7 +4,7 @@
     "version": "0.1.1"
   },
   "build": {
-    "distDir": "../tauri/dist",
+    "distDir": "../src/tauri/dist",
     "devPath": "http://localhost:3000",
     "beforeDevCommand": "",
     "beforeBuildCommand": ""
