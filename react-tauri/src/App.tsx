@@ -6,25 +6,25 @@ import { ChakraProvider, useColorMode } from '@chakra-ui/react';
 import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import TauriImage from './components/TauriImage';
-import fsStorageRepo from './config/fsStorageRepo';
+import { MockImage } from './components/MockImage';
+import fakeStorageRepo from './config/fakeStorageRepo';
 import { DependenciesWrapper } from './hooks/Dependencies';
 import QueryWrapper from './hooks/QueryWrapper';
 import { createWrapper, pipeWrapper } from './hooks/util';
 import i18n from './i18n/i18n';
-import fsMailRepository from './mailList/fsMailRepository';
+import fakeMailRepository from './mailList/fakeMailRepository';
 import { createUseMailList } from './mailList/useMailList';
 import Config from './pages/Config';
 import MailDetailPage from './pages/MailDetailPage';
 import MailListPage from './pages/MailListPage';
 import paths from './router/paths';
 import useRRDNavigation from './router/useRRDNavigation';
-import Test from './test/Test';
 import theme from './theme/theme';
 
-const useMailList = createUseMailList(fsMailRepository);
+const storageRepo = fakeStorageRepo;
+const useMailList = createUseMailList(fakeMailRepository);
 
-fsStorageRepo.getItem().then(config => {
+storageRepo.getItem().then(config => {
   i18n.changeLanguage((config as { lang: string}).lang);
 });
 
@@ -33,9 +33,9 @@ const Wrapper = pipeWrapper(
   HashRouter,
   QueryWrapper,
   DependenciesWrapper({
-    storageRepo: fsStorageRepo,
+    storageRepo,
     useNavigationImpl: useRRDNavigation,
-    Image: TauriImage,
+    Image: MockImage,
     useColorMode,
     useMailList
   }),
@@ -48,7 +48,6 @@ const App = () => (
       <Route path={paths.MAIL_LIST} element={<MailListPage />} />
       <Route path={paths.MAIL_DETAIL} element={<MailDetailPage />} />
       <Route path={paths.ROOT} element={<MailListPage />} />
-      <Route path={paths.TEST} element={<Test />} />
     </Routes>
   </Wrapper>
 );

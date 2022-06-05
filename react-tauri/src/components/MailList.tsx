@@ -21,13 +21,13 @@ function MailList({ allMailList, result }: Props) {
       mailList.findIndex((mail) => searchParams.get('mailId') === mail.id) + 4,
       mailList.length - 1
     );
-    
+
   return (
     <UnorderedList padding={0} margin={0}>
       {result.length !== 0 ? (
         <List
-          width={435}
-          height={580}
+          width={window.innerWidth}
+          height={window.innerHeight - 120}
           rowCount={result.length}
           rowHeight={100}
           scrollToIndex={getIndex(result)}

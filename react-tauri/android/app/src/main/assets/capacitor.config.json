@@ -1,0 +1,6 @@
+{
+	"appId": "com.lec.rize",
+	"appName": "rize",
+	"webDir": "dist",
+	"bundledWebRuntime": true
+}

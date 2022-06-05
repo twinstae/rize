@@ -10,7 +10,7 @@ import { toMailDetail } from '../router/paths';
 import { useFakeNavigation } from '../router/useNavigation';
 import { TEST_MAIL } from '../test/fixtures';
 import MailListItem from './MailListItem';
-import { MockImage } from './TauriImage';
+import { MockImage } from './MockImage';
 
 function renderWithDependency(component: React.ReactElement) {
   const useMailList = createUseMailList(fakeMailRepository);

@@ -8,7 +8,7 @@ import { DependenciesWrapper } from '../hooks/Dependencies';
 import fakeMailRepository from '../mailList/fakeMailRepository';
 import { createUseMailList } from '../mailList/useMailList';
 import MemberList from './MemberList';
-import { MockImage } from './TauriImage';
+import { MockImage } from './MockImage';
 
 describe('MemberList', () => {
   describe('멤버를 클릭하면, 그 멤버의 태그가 선택된다', () => {

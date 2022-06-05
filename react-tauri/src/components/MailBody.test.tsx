@@ -5,7 +5,7 @@ import { describe, it } from 'vitest';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import MailBody from './MailBody';
-import { MockImage } from './TauriImage';
+import { MockImage } from './MockImage';
 
 function renderWithDependency(component: React.ReactElement) {
   return render(component, {

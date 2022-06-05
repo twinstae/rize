@@ -28,8 +28,5 @@ const TauriImage: React.FC<Props> = ({ path, style, width }) => {
   );
 };
 
-export const MockImage: React.FC<Props> = ({ path, style }) => (
-  <span style={style}>{path}</span>
-);
 
 export default withSuspense(TauriImage);

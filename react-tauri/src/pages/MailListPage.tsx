@@ -30,13 +30,13 @@ function MailListPage() {
       <AppBar />
       <Tabs isFitted colorScheme={isDark ? 'pink' : 'izone'}>
         <TabList>
-          <Tab>
+          <Tab fontSize="lg">
             {t(strs.전체)} {results[0].length}
           </Tab>
-          <Tab>
+          <Tab fontSize="lg">
             {t(strs.읽지_않음)} {results[1].length}
           </Tab>
-          <Tab>
+          <Tab fontSize="lg">
             {t(strs.중요)} {results[2].length}
           </Tab>
         </TabList>

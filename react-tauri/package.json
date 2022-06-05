@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "^3.5.1",
+    "@capacitor/core": "^3.5.1",
+    "@capacitor/ios": "^3.5.1",
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.5",
     "@ctrl/tinycolor": "^3.4.0",
@@ -29,6 +32,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
+    "@capacitor/cli": "^3.5.1",
     "@stitches/core": "^1.2.6",
     "@tauri-apps/cli": "^1.0.0-rc.2",
     "@testing-library/jest-dom": "^5.16.2",
