@@ -18,16 +18,22 @@ function ProfileConfig() {
   return (
     <VStack align="stretch">
       <ConfigHeading title={t(strs.프로필_바꾸기) + ' : ' + profile}/>
-      <HStack spacing="0.5">
-        {MEMBER_LIST.map(member => <ProfileImage key={member} member={member} size="sm" theme={profile}/> )}
-      </HStack>
+      <VStack>
+        <HStack spacing="0.5">
+          {MEMBER_LIST.slice(0,6).map(member => <ProfileImage key={member} member={member} size="md" theme={profile}/> )}
+        </HStack>
+        <HStack spacing="0.5">
+          {MEMBER_LIST.slice(6).map(member => <ProfileImage key={member} member={member} size="md" theme={profile}/> )}
+        </HStack>
+      </VStack>
+      
       <RadioGroup value={profile} onChange={(selected) => {
         setProfile(selected);
       }}>
         {profileList.map(profileTheme => (
           <Radio value={profileTheme} p="1" key={profileTheme}>
-            {profileTheme}
-            {shuffledIndex.map((i)=>MEMBER_LIST[i]).slice(0,4)
+            <h4>{profileTheme}</h4>
+            {shuffledIndex.map((i)=>MEMBER_LIST[i]).slice(0,7)
               .map(member => <ProfileImage key={member} member={member} size="md" theme={profileTheme}/> )}
           </Radio>
         ))}
