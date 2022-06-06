@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 
 import App from '../App';
-import { MockImage } from '../components/MockImage';
+import CapacitorImage from '../components/CapacitorImage';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import QueryWrapper from '../hooks/QueryWrapper';
@@ -33,7 +33,7 @@ const Wrapper = pipeWrapper(
   DependenciesWrapper({
     storageRepo,
     useNavigationImpl: useRRDNavigation,
-    Image: MockImage,
+    Image: CapacitorImage,
     useColorMode,
     useMailList
   }),
