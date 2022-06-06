@@ -26,7 +26,7 @@ function MailList({ allMailList, result }: Props) {
     <UnorderedList padding={0} margin={0}>
       {result.length !== 0 ? (
         <List
-          width={window.innerWidth}
+          width={window.innerWidth - 10}
           height={window.innerHeight - 120}
           rowCount={result.length}
           rowHeight={100}
