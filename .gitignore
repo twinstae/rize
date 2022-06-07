@@ -31,3 +31,5 @@ yarn-error.log*
 src/public/
 
 dist
+yarn.lock
+package-lock.json
