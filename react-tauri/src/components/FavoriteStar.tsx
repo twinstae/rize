@@ -31,7 +31,8 @@ function FavoriteStar({ mail }: FavoriteStarProps) {
     <IconButtonWithTooltip
       variant="ghost"
       position="absolute"
-      right="3"
+      right="1"
+      top="0"
       borderRadius="full"
       onClick={(e) => {
         e.preventDefault();
