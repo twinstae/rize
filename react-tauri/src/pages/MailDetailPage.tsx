@@ -12,7 +12,6 @@ import BackButton from '../components/BackButton';
 import FavoriteStar from '../components/FavoriteStar';
 import MailBody from '../components/MailBody';
 import ProfileImage from '../components/ProfileImage';
-import { withSuspense } from '../hooks/util';
 import useMailList from '../mailList/useMailList';
 import useNavigation from '../router/useNavigation';
 
@@ -99,4 +98,4 @@ function MailDetailPage() {
   );
 }
 
-export default withSuspense(MailDetailPage);
+export default MailDetailPage;

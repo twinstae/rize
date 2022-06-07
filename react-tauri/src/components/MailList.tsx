@@ -2,7 +2,6 @@ import { Box, SkeletonCircle, SkeletonText, UnorderedList } from '@chakra-ui/rea
 import React from 'react';
 import { List } from 'react-virtualized';
 
-import { withSuspense } from '../hooks/util';
 import { MailT, RawMailT } from '../mailList/types';
 import useNavigation from '../router/useNavigation';
 import MailListItem from './MailListItem';
@@ -54,4 +53,4 @@ function MailList({ allMailList, result }: Props) {
   );
 }
 
-export default withSuspense(MailList);
+export default MailList;

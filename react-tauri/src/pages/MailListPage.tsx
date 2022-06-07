@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 
 import AppBar from '../components/AppBar';
 import MailList from '../components/MailList';
-import { withSuspense } from '../hooks/util';
 import { strs } from '../i18n/i18n';
 import { modes } from '../mailList/mailListModel';
 import useMailList from '../mailList/useMailList';
@@ -52,4 +51,4 @@ function MailListPage() {
   );
 }
 
-export default withSuspense(MailListPage);
+export default MailListPage;
