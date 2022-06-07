@@ -7,11 +7,12 @@ interface Props {
   width: number;
 }
 
+const ROOT = 'https://rize-taehee-kim.s3.ap-northeast-2.amazonaws.com/';
 const CapacitorImage: React.FC<Props> = ({ path, style, width }) => {
   return (
     <Image
       borderRadius='full'
-      src={'https://raw.githubusercontent.com/twinstae/izone-pm-viewer/main/dist/' + path || `https://via.placeholder.com/${width}`}
+      src={ROOT + path}
       width={width}
       style={style}
     />

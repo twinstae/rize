@@ -8,8 +8,6 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 
 import App from '../App';
-import CapacitorImage from '../components/CapacitorImage';
-import fakeStorageRepo from '../config/fakeStorageRepo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import QueryWrapper from '../hooks/QueryWrapper';
 import { createWrapper, pipeWrapper } from '../hooks/util';
@@ -18,9 +16,11 @@ import fakeMailRepository from '../mailList/fakeMailRepository';
 import { createUseMailList } from '../mailList/useMailList';
 import useRRDNavigation from '../router/useRRDNavigation';
 import theme from '../theme/theme';
+import CapacitorImage from './CapacitorImage';
+import storageRepo from './storageRepo';
 
-const storageRepo = fakeStorageRepo;
-const useMailList = createUseMailList(fakeMailRepository);
+const mailRepository = fakeMailRepository;
+const useMailList = createUseMailList(mailRepository);
 
 storageRepo.getItem().then(config => {
   i18n.changeLanguage((config as { lang: string}).lang);
@@ -35,7 +35,8 @@ const Wrapper = pipeWrapper(
     useNavigationImpl: useRRDNavigation,
     Image: CapacitorImage,
     useColorMode,
-    useMailList
+    useMailList,
+    mailRepository
   }),
 );
 
