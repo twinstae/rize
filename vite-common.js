@@ -1,8 +1,10 @@
 import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
-export default {
+export default defineConfig({
   plugins: [react()],
+  publicDir: '../public',
   test: {
     globals: true,
     environment: 'jsdom',
@@ -19,4 +21,4 @@ export default {
       all: true,
     },
   },
-};
+});

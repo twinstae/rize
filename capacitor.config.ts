@@ -4,7 +4,7 @@ const config: CapacitorConfig = {
   appId: 'com.lec.rize',
   appName: 'rize',
   webDir: 'src/capacitor/dist',
-  bundledWebRuntime: true
+  bundledWebRuntime: false
 };
 
 export default config;
