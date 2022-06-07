@@ -23,8 +23,6 @@ export interface MailRepository {
   getAllMailList: () => Promise<RawMailT[]>;
   getMailBodyDict: () => Promise<Record<string, MailBodyT>>;
   getTagToMailDict: () => Promise<Record<string, string[]>>;
-  getMailToTagDict: () => Promise<Record<string, string[]>>;
   getMemberNameDict: () => Promise<Record<string, number>>;
   saveTagToMailDict: (dict: Record<string, string[]>) => Promise<void>;
-  saveMailToTagDict: (dict: Record<string, string[]>) => Promise<void>;
 }

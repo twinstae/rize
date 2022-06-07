@@ -1,6 +1,6 @@
 import { http } from '@tauri-apps/api';
 
-import { MailBodyT,MailRepository, RawMailT } from './types';
+import { MailBodyT,MailRepository, RawMailT } from '../mailList/types';
 
 const readJSONfile: (path: string) => Promise<unknown> = (path) =>
   http.fetch('http://localhost:3000/' + path).then((res) => res.data);
@@ -22,9 +22,6 @@ const serverMailRepository: MailRepository = {
   getMailBodyDict: async () =>
     readJSONfile('mail_body_dict.json') as Promise<Record<string, MailBodyT>>,
   getMemberNameDict: async () => readJSONfile('member_name.json') as Promise<Record<string, number>>,
-  getMailToTagDict: async () =>
-    readJSONfile('mail_to_tag_dict.json') as Promise<Record<string, string[]>>,
-  saveMailToTagDict: writeJSONfile('mail_to_tag_dict.json'),
   getTagToMailDict: async () =>
     readJSONfile('tag_to_mail_dict.json') as Promise<Record<string, string[]>>,
   saveTagToMailDict: writeJSONfile('tag_to_mail_dict.json'),

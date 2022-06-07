@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import { StorageRepository } from '../global';
+import { MailRepository } from '../mailList/types';
 import { MailListResult } from '../mailList/useMailList';
 import { Navigation } from '../router/useNavigation';
 import { JsonValue } from '../types/json';
@@ -18,7 +19,8 @@ type DependencyT = {
     style: React.CSSProperties;
     width: number;
   }>;
-  useMailList?: () => MailListResult
+  useMailList?: () => MailListResult,
+  mailRepository?: MailRepository
 };
 
 export const Dependencies = React.createContext<DependencyT>({});

@@ -8,16 +8,16 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 
 import App from '../App';
-import TauriImage from '../components/TauriImage';
-import fsStorageRepo from '../config/fsStorageRepo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import QueryWrapper from '../hooks/QueryWrapper';
 import { createWrapper, pipeWrapper } from '../hooks/util';
 import i18n from '../i18n/i18n';
-import fsMailRepository from '../mailList/fsMailRepository';
 import { createUseMailList } from '../mailList/useMailList';
 import useRRDNavigation from '../router/useRRDNavigation';
 import theme from '../theme/theme';
+import fsMailRepository from './fsMailRepository';
+import fsStorageRepo from './fsStorageRepo';
+import TauriImage from './TauriImage';
 
 const storageRepo = fsStorageRepo;
 const useMailList = createUseMailList(fsMailRepository);
