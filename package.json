@@ -65,7 +65,7 @@
     "build:tauri": "vite build --config='vite.config.tauri.js'",
     "build:cap": "vite build --config='vite.config.capacitor.js' && npx cap copy",
     "build": "tsc && concurrently \"yarn build:tauri\" \"yarn build:cap\"",
-    "dev": "concurrently -k \"vite\" \"tauri dev\"",
+    "dev": "concurrently -k \"vite --config='vite.config.tauri.js'\" \"tauri dev\"",
     "tauri:build": "tauri dev --debug",
     "lint": "eslint --ext ts,tsx src",
     "build:full": ""
