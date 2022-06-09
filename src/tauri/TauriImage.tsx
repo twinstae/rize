@@ -4,15 +4,11 @@ import { convertFileSrc } from '@tauri-apps/api/tauri';
 import React from 'react';
 import { useQuery } from 'react-query';
 
+import { ImageProps } from '../components/MockImage';
 import { withSuspense } from '../hooks/util';
 
-interface Props {
-  path: string;
-  style: React.CSSProperties;
-  width: number;
-}
 
-const TauriImage: React.FC<Props> = ({ path, style, width }) => {
+const TauriImage: React.FC<ImageProps> = ({ path, style, width }) => {
   const { data } = useQuery<string, Error>(['image', path], async () => {
     const dir = await downloadDir();
     const filePath = await join(dir, 'output/' + path);

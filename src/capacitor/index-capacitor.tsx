@@ -16,7 +16,7 @@ import fakeMailRepository from '../mailList/fakeMailRepository';
 import { createUseMailList } from '../mailList/useMailList';
 import useRRDNavigation from '../router/useRRDNavigation';
 import theme from '../theme/theme';
-import CapacitorImage from './CapacitorImage';
+import S3Image from './S3Image';
 import storageRepo from './storageRepo';
 
 const mailRepository = fakeMailRepository;
@@ -33,7 +33,7 @@ const Wrapper = pipeWrapper(
   DependenciesWrapper({
     storageRepo,
     useNavigationImpl: useRRDNavigation,
-    Image: CapacitorImage,
+    Image: S3Image,
     useColorMode,
     useMailList,
     mailRepository

@@ -1,14 +1,11 @@
 import { Image } from '@chakra-ui/react';
 import React from 'react';
 
-interface Props {
-  path: string;
-  style: React.CSSProperties;
-  width: number;
-}
+import { ImageProps } from '../components/MockImage';
+
 
 const ROOT = 'https://rize-taehee-kim.s3.ap-northeast-2.amazonaws.com/';
-const CapacitorImage: React.FC<Props> = ({ path, style, width }) => {
+const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
   return (
     <Image
       borderRadius='full'
@@ -19,4 +16,4 @@ const CapacitorImage: React.FC<Props> = ({ path, style, width }) => {
   );
 };
 
-export default CapacitorImage;
+export default S3Image;
