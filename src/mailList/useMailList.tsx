@@ -1,4 +1,4 @@
-import { atom, useAtom } from 'jotai';
+import { atom, useAtom, useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 
 import { IZONE } from '../constants';
@@ -14,10 +14,22 @@ export interface MailListResult {
   addTagToMail: (tag: string, mail: string) => void;
   removeTagFromMail: (tag: string, mail: string) => void;
   toOriginalName: (member: string) => IZONE | '운영팀'
+  status: {
+    pmList: boolean;
+    mailBodyDict: boolean;
+    memberName: boolean;
+  }
 }
 
 export const UNREAD = '읽지 않음';
 export const FAVORITE = '💖';
+
+const initTagToMailDict = {
+  [UNREAD]: [],
+  [FAVORITE]: [],
+};
+
+const isEmptyObject = (obj: object) => Object.keys(obj).length !== 0;
 
 export const createUseMailList = (mailRepository: MailRepository) => {
   const rawMailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
@@ -31,10 +43,7 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     {}
   );
 
-  const tagToMailDictAtom = atomWithPersit({
-    [UNREAD]: [],
-    [FAVORITE]: [],
-  } as Record<string, string[]>, {
+  const tagToMailDictAtom = atomWithPersit(initTagToMailDict as Record<string, string[]>, {
     getItem: mailRepository.getTagToMailDict,
     setItem: mailRepository.saveTagToMailDict,
   });
@@ -43,6 +52,14 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     const tagToMailDict = get(tagToMailDictAtom);
 
     return reverseTagToMail(tagToMailDict);
+  });
+
+  const statusAtom = atom((get) => {
+    return {
+      pmList: get(mailListAtom).length > 0,
+      mailBodyDict: isEmptyObject(get(mailBodyDictAtom)),
+      memberName: isEmptyObject(get(nameToNumberDictAtom)),
+    };
   });
 
   const mailListAtom = atom((get) => {
@@ -63,10 +80,11 @@ export const createUseMailList = (mailRepository: MailRepository) => {
   });
 
   return (): MailListResult => {
-    const [mailList] = useAtom(mailListAtom);
-    const [mailBodyDict] = useAtom(mailBodyDictAtom);
-    const [nameToNumberDict] = useAtom(nameToNumberDictAtom);
+    const mailList = useAtomValue(mailListAtom);
+    const mailBodyDict = useAtomValue(mailBodyDictAtom);
+    const nameToNumberDict = useAtomValue(nameToNumberDictAtom);
     const [tagToMailDict, setTagToMailDict] = useAtom(tagToMailDictAtom);
+    const status = useAtomValue(statusAtom);
 
     return {
       mailList: (mode, tag) => {
@@ -93,7 +111,8 @@ export const createUseMailList = (mailRepository: MailRepository) => {
       removeTagFromMail: (tag: string, targetMailId: string) => {
         setTagToMailDict(removeTagFromMail(tag, targetMailId));
       },
-      toOriginalName: toOriginalName(nameToNumberDict)
+      toOriginalName: toOriginalName(nameToNumberDict),
+      status,
     };
   };
 };
