@@ -1,6 +1,6 @@
 import { HStack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import React, { CSSProperties } from 'react';
+import React from 'react';
 
 import useUsername from '../config/useUsername';
 import { MailT } from '../mailList/types';
@@ -43,16 +43,14 @@ const Description = styled.p`
 const DatiTimeText = styled.span`
   color: darkgray;
   position: absolute;
-  top: 0.5rem;
   right: 3rem;
 `;
 
 interface MailListItemProps {
   mail: MailT;
-  style?: CSSProperties;
 }
 
-function MailListItem({ mail, style }: MailListItemProps) {
+function MailListItem({ mail }: MailListItemProps) {
   const navigation = useNavigation();
   const { toOriginalName } = useMailList();
   const [ , setSearchParams] = navigation.useSearchParams();
@@ -61,13 +59,15 @@ function MailListItem({ mail, style }: MailListItemProps) {
   const usernameService = useUsername();
   
   return (
-    <Wrapper style={style} className={mail.isUnread ? 'unread' : undefined}>
+    <Wrapper id={'mail-'+mail.id} className={mail.isUnread ? 'unread' : undefined}>
       <Link to={toMailDetail(mail.id)}>
-        <div onClick={() => {
-          setSearchParams({
-            mailId: mail.id
-          }, { replace: true });
-        }}>
+        <div
+          style={{position: 'relative'}} 
+          onClick={() => {
+            setSearchParams({
+              mailId: mail.id
+            }, { replace: true });
+          }}>
           <ProfileImage member={mail.member} size="base" />
           <FavoriteStar mail={mail}/>
           <HStack>

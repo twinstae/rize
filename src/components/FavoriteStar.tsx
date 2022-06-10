@@ -32,7 +32,7 @@ function FavoriteStar({ mail }: FavoriteStarProps) {
       variant="ghost"
       position="absolute"
       right="1"
-      top="0"
+      top="-2"
       borderRadius="full"
       onClick={(e) => {
         e.preventDefault();
