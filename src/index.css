@@ -24,3 +24,7 @@ li button:focus {
 a:focus {
   outline: none;
 }
+
+path {
+  stroke-width: 2px;
+}
