@@ -1,6 +1,6 @@
 import { Box, SkeletonCircle, SkeletonText, UnorderedList } from '@chakra-ui/react';
-import React from 'react';
-import { List } from 'react-virtualized';
+import React, { useEffect } from 'react';
+import { Virtuoso } from 'react-virtuoso';
 
 import { MailT, RawMailT } from '../mailList/types';
 import useNavigation from '../router/useNavigation';
@@ -20,21 +20,21 @@ function MailList({ allMailList, result }: Props) {
       mailList.findIndex((mail) => searchParams.get('mailId') === mail.id) + 4,
       mailList.length - 1
     );
+  useEffect(() => {
+    const visitedMail = document.getElementById('mail-'+ result[getIndex(result)]?.id);
+    if(visitedMail){
+      visitedMail.scrollIntoView();
+    }
+  }, []);
 
   return (
     <UnorderedList padding={0} margin={0}>
       {result.length !== 0 ? (
-        <List
-          width={window.innerWidth - 10}
-          height={window.innerHeight - 120}
-          rowCount={result.length}
-          rowHeight={100}
-          scrollToIndex={getIndex(result)}
-          style={{
-            overflowY: 'scroll'
-          }}
-          rowRenderer={({ key, index, style }) => (
-            <MailListItem key={key} mail={result[index]} style={style} />
+        <Virtuoso
+          totalCount={result.length}
+          style={{ height: window.innerHeight - 120 }}
+          itemContent={(index) => (
+            <MailListItem mail={result[index]} />
           )}
         />
       ) : allMailList.length > result.length ? (

@@ -1,6 +1,5 @@
 import '../i18n/i18n';
 import '../index.css';
-import 'react-virtualized/styles.css';
 
 import { ChakraProvider, useColorMode } from '@chakra-ui/react';
 import React from 'react';

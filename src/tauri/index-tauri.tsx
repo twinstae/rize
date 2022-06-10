@@ -1,6 +1,5 @@
 import '../i18n/i18n';
 import '../index.css';
-import 'react-virtualized/styles.css';
 
 import { ChakraProvider, useColorMode } from '@chakra-ui/react';
 import React from 'react';
@@ -39,12 +38,15 @@ const Wrapper = pipeWrapper(
   }),
 );
 
-const root = createRoot(document.getElementById('root'));
+const rootDiv = document.getElementById('root');
+if(rootDiv){
+  const root = createRoot(rootDiv);
 
-root.render(
-  <React.StrictMode>
-    <Wrapper>
-      <App />
-    </Wrapper>
-  </React.StrictMode>
-);
+  root.render(
+    <React.StrictMode>
+      <Wrapper>
+        <App />
+      </Wrapper>
+    </React.StrictMode>
+  );  
+}
