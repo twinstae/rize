@@ -14,7 +14,7 @@ function MemberListItem({ name, text }: MemberListItemProps) {
 
   const selected = name === tag;
   return (
-    <li key={name}>
+    <li>
       <button
         onClick={() => {
           setTag(name);

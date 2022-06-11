@@ -30,7 +30,7 @@ function renderWithDependency(component: React.ReactElement) {
 
 describe('MailListItem', () => {
   it('MailListItem에는 제목, 별명, 미리보기, 시간이 있다', () => {
-    renderWithDependency(<MailListItem mail={TEST_MAIL} style={{}} />);
+    renderWithDependency(<MailListItem mail={TEST_MAIL} />);
 
     screen.getByText(TEST_MAIL.subject);
     screen.getByText('조유리');
@@ -40,7 +40,7 @@ describe('MailListItem', () => {
 
   it('MailListItem을 클릭하면 id 에 해당하는 메일 상세 페이지로 이동한다', () => {
     const { navigation } = renderWithDependency(
-      <MailListItem mail={TEST_MAIL} style={{}} />
+      <MailListItem mail={TEST_MAIL}/>
     );
 
     fireEvent.click(screen.getByText(TEST_MAIL.subject));
