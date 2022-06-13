@@ -1,4 +1,5 @@
 import { IZONE } from '../constants';
+import { JsonValue } from '../types/json';
 
 export type RawMailT = {
   id: string;
@@ -25,4 +26,10 @@ export interface MailRepository {
   getTagToMailDict: () => Promise<Record<string, string[]>>;
   getMemberNameDict: () => Promise<Record<string, number>>;
   saveTagToMailDict: (dict: Record<string, string[]>) => Promise<void>;
+  status: () => Promise<{ [fileName: string]: boolean }>
+}
+
+export interface FsJSON {
+  writeJSONfile: (path: string) => (dict: JsonValue) => Promise<void>;
+  readJSONfile: <T extends JsonValue>(path: string) => Promise<T>;
 }

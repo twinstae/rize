@@ -6,6 +6,8 @@ import { MailBodyT,MailRepository, RawMailT } from './types';
 
 let tag_to_mail_dict: Record<string, string[]> = TAG_TO_MAIL_DICT;
 
+export const fileList = ['pm_list.json', 'mail_body_dict.json', 'member_name.json'];
+
 const fakeMailRepository: MailRepository = {
   getAllMailList: async () => TEST_MAIL_LIST as RawMailT[],
   getMailBodyDict: async () => TEST_MAIL_BODY_DICT as Record<string, MailBodyT>,
@@ -14,6 +16,7 @@ const fakeMailRepository: MailRepository = {
   saveTagToMailDict: async (dict: Record<string, string[]>) => {
     tag_to_mail_dict = dict;
   },
+  status: async () => Object.fromEntries(fileList.map(fileName => [fileName, true]))
 };
 
 export default fakeMailRepository;
