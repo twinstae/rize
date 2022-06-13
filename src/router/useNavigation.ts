@@ -14,9 +14,8 @@ export interface Navigation {
     | ((props: { to: string; children: JSX.Element }) => JSX.Element)
 }
 
+const history = ['/'];
 export const useFakeNavigation = (): Navigation => {
-  const history = ['/'];
-
   return {
     params: () => ({ mailId: 'm123' }),
     useSearchParams: () => {
@@ -47,9 +46,7 @@ export const useFakeNavigation = (): Navigation => {
 };
 
 function useNavigation(){
-  const { useNavigationImpl } = useDependencies();
-
-  return useNavigationImpl();
+  return useDependencies().useNavigationImpl();
 }
 
 export default useNavigation;
