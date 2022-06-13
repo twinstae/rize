@@ -12,7 +12,7 @@ import BackButton from '../components/BackButton';
 import FavoriteStar from '../components/FavoriteStar';
 import MailBody from '../components/MailBody';
 import ProfileImage from '../components/ProfileImage';
-import useMailList from '../mailList/useMailList';
+import { useDependencies } from '../hooks/Dependencies';
 import useNavigation from '../router/useNavigation';
 
 const Title = styled.h3`
@@ -35,7 +35,7 @@ const skeletonCommon = {
 
 function MailDetailPage() {
   const navigation = useNavigation();
-  const { toOriginalName, mailById } = useMailList();
+  const { toOriginalName, mailById } = useDependencies().useMailList();
   const mailId = navigation.params().id ?? 'm25731';
 
   const mail = mailById(mailId);

@@ -1,0 +1,7 @@
+{
+  "name": "react-tauri",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

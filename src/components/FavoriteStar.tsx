@@ -1,7 +1,8 @@
 import { createIcon, StarIcon } from '@chakra-ui/icons';
 import React from 'react';
 
-import useMailList, { FAVORITE } from '../mailList/useMailList';
+import { useDependencies } from '../hooks/Dependencies';
+import { FAVORITE } from '../mailList/useMailList';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 
 const EmpryStarIcon = createIcon({
@@ -18,7 +19,7 @@ interface FavoriteStarProps {
 }
 
 function FavoriteStar({ mail }: FavoriteStarProps) {
-  const { addTagToMail, removeTagFromMail } = useMailList();
+  const { addTagToMail, removeTagFromMail } = useDependencies().useMailList();
   const toggleFavorite = () => {
     if (mail.isFavorited) {
       removeTagFromMail(FAVORITE, mail.id);

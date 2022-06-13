@@ -53,7 +53,7 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$APP/*", "$DOWNLOAD/output/*"]
+        "scope": ["$APP/*", "$DOWNLOAD/output/*", "$DOWNLOAD/output/"]
       },
       "http": {
         "all": true,

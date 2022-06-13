@@ -6,22 +6,23 @@ export type TabMode = typeof modes[number]
 
 const jsonClone: <T>(old: T) => T = (old) => JSON.parse(JSON.stringify(old));
 
-export function reverseTagToMail(tagToMailDict: Record<string, string[]>) {
+export function reverseTagToMail(tagToMailDict: Record<string, string[]>): Map<string, string[]> {
   return Object.entries(tagToMailDict).reduce((acc, entry) => {
-    (entry[1] ?? []).forEach(mailId => {
-      const oldTags = acc.get(mailId) ?? [];
+    (entry[1]).forEach(mailId => {
+      const oldTags = acc.get(mailId) || [];
       oldTags.push(entry[0]);
       acc.set(mailId, oldTags);
     });
     return acc;
-  }, new Map());
+  }, new Map<string, string[]>());
 }
 
 export function addTagToMail(tag: string, targetMailId: string) {
   return (old: Record<string, string[]>) => {
     const newDict = jsonClone(old);
-
-    (newDict[tag] ?? []).push(targetMailId);
+    const newTags = newDict[tag] ?? [];
+    newTags.push(targetMailId);
+    newDict[tag] = newTags;
     return newDict;
   };
 }

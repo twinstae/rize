@@ -1,7 +1,7 @@
 
 import useConfig from '../config/useConfig';
 
-const profileList: readonly string[] = [
+const profileList = [
   'la-vie-en-rose',
   'violeta',
   'fiesta',
@@ -13,15 +13,14 @@ const profileList: readonly string[] = [
   'one-the-story',
   // "latest",
   // "instagram"
-];
+] as const;
 
 function useProfile() {
   const config = useConfig();
 
   return {
     profile: (config.get('profile') ?? 'one-the-story') as string,
-    setProfile: (value: string) => {
-      if(! profileList.includes(value)) throw Error(value + '는 프로필 목록에 없습니다');
+    setProfile: (value: typeof profileList[number]) => {
       config.set('profile', value);
     },
     profileList

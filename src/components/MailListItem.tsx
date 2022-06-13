@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import useUsername from '../config/useUsername';
+import { useDependencies } from '../hooks/Dependencies';
 import { MailT } from '../mailList/types';
-import useMailList from '../mailList/useMailList';
 import { toMailDetail } from '../router/paths';
 import useNavigation from '../router/useNavigation';
 import FavoriteStar from './FavoriteStar';
@@ -52,7 +52,7 @@ interface MailListItemProps {
 
 function MailListItem({ mail }: MailListItemProps) {
   const navigation = useNavigation();
-  const { toOriginalName } = useMailList();
+  const { toOriginalName } = useDependencies().useMailList();
   const [ , setSearchParams] = navigation.useSearchParams();
   const Link = navigation.Link;
 

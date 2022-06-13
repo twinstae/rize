@@ -1,100 +1,81 @@
-import { CheckCircleIcon,WarningIcon } from '@chakra-ui/icons';
-import { Center, List, ListIcon, ListItem,VStack } from '@chakra-ui/layout';
-import { motion, useAnimation } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import { CheckCircleIcon, WarningIcon } from '@chakra-ui/icons';
+import { Center, List, ListIcon, ListItem, VStack } from '@chakra-ui/layout';
+import { Button } from '@chakra-ui/react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import useMailList from '../mailList/useMailList';
+import RizeLogo from '../components/RizeLogo';
+import { useDependencies } from '../hooks/Dependencies';
+import { fileList } from '../mailList/fakeMailRepository';
 import paths from '../router/paths';
 import useNavigation from '../router/useNavigation';
-import useDarkMode from '../theme/useDarkMode';
 
-const draw = {
-  hidden: { pathLength: 0, opacity: 0, fill: 'transparent' },
-  visible: (n: number) => {
-    return {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { delay: 1 + n*0.125, type: 'spring', duration: 1, bounce: 0 },
-        opacity: { delay: 1, duration: 0.01 },
-        fill: '#ff0055'
-      }
-    };
-  }
-};
 
 const InitPage = () => {
-  const { isDark } = useDarkMode();
-  const { status } = useMailList();
-  const pathColor = isDark ? '#f687b3' : '#ed64a6';
   const navigation = useNavigation();
   const [isAnimationEnd, setIsAnimationEnd] = useState(false);
 
-  useEffect(() => {
-    control.start('visible')
-      .then(() => { setIsAnimationEnd(true); });
-  }, []);
+  const { fsJSON: { writeJSONfile } } = useDependencies();
+  const { status } = useDependencies().useMailList();
 
+  const [uploaded, setUploaded] = useState<{ [fileName: string]: boolean}>({});
+
+  const merged = { ...status, ...uploaded };
   useEffect(() => {
-    if(Object.values(status).every(v => v) && isAnimationEnd){
+    if (Object.values(status).every((v) => v) && isAnimationEnd) {
       navigation.navigate(paths.MAIL_LIST);
     }
-  }, [status, isAnimationEnd]);
+  }, [merged, isAnimationEnd]);
 
-  const control = useAnimation(); 
-
+  const formRef = useRef<HTMLFormElement>(null);
 
   return (
     <div>
-      <Center width="500" height="600">
+      <Center width='500' height='100vh'>
         <VStack>
-          <motion.svg
-            width="200"
-            height="200"
-            viewBox="0 0 200 200"
-            initial="hidden"
-            animate="visible"
+          <RizeLogo onAnimationEnd={() => {setIsAnimationEnd(true);}} />
+
+          <form
+            ref={formRef}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if(! Object.values(merged).every(v => v)) return ;
+              const form = formRef.current;
+              if(! form) return;
+              const files = [...form.elements].flatMap((input) => [...(input as HTMLInputElement).files ?? []]);
+
+              await Promise.all(
+                [...files]
+                  .filter(file => fileList.includes(file.name))
+                  .map(async (file) => writeJSONfile(file.name)(JSON.parse(await file.text())))
+              );
+              navigation.navigate(paths.MAIL_LIST);
+            }}
           >
-            <motion.path
-              d="M 15.9 39.8 L 35.8 70.1 L 31.3 70.1 L 11.9 40.4 Q 8.2 40.9 3.7 41.1 L 3.7 70.1 L 0 70.1 L 0 0 Q 21.838 0.066 29.44 8.587 A 16.649 16.649 0 0 1 33.5 20.1 A 21.757 21.757 0 0 1 32.029 28.364 Q 29.599 34.328 23.154 37.441 A 30.898 30.898 0 0 1 15.9 39.8 Z M 3.7 3.8 L 3.7 37.1 L 4.7 37.2 A 57.025 57.025 0 0 0 13.547 36.434 Q 24.905 34.452 28.325 27.411 A 15.855 15.855 0 0 0 29.8 20.4 A 16.221 16.221 0 0 0 29.452 16.95 A 11.409 11.409 0 0 0 27.65 12.75 A 19.453 19.453 0 0 0 25.287 9.964 A 15.315 15.315 0 0 0 22.8 8 A 22.428 22.428 0 0 0 17.521 5.658 Q 11.935 3.93 3.7 3.8 Z"
-              stroke={pathColor}
-              variants={draw}
-              custom={0}
-            />
-            <motion.path
-              d="M 48.8 0.3 L 48.8 70.1 L 45.1 70.1 L 45.1 0.3 L 48.8 0.3 Z"
-              stroke={pathColor}
-              variants={draw}
-              custom={1}
-            />
-            <motion.path
-              d="M 86.5 3.8 L 60.7 3.8 L 60.7 0.1 L 92.1 0.1 L 63.1 66.4 L 93.2 66.4 L 93.2 70.1 L 57.4 70.1 L 86.5 3.8 Z"
-              stroke={pathColor}
-              variants={draw}
-              custom={2}
-            />
-            <motion.path d="M 100.3 40.1 L 116.6 25.1 L 100.3 10 L 105.4 10 L 117.4 21.1 L 117.4 5.1 L 121.1 5.1 L 121.1 20.9 L 132.9 10 L 138 10 L 121.7 25.1 L 138 40.1 L 132.9 40.1 L 121.1 29.2 L 121.1 45.1 L 117.4 45.1 L 117.4 29 L 105.4 40.1 L 100.3 40.1 Z"
-              stroke={pathColor}
-              variants={draw}
-              custom={2}
-            />
-            <motion.path
-              d="M 186.8 70.1 L 151 70.1 L 151 0.1 L 186.8 0.1 L 186.8 3.8 L 154.7 3.8 L 154.7 29.4 L 186.8 29.4 L 186.8 33.1 L 154.7 33.1 L 154.7 66.4 L 186.8 66.4 L 186.8 70.1 Z"
-              stroke={pathColor}
-              variants={draw}
-              custom={3}
-              initial="hidden"
-              animate={control}
-            />
-          </motion.svg>
-          <List spacing="3">
-            {Object.entries(status).map(([name, value]) => (
-              <ListItem key={name}>
-                <ListIcon as={value ? CheckCircleIcon : WarningIcon} color={value ? 'green.500' : 'red.500'}/>
-                {name}
-              </ListItem>
-            ))} 
-          </List>
+            <List spacing='3' p="2">
+              {fileList.map((name) => {
+                const value = merged[name];
+                return (
+                  <ListItem key={name}>
+                    <ListIcon
+                      as={value ? CheckCircleIcon : WarningIcon}
+                      color={value ? 'green.500' : 'red.500'}
+                    />
+                    <label>
+                      {name}
+                      <input type="file" accept="application/json"
+                        onChange={() => {
+                          const form = formRef.current;
+                          if(! form) return;
+                          const files = [...form.elements].flatMap((input) => [...(input as HTMLInputElement).files ?? []]);
+                          setUploaded(Object.fromEntries(files.map(file => [file.name, true])));
+                        }}/>
+                    </label>
+                  </ListItem>
+                );
+              })}
+            </List>
+            <Button type="submit" p="2">upload</Button>
+          </form>
         </VStack>
       </Center>
     </div>

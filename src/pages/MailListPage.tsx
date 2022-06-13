@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import AppBar from '../components/AppBar';
 import MailList from '../components/MailList';
+import { useDependencies } from '../hooks/Dependencies';
 import { strs } from '../i18n/i18n';
 import { modes } from '../mailList/mailListModel';
-import useMailList from '../mailList/useMailList';
 import useTag from '../mailList/useTag';
 import useSearch from '../search/useSearch';
 import useDarkMode from '../theme/useDarkMode';
@@ -14,7 +14,7 @@ import useDarkMode from '../theme/useDarkMode';
 function MailListPage() {
   const { isDark } = useDarkMode();
   const [tag] = useTag();
-  const { mailList } = useMailList();
+  const { mailList } = useDependencies().useMailList();
   const { t } = useTranslation();
 
   const allMailList = mailList('all', '');

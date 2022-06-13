@@ -6,7 +6,7 @@ const atomWithAsyncInit: <T>(init: () => Promise<T>, fallback: T) => Atom<T> = (
 ) => {
   const baseAtom = atom(fallback);
   baseAtom.onMount = (setValue) => {
-    init().then(setValue);
+    init().then(setValue).catch(() => null);
   };
 
   return baseAtom;
