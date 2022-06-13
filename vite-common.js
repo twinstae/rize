@@ -5,20 +5,4 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [react()],
   publicDir: '../public',
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.js',
-    coverage: {
-      exclude: [
-        'node_modules/**',
-        'dist/**',
-        '**/fs*',
-        '**/server*',
-        '**/localStorage*',
-      ],
-      include: ['src/**/*.tsx', 'src/**/*.ts'],
-      all: true,
-    },
-  },
 });
