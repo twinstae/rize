@@ -1,17 +1,12 @@
 import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
-import { DependenciesWrapper } from '../hooks/Dependencies';
 import fakeStorageRepo from './fakeStorageRepo';
 import useConfig from './useConfig';
 
 fakeStorageRepo.setItem({ test: '테스트' });
 
-const renderFakeConfig = () => renderHook(() => useConfig(), {
-  wrapper: DependenciesWrapper({
-    storageRepo: fakeStorageRepo
-  })
-});
+const renderFakeConfig = () => renderHook(() => useConfig());
 
 describe('useConfig', () => {
   it('config를 가져올 수 있다', async () => {

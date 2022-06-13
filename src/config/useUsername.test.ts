@@ -1,7 +1,6 @@
 import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
-import { DependenciesWrapper } from '../hooks/Dependencies';
 import fakeStorageRepo from './fakeStorageRepo';
 import useUsername from './useUsername';
 
@@ -10,11 +9,7 @@ fakeStorageRepo.setItem({
 });
 
 const renderUseUsernameService = () => {
-  return renderHook(() => useUsername(), {
-    wrapper: DependenciesWrapper({
-      storageRepo: fakeStorageRepo
-    })
-  });
+  return renderHook(() => useUsername());
 };
 
 describe('useUsernameService', () => {

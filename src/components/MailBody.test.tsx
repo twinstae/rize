@@ -1,19 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { describe, it } from 'vitest';
 
-import fakeStorageRepo from '../config/fakeStorageRepo';
-import { DependenciesWrapper } from '../hooks/Dependencies';
 import MailBody from './MailBody';
-import { MockImage } from './MockImage';
 
 function renderWithDependency(component: React.ReactElement) {
-  return render(component, {
-    wrapper: DependenciesWrapper({
-      storageRepo: fakeStorageRepo,
-      Image: MockImage,
-    }),
-  });
+  return render(component);
 }
 
 const TEST_PATH = 'img/mail/7/20210428/2e8279a2b7bb39309a585d8282aa81b5.jpeg';
@@ -31,7 +22,7 @@ describe('MailBody', () => {
 
     screen.getByText('첫 번째');
     // MockImage는 앞에 image:를 붙여줌
-    screen.getByText(TEST_PATH);
+    screen.getByAltText(TEST_PATH);
     screen.getByText('두 번째');
   });
 });

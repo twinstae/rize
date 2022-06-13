@@ -1,16 +1,12 @@
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
-import { describe, it } from 'vitest';
 
+import { useDependencies } from '../hooks/Dependencies';
 import { TestQueryWrapper } from '../hooks/QueryWrapper';
 import { pipeWrapper, SuspenseWrapper } from '../hooks/util';
-import fakeMailRepository from './fakeMailRepository';
-import { createUseMailList } from './useMailList';
-
-const useMailList = createUseMailList(fakeMailRepository);
 
 function Data() {
-  const mailList = useMailList().mailList('all', '');
+  const mailList = useDependencies().useMailList().mailList('all', '');
   return <span>{JSON.stringify(mailList[0])}</span>;
 }
 

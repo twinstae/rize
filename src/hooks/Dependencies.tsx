@@ -1,9 +1,13 @@
+import { atom, useAtom } from 'jotai';
 import React, { useContext } from 'react';
 
+import { MockImage } from '../components/MockImage';
+import fakeStorageRepo from '../config/fakeStorageRepo';
 import { StorageRepository } from '../global';
-import { MailRepository } from '../mailList/types';
-import { MailListResult } from '../mailList/useMailList';
-import { Navigation } from '../router/useNavigation';
+import fakeMailRepository from '../mailList/fakeMailRepository';
+import { FsJSON,MailRepository } from '../mailList/types';
+import { createUseMailList, MailListResult } from '../mailList/useMailList';
+import { Navigation, useFakeNavigation } from '../router/useNavigation';
 import { JsonValue } from '../types/json';
 import { createWrapper } from './util';
 
@@ -19,15 +23,43 @@ type DependencyT = {
     style: React.CSSProperties;
     width: number;
   }>;
+  fsJSON?: FsJSON,
   useMailList?: () => MailListResult,
   mailRepository?: MailRepository
 };
 
-export const Dependencies = React.createContext<DependencyT>({});
+const fakeFs: Record<string, unknown> = {};
+const fakeFsJSON = {
+  writeJSONfile: (path: string) => async (dict: JsonValue) => {
+    fakeFs[path] = dict;
+  },
+  readJSONfile: async <T extends JsonValue>(path: string): Promise<T> => fakeFs[path] as T
+};
+
+const useFakeMailList = createUseMailList(fakeMailRepository);
+
+const darkModeAtom = atom(false);
+
+export const Dependencies = React.createContext<DependencyT>({
+  useNavigationImpl: () => useFakeNavigation(),
+  storageRepo: fakeStorageRepo,
+  Image: MockImage,
+  fsJSON: fakeFsJSON,
+  useMailList: useFakeMailList,
+  mailRepository: fakeMailRepository,
+  useColorMode: () => {
+    const [darkMode, setDarkMode] = useAtom(darkModeAtom);
+    return {
+      colorMode: (darkMode ? 'dark' : 'light') as 'dark' | 'light',
+      toggleColorMode: () => {
+        setDarkMode(old => !old);
+      }
+    };
+  }
+});
 
 export function useDependencies() {
-  const dependencies = useContext(Dependencies);
-  return dependencies as Required<typeof dependencies>;
+  return useContext(Dependencies) as Required<DependencyT>;
 }
 
 export const DependenciesWrapper = (
