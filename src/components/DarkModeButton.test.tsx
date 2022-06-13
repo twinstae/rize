@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { describe } from 'vitest';
 
 import en from '../i18n/en.json';
 import i18n from '../i18n/i18n';

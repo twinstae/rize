@@ -1,5 +1,3 @@
-import { describe, it } from 'vitest';
-
 import { TEST_MAIL, TEST_MAIL_2 } from '../test/fixtures';
 import createFlexSearchIndex from './createFlexSearchIndex';
 

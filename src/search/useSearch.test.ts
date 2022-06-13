@@ -1,5 +1,4 @@
-import { act,renderHook } from '@testing-library/react-hooks';
-import { describe, it } from 'vitest';
+import { act, renderHook } from '@testing-library/react-hooks';
 
 import { TEST_MAIL, TEST_MAIL_2 } from '../test/fixtures';
 import useSearch from './useSearch';
