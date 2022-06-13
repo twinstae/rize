@@ -1,4 +1,4 @@
-import { HStack, Radio, RadioGroup,VStack } from '@chakra-ui/react';
+import { FormLabel, HStack, Radio, RadioGroup,VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,8 +17,11 @@ function ProfileConfig() {
   
   return (
     <VStack align="stretch">
-      <ConfigHeading title={t(strs.프로필_바꾸기) + ' : ' + profile}/>
-      <VStack>
+      <FormLabel htmlFor="profile-select">
+        <ConfigHeading title={t(strs.프로필_바꾸기)} />
+      </FormLabel>
+      <VStack >
+        <span>{`선택한 테마 : ${profile}`}</span>
         <HStack spacing="0.5">
           {MEMBER_LIST.slice(0,6).map(member => <ProfileImage key={member} member={member} size="md" theme={profile}/> )}
         </HStack>
@@ -27,12 +30,12 @@ function ProfileConfig() {
         </HStack>
       </VStack>
       
-      <RadioGroup value={profile} onChange={(selected) => {
-        setProfile(selected);
-      }}>
+      <RadioGroup id="profile-select" value={profile} onChange={(selected) => {
+        setProfile(selected as typeof profileList[number]);
+      }} as="select">
         {profileList.map(profileTheme => (
-          <Radio value={profileTheme} p="1" key={profileTheme}>
-            <h4>{profileTheme}</h4>
+          <Radio value={profileTheme} p="1" key={profileTheme} as="option">
+            {profileTheme}
             {shuffledIndex.map((i)=>MEMBER_LIST[i]).slice(0,7)
               .map(member => <ProfileImage key={member} member={member} size="md" theme={profileTheme}/> )}
           </Radio>
