@@ -35,6 +35,7 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@capacitor/cli": "^3.5.1",
+    "@playwright/test": "^1.22.2",
     "@tauri-apps/cli": "^1.0.0-rc.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -54,6 +55,7 @@
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "jsdom": "^19.0.0",
+    "playwright": "^1.22.2",
     "typescript": "^4.7.3",
     "vite": "^2.9.12",
     "vitest": "^0.14.2"
