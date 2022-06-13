@@ -40,9 +40,9 @@ const Wrapper = pipeWrapper(
   }),
 );
 
-const rootDiv = document.getElementById('root');
-if(rootDiv){
-  const root = createRoot(rootDiv);
+const rootEl = document.getElementById('root');
+if(rootEl){
+  const root = createRoot(rootEl);
 
   root.render(
     <React.StrictMode>
