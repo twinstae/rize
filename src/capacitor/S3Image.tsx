@@ -8,6 +8,12 @@ import { useQuery } from 'react-query';
 import { ImageProps } from '../components/MockImage';
 
 const ROOT = 'https://rize-taehee-kim.s3.ap-northeast-2.amazonaws.com/';
+
+const parseDirname = (path: string) => {
+  const temp = path.split('/');
+  return temp.slice(0, temp.length - 1).join('/');
+}; 
+
 const downloadFile = async (path: string): Promise<string> => {
   const result = await Filesystem.stat({
     path: 'output/'+path,
@@ -21,7 +27,15 @@ const downloadFile = async (path: string): Promise<string> => {
     filePath: 'output/'+path,
     fileDirectory: Directory.Cache,
     method: 'GET',
-  }).then(() => downloadFile(path));
+  }).then((result) => result.path && Capacitor.convertFileSrc(result.path) || '')
+    .catch(async () => {
+      await Filesystem.mkdir({
+        path: parseDirname('output/'+path),
+        directory: Directory.Cache,
+        recursive: true,
+      });
+      return downloadFile(path);
+    });
 };
 
 const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
