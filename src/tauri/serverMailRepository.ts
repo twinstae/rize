@@ -25,6 +25,7 @@ const serverMailRepository: MailRepository = {
   getTagToMailDict: async () =>
     readJSONfile('tag_to_mail_dict.json') as Promise<Record<string, string[]>>,
   saveTagToMailDict: writeJSONfile('tag_to_mail_dict.json'),
+  status: async () => http.fetch('http://localhost:3000/status').then((res) => res.data as { [fileName: string]: boolean }),
 };
 
 export default serverMailRepository;

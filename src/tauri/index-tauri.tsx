@@ -14,6 +14,7 @@ import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 import useRRDNavigation from '../router/useRRDNavigation';
 import theme from '../theme/theme';
+import fsJSON from './fsJSON';
 import fsMailRepository from './fsMailRepository';
 import fsStorageRepo from './fsStorageRepo';
 import TauriImage from './TauriImage';
@@ -34,6 +35,7 @@ const Wrapper = pipeWrapper(
     useNavigationImpl: useRRDNavigation,
     Image: TauriImage,
     useColorMode,
+    fsJSON,
     useMailList
   }),
 );
