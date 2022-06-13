@@ -5,6 +5,7 @@
   "dependencies": {
     "@capacitor-community/http": "^1.4.1",
     "@capacitor/android": "^3.5.1",
+    "@capacitor/app": "^1.1.1",
     "@capacitor/core": "^3.5.1",
     "@capacitor/filesystem": "^1.1.0",
     "@capacitor/ios": "^3.5.1",
@@ -69,7 +70,7 @@
     "test:cov": "vitest run --config=vitest.config.js --coverage=true",
     "tauri:build": "tauri dev --debug",
     "lint": "eslint --ext ts,tsx src",
-    "build:full": ""
+    "ionic:build": "npm run build"
   },
   "browserslist": {
     "production": [
