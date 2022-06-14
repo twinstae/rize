@@ -17,7 +17,7 @@ export interface Navigation {
 const history = ['/'];
 export const useFakeNavigation = (): Navigation => {
   return {
-    params: () => ({ mailId: 'm123' }),
+    params: () => ({ id: 'm25669' }),
     useSearchParams: () => {
       const searchParam = new URLSearchParams();
       return [searchParam, (newInit) => { 

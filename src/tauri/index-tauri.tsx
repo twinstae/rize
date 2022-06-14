@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 
 import App from '../App';
+import RizeLogo from '../components/RizeLogo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import QueryWrapper from '../hooks/QueryWrapper';
 import { createWrapper, pipeWrapper } from '../hooks/util';
@@ -36,7 +37,8 @@ const Wrapper = pipeWrapper(
     Image: TauriImage,
     useColorMode,
     fsJSON,
-    useMailList
+    useMailList,
+    RizeLogo
   }),
 );
 

@@ -9,7 +9,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.js',
     coverage: {
-      include: ['src/**/*.tsx', 'src/**/*.ts'],
+      include: ['src/**/*.test.tsx', 'src/**/*.test.ts'],
       exclude: [
         'node_modules/**',
         'dist/**',

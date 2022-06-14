@@ -3,7 +3,6 @@ import { Center, List, ListIcon, ListItem, VStack } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
-import RizeLogo from '../components/RizeLogo';
 import { useDependencies } from '../hooks/Dependencies';
 import { fileList } from '../mailList/fakeMailRepository';
 import paths from '../router/paths';
@@ -14,8 +13,8 @@ const InitPage = () => {
   const navigation = useNavigation();
   const [isAnimationEnd, setIsAnimationEnd] = useState(false);
 
-  const { fsJSON: { writeJSONfile } } = useDependencies();
-  const { status } = useDependencies().useMailList();
+  const { fsJSON, useMailList, RizeLogo } = useDependencies();
+  const { status } = useMailList();
 
   const [uploaded, setUploaded] = useState<{ [fileName: string]: boolean}>({});
 
@@ -28,6 +27,13 @@ const InitPage = () => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
+  function getFiles(){
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const form = formRef.current!;
+    const files = [...form.elements].flatMap((input) => [...(input as HTMLInputElement).files ?? []]);
+    return Array.from(files);
+  }
+
   return (
     <div>
       <Center width='500' height='100vh'>
@@ -38,15 +44,12 @@ const InitPage = () => {
             ref={formRef}
             onSubmit={async (e) => {
               e.preventDefault();
-              if(! Object.values(merged).every(v => v)) return ;
-              const form = formRef.current;
-              if(! form) return;
-              const files = [...form.elements].flatMap((input) => [...(input as HTMLInputElement).files ?? []]);
+              if(! Object.values(merged).every(v => v)) return;
 
               await Promise.all(
-                [...files]
+                getFiles()
                   .filter(file => fileList.includes(file.name))
-                  .map(async (file) => writeJSONfile(file.name)(JSON.parse(await file.text())))
+                  .map(async (file) => fsJSON.writeJSONfile(file.name)(JSON.parse(await file.text())))
               );
               navigation.navigate(paths.MAIL_LIST);
             }}
@@ -64,10 +67,7 @@ const InitPage = () => {
                       {name}
                       <input type="file" accept="application/json"
                         onChange={() => {
-                          const form = formRef.current;
-                          if(! form) return;
-                          const files = [...form.elements].flatMap((input) => [...(input as HTMLInputElement).files ?? []]);
-                          setUploaded(Object.fromEntries(files.map(file => [file.name, true])));
+                          setUploaded(Object.fromEntries(getFiles().map(file => [file.name, true])));
                         }}/>
                     </label>
                   </ListItem>

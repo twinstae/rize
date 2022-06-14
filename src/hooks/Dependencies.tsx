@@ -1,5 +1,5 @@
 import { atom, useAtom } from 'jotai';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { MockImage } from '../components/MockImage';
 import fakeStorageRepo from '../config/fakeStorageRepo';
@@ -26,6 +26,7 @@ type DependencyT = {
   fsJSON?: FsJSON,
   useMailList?: () => MailListResult,
   mailRepository?: MailRepository
+  RizeLogo?: (props: { onAnimationEnd: () => void }) => JSX.Element;
 };
 
 const fakeFs: Record<string, unknown> = {};
@@ -55,6 +56,12 @@ export const Dependencies = React.createContext<DependencyT>({
         setDarkMode(old => !old);
       }
     };
+  },
+  RizeLogo: ({ onAnimationEnd }) => {
+    useEffect(() => {
+      setTimeout(() => { onAnimationEnd(); }, 50);
+    });
+    return <h1> RIZ*E </h1>;
   }
 });
 

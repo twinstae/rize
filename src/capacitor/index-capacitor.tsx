@@ -8,6 +8,7 @@ import * as ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 
 import AppMain from '../App';
+import RizeLogo from '../components/RizeLogo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import QueryWrapper from '../hooks/QueryWrapper';
 import { createWrapper, pipeWrapper, WrapperT } from '../hooks/util';
@@ -41,6 +42,7 @@ const Wrapper = pipeWrapper(
     useMailList,
     fsJSON,
     mailRepository,
+    RizeLogo
   }),
 );
 

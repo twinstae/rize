@@ -7,11 +7,11 @@ import useNavigation from '../router/useNavigation';
 import MailListItem from './MailListItem';
 import NoSearchResult from './NoSearchResult';
 interface Props {
-  allMailList: MailT[];
+  allMailCount: number;
   result: MailT[];
 }
 
-function MailList({ allMailList, result }: Props) {
+function MailList({ allMailCount, result }: Props) {
   const navigation = useNavigation();
   const [searchParams] = navigation.useSearchParams();
 
@@ -37,7 +37,7 @@ function MailList({ allMailList, result }: Props) {
             <MailListItem mail={result[index]} />
           )}
         />
-      ) : allMailList.length > result.length ? (
+      ) : allMailCount > result.length ? (
         <NoSearchResult />
       ) : (
         <Box>
