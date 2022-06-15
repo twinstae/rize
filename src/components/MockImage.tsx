@@ -6,6 +6,6 @@ export interface ImageProps {
   width: number;
 }
 
-export const MockImage: React.FC<ImageProps> = ({ path, style }) => (
-  <img style={style} alt={path} />
+export const MockImage: React.FC<ImageProps> = ({ path, style, width }) => (
+  <img src={'http://localhost:8000/'+path} style={style} alt={path} width={width*4} />
 );

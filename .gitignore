@@ -33,3 +33,6 @@ src/public/
 dist
 yarn.lock
 package-lock.json
+playwright/.cache
+screenshots
+playwright-report
