@@ -72,7 +72,7 @@
     "tauri:build": "tauri dev --debug",
     "lint": "eslint --ext ts,tsx src",
     "ionic:build": "npm run build",
-    "e2e-ct": "playwright test -c playwright-ct.config.ts"
+    "e2e:ct": "playwright test -c playwright-ct.config.ts"
   },
   "browserslist": {
     "production": [

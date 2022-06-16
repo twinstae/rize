@@ -7,10 +7,10 @@ import ProfileImage from './ProfileImage';
 function SelectedTag() {
   const [tag] = useTag();
   return tag ? (
-    <>
+    <span data-testid="selected-tag">
       {MEMBER_LIST.includes(tag as IZONE) && <ProfileImage member={tag} size="sm" />}
-      <span>{tag}</span>
-    </>
+      {tag}
+    </span>
   ) : null;
 }
 

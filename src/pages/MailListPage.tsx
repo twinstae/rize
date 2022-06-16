@@ -42,7 +42,7 @@ function MailListPage() {
         <TabPanels>
           {modes.map((mode, i) => (
             <TabPanel style={{ padding: '0.5rem' }} key={mode}>
-              <MailList allMailCount={allMailList.length} result={results[i]} />
+              <MailList result={results[i]} />
             </TabPanel>
           ))}
         </TabPanels>

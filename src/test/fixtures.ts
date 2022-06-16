@@ -23,11 +23,3 @@ export const TEST_MAIL_2: RawMailT = {
   preview:
     '좋은아침😊💕 이침엔 핫초코지👍ㅎ おはよう😊💕 朝ホットチョコレートか👍',
 };
-
-export const DummyUsernameService: UsernameT = {
-  before: '테스트',
-  after: '테스트',
-  setBefore: vi.fn(),
-  setAfter: vi.fn(),
-  replaceUsername: (text: string) => text,
-};

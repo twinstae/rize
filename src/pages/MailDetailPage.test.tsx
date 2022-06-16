@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { strs } from '../i18n/i18n';
+import ko from '../i18n/ko.json';
 import MailDetailPage from './MailDetailPage';
 
 
@@ -20,7 +20,7 @@ describe('MailDetailPage', () => {
     render(<MailDetailPage />);
     screen.getByText(/로딩중/);
 
-    await screen.findAllByLabelText(strs.돌아가기);
+    await screen.findAllByLabelText(ko.translation.돌아가기);
     screen.getByLabelText('중요 표시하기');
 
     screen.getByText('장원영');

@@ -37,6 +37,7 @@ function AppBar() {
   function handleClose() {
     onClose();
     search('');
+    setKeywordInput('');
   }
 
   function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -50,6 +51,7 @@ function AppBar() {
       onOpen();
       setKeywordInput(keyword);
     }
+    return () => handleClose();
   }, []);
 
   return (
