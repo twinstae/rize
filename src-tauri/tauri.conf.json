@@ -1,19 +1,24 @@
 {
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "build": {
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
+    "devPath": "http://localhost:3000",
+    "distDir": "../build"
+  },
   "package": {
     "productName": "rize",
-    "version": "0.1.1"
-  },
-  "build": {
-    "distDir": "../src/tauri/dist",
-    "devPath": "http://localhost:3000",
-    "beforeDevCommand": "",
-    "beforeBuildCommand": ""
+    "version": "0.1.0"
   },
   "tauri": {
     "bundle": {
       "active": true,
-      "targets": "all",
-      "identifier": "com.lec.rize",
+      "category": "DeveloperTool",
+      "copyright": "",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -21,23 +26,18 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "resources": [],
-      "externalBin": [],
-      "copyright": "",
-      "category": "DeveloperTool",
-      "shortDescription": "",
+      "identifier": "com.tauri.dev",
       "longDescription": "",
-      "deb": {
-        "depends": []
-      },
       "macOS": {
-        "frameworks": [],
-        "minimumSystemVersion": "",
+        "entitlements": null,
         "exceptionDomain": "",
-        "signingIdentity": null,
+        "frameworks": [],
         "providerShortName": null,
-        "entitlements": null
+        "signingIdentity": null
       },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
@@ -47,6 +47,15 @@
     "updater": {
       "active": false
     },
+    "windows": [
+      {
+        "title": "react-tauri",
+        "width": 449,
+        "height": 700,
+        "resizable": false,
+        "fullscreen": false
+      }
+    ],
     "allowlist": {
       "path": {
         "all": true
@@ -64,15 +73,6 @@
         "assetScope": ["$DOWNLOAD/output/img/*"]
       }
     },
-    "windows": [
-      {
-        "title": "react-tauri",
-        "width": 449,
-        "height": 700,
-        "resizable": false,
-        "fullscreen": false
-      }
-    ],
     "security": {
       "csp":"default-src 'self'; img-src 'self' asset: https://asset.localhost; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com/; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/gh/naen-nae/fonts;",
       "freezePrototype": false
