@@ -1,3 +1,5 @@
+import { ChakraProvider } from '@chakra-ui/provider';
+import theme from '@chakra-ui/theme';
 import { atom, useAtom } from 'jotai';
 import React, { useContext, useEffect } from 'react';
 
@@ -72,3 +74,7 @@ export function useDependencies() {
 export const DependenciesWrapper = (
   value: Partial<ReturnType<typeof useDependencies>>
 ) => createWrapper(Dependencies.Provider, { value });
+
+export const ChakraWrapperOption = {
+  wrapper: createWrapper(ChakraProvider, { theme })
+};

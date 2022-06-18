@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
+import preview from 'jest-preview';
 import React from 'react';
 
+import { ChakraWrapperOption } from '../hooks/Dependencies';
 import ko from '../i18n/ko.json';
 import MailDetailPage from './MailDetailPage';
-
 
 describe('MailDetailPage', () => {
   it('MailDetailPage 제목, 별명, 미리보기, 시간이 있다', async () => {
@@ -17,7 +18,7 @@ describe('MailDetailPage', () => {
     // }
     // "images": ["img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg"]
 
-    render(<MailDetailPage />);
+    render(<MailDetailPage />, ChakraWrapperOption);
     screen.getByText(/로딩중/);
 
     await screen.findAllByLabelText(ko.translation.돌아가기);
@@ -29,5 +30,7 @@ describe('MailDetailPage', () => {
 
     // mail image
     screen.getByAltText('img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg');
+    
+    preview.debug();
   });
 });

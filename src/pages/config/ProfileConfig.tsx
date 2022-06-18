@@ -32,11 +32,11 @@ function ProfileConfig() {
       
       <RadioGroup id="profile-select" value={profile} onChange={(selected) => {
         setProfile(selected as typeof profileList[number]);
-      }} as="select">
+      }}>
         {profileList.map(profileTheme => (
-          <Radio value={profileTheme} p="1" key={profileTheme} as="option">
+          <Radio value={profileTheme} p="1" key={profileTheme}>
             {profileTheme}
-            {shuffledIndex.map((i)=>MEMBER_LIST[i]).slice(0,7)
+            {shuffledIndex.map((i)=>MEMBER_LIST[i]).slice(0,4)
               .map(member => <ProfileImage key={member} member={member} size="md" theme={profileTheme}/> )}
           </Radio>
         ))}
