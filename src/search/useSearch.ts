@@ -18,11 +18,7 @@ export const createUseSearch =
     );
 
     return {
-      mailIdSet: searchResultSet,
-      isInResult: useCallback(
-        (id: string) => searchResultSet.has(id),
-        [searchResultSet]
-      ),
+      isInResult: (id: string) => searchResultSet.has(id),
       keyword,
       search: setKeyword,
     };

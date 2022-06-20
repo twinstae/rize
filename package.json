@@ -69,7 +69,7 @@
     "build:cap": "vite build --config='vite.config.capacitor.js' && npx cap copy",
     "build": "tsc && concurrently \"yarn build:tauri\" \"yarn build:cap\"",
     "dev": "concurrently -k \"vite --config='vite.config.tauri.js'\" \"tauri dev\"",
-    "test": "vitest --config=vitest.config.js run",
+    "test": "vitest --config=vitest.config.js run --changed=HEAD",
     "test:watch": "vitest --config=vitest.config.js",
     "test:cov": "vitest run --config=vitest.config.js --coverage=true",
     "stryker": "stryker run --fileLogLevel trace --logLevel debug",
