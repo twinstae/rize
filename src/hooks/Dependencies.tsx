@@ -61,7 +61,7 @@ export const Dependencies = React.createContext<DependencyT>({
   },
   RizeLogo: ({ onAnimationEnd }) => {
     useEffect(() => {
-      setTimeout(() => { onAnimationEnd(); }, 50);
+      onAnimationEnd();
     });
     return <h1> RIZ*E </h1>;
   }

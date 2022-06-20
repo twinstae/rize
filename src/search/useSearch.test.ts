@@ -1,4 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+import { useState } from 'react';
+import { RawMailT } from '../mailList/types';
 
 import { TEST_MAIL, TEST_MAIL_2 } from '../test/fixtures';
 import useSearch from './useSearch';
@@ -11,14 +13,31 @@ describe('useSearch', () => {
       then(expected: string[]) {
         const { result } = renderHook(() => useSearch(ORIGINAL_LIST));
 
-        act(() => {
-          result.current.search(keyword);
-        });
+        result.current.search(keyword);
 
-        expect([...result.current.mailIdSet]).toStrictEqual(expected);
+        expected.forEach(expectedId => expect(result.current.isInResult(expectedId)).toBe(true));
       },
     };
   }
+
+  it('처음에는 모든 목록이 보인다.', () => {
+    const { result } = renderHook(() => useSearch(ORIGINAL_LIST));
+    [TEST_MAIL.id, TEST_MAIL_2.id].forEach(expectedId => expect(result.current.isInResult(expectedId)).toBe(true));
+  });
+
+  it('data가 바뀌면 새로 index를 생성한다', () => {
+    const { result } = renderHook(() => {
+      const [data, setData] = useState([] as RawMailT[]);
+      return {
+        ...useSearch(data),
+        setData,
+      };
+    });
+    [TEST_MAIL.id, TEST_MAIL_2.id].forEach(expectedId => expect(result.current.isInResult(expectedId)).toBe(false));
+    
+    result.current.setData(ORIGINAL_LIST);
+    [TEST_MAIL.id, TEST_MAIL_2.id].forEach(expectedId => expect(result.current.isInResult(expectedId)).toBe(true));
+  });
 
   it('검색어를 입력하지 않으면 모든 목록이 나온다', () => {
     searchKeyword('').then([TEST_MAIL.id, TEST_MAIL_2.id]);
@@ -32,15 +51,5 @@ describe('useSearch', () => {
     it('노래', () => {
       searchKeyword('노래').then([TEST_MAIL.id]);
     });
-  });
-
-  it('isInResult는 검색 결과에 있는 id만 true를 반환한다', () => {
-    const { result } = renderHook(() => useSearch(ORIGINAL_LIST));
-
-    act(() => {
-      result.current.search('노래');
-    });
-    expect(result.current.isInResult(TEST_MAIL.id)).toBe(true);
-    expect(result.current.isInResult(TEST_MAIL_2.id)).toBe(false);
   });
 });

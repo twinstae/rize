@@ -18,8 +18,23 @@ import useNavigation from '../router/useNavigation';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import MemberList from './MemberList';
 
-function LeftDrawler() {
+function ToConfigButton() {
   const navigation = useNavigation();
+  const { t } = useTranslation();
+  
+  return (
+    <Button
+      marginTop='4'
+      leftIcon={<SettingsIcon />}
+      onClick={() => {
+        navigation.navigate(paths.CONFIG);
+      }}>
+      {t(strs.설정)}
+    </Button>
+  );
+}
+
+function LeftDrawler() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { t } = useTranslation();
 
@@ -30,26 +45,17 @@ function LeftDrawler() {
         icon={<HamburgerIcon />}
         aria-label={t(strs.메뉴)}
       />
-      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+      <Drawer isOpen={isOpen} placement='left' onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px" color="izone.500">
+          <DrawerHeader borderBottomWidth='1px' color='izone.500'>
             {t(strs.메뉴)}
           </DrawerHeader>
-          <DrawerCloseButton margin="2" aria-label={t(strs.닫기)}>
+          <DrawerCloseButton margin='2' aria-label={t(strs.닫기)}>
             <CloseIcon />
           </DrawerCloseButton>
           <DrawerBody>
             <MemberList />
-            <Button
-              marginTop="4"
-              leftIcon={<SettingsIcon />}
-              onClick={() => {
-                navigation.navigate(paths.CONFIG);
-              }}
-            >
-              {t(strs.설정)}
-            </Button>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

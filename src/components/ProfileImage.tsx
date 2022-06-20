@@ -16,7 +16,6 @@ function getPath(member: string, theme?: string) {
 
   if (member === '') return 'img/izone-logo.png';
   if (member === '운영팀') return 'img/izone-logo.png';
-
   return `img/profile/${selectedTheme}/${toOriginalName(member)}.jpg`;
 }
 

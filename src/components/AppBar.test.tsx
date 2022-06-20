@@ -10,9 +10,9 @@ describe('AppBar', () => {
     render(<AppBar />);
 
     const searchButton = screen.getByLabelText(ko.translation.검색);
-    await userEvent.click(searchButton);
+    userEvent.click(searchButton);
 
-    const closeSearchButton = screen.getByLabelText(ko.translation.검색창_닫기);
-    await userEvent.click(closeSearchButton);
+    const closeSearchButton = await screen.findByLabelText(ko.translation.검색창_닫기);
+    userEvent.click(closeSearchButton);
   });
 });

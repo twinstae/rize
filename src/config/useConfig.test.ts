@@ -12,9 +12,10 @@ describe('useConfig', () => {
   it('config를 가져올 수 있다', async () => {
     const { result } = renderFakeConfig();
 
-    await waitFor(() => 
-      expect(result.current.get('test')).toBe('테스트')
-    );
+    await waitFor(() => expect(result.current.get('test')).toBe('테스트'), {
+      interval: 10,
+      timeout: 50,
+    });
   });
 
   it('config를 수정할 수 있다', async () => {
@@ -22,9 +23,7 @@ describe('useConfig', () => {
 
     result.current.set('test', '아이즈원');
 
-    await waitFor(() => 
-      expect(result.current.get('test')).toBe('아이즈원')
-    );
+    await waitFor(() => expect(result.current.get('test')).toBe('아이즈원'));
   });
 });
 // fallback

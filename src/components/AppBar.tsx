@@ -10,8 +10,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useAtom } from 'jotai';
-import debounce from 'lodash/debounce';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { strs } from '../i18n/i18n';
@@ -21,23 +20,18 @@ import IconButtonWithTooltip from './IconButtonWithTooltip';
 import LeftDrawler from './LeftDrawler';
 import SelectedTag from './SelectedTag';
 
-const debounceSearch = debounce((text, search) => search(text), 200);
-
 function AppBar() {
   const [keyword, search] = useAtom(keywordAtom);
-  const [keywordInput, setKeywordInput] = useState('');
   const { t } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeywordInput(e.target.value);
-    debounceSearch(e.target.value, search);
+    search(e.target.value);
   };
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   function handleClose() {
     onClose();
     search('');
-    setKeywordInput('');
   }
 
   function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -49,7 +43,6 @@ function AppBar() {
   useEffect(() => {
     if (keyword) {
       onOpen();
-      setKeywordInput(keyword);
     }
     return () => handleClose();
   }, []);
@@ -70,7 +63,7 @@ function AppBar() {
             htmlSize={16}
             width="90%"
             onKeyUp={handleKeyUp}
-            value={keywordInput}
+            value={keyword}
             onChange={handleChange}
           />
           <InputRightElement>

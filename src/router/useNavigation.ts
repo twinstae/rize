@@ -15,11 +15,11 @@ export interface Navigation {
 }
 
 const history = ['/'];
+const searchParam = new URLSearchParams();
 export const useFakeNavigation = (): Navigation => {
   return {
     params: () => ({ id: 'm25669' }),
     useSearchParams: () => {
-      const searchParam = new URLSearchParams();
       return [searchParam, (newInit) => { 
         Object.entries(newInit).forEach(([key, value]) => searchParam.set(key, value));
       }];

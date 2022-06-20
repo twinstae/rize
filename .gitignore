@@ -36,3 +36,8 @@ package-lock.json
 playwright/.cache
 screenshots
 playwright-report
+
+# stryker temp files
+.stryker-tmp
+reports/mutation/mutation.html
+stryker.log

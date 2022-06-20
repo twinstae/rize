@@ -9,6 +9,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.js',
     include: ['src/**/*.test.tsx', 'src/**/*.test.ts'],
+    threads: 2,
+    testTimeout: 100,
     coverage: {
       include: ['src/**/*.tsx', 'src/**/*.ts'],
       exclude: [

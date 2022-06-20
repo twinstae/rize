@@ -17,6 +17,9 @@ describe('InitPage', () => {
     await waitFor(() => {
       expect(fakeNavigation.current()).toBe(paths.MAIL_LIST);
     });
+    
+    //teardown
+    fakeNavigation.goBack();
   });
 
   it('필요한 파일을 업로드하면 메일 목록 페이지로 넘어간다', async () => {
@@ -37,14 +40,21 @@ describe('InitPage', () => {
     await waitFor(() => {
       expect(fakeNavigation.current()).toBe(paths.MAIL_LIST);
     });
+
+    //teardown
+    fakeNavigation.goBack();
   });
 
   it('없는 파일이 있는 채로 upload 버튼을 누르면, 메일 목록 페이지로 넘어가지 않는다', async () => {
     updateFakeStatus({ 'pm_list.json': false });
-    
+
+    const fakeNavigation = useFakeNavigation();    
+    fakeNavigation.navigate(paths.ROOT);
     render(<InitPage />);
 
     const uploadButton = screen.getByText(/upload/i);
     await userEvent.click(uploadButton);
+
+    expect(fakeNavigation.current()).toBe(paths.ROOT);
   });
 });

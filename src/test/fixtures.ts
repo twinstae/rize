@@ -1,6 +1,3 @@
-import { vi } from 'vitest';
-
-import { UsernameT } from '../global';
 import { MailT, RawMailT } from '../mailList/types';
 
 export const TEST_MAIL: MailT = {

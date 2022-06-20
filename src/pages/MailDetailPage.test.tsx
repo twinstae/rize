@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import preview from 'jest-preview';
 import React from 'react';
 
 import { ChakraWrapperOption } from '../hooks/Dependencies';
@@ -30,7 +29,5 @@ describe('MailDetailPage', () => {
 
     // mail image
     screen.getByAltText('img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg');
-    
-    preview.debug();
   });
 });
