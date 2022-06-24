@@ -3,11 +3,13 @@ import React from 'react';
 
 import { ChakraWrapperOption } from '../hooks/Dependencies';
 import ko from '../i18n/ko.json';
+import { useFakeNavigation } from '../router/useNavigation';
 import MailDetailPage from './MailDetailPage';
 
 describe('MailDetailPage', () => {
   it('MailDetailPage 제목, 별명, 미리보기, 시간이 있다', async () => {
-    // params { mailId: 'm25669' } from useFakeNavigation
+    const { navigate } = useFakeNavigation();
+    navigate('/mail/m25669');
     // {
     //   "id": "m25669",
     //   "member": "장원영",

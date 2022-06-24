@@ -13,21 +13,15 @@ describe('LangConfig', () => {
     render(<LangConfig />);
 
     const langSelect = screen.getByRole('combobox', {
-      name: ko.translation.언어
+      name: new RegExp(ko.translation.언어)
     }) as HTMLSelectElement;
 
     userEvent.selectOptions(langSelect, 'en');
 
-    expect(await screen.findByLabelText(en.translation.언어, undefined, {
-      interval: 10,
-      timeout: 50,
-    })).toBe(langSelect);
+    expect(await screen.findByLabelText(new RegExp(en.translation.언어))).toBe(langSelect);
 
     userEvent.selectOptions(langSelect, 'ko');
 
-    expect(await screen.findByLabelText(ko.translation.언어, undefined, {
-      interval: 10,
-      timeout: 50,
-    })).toBe(langSelect);
+    expect(await screen.findByLabelText(new RegExp(ko.translation.언어))).toBe(langSelect);
   });
 });

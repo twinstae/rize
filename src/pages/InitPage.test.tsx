@@ -31,10 +31,10 @@ describe('InitPage', () => {
     file.text = async () => JSON.stringify(TEST_MAIL_LIST, null, 2);
 
     const input = screen.getByLabelText(/pm_list.json/i);
-    await userEvent.upload(input, file);
+    userEvent.upload(input, file);
     
     const uploadButton = screen.getByText(/upload/i);
-    await userEvent.click(uploadButton);
+    userEvent.click(uploadButton);
 
     const fakeNavigation = useFakeNavigation();
     await waitFor(() => {
@@ -43,17 +43,18 @@ describe('InitPage', () => {
 
     //teardown
     fakeNavigation.goBack();
+    fakeNavigation.navigate(paths.ROOT);
   });
 
   it('없는 파일이 있는 채로 upload 버튼을 누르면, 메일 목록 페이지로 넘어가지 않는다', async () => {
     updateFakeStatus({ 'pm_list.json': false });
-
-    const fakeNavigation = useFakeNavigation();    
+    const fakeNavigation = useFakeNavigation();
     fakeNavigation.navigate(paths.ROOT);
+
     render(<InitPage />);
 
     const uploadButton = screen.getByText(/upload/i);
-    await userEvent.click(uploadButton);
+    userEvent.click(uploadButton);
 
     expect(fakeNavigation.current()).toBe(paths.ROOT);
   });

@@ -1,8 +1,8 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { useState } from 'react';
-import { RawMailT } from '../mailList/types';
 
 import { TEST_MAIL, TEST_MAIL_2 } from '../test/fixtures';
+import { IndexMail } from './types';
 import useSearch from './useSearch';
 
 describe('useSearch', () => {
@@ -27,7 +27,7 @@ describe('useSearch', () => {
 
   it('data가 바뀌면 새로 index를 생성한다', () => {
     const { result } = renderHook(() => {
-      const [data, setData] = useState([] as RawMailT[]);
+      const [data, setData] = useState([] as IndexMail[]);
       return {
         ...useSearch(data),
         setData,
@@ -44,12 +44,12 @@ describe('useSearch', () => {
   });
 
   describe('검색어를 입력하면 해당하는 메일만 걸러진다', () => {
-    it('핫초코', () => {
-      searchKeyword('핫초코').then([TEST_MAIL_2.id]);
+    it('subject: おはよう💕', () => {
+      searchKeyword('おはよう💕').then([TEST_MAIL_2.id]);
     });
 
-    it('노래', () => {
-      searchKeyword('노래').then([TEST_MAIL.id]);
+    it('body: 평소 보내던 메일과는 조금 다른 메일이 될 것 같아요', () => {
+      searchKeyword('평소 보내던 메일과는 조금 다른 메일이 될 것 같아요').then([TEST_MAIL.id]);
     });
   });
 });

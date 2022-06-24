@@ -3,6 +3,7 @@ import React from 'react';
 
 // eslint-disable-next-line react/display-name
 const IconButtonWithTooltip = (props: IconButtonProps) => {
+  
   return (
     <Tooltip label={props['aria-label']}>
       <IconButton {...props} />

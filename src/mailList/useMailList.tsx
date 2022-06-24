@@ -10,7 +10,7 @@ import { MailBodyT, MailRepository, MailT } from './types';
 
 
 export interface MailListResult {
-  mailList: (mode: TabMode, tag: string) => MailT[];
+  mailList: (mode: TabMode, tag: string) => (MailT & MailBodyT)[];
   mailById: (id: string) => MailT & MailBodyT | undefined;
   addTagToMail: (tag: string, mail: string) => void;
   removeTagFromMail: (tag: string, mail: string) => void;
@@ -49,8 +49,9 @@ export const createUseMailList = (mailRepository: MailRepository) => {
 
   const rawMailListAtom = atomWithAsyncInit(mailRepository.getAllMailList, []);
 
-  const mailListAtom = atom<MailT[]>((get) => {
+  const mailListAtom = atom<(MailT & MailBodyT)[]>((get) => {
     const rawMailList = get(rawMailListAtom);
+    const mailBodyDict = get(mailBodyDictAtom);
     const tagToMailDict = get(tagToMailDictAtom);
     const mailToTagDict = get(mailToTagDictAtom);
     const nameToNumberDict = get(nameToNumberDictAtom);
@@ -59,6 +60,7 @@ export const createUseMailList = (mailRepository: MailRepository) => {
     const favoriteSet = new Set(tagToMailDict[FAVORITE]);
     return rawMailList.map((mail) => ({
       ...mail,
+      ...mailBodyDict[mail.id],
       member: toOriginalName(nameToNumberDict)(mail.member),
       isFavorited: favoriteSet.has(mail.id),
       isUnread: unreadSet.has(mail.id),

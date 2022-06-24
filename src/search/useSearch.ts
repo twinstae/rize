@@ -1,16 +1,18 @@
 import { atom, useAtom } from 'jotai';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { CreateIndex } from '../global';
-import { RawMailT } from '../mailList/types';
 import createFlexSearchIndex from './createFlexSearchIndex';
+import { CreateIndex, IndexMail } from './types';
 
 export const keywordAtom = atom('');
 
 export const createUseSearch =
-  (createIndex: CreateIndex) => (data: RawMailT[]) => {
+  (createIndex: CreateIndex) => (data: IndexMail[]) => {
     const [keyword, setKeyword] = useAtom(keywordAtom);
-    const index = useMemo(() => createIndex(data), [data]);
+    const index = useMemo(() => createIndex(data.map(mail => ({
+      ...mail,
+      body: mail.body.replace(new RegExp('&nbsp;', 'g'), ' ')
+    }))), [data]);
 
     const searchResultSet = useMemo(
       () => index.search(keyword),

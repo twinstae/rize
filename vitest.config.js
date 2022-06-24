@@ -10,7 +10,7 @@ export default defineConfig({
     setupFiles: './src/setupTests.js',
     include: ['src/**/*.test.tsx', 'src/**/*.test.ts'],
     threads: 2,
-    testTimeout: 100,
+    testTimeout: 500,
     coverage: {
       include: ['src/**/*.tsx', 'src/**/*.ts'],
       exclude: [
@@ -28,6 +28,7 @@ export default defineConfig({
         'src/pages/MailListPage.tsx',
         'src/components/MailList.tsx',
         'src/components/RizeLogo.tsx',
+        'src/hooks/QueryWrapper.tsx',
         'src/test/Test.tsx',
         'src/App.tsx',
       ],

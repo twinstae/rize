@@ -18,7 +18,10 @@ const history = ['/'];
 const searchParam = new URLSearchParams();
 export const useFakeNavigation = (): Navigation => {
   return {
-    params: () => ({ id: 'm25669' }),
+    params: () => {
+      const [, id] = history[history.length - 1].match(/\/mail\/(.+)/) ?? [];
+      return { id };
+    },
     useSearchParams: () => {
       return [searchParam, (newInit) => { 
         Object.entries(newInit).forEach(([key, value]) => searchParam.set(key, value));

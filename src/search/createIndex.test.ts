@@ -22,8 +22,8 @@ describe('useSearch', () => {
       searchKeyword('핫초코').then([TEST_MAIL_2.id]);
     });
 
-    it('노래', () => {
-      searchKeyword('노래').then([TEST_MAIL.id]);
+    it('body: 평소 보내던 메일과는 조금 다른 메일이 될 것 같아요', () => {
+      searchKeyword('평소 보내던 메일과는 조금 다른 메일이 될 것 같아요').then([TEST_MAIL.id]);
     });
   });
 });

@@ -1,13 +1,3 @@
-import { RawMailT } from './mailList/types';
-
-type Id = string | number;
-interface Index {
-  search: (keyword: string) => Set<Id>;
-}
-
-type CreateIndex = (mailList: RawMailT[]) => Index;
-
-
 type UsernameT = {
   before: string;
   after: string;
@@ -16,7 +6,7 @@ type UsernameT = {
   replaceUsername: (text: string) => string;
 };
 
-interface StorageRepository<T> {
+export interface StorageRepository<T> {
   getItem: () => Promise<T | undefined>;
   setItem: (value: T) => Promise<void>;
 }

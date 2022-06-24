@@ -19,18 +19,18 @@ import IconButtonWithTooltip from './IconButtonWithTooltip';
 import MemberList from './MemberList';
 
 function ToConfigButton() {
-  const navigation = useNavigation();
+  const { Link } = useNavigation();
   const { t } = useTranslation();
   
   return (
-    <Button
-      marginTop='4'
-      leftIcon={<SettingsIcon />}
-      onClick={() => {
-        navigation.navigate(paths.CONFIG);
-      }}>
-      {t(strs.설정)}
-    </Button>
+    <Link to={paths.CONFIG}>
+      <Button
+        marginTop='4'
+        leftIcon={<SettingsIcon />}
+      >
+        {t(strs.설정)}
+      </Button>
+    </Link> 
   );
 }
 
@@ -56,6 +56,7 @@ function LeftDrawler() {
           </DrawerCloseButton>
           <DrawerBody>
             <MemberList />
+            <ToConfigButton />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

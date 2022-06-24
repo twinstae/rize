@@ -19,6 +19,9 @@ describe('useUsernameService', () => {
     await waitFor(() => {  
       expect(result.current.before).toBe('<위즈원>');
       expect(result.current.after).toBe('wiz*one');
+    }, {
+      interval: 5,
+      timeout: 20,
     });
   });
 
@@ -29,6 +32,9 @@ describe('useUsernameService', () => {
       expect(result.current.replaceUsername('<위즈원> 행복해')).toBe(
         'wiz*one 행복해'
       );
+    }, {
+      interval: 5,
+      timeout: 20,
     });    
   });
 
@@ -39,6 +45,9 @@ describe('useUsernameService', () => {
 
     await waitFor(() => {
       expect(result.current.after).toBe('토끼');
+    }, {
+      interval: 5,
+      timeout: 20,
     });
   });
 });

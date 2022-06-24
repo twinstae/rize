@@ -30,9 +30,12 @@ export function addTagToMail(tag: string, targetMailId: string) {
 export function removeTagFromMail(tag: string, targetMailId: string) {
   return (old: Record<string, string[]>) => {
     const newDict = jsonClone(old);
-    newDict[tag] = (newDict[tag] || []).filter(
-      (mailId) => targetMailId !== mailId
-    );
+    if(newDict[tag]){
+      newDict[tag] = newDict[tag].filter(
+        (mailId) => targetMailId !== mailId
+      );
+    }
+    
     return newDict;
   };
 }
@@ -60,7 +63,7 @@ export const filterByModeAndTag = (tagToMailDict: Record<string, string[]>) => (
     if (tag === '' || tagToMailDict[tag] === undefined) {
       return true;
     }
-    return (tagToMailDict[tag] ?? []).includes(mail.id);
+    return (tagToMailDict[tag]).includes(mail.id);
   };
 
   return (item: MailT) => byMode(item) && byTag(item);

@@ -13,8 +13,8 @@ describe('useConfig', () => {
     const { result } = renderFakeConfig();
 
     await waitFor(() => expect(result.current.get('test')).toBe('테스트'), {
-      interval: 10,
-      timeout: 50,
+      interval: 5,
+      timeout: 20,
     });
   });
 
@@ -23,7 +23,10 @@ describe('useConfig', () => {
 
     result.current.set('test', '아이즈원');
 
-    await waitFor(() => expect(result.current.get('test')).toBe('아이즈원'));
+    await waitFor(() => expect(result.current.get('test')).toBe('아이즈원'), {
+      interval: 5,
+      timeout: 20,
+    });
   });
 });
 // fallback

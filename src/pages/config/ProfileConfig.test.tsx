@@ -5,10 +5,12 @@ import React from 'react';
 import ProfileConfig from './ProfileConfig';
 
 
-describe.skip('ProfileConfig', () => {
+describe('ProfileConfig', () => {
   it('ProfileConfig 원하는 프로필을 선택하면 프로필이 바뀐다', async () => {
     render(<ProfileConfig />);
 
+    const images = screen.getAllByRole('img');
+    expect(images).toHaveLength(12 + 4 * 8);
     const laVieEnRoseRadio = screen.getByRole('radio', {
       name: /la-vie-en-rose/
     });

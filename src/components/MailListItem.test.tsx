@@ -13,8 +13,9 @@ describe('MailListItem', () => {
 
     screen.getByText(TEST_MAIL.subject);
     screen.getByText('조유리');
-    screen.getByText(TEST_MAIL.preview);
+    screen.getByText(/오늘은 평소 보내던 메일과는 조금 다른 메일이 될 것 같아요/);
     screen.getByText(TEST_MAIL.time);
+    screen.getByText('율리스트'); // tags
   });
 
   it('MailListItem을 클릭하면 id 에 해당하는 메일 상세 페이지로 이동한다', () => {

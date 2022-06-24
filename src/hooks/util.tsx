@@ -21,33 +21,6 @@ export const pipeWrapper = (...WrapperList: WrapperT[]): WrapperT => {
     WrapperList.reduce((acc, Wrapper) => <Wrapper>{acc}</Wrapper>, children);
 };
 
-type RenderQueryT = <D>(
-  query: UseQueryResult<D, Error>,
-  render: (data: D) => JSX.Element,
-  onError?: (error: Error) => JSX.Element
-) => JSX.Element;
-
-export const renderQuery: RenderQueryT = (
-  query,
-  render,
-  onError = (error) => <span>{JSON.stringify(error)}</span>
-) => {
-  const { data, isLoading, error } = query;
-  if (isLoading || data === undefined) return <span>로딩중</span>;
-
-  if (error) return onError(error);
-
-  return render(data);
-};
-
-export const SuspenseWrapper = createWrapper(React.Suspense, {
-  fallback: <span>로딩 중</span>,
-});
-
-export const withSuspense: <T>(Component: React.FC<T>) => React.FC<T> =
-  (Component) => (props) =>
-    SuspenseWrapper({ children: <Component {...props} /> });
-
 export const shuffle: <T>(array: Array<T>) => Array<T> = (array) => {
 
   let curId = array.length;

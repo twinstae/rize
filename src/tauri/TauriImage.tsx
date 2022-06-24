@@ -5,7 +5,6 @@ import React from 'react';
 import { useQuery } from 'react-query';
 
 import { ImageProps } from '../components/MockImage';
-import { withSuspense } from '../hooks/util';
 
 
 const TauriImage: React.FC<ImageProps> = ({ path, style, width }) => {
@@ -25,4 +24,4 @@ const TauriImage: React.FC<ImageProps> = ({ path, style, width }) => {
 };
 
 
-export default withSuspense(TauriImage);
+export default TauriImage;

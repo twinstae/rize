@@ -8,7 +8,7 @@ const renderComponent = () => {
   return render(<NickNameConfig />);
 };
 
-describe.skip('NickNameConfig', () => {
+describe('NickNameConfig', () => {
 
   it('닉네임을 바꿀 수 있다', async () => {
     renderComponent();

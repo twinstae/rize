@@ -12,7 +12,7 @@ function LangConfig() {
   return (
     <Box>
       <FormLabel>
-        <ConfigHeading title={t(strs.언어)}/>
+        <ConfigHeading title={t(strs.언어) + ' : ' + lang}/>
         <Select placeholder={t(strs.언어_선택하기)} value={lang} onChange={(e) => {
           setLang(e.target.value);
         }}>
