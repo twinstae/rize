@@ -1,14 +1,16 @@
 import React from 'react';
-import { UseQueryResult } from 'react-query';
 
 type ChildrenProps = {
-  children: React.ReactElement<unknown, string | React.JSXElementConstructor<unknown>>
+  children: React.ReactElement<
+    unknown,
+    string | React.JSXElementConstructor<unknown>
+  >;
 };
 
 export type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const createWrapper = <P extends {[key:string]: any}>(
+export const createWrapper = <P extends { [key: string]: any }>(
   Provider: React.FC<P>,
   props: P
 ): WrapperT => {
@@ -22,7 +24,6 @@ export const pipeWrapper = (...WrapperList: WrapperT[]): WrapperT => {
 };
 
 export const shuffle: <T>(array: Array<T>) => Array<T> = (array) => {
-
   let curId = array.length;
   // There remain elements to shuffle
   while (0 !== curId) {

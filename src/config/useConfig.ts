@@ -20,7 +20,7 @@ export const useConfig = () => {
   return {
     get: (key: string) => config[key],
     set: (key: string, value: JsonValue) => {
-      setConfig(() => ({ ...config, [key]: value }));
+      setConfig((old: JsonObject) => ({ ...old, [key]: value }));
     },
   };
 };

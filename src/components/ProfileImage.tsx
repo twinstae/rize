@@ -2,6 +2,7 @@ import React from 'react';
 
 import useProfile from '../config/useProfile';
 import { useDependencies } from '../hooks/Dependencies';
+import { rem } from '../theme/rem';
 
 interface Props {
   member: string;
@@ -10,7 +11,7 @@ interface Props {
 }
 
 function getPath(member: string, theme?: string) {
-  const {profile} = useProfile();
+  const { profile } = useProfile();
   const { toOriginalName } = useDependencies().useMailList();
   const selectedTheme = theme || profile;
 
@@ -20,9 +21,9 @@ function getPath(member: string, theme?: string) {
 }
 
 const sizes = {
-  base: 3,
-  md: 2,
-  sm: 1.5,
+  base: rem(3) / 4,
+  md: rem(2) / 4,
+  sm: rem(1.5) / 4,
 };
 
 const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme }) => {
@@ -36,7 +37,7 @@ const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme }) => {
         borderRadius: '50%',
         marginRight: '0.5rem',
       }}
-      width={sizes[size]*4}
+      width={sizes[size]}
     />
   );
 };

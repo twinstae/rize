@@ -3,7 +3,6 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/vi-dom
 import '@testing-library/jest-dom';
-
 import { vi } from 'vitest';
 
 const oldError = console.error;

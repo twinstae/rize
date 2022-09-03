@@ -1,52 +1,58 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
 import AppBar from '../components/AppBar';
 import MailList from '../components/MailList';
-import { useDependencies } from '../hooks/Dependencies';
+import { RizeTabs } from '../components/RizeTabs';
 import { strs } from '../i18n/i18n';
 import { modes } from '../mailList/mailListModel';
-import useTag from '../mailList/useTag';
-import useSearch from '../search/useSearch';
-import useDarkMode from '../theme/useDarkMode';
+import { useResults } from '../mailList/useResult';
+import paths from '../router/paths';
+import useNavigation from '../router/useNavigation';
+// import useDarkMode from '../theme/useDarkMode';
 
-function MailListPage() {
-  const { isDark } = useDarkMode();
-  const [tag] = useTag();
-  const { mailList } = useDependencies().useMailList();
+function ToConfigButton({ onClose }: { onClose: () => void }) {
+  const { Link } = useNavigation();
   const { t } = useTranslation();
 
-  const allMailList = mailList('all', '');
-  const { isInResult } = useSearch(allMailList);
-
-  const results = modes
-    .map((mode) => mailList(mode, tag))
-    .map((data) => data.filter((mail) => isInResult(mail.id)));
-
   return (
-    <div style={{ overflow: 'hidden' }}>
+    <Link to={paths.CONFIG}>
+      <button className="mt-4 btn btn-secondary btn-sm" onClick={onClose}>
+        {t(strs.설정)}
+      </button>
+    </Link>
+  );
+}
+
+function MailListPage() {
+  const { t } = useTranslation();
+  const tabs = [strs.전체, strs.읽지_않음, strs.중요];
+  console.log('MailListPage');
+  return (
+    <div>
       <AppBar />
-      <Tabs isFitted colorScheme={isDark ? 'pink' : 'izone'}>
-        <TabList>
-          <Tab fontSize="lg">
-            {t(strs.전체)} {results[0].length}
-          </Tab>
-          <Tab fontSize="lg">
-            {t(strs.읽지_않음)} {results[1].length}
-          </Tab>
-          <Tab fontSize="lg">
-            {t(strs.중요)} {results[2].length}
-          </Tab>
-        </TabList>
-        <TabPanels>
-          {modes.map((mode, i) => (
-            <TabPanel style={{ padding: '0.5rem' }} key={mode}>
-              <MailList result={results[i]} />
-            </TabPanel>
-          ))}
-        </TabPanels>
-      </Tabs>
+      <RizeTabs<string>
+        data={modes}
+        value={(mode) => mode}
+        label={(_mode, index) => {
+          const results = useResults();
+          return `${t(tabs[index])} ${results[index].length}`;
+        }}
+        Content={({ index }) => <MailList index={index} /> || null}
+      />
+      {createPortal(
+        <ToConfigButton
+          onClose={() => {
+            const checkbox = document.getElementById(
+              'my-drawer'
+            ) as HTMLInputElement;
+            checkbox.checked = false;
+          }}
+        />,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        document.getElementById('to-config')!
+      )}
     </div>
   );
 }

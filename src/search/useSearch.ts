@@ -11,7 +11,7 @@ export const createUseSearch =
     const [keyword, setKeyword] = useAtom(keywordAtom);
     const index = useMemo(() => createIndex(data.map(mail => ({
       ...mail,
-      body: mail.body.replace(new RegExp('&nbsp;', 'g'), ' ')
+      body: mail.body?.replace(new RegExp('&nbsp;', 'g'), ' ') ?? ''
     }))), [data]);
 
     const searchResultSet = useMemo(

@@ -43,20 +43,17 @@ it('removeTagFromMail', () => {
 const UNREAD_UNFAVORITED_YURI_MAIL1: MailT = {
   ...TEST_MAIL,
   id: 'mail1',
-  isUnread: true,
 };
 
 const READ_FAVORITED_HITOMI_MAIL2: MailT = {
   ...TEST_MAIL,
   member: '혼다 히토미',
   id: 'mail2',
-  isFavorited: true,
 };
 
 const UNREAD_UNFAVORITED_YURI_MAIL3: MailT = {
   ...TEST_MAIL,
   id: 'mail3',
-  isUnread: true,
 };
 
 const testSuites: [string, [TabMode, string], [boolean, boolean, boolean]][] = [
@@ -70,7 +67,13 @@ const testSuites: [string, [TabMode, string], [boolean, boolean, boolean]][] = [
 
 testSuites.forEach(([label, input, expected]) => {
   it(label, () => {
-    const predicate = filterByModeAndTag(tagToMailDict)(...input);
+    const predicate = filterByModeAndTag(
+      tagToMailDict,
+      (mailId) => mailId === READ_FAVORITED_HITOMI_MAIL2.id,
+      (mailId) =>
+        mailId === UNREAD_UNFAVORITED_YURI_MAIL3.id ||
+        mailId === UNREAD_UNFAVORITED_YURI_MAIL1.id
+    )(...input);
 
     expect(
       [
@@ -82,8 +85,8 @@ testSuites.forEach(([label, input, expected]) => {
   });
 });
 
-MEMBER_LIST.forEach(member => {
-  it('toOriginalName', async () => {
+MEMBER_LIST.forEach((member) => {
+  it(`toOriginalName: ${member}`, async () => {
     const memberNameDict = await fakeMailRepository.getMemberNameDict();
     expect(toOriginalName(memberNameDict)(member)).toBe(member);
   });

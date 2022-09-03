@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 
@@ -17,12 +16,15 @@ const assertToBeArray: (a: unknown) => void = (a) => {
   assert(Array.isArray(a), `${JSON.stringify(a)} is not an Array`);
 };
 
-const assertToBeGreaterThan: (a: number, b: number) => void = (a: number, b: number) => {
+const assertToBeGreaterThan: (a: number, b: number) => void = (
+  a: number,
+  b: number
+) => {
   assert(a > b, `${a} is not greater than ${b}`);
 };
 
-type Suite<D> = [string, (dependencies: D) => Promise<void>]
-type DependenciesT = ReturnType<typeof useDependencies>
+type Suite<D> = [string, (dependencies: D) => Promise<void>];
+type DependenciesT = ReturnType<typeof useDependencies>;
 const testSuites: Suite<DependenciesT>[] = [
   [
     '스토리지에 쓰고 읽어올 수 있다',
@@ -31,12 +33,11 @@ const testSuites: Suite<DependenciesT>[] = [
       await storageRepo.setItem(now);
       const result = await storageRepo.getItem();
       assertToBe(result, now);
-    }
+    },
   ],
   [
     'mailList를 가져올 수 있다',
     async ({ mailRepository }) => {
-
       const result = await mailRepository.getAllMailList();
       assertToBeGreaterThan(result.length, 0);
       assertToBeArray(result);
@@ -64,9 +65,12 @@ const wrapTimer = (run: () => Promise<void>) => async () => {
   return end - start;
 };
 
-function Result({ suite: [message, run] }: { suite: Suite<DependenciesT> }){
-  const dependencies = useDependencies();  
-  const { data, status, error } = useQuery<number, Error>(message, wrapTimer(() => run(dependencies)));
+function Result({ suite: [message, run] }: { suite: Suite<DependenciesT> }) {
+  const dependencies = useDependencies();
+  const { data, status, error } = useQuery<number, Error>(
+    message,
+    wrapTimer(() => run(dependencies))
+  );
   return (
     <li style={{ color: colorMap[status] }}>
       {resultMap[status]} : {message} ({data && data / 1000}초)
@@ -77,14 +81,14 @@ function Result({ suite: [message, run] }: { suite: Suite<DependenciesT> }){
 
 function Test() {
   return (
-    <Box>
+    <div>
       <BackButton />
       <ul>
         {testSuites?.map((suite) => (
           <Result suite={suite} key={suite[0]} />
         ))}
       </ul>
-    </Box>
+    </div>
   );
 }
 

@@ -1,19 +1,5 @@
 ::-webkit-scrollbar {
-  width: 0.75rem;
-}
-
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 1px grey;
-  padding: 1px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #f986ae;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #ff2974;
+  display: hidden;
 }
 
 li button:focus {
@@ -27,4 +13,27 @@ a:focus {
 
 path {
   stroke-width: 2px;
+}
+
+
+body {
+  font-family: 'Pretendard';
+}
+
+.tab.tab-active {
+  border-color: hsla(var(--s));
+  color: hsla(var(--s));
+}
+
+.scrollbar__thumb {
+  background-color: #f986ae !important;
+  border-radius: 2rem !important;
+}
+
+.scrollbar__thumbPlaceholder--vertical {
+  width: 1.2rem !important;
+}
+
+.scrollbar__thumb--horizontal {
+  display: none !important;
 }

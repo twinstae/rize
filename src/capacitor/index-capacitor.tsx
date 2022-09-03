@@ -1,78 +1,71 @@
 import '../i18n/i18n';
 import '../index.css';
+import 'uno.css';
+import 'normalize.css';
+import '@stackflow/basic-ui/index.css';
 
 import { App } from '@capacitor/app';
-import { ChakraProvider, useColorMode } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
 
 import AppMain from '../App';
 import RizeLogo from '../components/RizeLogo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import QueryWrapper from '../hooks/QueryWrapper';
-import { createWrapper, pipeWrapper, WrapperT } from '../hooks/util';
+import { pipeWrapper, WrapperT } from '../hooks/util';
 import i18n from '../i18n/i18n';
+import fakeMailRepository from '../mailList/fakeMailRepository';
 import { createUseMailList } from '../mailList/useMailList';
-import useNavigation from '../router/useNavigation';
-import useRRDNavigation from '../router/useRRDNavigation';
-import theme from '../theme/theme';
+import { useStackNavigation } from '../router/useStatckNavigation';
 import fsJSON from './fsJSON';
-import fsMailRepository from './fsMailRepository';
 import S3Image from './S3Image';
 import storageRepo from './storageRepo';
 
-
-const mailRepository = fsMailRepository;
+const mailRepository = fakeMailRepository;
 const useMailList = createUseMailList(mailRepository);
 
-storageRepo.getItem().then(config => {
-  i18n.changeLanguage((config as { lang: string}).lang);
+storageRepo.getItem().then((config) => {
+  i18n.changeLanguage((config as { lang: string }).lang);
 });
 
 const Wrapper = pipeWrapper(
-  createWrapper(ChakraProvider, { theme }),
-  HashRouter,
   QueryWrapper,
   DependenciesWrapper({
     storageRepo,
-    useNavigationImpl: useRRDNavigation,
+    useNavigationImpl: useStackNavigation,
     Image: S3Image,
-    useColorMode,
-    useMailList,
+    useColorMode: () => ({
+      colorMode: 'light',
+      toggleColorMode: () => undefined,
+    }),
     fsJSON,
+    useMailList,
     mailRepository,
-    RizeLogo
-  }),
+    RizeLogo,
+  })
 );
 
-const CapacitorWrpper: WrapperT = ({children}) => {
-  const navigation = useNavigation();
-  useEffect(() => {
-    App.addListener('backButton', () =>{
-      navigation.goBack();
-    });
+// const CapacitorWrpper: WrapperT = ({ children }) => {
+//   const navigation = useStackNavigation();
+//   useEffect(() => {
+//     App.addListener('backButton', () => {
+//       navigation.goBack();
+//     });
 
-    return () => {
-      App.removeAllListeners();
-    };
-  });
-  return children;
-};
+//     return () => {
+//       App.removeAllListeners();
+//     };
+//   });
+//   return children;
+// };
 
-const rootEl = document.getElementById('root');
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(document.getElementById('root')!);
 
-if(rootEl){
-  const root = ReactDOM.createRoot(rootEl);
-
-  root.render(
-    <React.StrictMode>
-      <Wrapper>
-        <CapacitorWrpper>
-          <AppMain />
-        </CapacitorWrpper>
-      </Wrapper>
-    </React.StrictMode>
-  );
-}
-
+root.render(
+  <React.StrictMode>
+    <Wrapper>
+      <AppMain />
+    </Wrapper>
+  </React.StrictMode>
+);

@@ -1,6 +1,6 @@
 import { HStack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import useUsername from '../config/useUsername';
 import { useDependencies } from '../hooks/Dependencies';
@@ -13,10 +13,11 @@ import TagList from './TagList';
 
 const Wrapper = styled.li`
   padding: 0.5rem;
-  border-bottom: 1px solid var(--chakra-colors-gray-300);
+  border-bottom: 1px solid #ddd;
+  background-color: hsla(var(--b1)/var(--tw-bg-opacity,1));
 
   &.unread::before {
-    content: "●";
+    content: '●';
     color: #f06d9c;
     position: absolute;
     margin-top: -8px;
@@ -48,32 +49,30 @@ const DatiTimeText = styled.span`
 
 interface MailListItemProps {
   mail: MailT;
+  style?: CSSProperties;
 }
 
-function MailListItem({ mail }: MailListItemProps) {
+function MailListItem({ mail, style }: MailListItemProps) {
   const navigation = useNavigation();
-  const { toOriginalName } = useDependencies().useMailList();
-  const [ , setSearchParams] = navigation.useSearchParams();
   const Link = navigation.Link;
 
   const usernameService = useUsername();
-  
+  const { isUnread } = useDependencies().useMailList();
+
   return (
-    <Wrapper id={'mail-'+mail.id} className={mail.isUnread ? 'unread' : undefined}>
+    <Wrapper
+      id={'mail-' + mail.id}
+      className={isUnread(mail.id) ? 'unread' : undefined}
+      style={style}
+    >
       <Link to={toMailDetail(mail.id)}>
-        <div
-          style={{position: 'relative'}} 
-          onClick={() => {
-            setSearchParams({
-              mailId: mail.id
-            }, { replace: true });
-          }}>
+        <div style={{ position: 'relative' }}>
           <ProfileImage member={mail.member} size="base" />
-          <FavoriteStar mail={mail}/>
+          <FavoriteStar mailId={mail.id} />
           <HStack>
-            <span>{toOriginalName(mail.member) || mail.member}</span>
-            <DatiTimeText>{mail.time}</DatiTimeText>
-            <TagList tags={mail.tags} />
+            <span>{mail.member}</span>
+            <DatiTimeText>{mail.time.slice(2)}</DatiTimeText>
+            <TagList mailId={mail.id} />
           </HStack>
           <Title>
             <strong>{mail.subject}</strong>

@@ -7,7 +7,7 @@ function renderWithDependency(component: React.ReactElement) {
   return render(component);
 }
 
-const TEST_PATH = 'img/mail/7/20210428/2e8279a2b7bb39309a585d8282aa81b5.jpeg';
+const TEST_PATH = '';
 
 describe('MailBody', () => {
   it('MailBody는 메일 본문과 이미지를 분리해서 렌더링한다', () => {
@@ -21,8 +21,7 @@ describe('MailBody', () => {
     );
 
     screen.getByText('첫 번째');
-    // MockImage는 앞에 image:를 붙여줌
-    screen.getByAltText(TEST_PATH);
+    expect(screen.getByRole('img')).toBeInTheDocument();
     screen.getByText('두 번째');
   });
 });

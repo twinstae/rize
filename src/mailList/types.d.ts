@@ -9,11 +9,7 @@ export type RawMailT = {
   preview: string;
 };
 
-export type MailT = RawMailT & {
-  isFavorited: boolean;
-  isUnread: boolean;
-  tags: string[];
-};
+export type MailT = RawMailT;
 
 export type MailBodyT = {
   body: string;
@@ -26,7 +22,7 @@ export interface MailRepository {
   getTagToMailDict: () => Promise<Record<string, string[]>>;
   getMemberNameDict: () => Promise<Record<string, number>>;
   saveTagToMailDict: (dict: Record<string, string[]>) => Promise<void>;
-  status: () => Promise<{ [fileName: string]: boolean }>
+  status: () => Promise<{ [fileName: string]: boolean }>;
 }
 
 export interface FsJSON {

@@ -12,25 +12,33 @@ const debounceSetAfter = debounce((text, setAfter) => setAfter(text), 200);
 
 function NickNameConfig() {
   const { t } = useTranslation();
-  const {before, after, setBefore, setAfter, replaceUsername} = useUsername();
+  const { before, after, setBefore, setAfter, replaceUsername } = useUsername();
 
   const [beforeInput, setBeforeInput] = useState(before);
   const [afterInput, setAfterInput] = useState(after);
 
   return (
-    <VStack align="stretch">
-      <ConfigHeading title={t(strs.닉네임_바꾸기)}/>
+    <VStack align="stretch" className="border-red-200 border-bottom-2 p-3 m-1">
+      <ConfigHeading title={t(strs.닉네임_바꾸기)} />
       <FormLabel>
-        <Input value={beforeInput} onChange={(e) => {
-          setBeforeInput(e.target.value);
-          debounceSetBefore(e.target.value, setBefore);
-        }} />{t(strs.에서)}
+        <Input
+          value={beforeInput}
+          onChange={(e) => {
+            setBeforeInput(e.target.value);
+            debounceSetBefore(e.target.value, setBefore);
+          }}
+        />
+        {t(strs.에서)}
       </FormLabel>
       <FormLabel>
-        <Input value={afterInput} onChange={(e) => {
-          setAfterInput(e.target.value);
-          debounceSetAfter(e.target.value, setAfter);
-        }} />{t(strs.으로)}
+        <Input
+          value={afterInput}
+          onChange={(e) => {
+            setAfterInput(e.target.value);
+            debounceSetAfter(e.target.value, setAfter);
+          }}
+        />
+        {t(strs.으로)}
       </FormLabel>
       <Box>
         <h4>{t(strs.예시)}</h4>

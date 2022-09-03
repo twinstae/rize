@@ -30,6 +30,6 @@ describe('MailDetailPage', () => {
     screen.getByText(/그동안 정말 정말 고마웠어ㅎㅎ/);
 
     // mail image
-    screen.getByAltText('img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg');
+    expect(screen.getAllByRole('img').at(-1)).toHaveAttribute('src', 'http://localhost:8000/img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg');
   });
 });

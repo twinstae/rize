@@ -1,6 +1,4 @@
-import {
-  Divider,
-} from '@chakra-ui/react';
+import { Divider } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -21,13 +19,15 @@ const Title = styled.h3`
 `;
 
 const Wrapper = styled.header`
-  padding: 0.5rem;
+  padding: 1rem;
+  position: relative;
 `;
 
 function MailDetailPage() {
   const navigation = useNavigation();
   const { toOriginalName, mailById } = useDependencies().useMailList();
-  const mailId = navigation.params().id ?? 'm25731';
+
+  const mailId = navigation.params().mailId ?? 'm25731';
 
   const mail = mailById(mailId);
 
@@ -36,26 +36,20 @@ function MailDetailPage() {
   }
 
   return (
-    <div style={{ padding: '0.5rem' }}>
+    <div className="p-1 bg-base-100">
       <BackButton />
       <Wrapper>
-        <FavoriteStar mail={mail} />
-        <ProfileImage member={mail.member} size='base' />
+        <FavoriteStar mailId={mail.id} />
+        <ProfileImage member={mail.member} size="base" />
         <strong>{toOriginalName(mail.member)} </strong>
-        <span
-          style={{
-            position: 'absolute',
-            top: '1rem',
-            right: '1rem',
-            color: 'darkgray',
-          }}>
+        <span className="text-gray-500 absolute top-0 right-10">
           {mail.time}
         </span>
         <Title>{mail.subject}</Title>
       </Wrapper>
       <Divider />
       <MailBody mailBody={mail} />
-      <BackButton />
+      <BackButton direction="top" />
     </div>
   );
 }

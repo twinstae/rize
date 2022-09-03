@@ -41,7 +41,18 @@ const fakeFsJSON = {
 
 const useFakeMailList = createUseMailList(fakeMailRepository);
 
-const darkModeAtom = atom(false);
+export const darkModeAtom = atom(false);
+
+export function useColorMode(){
+  const [darkMode, setDarkMode] = useAtom(darkModeAtom);
+  return {
+    colorMode: (darkMode ? 'dark' : 'light') as 'dark' | 'light',
+    toggleColorMode: () => {
+      setDarkMode(old => !old);
+      document.getElementsByTagName('html')[0].setAttribute('data-theme', !darkMode ? 'dark' : 'light');
+    }
+  };
+}
 
 export const Dependencies = React.createContext<DependencyT>({
   useNavigationImpl: () => useFakeNavigation(),
@@ -50,15 +61,7 @@ export const Dependencies = React.createContext<DependencyT>({
   fsJSON: fakeFsJSON,
   useMailList: useFakeMailList,
   mailRepository: fakeMailRepository,
-  useColorMode: () => {
-    const [darkMode, setDarkMode] = useAtom(darkModeAtom);
-    return {
-      colorMode: (darkMode ? 'dark' : 'light') as 'dark' | 'light',
-      toggleColorMode: () => {
-        setDarkMode(old => !old);
-      }
-    };
-  },
+  useColorMode,
   RizeLogo: ({ onAnimationEnd }) => {
     useEffect(() => {
       onAnimationEnd();

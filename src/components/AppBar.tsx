@@ -1,10 +1,7 @@
-import { SearchIcon } from '@chakra-ui/icons';
+import { CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import {
-  CloseButton,
   HStack,
-  Input,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
   Tooltip,
   useDisclosure,
@@ -17,7 +14,7 @@ import { strs } from '../i18n/i18n';
 import { keywordAtom } from '../search/useSearch';
 import DarkModeButton from './DarkModeButton';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
-import LeftDrawler from './LeftDrawler';
+import MenuButton from './MenuButton';
 import SelectedTag from './SelectedTag';
 
 function AppBar() {
@@ -27,7 +24,7 @@ function AppBar() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     search(e.target.value);
   };
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { isOpen, onClose, onOpen, getButtonProps } = useDisclosure();
 
   function handleClose() {
     onClose();
@@ -48,46 +45,37 @@ function AppBar() {
   }, []);
 
   return (
-    <HStack padding="2" borderBottom="1px solid #e2e8f0">
+    <HStack padding="2" borderBottom="1px solid #e2e8f0" className="bg-base-100">
       {isOpen ? (
         <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-          >
-            <SearchIcon color="gray.300" />
-          </InputLeftElement>
-          <Input
+          <input
             autoFocus
             type="text"
+            className="input input-bordered input-xs p-1 w-8/10 m-1 rounded"
             placeholder={t(strs.검색하기)}
-            htmlSize={16}
-            width="90%"
             onKeyUp={handleKeyUp}
             value={keyword}
             onChange={handleChange}
           />
           <InputRightElement>
             <Tooltip label={t(strs.검색창_닫기)}>
-              <CloseButton
-                h="1.75rem"
-                size="sm"
-                onClick={handleClose}
+              <IconButtonWithTooltip
+                {...getButtonProps()}
                 aria-label={t(strs.검색창_닫기)}
+                icon={<CloseIcon />}
               />
             </Tooltip>
           </InputRightElement>
         </InputGroup>
       ) : (
         <>
-          <LeftDrawler />
+          <MenuButton />
           <DarkModeButton />
           <SelectedTag />
           <IconButtonWithTooltip
-            position="absolute"
-            right="3"
-            onClick={onOpen}
+            className="ml-2 tooltip-bottom"
+            {...getButtonProps()}
             icon={<SearchIcon />}
-            marginLeft="2"
             aria-label={t(strs.검색)}
           />
         </>

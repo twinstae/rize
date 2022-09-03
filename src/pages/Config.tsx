@@ -1,4 +1,3 @@
-
 import { HStack, StackDivider, VStack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React from 'react';
@@ -16,7 +15,9 @@ const Wrapper = styled.header`
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
-  background-color: var(${props => props.theme ? '--chakra-colors-gray-800' : '--chakra-colors-white'});
+  background-color: var(
+    ${(props) => (props.theme ? 'bg-gray-800' : 'bg-white')}
+  );
   z-index: 999;
   border-bottom: 1px solid lightgray;
 `;
@@ -26,24 +27,19 @@ const Config = () => {
   return (
     <div>
       <Wrapper theme={isDark}>
-        <HStack>
+        <div>
           <BackButton />
           <DarkModeButton />
-        </HStack>
+        </div>
       </Wrapper>
-      <VStack
-        overflowY="scroll"
-        overscrollY="auto"
-        divider={<StackDivider borderColor='gray.100' />}
-        p="4"
-        spacing={4}
-        align='stretch'
+      <div
+        className="flex flex-col"
       >
         <NickNameConfig />
         <ProfileConfig />
         <LangConfig />
         <TestingButton />
-      </VStack>
+      </div>
     </div>
   );
 };

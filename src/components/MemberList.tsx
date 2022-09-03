@@ -20,12 +20,15 @@ function MemberListItem({ name, text }: MemberListItemProps) {
           setTag(name);
         }}
         style={{
-          width: '16rem',
+          width: '100%',
           textAlign: 'left',
-          borderLeft: '2px solid ' + (selected ? '#ff69b4' : 'lightgrey'),
-          padding: '0.5rem 1rem',
+          borderLeft: '3px solid ' + (selected ? '#ff69b4' : 'lightgrey'),
           transition: 'border 125ms ease',
+          borderRadius: '0',
+          marginBottom: '0.5rem',
+          padding: '0.25rem'
         }}
+        className="mb-2 p-1 pl-3"
         aria-selected={selected}
       >
         <ProfileImage member={name} size="sm" /> {text || name}

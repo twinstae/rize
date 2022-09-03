@@ -1,11 +1,9 @@
-import { Image } from '@chakra-ui/react';
 import { downloadDir, join } from '@tauri-apps/api/path';
 import { convertFileSrc } from '@tauri-apps/api/tauri';
 import React from 'react';
 import { useQuery } from 'react-query';
 
 import { ImageProps } from '../components/MockImage';
-
 
 const TauriImage: React.FC<ImageProps> = ({ path, style, width }) => {
   const { data } = useQuery<string, Error>(['image', path], async () => {
@@ -14,14 +12,12 @@ const TauriImage: React.FC<ImageProps> = ({ path, style, width }) => {
     return convertFileSrc(filePath);
   });
   return (
-    <Image
-      borderRadius='full'
+    <img
       src={data ?? `https://via.placeholder.com/${width}`}
-      width={width}
+      width={width * 4}
       style={style}
     />
   );
 };
-
 
 export default TauriImage;

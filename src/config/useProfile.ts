@@ -1,7 +1,7 @@
 
 import useConfig from '../config/useConfig';
 
-const profileList = [
+export const profileList = [
   'la-vie-en-rose',
   'violeta',
   'fiesta',
@@ -22,8 +22,7 @@ function useProfile() {
     profile: (config.get('profile') ?? 'one-the-story') as string,
     setProfile: (value: typeof profileList[number]) => {
       config.set('profile', value);
-    },
-    profileList
+    }
   };
 }
 

@@ -6,44 +6,38 @@ import { EmptyStarIcon } from '../icons';
 import { FAVORITE } from '../mailList/useMailList';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 
-
 interface FavoriteStarProps {
-  mail: {
-    isFavorited: boolean;
-    id: string;
-  };
+  mailId: string;
 }
 
-function FavoriteStar({ mail }: FavoriteStarProps) {
-  const { addTagToMail, removeTagFromMail } = useDependencies().useMailList();
+function FavoriteStar({ mailId }: FavoriteStarProps) {
+  const { addTagToMail, removeTagFromMail, isFavorited } =
+    useDependencies().useMailList();
+  const mailIsFavorited = isFavorited(mailId);
   const toggleFavorite = () => {
-    if (mail.isFavorited) {
-      removeTagFromMail(FAVORITE, mail.id);
+    if (mailIsFavorited) {
+      removeTagFromMail(FAVORITE, mailId);
     } else {
-      addTagToMail(FAVORITE, mail.id);
+      addTagToMail(FAVORITE, mailId);
     }
   };
 
   return (
     <IconButtonWithTooltip
-      variant="ghost"
-      position="absolute"
-      right="1"
-      top="-2"
-      borderRadius="full"
+      className="rounded-full -top-2 -right-1 absolute tooltip-left"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
         toggleFavorite();
       }}
       icon={
-        mail.isFavorited ? (
+        mailIsFavorited ? (
           <StarIcon color="gold" />
         ) : (
           <EmptyStarIcon color="gray.400" />
         )
       }
-      aria-label={mail.isFavorited ? '중요' : '중요 표시하기'}
+      aria-label={mailIsFavorited ? '중요' : '중요 표시'}
     />
   );
 }
