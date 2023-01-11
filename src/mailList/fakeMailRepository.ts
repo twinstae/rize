@@ -11,7 +11,7 @@ export const fileList = [
 ];
 
 const fakeFs: Record<string, unknown> = {
-  'pm_list.json': TEST_MAIL_LIST,
+  'pm_list.json': TEST_MAIL_LIST.slice(0, 100),
   'mail_body_dict.json': TEST_MAIL_BODY_DICT,
   'member_name.json': MEMBER_NAME,
   'tag_to_mail_dict.json': TAG_TO_MAIL_DICT,

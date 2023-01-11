@@ -1,31 +1,35 @@
 import { CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import {
-  InputGroup,
-  InputRightElement,
-  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useAtom } from 'jotai';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { strs } from '../i18n/i18n';
-import { keywordAtom } from '../search/useSearch';
 import DarkModeButton from './DarkModeButton';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import MenuButton from './MenuButton';
 import SelectedTag from './SelectedTag';
 import { HStack } from './rize-ui';
+import { useMailList } from '../hooks/Dependencies';
 
 function AppBar() {
-  const [keyword, search] = useAtom(keywordAtom);
+  const [keyword, search] = useMailList().useSearch();
+  const [keywordInput, setKeywordInput] = useState('');
   const { t } = useTranslation();
-
   const { isOpen, onClose, onOpen, getButtonProps } = useDisclosure();
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      search(keywordInput);
+    }, 500);
+
+    return () => clearTimeout(id);
+  }, [keywordInput, search]);
 
   function handleClose() {
     onClose();
-    search('');
+    setKeywordInput('');
   }
 
   function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -52,9 +56,9 @@ function AppBar() {
             className="input input-bordered input-xs p-1 w-8/10 m-1 rounded"
             placeholder={t(strs.검색하기) ?? ''}
             onKeyUp={handleKeyUp}
-            value={keyword}
+            value={keywordInput}
             onChange={(e) => {
-              search(e.target.value);
+              setKeywordInput(e.target.value);
             }}
           />
           <IconButtonWithTooltip

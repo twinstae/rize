@@ -5,11 +5,11 @@ import { useMachine, normalizeProps } from '@zag-js/react';
 interface RizeTabsProps<T> {
   data: readonly T[];
   value: (item: T) => string;
-  label: (item: T, index: number) => string;
+  Label: React.FC<{ index: number}>;
   Content: (props: {index: number}) => JSX.Element;
 }
 
-export function RizeTabs<T>({ data, value, label, Content }: RizeTabsProps<T>) {
+export function RizeTabs<T>({ data, value, Label, Content }: RizeTabsProps<T>) {
   console.log('Tabs');
   const [state, send] = useMachine(tabs.machine({ id: 'rize-tabs', value: value(data[0]) }));
 
@@ -21,7 +21,7 @@ export function RizeTabs<T>({ data, value, label, Content }: RizeTabsProps<T>) {
         {data.map((item, index) => (
           <button {...api.getTriggerProps({ value: value(item) })} key={value(item)}
             className={'bg-base-100 tab tab-bordered w-1/3 ' + (value(item) === api.value ? 'tab-active' : '')}>
-            {label(item, index)}
+            <Label index={index} />
           </button>
         ))}
       </div>

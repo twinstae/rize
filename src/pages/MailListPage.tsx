@@ -7,14 +7,12 @@ import MailList from '../components/MailList';
 import { RizeTabs } from '../components/RizeTabs';
 import { strs } from '../i18n/i18n';
 import { modes } from '../mailList/mailListModel';
-import { useResults } from '../mailList/useResult';
 import paths from '../router/paths';
 import useNavigation from '../router/useNavigation';
 import { useMailList } from '../hooks/Dependencies';
 // import useDarkMode from '../theme/useDarkMode';
 
 function MailListPage() {
-  useMailList().waitForAll();
   const { Link } = useNavigation();
   const { t } = useTranslation();
   const tabs = [strs.전체, strs.읽지_않음, strs.중요];
@@ -26,9 +24,10 @@ function MailListPage() {
       <RizeTabs<string>
         data={modes}
         value={(mode) => mode}
-        label={(_mode, index) => {
-          const results = useResults();
-          return `${t(tabs[index])} ${results[index].length}`;
+        Label={({index}) => {
+          const result = useMailList().mailList()[modes[index]];
+          
+          return <span>{t(tabs[index])} {result.length}</span>;
         }}
         Content={({ index }) => <MailList index={index} /> || null}
       />

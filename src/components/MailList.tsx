@@ -1,10 +1,10 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import React from 'react';
 
-import { useResults } from '../mailList/useResult';
 import { rem } from '../theme/rem';
 import MailListItem from './MailListItem';
-
+import { useMailList } from '../hooks/Dependencies';
+import { modes } from '../mailList/mailListModel';
 interface Props {
   index: number;
 }
@@ -12,9 +12,8 @@ interface Props {
 const height = window.innerHeight - rem(4.2);
 
 function MailList({ index }: Props) {
-  const result = useResults()[index];
   const parentRef = React.useRef(null);
-
+  const result = useMailList().mailList()[modes[index]];
   // The virtualizer
   const rowVirtualizer = useVirtualizer({
     count: result.length,

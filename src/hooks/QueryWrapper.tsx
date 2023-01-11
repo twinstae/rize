@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { createWrapper } from './util';
+import { Provider } from 'jotai';
+import { queryClientAtom } from 'jotai-tanstack-query';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,9 +15,12 @@ const queryClient = new QueryClient({
     }
   }
 });
+
 const QueryWrapper = createWrapper(QueryClientProvider, {
   client: queryClient,
 });
+
+export const JotaiQueryWrapper = createWrapper(Provider, { initialValues: [[queryClientAtom, queryClient]] });
 
 const testQueryClient = new QueryClient({
   defaultOptions: {

@@ -1,6 +1,6 @@
 import { atom, useAtom } from 'jotai';
 
-const currentTagAtom = atom('');
+export const currentTagAtom = atom('');
 function useTag(){
   return useAtom(currentTagAtom);
 }
