@@ -9,4 +9,5 @@ type UsernameT = {
 export interface StorageRepository<T> {
   getItem: () => Promise<T | undefined>;
   setItem: (value: T) => Promise<void>;
+  removeItem: () => Promise<void>;
 }

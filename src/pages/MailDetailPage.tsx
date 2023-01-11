@@ -1,4 +1,3 @@
-import { Divider } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -6,8 +5,9 @@ import BackButton from '../components/BackButton';
 import FavoriteStar from '../components/FavoriteStar';
 import MailBody from '../components/MailBody';
 import ProfileImage from '../components/ProfileImage';
-import { useDependencies } from '../hooks/Dependencies';
-import useNavigation from '../router/useNavigation';
+import useNavigation, { useSearchParam } from '../router/useNavigation';
+import paths from '../router/paths';
+import { useMailList } from '../hooks/Dependencies';
 
 const Title = styled.h3`
   padding: 0;
@@ -25,14 +25,13 @@ const Wrapper = styled.header`
 
 function MailDetailPage() {
   const navigation = useNavigation();
-  const { toOriginalName, mailById } = useDependencies().useMailList();
-
-  const mailId = navigation.params().mailId ?? 'm25731';
-
-  const mail = mailById(mailId);
+  const mailId = useSearchParam('mailId') ?? '';
+  const toOriginalName = useMailList().useToOriginalName();
+  const mail = useMailList().useMailById(mailId);
 
   if (mail === undefined) {
-    return <span>로딩중 </span>;
+    navigation.redirect(paths.MAIL_LIST);
+    return <></>;
   }
 
   return (
@@ -47,7 +46,6 @@ function MailDetailPage() {
         </span>
         <Title>{mail.subject}</Title>
       </Wrapper>
-      <Divider />
       <MailBody mailBody={mail} />
       <BackButton direction="top" />
     </div>

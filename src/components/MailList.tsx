@@ -19,7 +19,7 @@ function MailList({ index }: Props) {
   const rowVirtualizer = useVirtualizer({
     count: result.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => rem(5),
+    estimateSize: () => rem(6),
     overscan: 2,
   });
   return (

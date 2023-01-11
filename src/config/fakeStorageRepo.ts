@@ -17,7 +17,9 @@ export const createFakeStorageRepo = (key: string) => {
     },
     async setItem(value: JsonValue) {
       this._storage[key] = value;
-      return;
+    },
+    async removeItem() {
+      delete this._storage[key];
     },
   };
 };

@@ -1,17 +1,13 @@
-import { Center, VStack } from '@chakra-ui/layout';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import { useDependencies } from '../hooks/Dependencies';
+import { useDependencies, useMailList } from '../hooks/Dependencies';
 import { fileList } from '../mailList/fakeMailRepository';
-import paths from '../router/paths';
-import useNavigation from '../router/useNavigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 const InitPage = () => {
-  const navigation = useNavigation();
-  const [isAnimationEnd, setIsAnimationEnd] = useState(false);
-
-  const { fsJSON, useMailList, RizeLogo } = useDependencies();
-  const { status } = useMailList();
+  const { fsJSON } = useDependencies();
+  const status = useMailList().useStatus();
+  const client = useQueryClient();
 
   const [uploaded, setUploaded] = useState<{
     [fileName: string]: boolean | undefined;
@@ -19,11 +15,6 @@ const InitPage = () => {
 
   const merged = { ...status, ...uploaded };
   const isAlreadLoaded = Object.values(status).every((v) => v === true);
-  useEffect(() => {
-    if (isAlreadLoaded && isAnimationEnd) {
-      navigation.redirect(paths.MAIL_LIST);
-    }
-  }, [isAlreadLoaded, isAnimationEnd]);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -38,72 +29,77 @@ const InitPage = () => {
 
   const everyOk = !Object.values(merged).some((v) => v === false);
   return (
-    <div>
-      <Center width="500" height="100vh">
-        <VStack>
-          <RizeLogo
-            onAnimationEnd={() => {
-              setIsAnimationEnd(true);
-            }}
-          />
+    <div className="flex flex-col justify-center align-middle h-screen">
+      <div className="mx-auto text-red-400 text-9xl">
+        RIZ*E
+      </div>
+      {Object.values(status).some((v) => v === false) && (
+        <form
+          ref={formRef}
+          className="flex flex-col p-8"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            if (!everyOk) return;
 
-          {Object.values(status).every((v) => v !== undefined) && (
-            <form
-              ref={formRef}
-              className="flex flex-col p-8"
-              onSubmit={async (e) => {
-                e.preventDefault();
-                if (!everyOk) return;
-
-                await Promise.all(
-                  getFiles()
-                    .filter((file) => fileList.includes(file.name))
-                    .map(async (file) =>
-                      fsJSON.writeJSONfile(file.name)(
-                        JSON.parse(await file.text())
-                      )
-                    )
-                );
-                navigation.redirect(paths.MAIL_LIST);
-              }}
-            >
-              <ul>
-                {fileList.map((name) => {
-                  const value = merged[name];
-                  return (
-                    <li key={name} className="mb-1 p-1">
-                      <input
-                        type="checkbox"
-                        checked={value}
-                        className="checkbox checkbox-secondary checkbox-xs"
-                        onChange={() => undefined}
-                      />
-                      <label>
-                        {name}
-                        <input
-                          type="file"
-                          accept="application/json"
-                          disabled={value}
-                          onChange={() => {
-                            setUploaded(
-                              Object.fromEntries(
-                                getFiles().map((file) => [file.name, true])
-                              )
-                            );
-                          }}
-                        />
-                      </label>
-                    </li>
-                  );
-                })}
-              </ul>
-              <button className="btn btn-secondary btn-sm p-2" type="submit" disabled={isAlreadLoaded}>
-                upload
-              </button>
-            </form>
-          )}
-        </VStack>
-      </Center>
+            const files = await Promise.all(getFiles()
+              .filter((file) => fileList.includes(file.name))
+              .map(async (file) => {
+                const data = await file.text().then(JSON.parse);
+                return {
+                  name: file.name,
+                  data,
+                };
+              }));
+            await Promise.all(files.map((file) => fsJSON.writeJSONfile(file.name)(file.data)))
+              .then(() =>{
+                files.forEach(file => {
+                  void client.invalidateQueries({
+                    queryKey: [file.name]
+                  });
+                });
+                void client.invalidateQueries({
+                  queryKey: ['status']
+                });
+              });
+          }}
+        >
+          <ul>
+            {fileList.map((name) => {
+              const value = merged[name];
+              return (
+                <li key={name} className="mb-1 p-1">
+                  <input
+                    type="checkbox"
+                    checked={value}
+                    className="checkbox checkbox-secondary checkbox-xs"
+                    onChange={() => undefined}
+                  />
+                  <label>
+                    {name}
+                    <input
+                      type="file"
+                      disabled={value}
+                      onChange={(e) => {
+                        setUploaded(old => ({
+                          ...old,
+                          [name]: ((e.currentTarget as HTMLInputElement).files?.length ?? 0) > 0,
+                        }));
+                      }}
+                    />
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+          <button
+            className="btn btn-secondary btn-sm p-2"
+            type="submit"
+            disabled={isAlreadLoaded}
+          >
+            upload
+          </button>
+        </form>
+      )}
     </div>
   );
 };

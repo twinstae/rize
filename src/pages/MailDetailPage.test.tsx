@@ -1,15 +1,15 @@
-import { render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { ChakraWrapperOption } from '../hooks/Dependencies';
 import ko from '../i18n/ko.json';
 import { useFakeNavigation } from '../router/useNavigation';
 import MailDetailPage from './MailDetailPage';
+import { render } from '../components/testUtil';
+import { toMailDetail } from '../router/paths';
 
 describe('MailDetailPage', () => {
   it('MailDetailPage 제목, 별명, 미리보기, 시간이 있다', async () => {
     const { navigate } = useFakeNavigation();
-    navigate('/mail/m25669');
+    navigate(toMailDetail('m25669'));
     // {
     //   "id": "m25669",
     //   "member": "장원영",
@@ -19,11 +19,10 @@ describe('MailDetailPage', () => {
     // }
     // "images": ["img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg"]
 
-    render(<MailDetailPage />, ChakraWrapperOption);
-    screen.getByText(/로딩중/);
+    const { screen } = await render(<MailDetailPage />);
 
     await screen.findAllByLabelText(ko.translation.돌아가기);
-    screen.getByLabelText('중요 표시하기');
+    screen.getByLabelText('중요 표시');
 
     screen.getByText('장원영');
 

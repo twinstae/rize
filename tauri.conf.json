@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "npm run build:tauri",
-    "beforeDevCommand": "npm run dev:vite",
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
     "devPath": "http://localhost:5173",
     "distDir": "../src/tauri/dist"
   },
@@ -26,7 +26,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.lec.rize",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -62,15 +62,15 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$APP/**/*", "$DOWNLOAD/output", "$DOWNLOAD/output/**/*"]
+        "scope": ["$APP/*", "$DOWNLOAD/output/*", "$DOWNLOAD/output/"]
       },
       "http": {
         "all": true,
-        "scope": ["http://localhost:5173/**/*", "https://fonts.googleapis.com/**/*"]
+        "scope": ["http://localhost:5173/*", "https://fonts.googleapis.com/*"]
       },
       "protocol": {
         "asset": true,
-        "assetScope": ["$DOWNLOAD/output/img/**/*"]
+        "assetScope": ["$DOWNLOAD/output/img/*"]
       }
     },
     "security": {

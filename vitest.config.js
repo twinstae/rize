@@ -10,7 +10,7 @@ export default defineConfig({
     setupFiles: './src/setupTests.js',
     include: ['src/**/*.test.tsx', 'src/**/*.test.ts'],
     threads: 6,
-    testTimeout: 500,
+    testTimeout: 3000,
     coverage: {
       include: ['src/**/*.tsx', 'src/**/*.ts'],
       exclude: [

@@ -1,15 +1,10 @@
-import { Atom, atom } from 'jotai';
+import { type Atom, atom } from 'jotai';
 
-const atomWithAsyncInit: <T>(init: () => Promise<T>, fallback: T) => Atom<T> = (
+const atomWithAsyncInit: <T>(init: () => Promise<T>, fallback: T) => Atom<Promise<T>> = (
   init,
   fallback
 ) => {
-  const baseAtom = atom(fallback);
-  baseAtom.onMount = (setValue) => {
-    init().then(setValue).catch(() => null);
-  };
-
-  return baseAtom;
+  return atom(async () => init().catch(() => fallback));
 };
 
 export default atomWithAsyncInit;

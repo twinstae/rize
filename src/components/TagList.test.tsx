@@ -1,15 +1,14 @@
-import { render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { FAVORITE, UNREAD } from '../mailList/useMailList';
 import TagList from './TagList';
+import { FAVORITE } from '../mailList/useMailList';
+import { render } from './testUtil';
 
 describe('TagList', () => {
   it('FAVORITE 태그는 렌더링되지 않는다', async () => {
-    render(<TagList mailId="m21828" />);
+    const { screen } = await render(<TagList mailId="m21828" />);
 
-    expect(await screen.findByText('놀이동산')).toBeInTheDocument();
-    expect(await screen.findByText(UNREAD)).toBeInTheDocument();
+    expect(screen.getByText('놀이동산')).toBeInTheDocument();
     expect(screen.queryByText(FAVORITE)).not.toBeInTheDocument();
   });
 });

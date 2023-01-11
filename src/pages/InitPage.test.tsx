@@ -1,61 +1,61 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { updateFakeStatus } from '../mailList/fakeMailRepository';
 import TEST_MAIL_LIST from '../public/pm_list.json';
-import paths from '../router/paths';
-import { useFakeNavigation } from '../router/useNavigation';
 import InitPage from './InitPage';
+import { render } from '../components/testUtil';
+import { useMailList } from '../hooks/Dependencies';
+
+
+function Wait(){
+  useMailList().waitForAll();
+  return <span>렌더!</span>;
+}
+
+function Story(){
+  return (
+    <Suspense fallback={<InitPage />}>
+      <Wait />
+    </Suspense>
+  );
+}
 
 describe('InitPage', () => {
-  it('이미 파일이 업로드 되어 있으면, 애니메이션이 끝나고 메일 목록 페이지로 넘어간다', async () => {
-    render(<InitPage />);
+  it('이미 파일이 업로드 되어 있으면, 렌더가 된다', async () => {
+    const { screen } = await render(<Story />);
 
-    const fakeNavigation = useFakeNavigation();
-    expect(fakeNavigation.current()).toBe(paths.ROOT);
-    await waitFor(() => {
-      expect(fakeNavigation.current()).toBe(paths.MAIL_LIST);
-    });
+    expect(screen.getByText('렌더!')).toBeInTheDocument();
+  });
+
+  it('없는 파일이 있는 채로 upload 버튼을 누르면, 렌더되지 않는다.', async () => {
+    updateFakeStatus({ 'pm_list.json': false });
     
-    //teardown
-    fakeNavigation.goBack();
+    const { user, screen } = await render(<Story />);
+
+    const uploadButton = screen.getByRole('button', {
+      name: 'upload'
+    });
+    await user.click(uploadButton);
+
+    expect(screen.queryByText('렌더!')).not.toBeInTheDocument();
   });
 
   it('필요한 파일을 업로드하면 메일 목록 페이지로 넘어간다', async () => {
     updateFakeStatus({ 'pm_list.json': false });
     
-    render(<InitPage />);
+    const { user, screen } = await render(<Story />);
+    expect(screen.queryByText('렌더!')).not.toBeInTheDocument();
 
-    const file = new File([JSON.stringify(TEST_MAIL_LIST, null, 2)], 'pm_list.json', {type: 'application/json'});
-    file.text = async () => JSON.stringify(TEST_MAIL_LIST, null, 2);
+    const file = new File([JSON.stringify(TEST_MAIL_LIST.slice(0,2), null, 2)], 'pm_list.json', {type: 'application/json'});
+    file.text = async () => JSON.stringify(TEST_MAIL_LIST.slice(0,2), null, 2);
 
-    const input = screen.getByLabelText(/pm_list.json/i);
-    userEvent.upload(input, file);
-    
-    const uploadButton = screen.getByText(/upload/i);
-    userEvent.click(uploadButton);
-
-    const fakeNavigation = useFakeNavigation();
-    await waitFor(() => {
-      expect(fakeNavigation.current()).toBe(paths.MAIL_LIST);
+    const input = screen.getByLabelText(/pm_list.json/i) as HTMLInputElement;
+    await user.upload(input, file);
+    expect(input.files).toHaveLength(1);
+    const uploadButton = screen.getByRole('button', {
+      name: 'upload'
     });
-
-    //teardown
-    fakeNavigation.goBack();
-    fakeNavigation.navigate(paths.ROOT);
-  });
-
-  it('없는 파일이 있는 채로 upload 버튼을 누르면, 메일 목록 페이지로 넘어가지 않는다', async () => {
-    updateFakeStatus({ 'pm_list.json': false });
-    const fakeNavigation = useFakeNavigation();
-    fakeNavigation.navigate(paths.ROOT);
-
-    render(<InitPage />);
-
-    const uploadButton = screen.getByText(/upload/i);
-    userEvent.click(uploadButton);
-
-    expect(fakeNavigation.current()).toBe(paths.ROOT);
+    await user.click(uploadButton);
+    expect(await screen.findByText('렌더!')).toBeInTheDocument();
   });
 });

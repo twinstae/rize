@@ -1,6 +1,5 @@
 import { CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import {
-  HStack,
   InputGroup,
   InputRightElement,
   Tooltip,
@@ -16,14 +15,12 @@ import DarkModeButton from './DarkModeButton';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import MenuButton from './MenuButton';
 import SelectedTag from './SelectedTag';
+import { HStack } from './rize-ui';
 
 function AppBar() {
   const [keyword, search] = useAtom(keywordAtom);
   const { t } = useTranslation();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    search(e.target.value);
-  };
   const { isOpen, onClose, onOpen, getButtonProps } = useDisclosure();
 
   function handleClose() {
@@ -45,28 +42,27 @@ function AppBar() {
   }, []);
 
   return (
-    <HStack padding="2" borderBottom="1px solid #e2e8f0" className="bg-base-100">
+    <HStack className="bg-base-100 p-2">
       {isOpen ? (
-        <InputGroup>
+        <label className="flex flex-row justify-between">
+          <span>검색</span>
           <input
             autoFocus
             type="text"
             className="input input-bordered input-xs p-1 w-8/10 m-1 rounded"
-            placeholder={t(strs.검색하기)}
+            placeholder={t(strs.검색하기) ?? ''}
             onKeyUp={handleKeyUp}
             value={keyword}
-            onChange={handleChange}
+            onChange={(e) => {
+              search(e.target.value);
+            }}
           />
-          <InputRightElement>
-            <Tooltip label={t(strs.검색창_닫기)}>
-              <IconButtonWithTooltip
-                {...getButtonProps()}
-                aria-label={t(strs.검색창_닫기)}
-                icon={<CloseIcon />}
-              />
-            </Tooltip>
-          </InputRightElement>
-        </InputGroup>
+          <IconButtonWithTooltip
+            {...getButtonProps()}
+            aria-label={t(strs.검색창_닫기)}
+            icon={<CloseIcon />}
+          />
+        </label>
       ) : (
         <>
           <MenuButton />

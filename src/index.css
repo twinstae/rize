@@ -15,6 +15,10 @@ path {
   stroke-width: 2px;
 }
 
+.focus\:border-2:focus {
+  border-width: 2px;
+  border-color: hsla(var(--p), alpha);
+}
 
 body {
   font-family: 'Pretendard';

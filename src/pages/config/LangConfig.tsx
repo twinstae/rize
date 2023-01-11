@@ -1,4 +1,3 @@
-import { Box, FormLabel, Select } from '@chakra-ui/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -10,11 +9,11 @@ function LangConfig() {
   const { lang, setLang, langList } = useLang();
   const { t } = useTranslation();
   return (
-    <Box className="card bg-base-100 shadow-2xl p-3 m-3">
-      <FormLabel>
-        <ConfigHeading title={t(strs.언어) + ' : ' + lang} />
-        <Select
-          placeholder={t(strs.언어_선택하기)}
+    <div className="card bg-base-100 ring-1 ring-slate-300 shadow-xl p-4">
+      <ConfigHeading title={t(strs.언어_선택하기) + ' : ' + lang} />
+      <label>
+        {t(strs.언어)}
+        <select
           value={lang}
           onChange={(e) => {
             setLang(e.target.value);
@@ -25,9 +24,9 @@ function LangConfig() {
               {t(strs[lang])}
             </option>
           ))}
-        </Select>
-      </FormLabel>
-    </Box>
+        </select>
+      </label>
+    </div>
   );
 }
 

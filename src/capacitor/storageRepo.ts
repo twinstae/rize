@@ -1,17 +1,20 @@
-import { Storage } from '@capacitor/storage';
+import { Storage } from '@ionic/storage';
 
 import { StorageRepository } from '../global';
 import { JsonValue } from '../types/json';
 
 export const createStorageRepository = (key: string): StorageRepository<JsonValue> => {
-
+  const storage = new Storage();
   return {
     getItem: async  () => {
-      return Storage.get({ key }).then(result => JSON.parse(result.value ?? '{}'));
+      return storage.get(key).then(result => JSON.parse(result.value ?? '{}'));
     },
     setItem: async (value) => {
-      return Storage.set({ key, value: JSON.stringify(value)});
+      return storage.set(key, JSON.stringify(value));
     },
+    async removeItem(){
+      return storage.remove(key);
+    }
   };
 };
 

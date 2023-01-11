@@ -14,7 +14,7 @@ const fsMailRepository: MailRepository = {
   status: async () => Filesystem.readdir({
     path: 'output',
     directory: Directory.Cache,
-  }).then(result => Object.fromEntries(fileList.map(name => [name, result.files.includes(name)])))
+  }).then(result => Object.fromEntries(fileList.map(name => [name, result.files.map(f => f.name).includes(name)])))
 };
 
 export default fsMailRepository;

@@ -11,6 +11,9 @@ export const createLocalStorageRepository = (key: string): StorageRepository<Jso
     setItem: async (value: JsonValue) => {
       localStorage.setItem(key, JSON.stringify(value));
     },
+    async removeItem(){
+      return localStorage.removeItem(key);
+    }
   };
 };
 

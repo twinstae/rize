@@ -1,11 +1,12 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import ProfileImage from './ProfileImage';
+import { waitFor } from '@testing-library/react';
+import { render } from './testUtil';
 
 describe('ProfileImage', () => {
   it('base size', async () => {
-    render(<ProfileImage member="권은비" size="base" theme="la-vie-en-rose" />);
+    const { screen } = await render(<ProfileImage member="권은비" size="base" theme="la-vie-en-rose" />);
     const image = await screen.findByRole('img');
 
     await waitFor(() => {
@@ -15,7 +16,7 @@ describe('ProfileImage', () => {
   });
   
   it('md size', async () => {
-    render(<ProfileImage member="운영팀" size="md" theme="la-vie-en-rose" />);
+    const { screen } = await render(<ProfileImage member="운영팀" size="md" theme="la-vie-en-rose" />);
     
     const image = await screen.findByRole('img');
 
@@ -24,7 +25,7 @@ describe('ProfileImage', () => {
   });
 
   it('sm size', async () => {
-    render(<ProfileImage member="" size="base" theme="la-vie-en-rose" />);
+    const { screen } = await render(<ProfileImage member="" size="base" theme="la-vie-en-rose" />);
     
     const image = await screen.findByRole('img');
     

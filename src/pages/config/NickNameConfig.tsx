@@ -1,4 +1,4 @@
-import { Box, FormLabel, Input, VStack } from '@chakra-ui/react';
+import { FormLabel, Input, VStack } from '../../components/rize-ui';
 import debounce from 'lodash/debounce';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ function NickNameConfig() {
   const [afterInput, setAfterInput] = useState(after);
 
   return (
-    <VStack align="stretch" className="border-red-200 border-bottom-2 p-3 m-1">
+    <VStack className="card bg-base-100 ring-1 ring-slate-300 shadow-xl p-4">
       <ConfigHeading title={t(strs.닉네임_바꾸기)} />
       <FormLabel>
         <Input
@@ -28,7 +28,7 @@ function NickNameConfig() {
             debounceSetBefore(e.target.value, setBefore);
           }}
         />
-        {t(strs.에서)}
+        <span className="label-text">{t(strs.에서)}</span>
       </FormLabel>
       <FormLabel>
         <Input
@@ -38,14 +38,14 @@ function NickNameConfig() {
             debounceSetAfter(e.target.value, setAfter);
           }}
         />
-        {t(strs.으로)}
+        <span className="label-text">{t(strs.으로)}</span>
       </FormLabel>
-      <Box>
+      <div>
         <h4>{t(strs.예시)}</h4>
         <span>안녕 {beforeInput}, 오늘도 화이팅!</span>
         <br />
         <span>{replaceUsername(`안녕 ${before}, 오늘도 화이팅!`)}</span>
-      </Box>
+      </div>
     </VStack>
   );
 }

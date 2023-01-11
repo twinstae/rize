@@ -1,14 +1,13 @@
-import { ChakraProvider } from '@chakra-ui/provider';
-import theme from '@chakra-ui/theme';
 import { atom, useAtom } from 'jotai';
 import React, { useContext, useEffect } from 'react';
 
+import { createUseMailList, MailListResult } from '../mailList/useMailList';
+
 import { MockImage } from '../components/MockImage';
 import fakeStorageRepo from '../config/fakeStorageRepo';
-import { StorageRepository } from '../global';
-import fakeMailRepository from '../mailList/fakeMailRepository';
-import { FsJSON,MailRepository } from '../mailList/types';
-import { createUseMailList, MailListResult } from '../mailList/useMailList';
+import type { StorageRepository } from '../global';
+import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
+import type { FsJSON,MailRepository } from '../mailList/types';
 import { Navigation, useFakeNavigation } from '../router/useNavigation';
 import { JsonValue } from '../types/json';
 import { createWrapper } from './util';
@@ -28,18 +27,9 @@ type DependencyT = {
   fsJSON?: FsJSON,
   useMailList?: () => MailListResult,
   mailRepository?: MailRepository
-  RizeLogo?: (props: { onAnimationEnd: () => void }) => JSX.Element;
+  RizeLogo?: (props: { onAnimationEnd?: () => void }) => JSX.Element;
 };
 
-const fakeFs: Record<string, unknown> = {};
-const fakeFsJSON = {
-  writeJSONfile: (path: string) => async (dict: JsonValue) => {
-    fakeFs[path] = dict;
-  },
-  readJSONfile: async <T extends JsonValue>(path: string): Promise<T> => fakeFs[path] as T
-};
-
-const useFakeMailList = createUseMailList(fakeMailRepository);
 
 export const darkModeAtom = atom(false);
 
@@ -54,21 +44,24 @@ export function useColorMode(){
   };
 }
 
-export const Dependencies = React.createContext<DependencyT>({
+export const createFakeDependencies: () => DependencyT = () => ({
   useNavigationImpl: () => useFakeNavigation(),
   storageRepo: fakeStorageRepo,
   Image: MockImage,
   fsJSON: fakeFsJSON,
-  useMailList: useFakeMailList,
+  useMailList: createUseMailList(fakeMailRepository),
   mailRepository: fakeMailRepository,
   useColorMode,
   RizeLogo: ({ onAnimationEnd }) => {
     useEffect(() => {
-      onAnimationEnd();
+      onAnimationEnd?.();
     });
     return <h1> RIZ*E </h1>;
   }
 });
+
+const fakeDependencies = createFakeDependencies();
+export const Dependencies = React.createContext<DependencyT>(fakeDependencies);
 
 export function useDependencies() {
   return useContext(Dependencies) as Required<DependencyT>;
@@ -78,6 +71,10 @@ export const DependenciesWrapper = (
   value: Partial<ReturnType<typeof useDependencies>>
 ) => createWrapper(Dependencies.Provider, { value });
 
-export const ChakraWrapperOption = {
-  wrapper: createWrapper(ChakraProvider, { theme })
-};
+export function useMailList(){
+  return useDependencies().useMailList();
+}
+
+export function useTags(){
+  return useDependencies().useMailList().useTags();
+}

@@ -1,17 +1,17 @@
-import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import FavoriteStar from './FavoriteStar';
+import { render } from './testUtil';
 
 describe('FavoriteStar', () => {
   it('중요 표시 버튼을 누르면 중요 표시가 된다', async () => {
-    render(<FavoriteStar mailId="m25731"/>);
+    const { user, screen } = await render(<FavoriteStar mailId="m25731"/>);
 
     const before = await screen.findByLabelText('중요 표시');
-    fireEvent.click(before);
+    await user.click(before);
 
     const after = await screen.findByLabelText('중요');
-    fireEvent.click(after);
+    await user.click(after);
 
     expect(screen.getByLabelText('중요 표시')).toBeInTheDocument();
   });

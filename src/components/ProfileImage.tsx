@@ -1,7 +1,7 @@
 import React from 'react';
 
 import useProfile from '../config/useProfile';
-import { useDependencies } from '../hooks/Dependencies';
+import { useDependencies, useMailList } from '../hooks/Dependencies';
 import { rem } from '../theme/rem';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 
 function getPath(member: string, theme?: string) {
   const { profile } = useProfile();
-  const { toOriginalName } = useDependencies().useMailList();
+  const toOriginalName = useMailList().useToOriginalName();
   const selectedTheme = theme || profile;
 
   if (member === '') return 'img/izone-logo.png';

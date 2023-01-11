@@ -23,6 +23,17 @@ export const createFsStorageRepository = (key: string): StorageRepository<JsonVa
         }
       );
     },
+    async removeItem(){
+      return fs.writeFile(
+        {
+          path: path,
+          contents: '',
+        },
+        {
+          dir: fs.BaseDirectory.Download,
+        }
+      );
+    }
   };
 };
 

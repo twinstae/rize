@@ -1,13 +1,13 @@
 import { http } from '@tauri-apps/api';
 
 import { MailBodyT,MailRepository, RawMailT } from '../mailList/types';
-
+const HOST = 'http://localhost:5173';
 const readJSONfile: (path: string) => Promise<unknown> = (path) =>
-  http.fetch('http://localhost:3000/' + path).then((res) => res.data);
+  http.fetch(HOST +'/' + path).then((res) => res.data);
 
 const writeJSONfile =
   (path: string) => async (dict: Record<string, string[]>) => {
-    await http.fetch('http://localhost:3000/' + path, {
+    await http.fetch(HOST +'/' + path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const serverMailRepository: MailRepository = {
   getTagToMailDict: async () =>
     readJSONfile('tag_to_mail_dict.json') as Promise<Record<string, string[]>>,
   saveTagToMailDict: writeJSONfile('tag_to_mail_dict.json'),
-  status: async () => http.fetch('http://localhost:3000/status').then((res) => res.data as { [fileName: string]: boolean }),
+  status: async () => http.fetch(HOST +'/status').then((res) => res.data as { [fileName: string]: boolean }),
 };
 
 export default serverMailRepository;

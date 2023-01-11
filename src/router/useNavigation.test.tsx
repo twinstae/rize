@@ -14,6 +14,7 @@ describe('useNavigation 계약', () => {
   });
 
   it('goBack을 하면 한 번 뒤로 돌아간다', () => {
+    navigation.navigate(paths.MAIL_LIST);
     navigation.goBack();
     // ["/"]
     expect(navigation.current()).toBe(paths.ROOT);

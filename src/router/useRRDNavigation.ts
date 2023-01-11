@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-
-import { Navigation } from './useNavigation';
+import type { LinkProps, Navigation } from './useNavigation';
 
 const useRRDNavigation = (): Navigation => {
   const navigate = useNavigate();
@@ -20,8 +19,8 @@ const useRRDNavigation = (): Navigation => {
     redirect: (path: string) => {
       navigate(path, { replace: true });
     },
-    Link: ({ to, children }: { to: string; children: JSX.Element }) =>
-      React.createElement(Link, { to }, children),
+    Link: ({ className, to, children }: LinkProps) =>
+      React.createElement(Link, { to, className }, children),
   };
 };
 

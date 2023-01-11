@@ -13,7 +13,7 @@ function MenuButton() {
       <label
         htmlFor="my-drawer"
         className="btn btn-sm btn-ghost drawer-button"
-        aria-label={t(strs.메뉴)}
+        aria-label={t(strs.메뉴) ?? ''}
       >
         <HamburgerIcon />
       </label>

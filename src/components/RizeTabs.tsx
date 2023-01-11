@@ -17,11 +17,10 @@ export function RizeTabs<T>({ data, value, label, Content }: RizeTabsProps<T>) {
 
   return (
     <div {...api.rootProps}>
-      <div {...api.triggerGroupProps} className="tabs flex justify-around">
+      <div {...api.tablistProps} className="tabs flex justify-around">
         {data.map((item, index) => (
           <button {...api.getTriggerProps({ value: value(item) })} key={value(item)}
-
-            className={'bg-base-100 tab tab-bordered tab-lg w-1/3 ' + (value(item) === api.value ? 'tab-active' : '')}>
+            className={'bg-base-100 tab tab-bordered w-1/3 ' + (value(item) === api.value ? 'tab-active' : '')}>
             {label(item, index)}
           </button>
         ))}

@@ -2,9 +2,9 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Http } from '@capacitor-community/http';
 import React from 'react';
-import { useQuery } from 'react-query';
 
 import { ImageProps } from '../components/MockImage';
+import { suspend } from 'suspend-react';
 
 const ROOT = 'https://rize-taehee-kim.s3.ap-northeast-2.amazonaws.com/';
 
@@ -48,7 +48,7 @@ const downloadFile = async (path: string): Promise<string> => {
 };
 
 const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
-  const { data: src } = useQuery<string, Error>(['image', path], () => downloadFile(path));
+  const src = suspend(() => downloadFile(path), ['image', path]);
   return (
     <img
       src={src ?? `https://via.placeholder.com/${width}`}

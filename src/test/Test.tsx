@@ -1,8 +1,8 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 
 import BackButton from '../components/BackButton';
 import { useDependencies } from '../hooks/Dependencies';
+import { useQuery } from '@tanstack/react-query';
 
 const assert = (assertion: boolean, message: string) => {
   if (assertion === false) throw Error(message);
@@ -67,10 +67,9 @@ const wrapTimer = (run: () => Promise<void>) => async () => {
 
 function Result({ suite: [message, run] }: { suite: Suite<DependenciesT> }) {
   const dependencies = useDependencies();
-  const { data, status, error } = useQuery<number, Error>(
-    message,
-    wrapTimer(() => run(dependencies))
-  );
+  const { data, status, error } = useQuery<number, Error>({
+    queryFn: wrapTimer(() => run(dependencies))
+  });
   return (
     <li style={{ color: colorMap[status] }}>
       {resultMap[status]} : {message} ({data && data / 1000}초)

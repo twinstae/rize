@@ -1,4 +1,4 @@
-import { FormLabel, HStack, Radio, RadioGroup, VStack } from '@chakra-ui/react';
+import { FormLabel, HStack, Radio, VStack } from '../../components/rize-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -13,29 +13,36 @@ import ConfigHeading from './ConfigHeading';
 const shuffledIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 const shuffledMembers = shuffledIndex.map((i) => MEMBER_LIST[i]).slice(0, 4);
 
-function ThemeRadio({ theme }: { theme: string }) {
+function ThemeRadio({ theme }: { theme: typeof profileList[number] }) {
+  const { setProfile } = useProfile();
   return (
-    <Radio value={theme} p="1" id={`${theme}-radio`}>
+    <FormLabel>
       {theme}
+      <Radio value={theme} id={`${theme}-radio`} name="theme" onChange={(e) => {
+        if (e.target.checked){
+          setProfile(theme);
+        }
+      }} />
       {shuffledMembers.map((member) => (
         <ProfileImage key={member} member={member} size="md" theme={theme} />
       ))}
-    </Radio>
+    </FormLabel>
+    
   );
 }
 
 function ProfileConfig() {
-  const { profile, setProfile } = useProfile();
+  const { profile } = useProfile();
   const { t } = useTranslation();
 
   return (
-    <VStack align="stretch" className="card bg-base-100 shadow-2xl p-3 m-1">
+    <VStack className="card bg-base-100 ring-1 ring-slate-300 shadow-xl p-4">
       <FormLabel htmlFor="profile-select">
         <ConfigHeading title={t(strs.프로필_바꾸기)} />
       </FormLabel>
       <VStack>
         <span>{`선택한 테마 : ${profile}`}</span>
-        <HStack spacing="0.5">
+        <HStack>
           {MEMBER_LIST.slice(0, 6).map((member) => (
             <ProfileImage
               key={member}
@@ -45,7 +52,7 @@ function ProfileConfig() {
             />
           ))}
         </HStack>
-        <HStack spacing="0.5">
+        <HStack>
           {MEMBER_LIST.slice(6).map((member) => (
             <ProfileImage
               key={member}
@@ -57,17 +64,13 @@ function ProfileConfig() {
         </HStack>
       </VStack>
 
-      <RadioGroup
+      <div className="form-control"
         id="profile-select"
-        value={profile}
-        onChange={(selected: typeof profileList[number]) => {
-          setProfile(selected);
-        }}
       >
         {profileList.map((theme) => (
           <ThemeRadio key={theme} theme={theme} />
         ))}
-      </RadioGroup>
+      </div>
     </VStack>
   );
 }

@@ -1,15 +1,14 @@
-import { HStack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React, { CSSProperties } from 'react';
 
 import useUsername from '../config/useUsername';
-import { useDependencies } from '../hooks/Dependencies';
 import { MailT } from '../mailList/types';
 import { toMailDetail } from '../router/paths';
 import useNavigation from '../router/useNavigation';
 import FavoriteStar from './FavoriteStar';
 import ProfileImage from './ProfileImage';
 import TagList from './TagList';
+import { useTags } from '../hooks/Dependencies';
 
 const Wrapper = styled.li`
   padding: 0.5rem;
@@ -57,7 +56,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
   const Link = navigation.Link;
 
   const usernameService = useUsername();
-  const { isUnread } = useDependencies().useMailList();
+  const { isUnread } = useTags();
 
   return (
     <Wrapper
@@ -69,11 +68,11 @@ function MailListItem({ mail, style }: MailListItemProps) {
         <div style={{ position: 'relative' }}>
           <ProfileImage member={mail.member} size="base" />
           <FavoriteStar mailId={mail.id} />
-          <HStack>
+          <div className="flex flex-row">
             <span>{mail.member}</span>
             <DatiTimeText>{mail.time.slice(2)}</DatiTimeText>
             <TagList mailId={mail.id} />
-          </HStack>
+          </div>
           <Title>
             <strong>{mail.subject}</strong>
           </Title>

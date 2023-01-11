@@ -4,15 +4,14 @@ import 'uno.css';
 import 'normalize.css';
 import '@stackflow/basic-ui/index.css';
 
-import { App } from '@capacitor/app';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import AppMain from '../App';
 import RizeLogo from '../components/RizeLogo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import QueryWrapper from '../hooks/QueryWrapper';
-import { pipeWrapper, WrapperT } from '../hooks/util';
+import { pipeWrapper } from '../hooks/util';
 import i18n from '../i18n/i18n';
 import fakeMailRepository from '../mailList/fakeMailRepository';
 import { createUseMailList } from '../mailList/useMailList';

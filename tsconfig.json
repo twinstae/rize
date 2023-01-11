@@ -17,6 +17,6 @@
       "noEmit": true,
       "jsx": "react-jsx",
     },
-    "include": ["src", "vitest"]
+    "include": ["src", "vitest", "presetDaisy.js"]
 }
   

@@ -23,7 +23,7 @@ const draw = {
   },
 };
 
-function RizeLogo({onAnimationEnd}: { onAnimationEnd: () => void }) {
+function RizeLogo({onAnimationEnd}: { onAnimationEnd?: () => void }) {
   const { isDark } = useDarkMode();
   const pathColor = isDark ? '#f687b3' : '#ed64a6';
 

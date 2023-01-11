@@ -1,7 +1,10 @@
 import '../i18n/i18n';
 import '../index.css';
+// daisyUI assumes Tailwind CSS's Preflight
+import '@unocss/reset/tailwind.css';
+// Import daisyUI **BEFORE** UnoCSS
+import '@kidonng/daisyui/index.css';
 import 'uno.css';
-import 'normalize.css';
 import '@stackflow/basic-ui/index.css';
 
 import React from 'react';
@@ -16,15 +19,18 @@ import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 import { useStackNavigation } from '../router/useStatckNavigation';
 import fsJSON from './fsJSON';
+// import fakeStorageRepo from '../config/fakeStorageRepo';
+// import fakeMailRepository from '../mailList/fakeMailRepository';
+// import { MockImage } from '../components/MockImage';
+// const storageRepo = fakeStorageRepo;
+// const useMailList = createUseMailList(fakeMailRepository);
+// const Image = MockImage;
 import fsMailRepository from './fsMailRepository';
 import fsStorageRepo from './fsStorageRepo';
 import TauriImage from './TauriImage';
-// import { MockImage } from '../components/MockImage';
-// import fakeStorageRepo from '../config/fakeStorageRepo';
-// import fakeMailRepository from '../mailList/fakeMailRepository';
-
 const storageRepo = fsStorageRepo;
 const useMailList = createUseMailList(fsMailRepository);
+const Image = TauriImage;
 
 storageRepo.getItem().then((config) => {
   i18n.changeLanguage((config as { lang: string } | undefined)?.lang || 'ko');
@@ -35,7 +41,7 @@ const Wrapper = pipeWrapper(
   DependenciesWrapper({
     storageRepo,
     useNavigationImpl: useStackNavigation,
-    Image: TauriImage,
+    Image,
     useColorMode,
     fsJSON,
     useMailList,

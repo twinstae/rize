@@ -4,12 +4,12 @@ import atomWithPersit from '../hooks/atomWithPersist';
 import { useDependencies } from '../hooks/Dependencies';
 import { JsonObject, JsonValue } from '../types/json';
 
-let atom: WritableAtom<JsonObject, unknown, void> | undefined;
+let atom: WritableAtom<Promise<JsonObject>, unknown, void> | undefined;
 
 const useConfigAtom = () => {
   const { storageRepo } = useDependencies();
   if(atom === undefined){
-    atom = atomWithPersit({}, storageRepo) as WritableAtom<JsonObject, unknown, void>;
+    atom = atomWithPersit({}, storageRepo) as WritableAtom<Promise<JsonObject>, unknown, void>;
   }
   return atom; 
 };

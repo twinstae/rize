@@ -3,17 +3,16 @@ import { stackflow, useActivity } from '@stackflow/react';
 import React from 'react';
 
 import Config from '../pages/Config';
-import InitPage from '../pages/InitPage';
 import MailDetailPage from '../pages/MailDetailPage';
 import MailListPage from '../pages/MailListPage';
 import { wrapLayout } from './Layout';
 import { Navigation } from './useNavigation';
+import { basicUIPlugin } from '@stackflow/basic-ui';
 
 const activities = {
   Config: wrapLayout(Config),
   MailListPage: wrapLayout(MailListPage),
   MailDetailPage: wrapLayout(MailDetailPage),
-  InitPage: wrapLayout(InitPage),
 };
 
 const activityNames = Object.keys(activities);
@@ -23,8 +22,10 @@ type ActivityName = keyof typeof activities;
 export const { Stack, useFlow } = stackflow({
   transitionDuration: 350,
   activities,
-  initialActivity: () => 'InitPage',
-  plugins: [basicRendererPlugin()],
+  initialActivity: () => 'MailListPage',
+  plugins: [basicRendererPlugin(), basicUIPlugin({
+    theme: 'cupertino',
+  }),],
 });
 
 export const parsePath = (
@@ -42,7 +43,8 @@ export const parsePath = (
 };
 
 export const useStackNavigation = (): Navigation => {
-  const { name, params } = useActivity();
+  const activity = useActivity();
+  const { name, params } = activity;
   const { push, pop, replace } = useFlow();
 
   return {
@@ -58,7 +60,7 @@ export const useStackNavigation = (): Navigation => {
     navigate: (path: string) => push(...parsePath(path)),
     goBack: () => pop(),
     redirect: (path: string) => replace(...parsePath(path), { animate: false }),
-    Link: (props: { to: string; children: JSX.Element }) =>
+    Link: (props: { to: string; children: React.ReactNode }) =>
       React.createElement(
         'span',
         { href: props.to, onClick: () => push(...parsePath(props.to)) },

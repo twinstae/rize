@@ -1,5 +1,5 @@
 import { MEMBER_LIST } from '../constants';
-import { TEST_MAIL } from '../test/fixtures';
+import { YURI_MAIL_M25752 } from '../test/fixtures';
 import fakeMailRepository from './fakeMailRepository';
 import {
   addTagToMail,
@@ -41,18 +41,18 @@ it('removeTagFromMail', () => {
 });
 
 const UNREAD_UNFAVORITED_YURI_MAIL1: MailT = {
-  ...TEST_MAIL,
+  ...YURI_MAIL_M25752,
   id: 'mail1',
 };
 
 const READ_FAVORITED_HITOMI_MAIL2: MailT = {
-  ...TEST_MAIL,
+  ...YURI_MAIL_M25752,
   member: '혼다 히토미',
   id: 'mail2',
 };
 
 const UNREAD_UNFAVORITED_YURI_MAIL3: MailT = {
-  ...TEST_MAIL,
+  ...YURI_MAIL_M25752,
   id: 'mail3',
 };
 
