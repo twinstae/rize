@@ -69,7 +69,9 @@ export function createUseMailList(mailRepository: MailRepository) {
     queryFn: async () => {
       const status = await mailRepository.status();
       if (Object.values(status).every(v => v === true)){
-        temp('done!');
+        setTimeout(() => {
+          temp('done!');
+        }, 1500);
       }
       return status;
     },

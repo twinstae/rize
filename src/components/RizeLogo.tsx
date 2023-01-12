@@ -11,12 +11,12 @@ const draw = {
       opacity: 1,
       transition: {
         pathLength: {
-          delay: 1 + n * 0.125,
+          delay: 0 + n * 0.1,
           type: 'spring',
           duration: 1,
           bounce: 0,
         },
-        opacity: { delay: 1, duration: 0.01 },
+        opacity: { delay: 0, duration: 0.01 },
         fill: '#ff0055',
       },
     };

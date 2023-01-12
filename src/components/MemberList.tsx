@@ -14,18 +14,16 @@ function MemberListItem({ name, text }: MemberListItemProps) {
 
   const selected = name === tag;
   return (
-    <li>
+    <li className="flex flex-col gap-2 w-10/12">
       <button
         onClick={() => {
           setTag(name);
         }}
         style={{
-          width: '100%',
           textAlign: 'left',
           borderLeft: '3px solid ' + (selected ? '#ff69b4' : 'lightgrey'),
           transition: 'border 125ms ease',
           borderRadius: '0',
-          marginBottom: '0.5rem',
           padding: '0.25rem'
         }}
         className="mb-2 p-1 pl-3"
@@ -40,9 +38,7 @@ function MemberListItem({ name, text }: MemberListItemProps) {
 function MemberList() {
   return (
     <ul
-      style={{
-        listStyle: 'none',
-      }}
+      className="list-none w-full h-fit"
     >
       <MemberListItem name="" text="전체" />
       {MEMBER_LIST.map((name) => (

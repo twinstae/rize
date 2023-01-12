@@ -11,21 +11,25 @@ import { strs } from '../../i18n/i18n';
 import ConfigHeading from './ConfigHeading';
 
 const shuffledIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-const shuffledMembers = shuffledIndex.map((i) => MEMBER_LIST[i]).slice(0, 4);
+const shuffledMembers = shuffledIndex.map((i) => MEMBER_LIST[i]).slice(0, 8);
 
 function ThemeRadio({ theme }: { theme: typeof profileList[number] }) {
   const { setProfile } = useProfile();
   return (
-    <FormLabel>
-      {theme}
-      <Radio value={theme} id={`${theme}-radio`} name="theme" onChange={(e) => {
-        if (e.target.checked){
-          setProfile(theme);
-        }
-      }} />
-      {shuffledMembers.map((member) => (
-        <ProfileImage key={member} member={member} size="md" theme={theme} />
-      ))}
+    <FormLabel className="flex flex-col">
+      <HStack className="gap-2 justify-between w-full">
+        <Radio value={theme} id={`${theme}-radio`} name="theme" onChange={(e) => {
+          if (e.target.checked){
+            setProfile(theme);
+          }
+        }} />
+        <span className="text-lg">{theme}</span>
+      </HStack>
+      <HStack className="gap-2">
+        {shuffledMembers.map((member) => (
+          <ProfileImage key={member} member={member} size="md" theme={theme} />
+        ))}
+      </HStack>
     </FormLabel>
     
   );
@@ -42,22 +46,22 @@ function ProfileConfig() {
       </FormLabel>
       <VStack>
         <span>{`선택한 테마 : ${profile}`}</span>
-        <HStack>
+        <HStack className="justify-between">
           {MEMBER_LIST.slice(0, 6).map((member) => (
             <ProfileImage
               key={member}
               member={member}
-              size="md"
+              size="base"
               theme={profile}
             />
           ))}
         </HStack>
-        <HStack>
+        <HStack className="justify-between">
           {MEMBER_LIST.slice(6).map((member) => (
             <ProfileImage
               key={member}
               member={member}
-              size="md"
+              size="base"
               theme={profile}
             />
           ))}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FAVORITE } from '../mailList/useMailList';
+import { FAVORITE, UNREAD } from '../mailList/useMailList';
 import { useTags } from '../hooks/Dependencies';
 
 interface TagListProps {
@@ -11,9 +11,9 @@ function TagList({ mailId }: TagListProps) {
   const tags = useMailTags(mailId);
 
   return (
-    <ul>
+    <>
       {tags
-        .filter((tag) => tag !== FAVORITE)
+        .filter((tag) => tag !== FAVORITE && tag !== UNREAD)
         .map((content) => (
           <li key={content}>
             <span className="badge badge-primary">
@@ -21,7 +21,7 @@ function TagList({ mailId }: TagListProps) {
             </span>
           </li>
         ))}
-    </ul>
+    </>
   );
 }
 

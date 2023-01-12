@@ -1,7 +1,7 @@
 import { AppScreen } from '@stackflow/basic-ui';
 import React, { Suspense } from 'react';
 import InitPage from '../pages/InitPage';
-import { useMailList } from '../hooks/Dependencies';
+import { useDependencies, useMailList } from '../hooks/Dependencies';
 
 function Wait({ children }: { children: React.ReactNode }){
   useMailList().waitForAll();
@@ -9,15 +9,17 @@ function Wait({ children }: { children: React.ReactNode }){
   return <>{children}</>;
 }
 
-export function wrapLayout(Page: React.FC): React.FC {
-  // eslint-disable-next-line react/display-name
-  return () => (
-    <AppScreen backgroundColor="#ffffff">
-      <Suspense fallback={<InitPage />}>
-        <Wait>
-          <Page />
-        </Wait>
-      </Suspense>
-    </AppScreen>
-  );
+export function wrapLayout(OriginalPage: React.FC): React.FC {
+  return function Page() {
+    useDependencies().usePlatform();
+    return (
+      <AppScreen backgroundColor="#ffffff">
+        <Suspense fallback={<InitPage />}>
+          <Wait>
+            <OriginalPage />
+          </Wait>
+        </Suspense>
+      </AppScreen>
+    );
+  };
 }

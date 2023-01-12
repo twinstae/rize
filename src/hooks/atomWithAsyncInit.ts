@@ -3,7 +3,7 @@ import { atom } from 'jotai';
 const atomWithAsyncInit = <T>(initialValue: T, load: () => Promise<T>, save: (item: T) => Promise<void>) => {
   const baseAtom = atom(initialValue);
   baseAtom.onMount = (setValue) => {
-    load().then(item => setValue(item));
+    load().catch(() => initialValue).then(item => setValue(item ?? initialValue));
   };
   let id: number | NodeJS.Timeout | undefined;
   const derivedAtom = atom(

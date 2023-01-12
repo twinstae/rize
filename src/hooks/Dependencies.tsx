@@ -13,6 +13,7 @@ import { JsonValue } from '../types/json';
 import { createWrapper } from './util';
 
 type DependencyT = {
+  usePlatform: () => void;
   useNavigationImpl?: () => Navigation;
   storageRepo?: StorageRepository<JsonValue>;
   useColorMode?: () => {
@@ -35,16 +36,19 @@ export const darkModeAtom = atom(false);
 
 export function useColorMode(){
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
+  useEffect(() => {
+    document.getElementsByTagName('html')[0].setAttribute('data-theme', darkMode ? 'dark' : 'izone');
+  }, [darkMode]);
   return {
     colorMode: (darkMode ? 'dark' : 'light') as 'dark' | 'light',
     toggleColorMode: () => {
       setDarkMode(old => !old);
-      document.getElementsByTagName('html')[0].setAttribute('data-theme', !darkMode ? 'dark' : 'light');
     }
   };
 }
 
 export const createFakeDependencies: () => DependencyT = () => ({
+  usePlatform: () => undefined,
   useNavigationImpl: () => useFakeNavigation(),
   storageRepo: fakeStorageRepo,
   Image: MockImage,
@@ -68,7 +72,7 @@ export function useDependencies() {
 }
 
 export const DependenciesWrapper = (
-  value: Partial<ReturnType<typeof useDependencies>>
+  value: ReturnType<typeof useDependencies>
 ) => createWrapper(Dependencies.Provider, { value });
 
 export function useMailList(){

@@ -5,7 +5,7 @@ import { fileList } from '../mailList/fakeMailRepository';
 import { useQueryClient } from '@tanstack/react-query';
 
 const InitPage = () => {
-  const { fsJSON } = useDependencies();
+  const { fsJSON, RizeLogo } = useDependencies();
   const status = useMailList().useStatus();
   const client = useQueryClient();
 
@@ -31,7 +31,7 @@ const InitPage = () => {
   return (
     <div className="flex flex-col justify-center align-middle h-screen">
       <div className="mx-auto text-red-400 text-9xl">
-        RIZ*E
+        <RizeLogo />
       </div>
       {Object.values(status).some((v) => v === false) && (
         <form

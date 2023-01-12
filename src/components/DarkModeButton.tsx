@@ -1,9 +1,10 @@
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import React from 'react';
 
 import { strs, useTranslation } from '../i18n/i18n';
 import useDarkMode from '../theme/useDarkMode';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
+import SunIcon from './icons/SunIcon';
+import MoonIcon from './icons/MoonIcon';
 
 export const RawDarkModeButton = () => {
   const { t } = useTranslation();

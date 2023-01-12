@@ -22,6 +22,7 @@ function NickNameConfig() {
       <ConfigHeading title={t(strs.닉네임_바꾸기)} />
       <FormLabel>
         <Input
+          className="input-sm"
           value={beforeInput}
           onChange={(e) => {
             setBeforeInput(e.target.value);
@@ -32,6 +33,7 @@ function NickNameConfig() {
       </FormLabel>
       <FormLabel>
         <Input
+          className="input-sm"
           value={afterInput}
           onChange={(e) => {
             setAfterInput(e.target.value);
@@ -41,10 +43,10 @@ function NickNameConfig() {
         <span className="label-text">{t(strs.으로)}</span>
       </FormLabel>
       <div>
-        <h4>{t(strs.예시)}</h4>
-        <span>안녕 {beforeInput}, 오늘도 화이팅!</span>
+        <h4 className="font-bold">{t(strs.예시)}</h4>
+        <span>안녕 <strong>{beforeInput}</strong>, 오늘도 화이팅!</span>
         <br />
-        <span>{replaceUsername(`안녕 ${before}, 오늘도 화이팅!`)}</span>
+        <span>안녕 <strong>{replaceUsername(before)}</strong>, 오늘도 화이팅!</span>
       </div>
     </VStack>
   );

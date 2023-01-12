@@ -14,14 +14,6 @@ const Wrapper = styled.li`
   padding: 0.5rem;
   border-bottom: 1px solid #ddd;
   background-color: hsla(var(--b1)/var(--tw-bg-opacity,1));
-
-  &.unread::before {
-    content: '●';
-    color: #f06d9c;
-    position: absolute;
-    margin-top: -8px;
-    text-shadow: 1px 1px 5px gray;
-  }
 `;
 
 const Title = styled.h3`
@@ -38,12 +30,6 @@ const Description = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-`;
-
-const DatiTimeText = styled.span`
-  color: darkgray;
-  position: absolute;
-  right: 3rem;
 `;
 
 interface MailListItemProps {
@@ -68,9 +54,9 @@ function MailListItem({ mail, style }: MailListItemProps) {
         <div style={{ position: 'relative' }}>
           <ProfileImage member={mail.member} size="base" />
           <FavoriteStar mailId={mail.id} />
-          <div className="flex flex-row">
+          <div className="flex flex-row flex-wrap gap-1">
             <span>{mail.member}</span>
-            <DatiTimeText>{mail.time.slice(2)}</DatiTimeText>
+            <span className="text-gray-500 w-fit">{mail.time.slice(2,10)}</span>
             <TagList mailId={mail.id} />
           </div>
           <Title>

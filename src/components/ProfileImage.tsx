@@ -35,7 +35,6 @@ const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme }) => {
       style={{
         float: 'left',
         borderRadius: '50%',
-        marginRight: '0.5rem',
       }}
       width={sizes[size]}
     />

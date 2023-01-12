@@ -17,9 +17,9 @@ const Config = () => {
       <VStack
         className="gap-4 p-1"
       >
+        <LangConfig />
         <NickNameConfig />
         <ProfileConfig />
-        <LangConfig />
         <TestingButton />
       </VStack>
     </VStack>
