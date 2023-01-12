@@ -7,13 +7,12 @@ import '@kidonng/daisyui/index.css';
 import 'uno.css';
 import '@stackflow/basic-ui/index.css';
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import App from '../App';
 import RizeLogo from '../components/RizeLogo';
 import { useColorMode, DependenciesWrapper } from '../hooks/Dependencies';
-import QueryWrapper, { JotaiQueryWrapper } from '../hooks/QueryWrapper';
 import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 import { useStackNavigation } from '../router/useStatckNavigation';
@@ -27,7 +26,6 @@ import fsJSON from './fsJSON';
 import fsMailRepository from './fsMailRepository';
 import fsStorageRepo from './fsStorageRepo';
 import TauriImage from './TauriImage';
-import InitPage from '../pages/InitPage';
 const storageRepo = fsStorageRepo;
 const useMailList = createUseMailList(fsMailRepository);
 const Image = TauriImage;
@@ -37,11 +35,13 @@ storageRepo.getItem().then((config) => {
 });
 
 const Wrapper = DependenciesWrapper({
+  usePlatform: () => undefined,
   storageRepo,
   useNavigationImpl: useStackNavigation,
   Image,
   useColorMode,
   fsJSON,
+  mailRepository: fsMailRepository,
   useMailList,
   RizeLogo,
 });
@@ -51,14 +51,8 @@ const root = createRoot(document.getElementById('root')!);
 
 root.render(
   <React.StrictMode>
-    <QueryWrapper>
-      <JotaiQueryWrapper>
-        <Wrapper>
-          <Suspense fallback={ <InitPage />}>
-            <App />
-          </Suspense>
-        </Wrapper>
-      </JotaiQueryWrapper>
-    </QueryWrapper>
+    <Wrapper>
+      <App />
+    </Wrapper>
   </React.StrictMode>
 );
