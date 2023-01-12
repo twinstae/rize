@@ -1,4 +1,4 @@
-import { type VirtualItem, useVirtualizer } from '@tanstack/react-virtual';
+import { type VirtualItem, useVirtual } from '@tanstack/react-virtual';
 import React from 'react';
 
 type VirtualListProps<T> = {
@@ -11,9 +11,9 @@ type VirtualListProps<T> = {
 
 function VirtualList<T>({ result, height, VirtualRowItem, fallback, estimateSize }: VirtualListProps<T>) {
   const parentRef = React.useRef(null);
-  const rowVirtualizer = useVirtualizer({
-    getScrollElement: () => parentRef.current,
-    count: result.length,
+  const rowVirtualizer = useVirtual({
+    parentRef,
+    size: result.length,
     estimateSize,
     overscan: 2,
   });
@@ -28,13 +28,13 @@ function VirtualList<T>({ result, height, VirtualRowItem, fallback, estimateSize
     >
       <ul
         style={{
-          height: `${rowVirtualizer.getTotalSize()}px`,
+          height: `${rowVirtualizer.totalSize}px`,
           width: '100%',
           position: 'relative',
         }}
       >
         {result.length !== 0 ? (
-          rowVirtualizer.getVirtualItems().map((virtualItem) => (
+          rowVirtualizer.virtualItems.map((virtualItem) => (
             <VirtualRowItem key={virtualItem.key} virtualItem={virtualItem} />
           ))
         ) : (
