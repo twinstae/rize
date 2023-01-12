@@ -1,7 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Http } from '@capacitor-community/http';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { ImageProps } from '../components/MockImage';
 import { suspend } from 'suspend-react';
@@ -47,14 +47,30 @@ const downloadFile = async (path: string): Promise<string> => {
   return cache.get(path) || '';
 };
 
-const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
+const ImageLoaded: React.FC<ImageProps> = ({ path, style, width }) => {
   const src = suspend(() => downloadFile(path), ['image', path]);
   return (
     <img
-      src={src ?? `https://via.placeholder.com/${width}`}
+      src={src}
       width={width * 4}
       style={style}
     />
+  );
+};
+
+const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
+  return (
+    <Suspense
+      fallback={
+        <img
+          src={`https://via.placeholder.com/${width}`}
+          width={width * 4}
+          style={style}
+        />
+      }
+    >
+      <ImageLoaded path={path} style={style} width={width} />
+    </Suspense>
   );
 };
 
