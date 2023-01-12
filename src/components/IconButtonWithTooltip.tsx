@@ -16,7 +16,7 @@ const IconButtonWithTooltip = forwardRef<HTMLButtonElement, P>((props, ref) => {
         type="button"
         ref={ref}
         onClick={props.onClick}
-        className="btn btn-ghost btn-sm focus:border-2"
+        className="btn btn-ghost btn-sm focus:border-2 p-1"
         aria-label={props['aria-label']}
       >
         {props.icon}

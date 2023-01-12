@@ -1,8 +1,8 @@
-import { ArrowBackIcon } from '@chakra-ui/icons';
 import React from 'react';
 
 import useNavigation from '../router/useNavigation';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
+import ArrowLeftIcon from './icons/ArrowLeftIcon';
 
 function BackButton({ direction = 'bottom', width='fit', className='' }: { direction?: 'bottom' | 'top', width?: 'full' | 'fit', className?: string}) {
   const navigation = useNavigation();
@@ -10,7 +10,7 @@ function BackButton({ direction = 'bottom', width='fit', className='' }: { direc
   return (
     <IconButtonWithTooltip
       className={`tooltip-${direction} w-${width} ${className}`}
-      icon={<ArrowBackIcon />}
+      icon={<ArrowLeftIcon />}
       onClick={() => navigation.goBack()}
       aria-label="돌아가기"
     />

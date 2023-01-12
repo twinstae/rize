@@ -7,8 +7,7 @@ const createFlexSearchIndex: CreateIndex = (mailList: IndexMail[]) => {
       id: '', // 'id'
       index: ['subject', 'body'],
     },
-    // eslint-disable-next-line no-control-regex
-    encode: (str: string) => str.replace(/[\x00-\x7F]/g, '').split('')
+    encode: (sent) => sent.split('')
   });
 
   mailList.forEach((mail) => docIndex.add(mail));

@@ -14,11 +14,11 @@ describe('NickNameConfig', () => {
 
     await user.clear(beforeInput);
     await user.type(beforeInput, '위 즈 원');
-    await screen.findByText(/안녕 위 즈 원, 오늘도 화이팅!/);
+    await screen.findByText(/위 즈 원/);
 
     const afterInput = screen.getByLabelText(ko.translation.으로);
     await user.clear(afterInput);
     await user.type(afterInput, 'wiz*one');
-    await screen.findByText(/안녕 wiz\*one, 오늘도 화이팅!/);
+    await screen.findByText(/wiz\*one/);
   });
 });

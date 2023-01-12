@@ -24,7 +24,7 @@ describe('InitPage', () => {
   it('이미 파일이 업로드 되어 있으면, 렌더가 된다', async () => {
     const { screen } = await render(<Story />);
 
-    expect(screen.getByText('렌더!')).toBeInTheDocument();
+    expect(await screen.findByText('렌더!')).toBeInTheDocument();
   });
 
   it('없는 파일이 있는 채로 upload 버튼을 누르면, 렌더되지 않는다.', async () => {

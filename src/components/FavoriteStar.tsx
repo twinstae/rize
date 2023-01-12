@@ -1,10 +1,10 @@
-import { StarIcon } from '@chakra-ui/icons';
 import React from 'react';
 
-import { EmptyStarIcon } from '../icons';
+import EmptyStarIcon from './icons/EmptyStarIcon';
 import { FAVORITE } from '../mailList/useMailList';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import { useTags } from '../hooks/Dependencies';
+import StarIcon from './icons/StarIcon';
 
 interface FavoriteStarProps {
   mailId: string;
@@ -31,12 +31,12 @@ function FavoriteStar({ mailId }: FavoriteStarProps) {
       }}
       icon={
         mailIsFavorited ? (
-          <StarIcon color="gold" />
+          <StarIcon className="text-yellow-400" />
         ) : (
-          <EmptyStarIcon color="gray.400" />
+          <EmptyStarIcon className="text-slate-400" />
         )
       }
-      aria-label={mailIsFavorited ? '중요' : '중요 표시'}
+      aria-label={mailIsFavorited ? '중요 취소' : '중요 표시'}
     />
   );
 }

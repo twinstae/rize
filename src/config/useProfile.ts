@@ -5,14 +5,14 @@ export const profileList = [
   'la-vie-en-rose',
   'violeta',
   'fiesta',
-  // "secret-diary-id",
+  'secret-diary-id',
   'the-secret-story-of-swan',
   'panorama',
   'eating-trip-3',
   'birthday',
   'one-the-story',
-  // "latest",
-  // "instagram"
+  'latest',
+  'instagram'
 ] as const;
 
 function useProfile() {

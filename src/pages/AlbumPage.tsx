@@ -25,8 +25,8 @@ function AlbumPage() {
   const result = chunk(all.flatMap(mail => mail.images.map(image => ({ image, mailId: mail.id, time: mail.time }))), 4);
 
   return (
-    <VStack className="relative">
-      <BackButton direction="top" className="absolute bottom-2 right-4 btn-primary rounded-lg"/>
+    <VStack className="relative bg-base-100">
+      <BackButton direction="top" className="absolute bottom-2 right-4 btn-primary p-2 btn-circle"/>
       <VirtualList
         result={result}
         height={height}

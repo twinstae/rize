@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import React from 'react';
 
 import BackButton from '../components/BackButton';
@@ -8,20 +7,6 @@ import ProfileImage from '../components/ProfileImage';
 import useNavigation, { useSearchParam } from '../router/useNavigation';
 import paths from '../router/paths';
 import { useMailList } from '../hooks/Dependencies';
-
-const Title = styled.h3`
-  padding: 0;
-  margin: 0.25rem 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-weight: 500;
-`;
-
-const Wrapper = styled.header`
-  padding: 1rem;
-  position: relative;
-`;
 
 function MailDetailPage() {
   const navigation = useNavigation();
@@ -35,19 +20,19 @@ function MailDetailPage() {
   }
 
   return (
-    <div className="p-1 bg-base-100">
+    <div className="p-1 h-fit relative">
       <BackButton />
-      <Wrapper>
+      <header className="p-4 relative">
         <FavoriteStar mailId={mail.id} />
         <ProfileImage member={mail.member} size="base" />
         <strong>{toOriginalName(mail.member)} </strong>
         <span className="text-gray-500 absolute top-0 right-10">
           {mail.time}
         </span>
-        <Title>{mail.subject}</Title>
-      </Wrapper>
+        <h3 className="p-0 m-0 overflow-hidden text-ellipsis font-bold">{mail.subject}</h3>
+      </header>
       <MailBody mailBody={mail} />
-      <BackButton direction="top" />
+      <BackButton direction="top" className="absolute bottom-2 right-4 btn-primary p-2 btn-circle"/>
     </div>
   );
 }

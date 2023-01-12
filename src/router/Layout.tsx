@@ -13,7 +13,7 @@ export function wrapLayout(OriginalPage: React.FC): React.FC {
   return function Page() {
     useDependencies().usePlatform();
     return (
-      <AppScreen backgroundColor="#ffffff">
+      <AppScreen backgroundColor="bg-base-100">
         <Suspense fallback={<InitPage />}>
           <Wait>
             <OriginalPage />

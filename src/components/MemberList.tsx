@@ -23,7 +23,6 @@ function MemberListItem({ name, text }: MemberListItemProps) {
           textAlign: 'left',
           borderLeft: '3px solid ' + (selected ? '#ff69b4' : 'lightgrey'),
           transition: 'border 125ms ease',
-          borderRadius: '0',
           padding: '0.25rem'
         }}
         className="mb-2 p-1 pl-3"

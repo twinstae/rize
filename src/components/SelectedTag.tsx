@@ -7,9 +7,8 @@ import ProfileImage from './ProfileImage';
 function SelectedTag() {
   const [tag] = useTag();
   return tag ? (
-    <span data-testid="selected-tag">
-      {MEMBER_LIST.includes(tag as IZONE) && <ProfileImage member={tag} size="sm" />}
-      {tag}
+    <span data-testid="selected-tag" className='text-lg'>
+      {MEMBER_LIST.includes(tag as IZONE) && <ProfileImage member={tag} size="sm" />} <span className='ml-2'>{tag}</span>
     </span>
   ) : null;
 }

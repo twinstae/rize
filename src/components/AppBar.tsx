@@ -1,6 +1,4 @@
-import {
-  useDisclosure,
-} from '@chakra-ui/react';
+
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -21,18 +19,14 @@ function AppBar() {
   const [keywordInput, setKeywordInput] = useState('');
   const { Link } = useNavigation();
   const { t } = useTranslation();
-  const { isOpen, onClose, onOpen, getButtonProps } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      search(keywordInput);
-    }, 500);
-
-    return () => clearTimeout(id);
+    search(keywordInput);
   }, [keywordInput, search]);
 
   function handleClose() {
-    onClose();
+    setIsOpen(false);
     setKeywordInput('');
   }
 
@@ -44,50 +38,54 @@ function AppBar() {
 
   useEffect(() => {
     if (keyword) {
-      onOpen();
+      setIsOpen(true);
     }
     return () => handleClose();
   }, []);
 
-  return (
-    <HStack className="bg-base-100 p-2 border-b-2 border-gray-200">
-      {isOpen ? (
-        <label className="w-full flex flex-row justify-between align-middle items-center">
-          <span>검색</span>
-          <input
-            autoFocus
-            type="text"
-            className="input input-bordered input-xs p-1 w-8/12 m-1 rounded"
-            placeholder={t(strs.검색하기) ?? ''}
-            onKeyUp={handleKeyUp}
-            value={keywordInput}
-            onChange={(e) => {
-              setKeywordInput(e.target.value);
-            }}
-          />
-          <IconButtonWithTooltip
-            {...getButtonProps()}
-            aria-label={t(strs.검색창_닫기)}
-            icon={<XMarkIcon />}
-          />
-        </label>
-      ) : (
-        <>
-          <MenuButton />
-          <DarkModeButton />
-          <SelectedTag />
-          <IconButtonWithTooltip
-            className="ml-2 tooltip-bottom"
-            {...getButtonProps()}
-            icon={<MagnifyingGlassIcon />}
-            aria-label={t(strs.검색)}
-          />
-          <Link to={paths.ALBUM} className="btn btn-ghost btn-sm">
-            앨범
-          </Link>
-        </>
-      )}
+  return (isOpen ? (
+    <HStack className="h-12 bg-base-100 px-2 py-1 border-b-2 border-gray-200 items-center justify-between">
+      <label htmlFor="search-bar" className="flex flex-row justify-between align-middle items-center">
+        <span className="p-2 font-bold">검색</span>
+      </label>
+      <input
+        id="search-bar"
+        autoFocus
+        type="text"
+        className="flex-1 input input-bordered input-sm p-1 rounded"
+        placeholder={t(strs.검색하기) ?? ''}
+        onKeyUp={handleKeyUp}
+        value={keywordInput}
+        onChange={(e) => {
+          setKeywordInput(e.target.value);
+        }}
+      />
+      <IconButtonWithTooltip
+        onClick={() => {
+          handleClose();
+        }}
+        aria-label={t(strs.검색창_닫기)}
+        icon={<XMarkIcon />}
+      />
     </HStack>
+  ) : (
+    <HStack className="h-12 bg-base-100 p-2 border-b-2 border-gray-200 items-center justify-between">
+      <MenuButton />
+      <DarkModeButton />
+      <SelectedTag />
+      <Link to={paths.ALBUM} className="btn btn-ghost btn-sm">
+            앨범
+      </Link>
+      <IconButtonWithTooltip
+        onClick={() => {
+          setIsOpen(true);          
+        }}
+        className="ml-2 tooltip-bottom"
+        icon={<MagnifyingGlassIcon />}
+        aria-label={t(strs.검색)}
+      />
+    </HStack>
+  )
   );
 }
 

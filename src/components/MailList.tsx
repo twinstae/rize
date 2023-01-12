@@ -18,7 +18,7 @@ function MailList({ index }: Props) {
     <VirtualList
       result={result}
       height={height}
-      estimateSize={() => rem(6.0)}
+      estimateSize={() => rem(5.5)}
       VirtualRowItem={({virtualItem}) => (
         <MailListItem
           key={virtualItem.key}

@@ -26,7 +26,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.lec.rize",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -74,7 +74,7 @@
       }
     },
     "security": {
-      "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com/; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/gh/naen-nae/fonts;",
+      "csp": "default-src 'self'; img-src 'self' https://via.placeholder.com/ asset: https://asset.localhost; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com/;",
       "freezePrototype": false
     }
   }

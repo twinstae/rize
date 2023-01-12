@@ -1,5 +1,3 @@
-import { ChakraProvider } from '@chakra-ui/provider';
-import theme from '@chakra-ui/theme';
 import { expect, test } from '@playwright/experimental-ct-react';
 import React from 'react';
 
@@ -7,7 +5,7 @@ import MailListPage from './MailListPage';
 
 test.use({ viewport: { width: 449, height: 700 } });
 test('탭을 누르면 해당하는 아이템이 필터링된다', async ({ mount, browserName }) => {
-  const component = await mount(<ChakraProvider theme={theme}><MailListPage /></ChakraProvider>);
+  const component = await mount(<MailListPage />);
 
 
   expect(await component.locator('li').count()).toBe(6);

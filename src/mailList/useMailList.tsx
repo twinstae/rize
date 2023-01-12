@@ -71,7 +71,7 @@ export function createUseMailList(mailRepository: MailRepository) {
       if (Object.values(status).every(v => v === true)){
         setTimeout(() => {
           temp('done!');
-        }, 1500);
+        }, 1000);
       }
       return status;
     },
@@ -102,6 +102,7 @@ export function createUseMailList(mailRepository: MailRepository) {
     const dict = useAtomValue(mailToTagDictAtom);
 
     const unreadSet = new Set(tagToMailDict[UNREAD]);
+    console.log(unreadSet);
     const favoriteSet = new Set(tagToMailDict[FAVORITE]);
 
     return {
@@ -126,22 +127,16 @@ export function createUseMailList(mailRepository: MailRepository) {
   }))));
 
   const keywordAtom = atom('');
-  const inSearchResultAtom = atom((get) => {
-    const index = get(indexAtom);
-    const keyword = get(keywordAtom);
-    return (id: string) => index.search(keyword).has(id);
-  });
-  
-  const searchMailListAtom = atom((get) => {
-    const mailList = get(mailListAtom);
-    const inSearchResult = get(inSearchResultAtom);
-    return mailList.filter((mail) => inSearchResult(mail.id));
-  });
 
   const filtertedMailListAtom = atom((get) => {
     const tag = get(currentTagAtom);
     const tagToMailDict = get(tagToMailDictAtom);
-    const searchMailList = get(searchMailListAtom);
+    const mailList = get(mailListAtom);
+    const index = get(indexAtom);
+    const keyword = get(keywordAtom);
+    const searchResult = index.search(keyword);
+    const inSearchResult = (id: string) => searchResult.has(id);
+
     const tagSet = tagToMailDict[tag];
     const createByTag = (tag: string) => {
       if (MEMBER_LIST.includes(tag as IZONE)) {
@@ -155,18 +150,30 @@ export function createUseMailList(mailRepository: MailRepository) {
     const byTag = createByTag(tag);
     const unreadSet = new Set(tagToMailDict[UNREAD]);
     const favoriteSet = new Set(tagToMailDict[FAVORITE]);
-    const allMailList = searchMailList.filter(mail => byTag(mail));
+    
+    const allMailList = tag 
+      ? mailList.filter(mail => byTag(mail))
+      : mailList;
+
+    if (keyword === ''){
+      return {
+        'all': allMailList,
+        'unread': allMailList.filter((mail) => unreadSet.has(mail.id)),
+        'favorite': allMailList.filter((mail) => favoriteSet.has(mail.id))
+      };
+    }
+
     return {
-      'all': allMailList,
-      'unread': allMailList.filter((mail) => unreadSet.has(mail.id)),
-      'favorite': allMailList.filter((mail) => favoriteSet.has(mail.id))
+      'all': allMailList.filter((mail) => inSearchResult(mail.id)),
+      'unread': allMailList.filter((mail) => unreadSet.has(mail.id) && inSearchResult(mail.id)),
+      'favorite': allMailList.filter((mail) => favoriteSet.has(mail.id) && inSearchResult(mail.id))
     };
   });
 
   return (): MailListResult => {
     return {
       waitForAll: () => {
-        useAtomValue(waitForAll([statusAtom, tagToMailDictAtom, mailBodyDictAtom, nameToNumberDictAtom, rawMailListAtom, waitAtom, indexAtom, inSearchResultAtom]));
+        useAtomValue(waitForAll([statusAtom, waitAtom, filtertedMailListAtom]));
       },
       mailList: () => useAtomValue(filtertedMailListAtom),
       useMailById: (id) => {

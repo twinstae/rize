@@ -2,11 +2,6 @@
   display: hidden;
 }
 
-li button:focus {
-  outline: none;
-  border: 2px solid pink;
-}
-
 a:focus {
   outline: none;
 }
@@ -44,6 +39,10 @@ body {
 
 .tab-active {
   border-color: 2px solid hsla(var(--p), 1) !important;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 html[data-theme="izone"] {
