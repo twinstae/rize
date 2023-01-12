@@ -99,6 +99,7 @@
     "tauri": "tauri",
     "tauri:build": "tauri dev --debug",
     "lint": "eslint --ext ts,tsx src",
+    "ionic:serve": "vite serve --config='vite.config.capacitor.js'",
     "ionic:build": "npm run build",
     "e2e:ct": "playwright test -c playwright-ct.config.ts"
   },

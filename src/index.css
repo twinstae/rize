@@ -35,9 +35,76 @@ body {
 }
 
 .scrollbar__thumbPlaceholder--vertical {
-  width: 1.2rem !important;
+  width: 2rem !important;
 }
 
 .scrollbar__thumb--horizontal {
   display: none !important;
+}
+
+.tab-active {
+  border-color: 2px solid hsla(var(--p), 1) !important;
+}
+
+html[data-theme="izone"] {
+  --p: 332 83% 63%;
+  --pf: 332 83% 51%;
+  --pc: 332 100% 93%;
+  --sf: 0, 63%, 47%;
+  --af: 27, 56%, 50%;
+  --nf: 22, 17%, 35%;
+  --b2: 0, 0%, 85%;
+  --b3: 0, 0%, 77%;
+  --bc: 0, 0%, 19%;
+  --sc: 0, 100%, 92%;
+  --ac: 27, 100%, 13%;
+  --nc: 22, 100%, 89%;
+  --inc: 187, 100%, 10%;
+  --suc: 165, 100%, 9%;
+  --wac: 30, 100%, 10%;
+  --erc: 354, 100%, 90%;
+  --rounded-box: 1rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 1.9rem;
+  --animation-btn: 0.25s;
+  --animation-input: .2s;
+  --btn-text-case: uppercase;
+  --btn-focus-scale: 0.95;
+  --border-btn: 1px;
+  --tab-border: 1px;
+  --tab-radius: 0.5rem;
+  --s: 0, 63%, 58%;
+  --a: 27, 56%, 63%;
+  --n: 22, 17%, 44%;
+  --b1: 0, 0%, 100%;
+  --in: 187, 48%, 50%;
+  --su: 165, 34%, 43%;
+  --wa: 30, 84%, 50%;
+  --er: 354, 79%, 49%;
+}
+
+.btn-primary, .badge-primary {
+  --un-bg-opacity: 1;
+  color: white !important;
+  border: none;
+  background-color: hsla(var(--p)) !important;
+}
+
+.btn-primary:hover {
+  background-color: hsla(var(--pf)) !important;
+  border: none;
+}
+
+.tab.tab-active {
+  border-color: #f06d9c;
+  color: #f06d9c;
+}
+
+.unread::before {
+  content: '●';
+  color: #f06d9c;
+  position: absolute;
+  margin-top: -8px;
+  text-shadow: 1px 1px 5px gray;
+  z-index:10;
 }
