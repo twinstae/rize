@@ -2,7 +2,7 @@ import React from 'react';
 import { useDependencies } from '../hooks/Dependencies';
 import paths from './paths';
 
-export type LinkProps = React.ComponentProps<'a'> & { to: string; children: React.ReactNode }
+export type LinkProps = React.ComponentProps<'a'> & { to: string; children: React.ReactNode; className?: string }
 
 export interface Navigation {
   params: () => Readonly<{ [key: string]: string | undefined }>;

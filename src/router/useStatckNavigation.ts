@@ -8,11 +8,13 @@ import MailListPage from '../pages/MailListPage';
 import { wrapLayout } from './Layout';
 import { Navigation } from './useNavigation';
 import { basicUIPlugin } from '@stackflow/basic-ui';
+import AlbumPage from '../pages/AlbumPage';
 
 const activities = {
   Config: wrapLayout(Config),
   MailListPage: wrapLayout(MailListPage),
   MailDetailPage: wrapLayout(MailDetailPage),
+  AlbumPage: wrapLayout(AlbumPage),
 };
 
 const activityNames = Object.keys(activities);
@@ -60,10 +62,10 @@ export const useStackNavigation = (): Navigation => {
     navigate: (path: string) => push(...parsePath(path)),
     goBack: () => pop(),
     redirect: (path: string) => replace(...parsePath(path), { animate: false }),
-    Link: (props: { to: string; children: React.ReactNode }) =>
+    Link: (props: { className?: string, to: string; children: React.ReactNode }) =>
       React.createElement(
-        'span',
-        { href: props.to, onClick: () => push(...parsePath(props.to)) },
+        'a',
+        { href: props.to, onClick: (e: React.MouseEvent) => { e.preventDefault(); push(...parsePath(props.to)); }, className: props.className },
         props.children
       ),
   };
