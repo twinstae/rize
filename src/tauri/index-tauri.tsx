@@ -26,6 +26,9 @@ import fsJSON from './fsJSON';
 import fsMailRepository from './fsMailRepository';
 import fsStorageRepo from './fsStorageRepo';
 import TauriImage from './TauriImage';
+import { useAtom } from 'jotai';
+import { isSplashEndAtom } from '../hooks/splashEndAtom';
+import useFsProfileList from './useFsProfileList';
 const storageRepo = fsStorageRepo;
 const useMailList = createUseMailList(fsMailRepository);
 const Image = TauriImage;
@@ -35,7 +38,9 @@ storageRepo.getItem().then((config) => {
 });
 
 const Wrapper = DependenciesWrapper({
-  usePlatform: () => undefined,
+  usePlatform: () => {
+    useAtom(isSplashEndAtom);
+  },
   storageRepo,
   useNavigationImpl: useStackNavigation,
   Image,
@@ -43,6 +48,7 @@ const Wrapper = DependenciesWrapper({
   fsJSON,
   mailRepository: fsMailRepository,
   useMailList,
+  useProfileList: useFsProfileList,
   RizeLogo,
 });
 

@@ -11,19 +11,19 @@ describe('DarkModeButton', () => {
     await i18n.changeLanguage('ko');
     const { user, screen } = await render(<RawDarkModeButton />);
 
-    await user.click(screen.getByRole('button', { name: '밝게'}));
-    await user.click(screen.getByRole('button', { name: '다크'}));
+    await user.click(screen.getByRole('button', { name: /밝게/ }));
+    await user.click(screen.getByRole('button', { name: /다크/ }));
 
-    screen.getByRole('button', { name: '밝게' });
+    screen.getByRole('button', { name: /밝게/ });
   });
 
   it('DarkModeButton을 영어로 번역할 수 있다', async () => {
     await i18n.changeLanguage('en');
     const { user, screen } = await render(<RawDarkModeButton />);
 
-    await user.click(screen.getByRole('button', { name: en.translation.밝게}));
-    await user.click(screen.getByRole('button', { name: en.translation.다크}));
+    await user.click(screen.getByRole('button', { name: new RegExp(en.translation.밝게) }));
+    await user.click(screen.getByRole('button', { name: new RegExp(en.translation.다크) }));
 
-    screen.getByRole('button', { name: en.translation.밝게 });
+    screen.getByRole('button', { name: new RegExp(en.translation.밝게)  });
   });
 });

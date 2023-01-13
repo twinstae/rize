@@ -11,7 +11,7 @@ describe('AppBar', () => {
     const searchButton = screen.getByLabelText(ko.translation.검색);
     user.click(searchButton);
 
-    const closeSearchButton = await screen.findByLabelText(ko.translation.검색창_닫기);
+    const closeSearchButton = await screen.findByLabelText(ko.translation.닫기);
     user.click(closeSearchButton);
   });
 });
