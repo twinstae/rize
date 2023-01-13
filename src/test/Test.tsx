@@ -30,8 +30,8 @@ const testSuites: Suite<DependenciesT>[] = [
     '스토리지에 쓰고 읽어올 수 있다',
     async ({ storageRepo }: DependenciesT) => {
       const now = new Date().toISOString();
-      await storageRepo.setItem(now);
-      const result = await storageRepo.getItem();
+      await storageRepo.setItem('test', now);
+      const result = await storageRepo.getItem('test');
       assertToBe(result, now);
     },
   ],

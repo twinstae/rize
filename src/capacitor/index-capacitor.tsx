@@ -27,8 +27,8 @@ import useFsProfileList from './useFsProfileList';
 const mailRepository = fakeMailRepository;
 const useMailList = createUseMailList(mailRepository);
 
-storageRepo.getItem().then((config) => {
-  i18n.changeLanguage((config as { lang: string }).lang);
+storageRepo.getItem('lang').then((lang) => {
+  i18n.changeLanguage(lang);
 });
 
 const Wrapper = DependenciesWrapper({

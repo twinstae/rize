@@ -33,8 +33,8 @@ const storageRepo = fsStorageRepo;
 const useMailList = createUseMailList(fsMailRepository);
 const Image = TauriImage;
 
-storageRepo.getItem().then((config) => {
-  i18n.changeLanguage((config as { lang: string } | undefined)?.lang || 'ko');
+storageRepo.getItem('lang').then((lang) => {
+  i18n.changeLanguage(lang ?? 'ko');
 });
 
 const Wrapper = DependenciesWrapper({

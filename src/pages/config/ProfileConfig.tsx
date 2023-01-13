@@ -1,5 +1,5 @@
-import { FormLabel, HStack, Radio, VStack } from '../../components/rize-ui';
 import React from 'react';
+import { FormLabel, HStack, Radio, VStack } from '../../components/rize-ui';
 import { useTranslation } from '../../i18n/i18n';
 
 import ProfileImage from '../../components/ProfileImage';
@@ -13,7 +13,7 @@ const shuffledIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 const shuffledMembers = shuffledIndex.map((i) => MEMBER_LIST[i]).slice(0, 8);
 
 function ThemeRadio({ theme }: { theme: string }) {
-  const { setProfile } = useProfile();
+  const { profile, setProfile } = useProfile();
   return (
     <FormLabel className="flex flex-col">
       <HStack className="gap-2 justify-between w-full">
@@ -21,7 +21,7 @@ function ThemeRadio({ theme }: { theme: string }) {
           if (e.target.checked){
             setProfile(theme);
           }
-        }} />
+        }} checked={profile === theme} />
         <span className="text-lg">{theme}</span>
       </HStack>
       <HStack className="gap-2">

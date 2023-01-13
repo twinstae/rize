@@ -47,7 +47,7 @@ function AppBar() {
   return (isOpen ? (
     <HStack className="h-14 bg-base-100 px-2 py-1 border-b-2 border-gray-200 items-center justify-between">
       <label htmlFor="search-bar" className="flex flex-row justify-between align-middle items-center">
-        <span className="p-2 font-bold">검색</span>
+        <span className="p-2 font-bold">{t(strs.검색)}</span>
       </label>
       <input
         id="search-bar"

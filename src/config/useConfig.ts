@@ -1,33 +1,34 @@
 import { useAtom, WritableAtom } from 'jotai';
 
-import atomWithPersit from '../hooks/atomWithPersist';
 import { useDependencies } from '../hooks/Dependencies';
-import { JsonObject, JsonValue } from '../types/json';
+import type { JsonValue } from '../types/json';
 
-let atom: WritableAtom<Promise<JsonObject>, unknown, void> | undefined;
+import { atomWithStorage, createJSONStorage, type RESET } from 'jotai/utils';
 
-const useConfigAtom = () => {
+type SetStateActionWithReset<Value> = Value | typeof RESET | ((prev: Value) => Value | typeof RESET);
+
+let atomDict: Record<string, WritableAtom<Promise<any>, SetStateActionWithReset<any>, Promise<void>>>;
+
+const useConfigAtom = <JsonValue>(key: string, initialValue: JsonValue) => {
   const { storageRepo } = useDependencies();
-  if(atom === undefined){
-    atom = atomWithPersit({}, storageRepo) as WritableAtom<Promise<JsonObject>, unknown, void>;
+  if(! (key in atomDict)){
+    atomDict[key] = atomWithStorage(key, initialValue, createJSONStorage(() => ({
+      async getItem(key) {
+        return storageRepo.getItem(key).then(v => v ?? null)
+      },
+      async setItem(key, newValue) {
+        return storageRepo.setItem(key, newValue);
+      },
+      async removeItem(key) {
+        return storageRepo.removeItem(key)
+      },
+    }))) as any;
   }
-  return atom;
+  return atomDict[key];
 };
 
-export const useConfig = () => {
-  const [config, setConfig] = useAtom(useConfigAtom());
-
-  return {
-    get: (key: string) => config[key],
-    set: (key: string, value: JsonValue) => {
-      setConfig((old: JsonObject) => ({ ...old, [key]: value }));
-    },
-  };
+const useConfig = <T extends JsonValue>(key: string, initialValue: T): [T, (update: SetStateActionWithReset<T>) => Promise<void>] => {
+  return useAtom(useConfigAtom(key, initialValue));  
 };
-
-export type ConfigT = {
-  get: (key: string) => JsonValue | undefined;
-  set: (key: string, value: JsonValue) => void;
-}
 
 export default useConfig;

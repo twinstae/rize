@@ -12,16 +12,13 @@ const langList = [
 const defaultLang = langList[0];
 
 function useLang() {
-  const config = useConfig();
+  const [lang, setLang] = useConfig<string>('lang', defaultLang);
   const { i18n } = useTranslation();
 
-  const lang = (config.get('lang') ?? defaultLang) as string;
-  const setLang = (value: string) => {
-    config.set('lang', value);
-  };
-
   useEffect(() => {
-    i18n.changeLanguage(lang);
+    if (typeof lang === 'string'){
+      i18n.changeLanguage(lang);
+    }
   }, [lang]);
 
   return {

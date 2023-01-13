@@ -4,19 +4,17 @@ import useConfig from './useConfig';
 const USERNAME_KEY = 'username';
 
 export const useUsername: () => UsernameT = () => {
-  const config = useConfig();
-
-  const [before, after] = (config.get(USERNAME_KEY) ?? ['{_nickname_}', '위즈원'])  as [string, string];
+  const [[before, after], setUsername] = useConfig<[string, string]>(USERNAME_KEY, ['{_nickname_}', '위즈원']);
 
   const regex = new RegExp(before, 'g');
   return {
     before,
     after,
     setBefore: (newBefore: string) => {
-      config.set(USERNAME_KEY, [newBefore, after]);
+      setUsername([newBefore, after]);
     },
     setAfter: (newAfter: string) => {
-      config.set(USERNAME_KEY, [before, newAfter]);
+      setUsername([before, newAfter]);
     },
     replaceUsername: (text: string) => text.replace(regex, after),
   };

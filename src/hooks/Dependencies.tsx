@@ -9,13 +9,12 @@ import type { StorageRepository } from '../global';
 import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
 import type { FsJSON,MailRepository } from '../mailList/types';
 import { Navigation, useFakeNavigation } from '../router/useNavigation';
-import { JsonValue } from '../types/json';
 import { createWrapper } from './util';
 
 type DependencyT = {
   usePlatform: () => void;
   useNavigationImpl?: () => Navigation;
-  storageRepo?: StorageRepository<JsonValue>;
+  storageRepo?: StorageRepository<string>;
   useColorMode?: () => {
     colorMode: 'light' | 'dark',
     toggleColorMode: () => void,

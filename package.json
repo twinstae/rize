@@ -29,6 +29,7 @@
     "i18next": "^22.4.9",
     "jotai": "^1.12.1",
     "jotai-tanstack-query": "^0.4.0",
+    "nanostores": "^0.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hotkeys-hook": "^4.3.2",

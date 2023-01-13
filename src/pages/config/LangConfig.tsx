@@ -13,19 +13,21 @@ function LangConfig() {
       <ConfigHeading title={t(strs.언어_선택하기) + ' : ' + lang} />
       <label>
         {t(strs.언어)}{' '}
-        <select
-          className="select select-bordered select-sm"
-          value={lang}
-          onChange={(e) => {
-            setLang(e.target.value);
-          }}
-        >
-          {langList.map((lang) => (
-            <option key={lang} value={lang}>
-              {t(strs[lang])}
-            </option>
-          ))}
-        </select>
+        {lang && (
+          <select
+            className="select select-bordered select-sm"
+            defaultValue={lang}
+            onChange={(e) => {
+              setLang(e.target.value);
+            }}
+          >
+            {langList.map((value) => (
+              <option key={value} value={value}>
+                {t(strs[value])}
+              </option>
+            ))}
+          </select>
+        )}
       </label>
     </div>
   );

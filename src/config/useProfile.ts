@@ -4,13 +4,13 @@ import { useDependencies } from '../hooks/Dependencies';
 
 function useProfile() {
   const profileList = useDependencies().useProfileList();
-  const config = useConfig();
+  const [profile, setProfile] = useConfig<string>('profile', 'one-the-story');
 
   return {
     profileList, 
-    profile: (config.get('profile') ?? 'one-the-story') as string,
+    profile: profile as string,
     setProfile: (value: typeof profileList[number]) => {
-      config.set('profile', value);
+      setProfile(value);
     }
   };
 }
