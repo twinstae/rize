@@ -30,7 +30,8 @@ const useConfigAtom = <JsonValue>(key: string, initialValue: JsonValue) => {
 };
 
 const useConfig = <T extends JsonValue>(key: string, initialValue: T): [T, (update: SetStateActionWithReset<T>) => Promise<void>] => {
-  return useAtom(useConfigAtom(key, initialValue));  
+  const atom = useConfigAtom(key, initialValue);
+  return useAtom(atom);
 };
 
 export default useConfig;
