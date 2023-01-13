@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface ImageProps {
+export interface ImageProps extends React.ComponentProps<'img'> {
   path: string;
   style: React.CSSProperties;
   width: number;

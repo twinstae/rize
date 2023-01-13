@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import useProfile from '../config/useProfile';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
 import { rem } from '../theme/rem';
+import useNavigation from '../router/useNavigation';
+import paths from '../router/paths';
 
 interface Props {
   member: string;
   size: keyof typeof sizes;
   theme?: string;
+  className?: string;
 }
 
 function getPath(member: string, theme?: string) {
@@ -26,8 +29,25 @@ const sizes = {
   sm: rem(1.5) / 4,
 };
 
-const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme }) => {
+const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme, className }) => {
   const { Image } = useDependencies();
+  const { current, navigate } = useNavigation();
+  const timeoutRef = useRef<NodeJS.Timeout | number | undefined>(undefined);
+
+  function job(){
+    if (current() !== paths.CONFIG){
+      navigate(paths.CONFIG);
+    }
+  }
+  const duration = 2000;
+  function start(){
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(job, duration);
+  }
+
+  function end(){
+    clearTimeout(timeoutRef.current);
+  }
 
   return (
     <Image
@@ -36,6 +56,10 @@ const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme }) => {
         float: 'left',
         borderRadius: '50%',
       }}
+      onMouseDown={() => { start()}}
+      onMouseOut={() => { end() }}
+      onMouseUp={() => { end() }}
+      className={className}
       width={sizes[size]}
     />
   );
