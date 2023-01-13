@@ -23,7 +23,7 @@ function FavoriteStar({ mailId }: FavoriteStarProps) {
 
   return (
     <IconButtonWithTooltip
-      className="rounded-full -top-2 -right-1 absolute tooltip-left"
+      className="rounded-full top-2 right-1 absolute tooltip-left"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

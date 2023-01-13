@@ -10,7 +10,7 @@ describe('FavoriteStar', () => {
     const before = await screen.findByLabelText('중요 표시');
     await user.click(before);
 
-    const after = await screen.findByLabelText('중요');
+    const after = await screen.findByLabelText('중요 취소');
     await user.click(after);
 
     expect(screen.getByLabelText('중요 표시')).toBeInTheDocument();
