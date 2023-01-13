@@ -4,14 +4,17 @@ import React, { Suspense } from 'react';
 import { suspend } from 'suspend-react';
 import { ImageProps } from '../components/MockImage';
 
+let dir: string | null = null;
+
 const TauriLoaded: React.FC<ImageProps> = ({ path, style, width, ...props }) => {
-  const data = suspend(async () => {
-    const dir = await downloadDir();
-    const filePath = await join(dir, 'output/' + path);
-    return convertFileSrc(filePath);
+  const filePath = suspend(async () => {
+    if (dir === null){
+      dir = await downloadDir();
+    }
+    return join(dir, 'output/' + path);
   }, ['image', path]);
 
-  return <img src={data} width={width * 4} style={style} {...props} />;
+  return <img src={convertFileSrc(filePath)} width={width * 4} style={style} {...props} />;
 };
 
 const TauriImage: React.FC<ImageProps> = ({ width, style, ...props}) => {
