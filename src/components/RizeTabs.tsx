@@ -10,7 +10,6 @@ interface RizeTabsProps<T> {
 }
 
 export function RizeTabs<T>({ data, value, Label, Content }: RizeTabsProps<T>) {
-  console.log('Tabs');
   const [state, send] = useMachine(tabs.machine({ id: 'rize-tabs', value: value(data[0]) }));
 
   const api = tabs.connect(state, send, normalizeProps);

@@ -12,7 +12,6 @@ import LeftDrawler from '../components/LeftDrawer';
 function MailListPage() {
   const { t } = useTranslation();
   const tabs = [strs.전체, strs.읽지_않음, strs.중요];
-  console.log('MailListPage');
   return (
     <LeftDrawler>
       <AppBar />

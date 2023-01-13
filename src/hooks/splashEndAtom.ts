@@ -5,7 +5,6 @@ export function createSuspender(){
   const suspender = new Promise((resolve) => {
     _resolve = () => {
       resolve(null);
-      console.log('done!');
       return undefined;
     };
   });

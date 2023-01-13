@@ -8,7 +8,7 @@ import { atomWithStorage, createJSONStorage, type RESET } from 'jotai/utils';
 type SetStateActionWithReset<Value> = Value | typeof RESET | ((prev: Value) => Value | typeof RESET);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let atomDict: Record<string, WritableAtom<Promise<any>, SetStateActionWithReset<any>, Promise<void>>>;
+const atomDict: Record<string, WritableAtom<Promise<any>, SetStateActionWithReset<any>, Promise<void>>> = {};
 
 const useConfigAtom = <JsonValue>(key: string, initialValue: JsonValue) => {
   const { storageRepo } = useDependencies();

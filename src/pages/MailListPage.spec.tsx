@@ -7,7 +7,6 @@ test.use({ viewport: { width: 449, height: 700 } });
 test('탭을 누르면 해당하는 아이템이 필터링된다', async ({ mount, browserName }) => {
   const component = await mount(<MailListPage />);
 
-
   expect(await component.locator('li').count()).toBe(6);
   const tabFavorite = component.locator('text=중요 2').first();
   await tabFavorite.click();
