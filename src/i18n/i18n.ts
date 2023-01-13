@@ -27,6 +27,9 @@ type TranslationKeys = Record<keyof typeof ko.translation, keyof typeof ko.trans
 
 export const strs = Object.fromEntries(Object.keys(ko.translation).map(key => [key, key])) as TranslationKeys;
 
-export const useTranslation = useNextTranslation;
+export const useTranslation = useNextTranslation as () => {
+  i18n: typeof i18n;
+  t: <K extends keyof typeof strs>(key: K) => typeof strs[K]
+};
 
 export default i18n;

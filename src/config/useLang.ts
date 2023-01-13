@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/i18n';
 
 import useConfig from './useConfig';
 
 const langList = [
   'ko',
   'en',
-  'jp',
+  // 'jp',
 ] as const;
 
 const defaultLang = langList[0];

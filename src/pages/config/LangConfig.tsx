@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../i18n/i18n';
 
 import useLang from '../../config/useLang';
 import { strs } from '../../i18n/i18n';

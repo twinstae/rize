@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/i18n';
 import { strs } from '../i18n/i18n';
 import MemberList from './MemberList';
 import paths from '../router/paths';
@@ -10,10 +10,11 @@ import { HStack } from './rize-ui';
 function LeftDrawler({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation();
   const { Link } = useNavigation();
+
   return (
     <div className="drawer bg-base-100 ">
       <input id="my-drawer" type="checkbox" className="drawer-toggle"/>
-      <div className="drawer-content">{children}</div>
+      <div className="drawer-content overflow-x-hidden">{children}</div>
       <div className="drawer-side">
         <label
           htmlFor="my-drawer"

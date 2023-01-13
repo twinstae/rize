@@ -21,6 +21,8 @@
     "jp": "Japanese",
     "메뉴": "Menu",
     "닫기": "Close",
-    "돌아가기": "Go Back"
+    "돌아가기": "Go Back",
+    "선택한_테마": "Selected Theme",
+    "앨범":"Album"
   }
 }
