@@ -1,10 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 import useProfile from '../config/useProfile';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
 import { rem } from '../theme/rem';
-import useNavigation from '../router/useNavigation';
-import paths from '../router/paths';
 
 interface Props {
   member: string;
@@ -31,23 +29,6 @@ const sizes = {
 
 const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme, className }) => {
   const { Image } = useDependencies();
-  const { current, navigate } = useNavigation();
-  const timeoutRef = useRef<NodeJS.Timeout | number | undefined>(undefined);
-
-  function job(){
-    if (current() !== paths.CONFIG){
-      navigate(paths.CONFIG);
-    }
-  }
-  const duration = 2000;
-  function start(){
-    clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(job, duration);
-  }
-
-  function end(){
-    clearTimeout(timeoutRef.current);
-  }
 
   return (
     <Image
@@ -56,9 +37,6 @@ const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme, className
         float: 'left',
         borderRadius: '50%',
       }}
-      onMouseDown={() => { start(); }}
-      onMouseOut={() => { end(); }}
-      onMouseUp={() => { end(); }}
       className={className}
       width={sizes[size]}
     />
