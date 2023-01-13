@@ -15,7 +15,7 @@ const createFlexSearchIndex: CreateIndex = (mailList: IndexMail[]) => {
   return {
     search: (keyword) => {
       if (keyword) {
-        return new Set(docIndex.search(keyword).flatMap((unit: any) => unit.result));
+        return new Set(docIndex.search(keyword).flatMap((unit) => unit.result));
       }
       return new Set(mailList.map((mail) => mail.id));
     },

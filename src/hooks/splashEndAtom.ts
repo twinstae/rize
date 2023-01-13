@@ -1,14 +1,15 @@
-import { atom } from "jotai";
+import { atom } from 'jotai';
 
 export function createSuspender(){
-  let _resolve = () => {};
+  let _resolve = () => undefined;
   const suspender = new Promise((resolve) => {
     _resolve = () => {
       resolve(null);
       console.log('done!');
+      return undefined;
     };
-  })
-  return [suspender, _resolve] as const
+  });
+  return [suspender, _resolve] as const;
 }
 
 const [suspender, resolve] = createSuspender();

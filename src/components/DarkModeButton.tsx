@@ -12,8 +12,7 @@ export const RawDarkModeButton = () => {
   const { isDark, toggleDark } = useDarkMode();
 
   useHotkeys('ctrl+d', toggleDark, {
-    
-  }, [toggleDark])
+  }, [toggleDark]);
   return (
     <IconButtonWithTooltip
       onClick={() => toggleDark()}

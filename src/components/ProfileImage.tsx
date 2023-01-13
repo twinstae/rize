@@ -56,9 +56,9 @@ const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme, className
         float: 'left',
         borderRadius: '50%',
       }}
-      onMouseDown={() => { start()}}
-      onMouseOut={() => { end() }}
-      onMouseUp={() => { end() }}
+      onMouseDown={() => { start(); }}
+      onMouseOut={() => { end(); }}
+      onMouseUp={() => { end(); }}
       className={className}
       width={sizes[size]}
     />

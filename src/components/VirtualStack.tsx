@@ -17,7 +17,7 @@ function VirtualList<T>({ result, width, height, VirtualRowItem, fallback, estim
     count: result.length,
     estimateSize,
     observeElementRect: (_, cb) => {
-      cb({ height, width })
+      cb({ height, width });
     },
     overscan: 2,
   });

@@ -13,7 +13,7 @@ function BackButton({ direction = 'bottom', width='fit', className='' }: { direc
   function backHandler(){
     navigation.goBack();
   }
-  useHotkeys('backspace', backHandler, [navigation])
+  useHotkeys('backspace', backHandler, [navigation]);
   return (
     <IconButtonWithTooltip
       className={`tooltip-${direction} w-${width} ${className}`}

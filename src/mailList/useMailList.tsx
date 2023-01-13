@@ -170,7 +170,7 @@ export function createUseMailList(mailRepository: MailRepository) {
   return (): MailListResult => {
     return {
       waitForAll: () => {
-        const result = useAtomValue(waitForAll([statusAtom, waitAtom, filtertedMailListAtom]));
+        useAtomValue(waitForAll([statusAtom, waitAtom, filtertedMailListAtom]));
       },
       mailList: () => useAtomValue(filtertedMailListAtom),
       useMailById: (id) => {
