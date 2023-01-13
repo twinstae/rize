@@ -9,7 +9,7 @@ interface Props {
   index: number;
 }
 
-const height = window.innerHeight - rem(5.3);
+const height = window.innerHeight - rem(6);
 
 function MailList({ index }: Props) {
   const result = useMailList().mailList()[modes[index]];
@@ -17,6 +17,7 @@ function MailList({ index }: Props) {
   return (
     <VirtualList
       result={result}
+      width={window.innerWidth}
       height={height}
       estimateSize={() => rem(5.5)}
       VirtualRowItem={({virtualItem}) => (
