@@ -5,13 +5,15 @@ import ko from '../i18n/ko.json';
 import AppBar from './AppBar';
 
 describe('AppBar', () => {
-  it('검색하면 메일 목록이 변한다', async () => {
+  it('검색창을 열고 닫을 수 있다.', async () => {
     const { user, screen } = await render(<AppBar />);
 
-    const searchButton = screen.getByLabelText(ko.translation.검색);
-    user.click(searchButton);
+    await user.click(screen.getByRole('button', { name: ko.translation.검색 }));
 
-    const closeSearchButton = await screen.findByLabelText(ko.translation.닫기);
-    user.click(closeSearchButton);
+    await user.click(screen.getByLabelText(ko.translation.닫기));
+
+    await user.click(screen.getByRole('button', { name: ko.translation.검색 }));
+
+    await user.type(screen.getByRole('textbox', { name: ko.translation.검색 }), '마라탕{Escape}');
   });
 });

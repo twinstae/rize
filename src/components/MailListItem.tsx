@@ -18,14 +18,13 @@ function MailListItem({ mail, style }: MailListItemProps) {
   const navigation = useNavigation();
   const Link = navigation.Link;
 
-  const usernameService = useUsername();
+  const { replaceUsername } = useUsername();
   const { isUnread } = useTags();
 
-  const unread = isUnread(mail.id);
   return (
     <li
       id={'mail-' + mail.id}
-      className={`p-2 border-b-1 border-base-200 relative ${unread && 'unread'}`}
+      className={`p-2 border-b-1 border-base-200 relative ${isUnread(mail.id) && 'unread'}`}
       style={style}
     >
       <Link to={toMailDetail(mail.id)}>
@@ -41,7 +40,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
           <p
             className="w-full p-0 overflow-hidden text-ellipsis nowrap"
             dangerouslySetInnerHTML={{
-              __html: usernameService.replaceUsername(mail.preview),
+              __html: replaceUsername(mail.preview),
             }}
           ></p>
         </div>

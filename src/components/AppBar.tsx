@@ -16,7 +16,7 @@ import PhotoIcon from './icons/PhotoIcon';
 import { Tooltip } from './Tooltip';
 
 function AppBar() {
-  const [keyword, search] = useMailList().useSearch();
+  const [, search] = useMailList().useSearch();
   const [keywordInput, setKeywordInput] = useState('');
   const { Link } = useNavigation();
   const { t } = useTranslation();
@@ -36,13 +36,6 @@ function AppBar() {
       handleClose();
     }
   }
-
-  useEffect(() => {
-    if (keyword) {
-      setIsOpen(true);
-    }
-    return () => handleClose();
-  }, []);
 
   return (isOpen ? (
     <HStack className="h-14 bg-base-100 px-2 py-1 border-b-2 border-gray-200 items-center justify-between">
