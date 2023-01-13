@@ -21,6 +21,7 @@ import S3Image from './S3Image';
 import storageRepo from './storageRepo';
 // import fsMailRepository from './fsMailRepository';
 import { App } from '@capacitor/app';
+import useFsProfileList from './useFsProfileList';
 
 
 const mailRepository = fakeMailRepository;
@@ -50,6 +51,7 @@ const Wrapper = DependenciesWrapper({
   fsJSON,
   useMailList,
   mailRepository,
+  useProfileList: useFsProfileList,
   RizeLogo,
 });
 

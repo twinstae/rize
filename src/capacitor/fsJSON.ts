@@ -1,4 +1,4 @@
-import { Directory, Encoding,Filesystem } from '@capacitor/filesystem';
+import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
 
 import { JsonValue } from '../types/json';
 

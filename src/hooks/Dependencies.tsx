@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 
 import { createUseMailList, MailListResult } from '../mailList/useMailList';
 
-import { MockImage } from '../components/MockImage';
+import { ImageProps, MockImage } from '../components/MockImage';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import type { StorageRepository } from '../global';
 import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
@@ -20,14 +20,11 @@ type DependencyT = {
     colorMode: 'light' | 'dark',
     toggleColorMode: () => void,
   };
-  Image?: React.FC<{
-    path: string;
-    style: React.CSSProperties;
-    width: number;
-  }>;
-  fsJSON?: FsJSON,
-  useMailList?: () => MailListResult,
-  mailRepository?: MailRepository
+  Image?: React.FC<ImageProps>;
+  fsJSON?: FsJSON;
+  useMailList?: () => MailListResult;
+  mailRepository?: MailRepository;
+  useProfileList: () => string[];
   RizeLogo?: (props: { onAnimationEnd?: () => void }) => JSX.Element;
 };
 
@@ -55,6 +52,7 @@ export const createFakeDependencies: () => DependencyT = () => ({
   fsJSON: fakeFsJSON,
   useMailList: createUseMailList(fakeMailRepository),
   mailRepository: fakeMailRepository,
+  useProfileList: () => ['la-vie-en-rose','violeta'],
   useColorMode,
   RizeLogo: ({ onAnimationEnd }) => {
     useEffect(() => {

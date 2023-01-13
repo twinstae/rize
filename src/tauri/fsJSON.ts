@@ -14,16 +14,12 @@ const readJSONfile = async (path: string) => {
       dir: fs.BaseDirectory.Download,
     })
     .then(JSON.parse)
-    .catch(e => {
-      console.error(path, e.message);
-    })
+    .catch(console.error)
     .then((data) => {
       cache.set(path, data);
       return data;
     })
-    .finally(() => {
-      console.log('loaded', path);
-    });
+    .finally(() => console.log('loaded', path));
 };
 
 const writeJSONfile =

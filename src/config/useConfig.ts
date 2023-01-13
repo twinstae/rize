@@ -11,7 +11,7 @@ const useConfigAtom = () => {
   if(atom === undefined){
     atom = atomWithPersit({}, storageRepo) as WritableAtom<Promise<JsonObject>, unknown, void>;
   }
-  return atom; 
+  return atom;
 };
 
 export const useConfig = () => {
