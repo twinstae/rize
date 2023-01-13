@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
 import { fileList } from '../mailList/fakeMailRepository';
 import { useQueryClient } from '@tanstack/react-query';
+import { splashEnd } from '../hooks/splashEndAtom';
 
 const InitPage = () => {
   const { fsJSON, RizeLogo } = useDependencies();
@@ -31,7 +32,7 @@ const InitPage = () => {
   return (
     <div className="flex flex-col justify-center align-middle h-screen">
       <div className="mx-auto text-red-400 text-9xl">
-        <RizeLogo />
+        <RizeLogo onAnimationEnd={splashEnd} />
       </div>
       {Object.values(status).some((v) => v === false) && (
         <form

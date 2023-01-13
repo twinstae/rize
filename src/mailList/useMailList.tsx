@@ -69,9 +69,7 @@ export function createUseMailList(mailRepository: MailRepository) {
     queryFn: async () => {
       const status = await mailRepository.status();
       if (Object.values(status).every(v => v === true)){
-        setTimeout(() => {
-          temp('done!');
-        }, 1000);
+        temp('done!');
       }
       return status;
     },
@@ -102,7 +100,6 @@ export function createUseMailList(mailRepository: MailRepository) {
     const dict = useAtomValue(mailToTagDictAtom);
 
     const unreadSet = new Set(tagToMailDict[UNREAD]);
-    console.log(unreadSet);
     const favoriteSet = new Set(tagToMailDict[FAVORITE]);
 
     return {
@@ -173,7 +170,7 @@ export function createUseMailList(mailRepository: MailRepository) {
   return (): MailListResult => {
     return {
       waitForAll: () => {
-        useAtomValue(waitForAll([statusAtom, waitAtom, filtertedMailListAtom]));
+        const result = useAtomValue(waitForAll([statusAtom, waitAtom, filtertedMailListAtom]));
       },
       mailList: () => useAtomValue(filtertedMailListAtom),
       useMailById: (id) => {

@@ -29,8 +29,9 @@ function AlbumPage() {
       <BackButton direction="top" className="absolute bottom-2 right-4 btn-primary p-2 btn-circle"/>
       <VirtualList
         result={result}
+        width={window.innerWidth}
         height={height}
-        estimateSize={() => rem(6.5)}
+        estimateSize={() => rem(8)}
         VirtualRowItem={({virtualItem}) => (
           <HStack key={virtualItem.key} className="gap-1 p-0.5"  style={{
             position: 'absolute',

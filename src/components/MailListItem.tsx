@@ -23,14 +23,14 @@ function MailListItem({ mail, style }: MailListItemProps) {
 
   const unread = isUnread(mail.id);
   return (
-    <div
+    <li
       id={'mail-' + mail.id}
-      className={`p-2 border-b-2 border-base-200 ${unread && 'unread'}`}
+      className={`p-2 border-b-1 border-base-200 relative ${unread && 'unread'}`}
       style={style}
     >
       <Link to={toMailDetail(mail.id)}>
         <div style={{ position: 'relative' }}>
-          <ProfileImage member={mail.member} size="base" />
+          <ProfileImage member={mail.member} size="base" className="mr-2"/>
           <FavoriteStar mailId={mail.id} />
           <div className="flex flex-row flex-wrap gap-1">
             <span>{mail.member}</span>
@@ -46,7 +46,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
           ></p>
         </div>
       </Link>
-    </div>
+    </li>
   );
 }
 

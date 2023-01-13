@@ -20,19 +20,20 @@ function MailDetailPage() {
   }
 
   return (
-    <div className="p-1 h-fit relative">
-      <BackButton />
-      <header className="p-4 relative">
-        <FavoriteStar mailId={mail.id} />
-        <ProfileImage member={mail.member} size="base" />
-        <strong>{toOriginalName(mail.member)} </strong>
-        <span className="text-gray-500 absolute top-0 right-10">
-          {mail.time}
-        </span>
-        <h3 className="p-0 m-0 overflow-hidden text-ellipsis font-bold">{mail.subject}</h3>
-      </header>
-      <MailBody mailBody={mail} />
-      <BackButton direction="top" className="absolute bottom-2 right-4 btn-primary p-2 btn-circle"/>
+    <div className="w-full h-screen relative bg-base-100">
+      <div className="p-1 h-full overflow-y-auto">
+        <header className="p-4 relative">
+          <FavoriteStar mailId={mail.id} />
+          <ProfileImage member={mail.member} size="base" />
+          <strong>{toOriginalName(mail.member)} </strong>
+          <span className="text-gray-500 absolute top-0 right-10">
+            {mail.time}
+          </span>
+          <h3 className="p-0 m-0 overflow-hidden text-ellipsis font-bold">{mail.subject}</h3>
+        </header>
+        <MailBody mailBody={mail} />
+      </div>
+      <BackButton direction="top" className="fixed bottom-2 right-2 btn-primary p-2 btn-circle"/>
     </div>
   );
 }
