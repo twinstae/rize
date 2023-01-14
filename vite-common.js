@@ -4,12 +4,15 @@ import {presetUno, transformerDirectives} from 'unocss';
 import { defineConfig } from 'vite';
 import presetDaisy from './presetDaisy.js';
 
-// https://vitejs.dev/config/
 // eslint-disable-next-line no-undef
 const env = process.env;
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ['istanbul']
+      }
+    }),
     Unocss({
       shortcuts: {
         'tab-active': 'border-red-300',
@@ -35,6 +38,6 @@ export default defineConfig({
     // don't minify for debug builds
     minify: !env.TAURI_DEBUG ? 'esbuild' : false,
     // 디버그 빌드에서 소스맵을 제공합니다.
-    sourcemap: !!env.TAURI_DEBUG,
+    sourcemap: true,
   },
 });

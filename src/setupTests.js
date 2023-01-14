@@ -3,10 +3,14 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/vi-dom
 import '@testing-library/jest-dom';
-import { vi } from 'vitest';
-import { fakeNavigation } from './router/useNavigation';
+import { vi, afterEach, afterAll } from 'vitest';
+import { useFakeNavigation } from './router/useNavigation';
+import libReport from 'istanbul-lib-report';
+import reports from 'istanbul-reports';
+import libCoverage from 'istanbul-lib-coverage';
 
-vi.afterEach(() => {
+afterEach(() => {
+  const fakeNavigation = useFakeNavigation();
   fakeNavigation.clear();
 });
 
@@ -41,3 +45,14 @@ if (typeof window.matchMedia !== 'function') {
     })),
   });
 }
+
+afterAll(() => {
+  const context = libReport.createContext({
+    dir: './.nyc_output',
+    coverageMap: libCoverage.createCoverageMap(window.__coverage__),
+  });
+
+  reports.create('json', {
+    file: (Math.random() * 100000000).toFixed(0).toString()+'-coverage.json'
+  }).execute(context);
+});

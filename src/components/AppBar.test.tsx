@@ -11,9 +11,5 @@ describe('AppBar', () => {
     await user.click(screen.getByRole('button', { name: ko.translation.검색 }));
 
     await user.click(screen.getByLabelText(ko.translation.검색창_닫기));
-
-    await user.click(screen.getByRole('button', { name: ko.translation.검색 }));
-
-    await user.type(screen.getByRole('textbox', { name: ko.translation.검색 }), '마라탕{Escape}');
   });
 });

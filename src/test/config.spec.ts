@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test } from 'playwright-test-coverage';
 import koJson from '../i18n/ko.json';
 
 const ko = koJson.translation;

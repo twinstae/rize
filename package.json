@@ -64,17 +64,22 @@
     "@typescript-eslint/parser": "^5.48.1",
     "@unocss/preset-wind": "^0.45.21",
     "@vitejs/plugin-react": "^3.0.1",
-    "@vitest/coverage-c8": "^0.27.1",
     "@vitest/ui": "^0.27.0",
     "autoprefixer": "^10.4.13",
-    "c8": "^7.12.0",
+    "babel-plugin-istanbul": "^6.1.1",
     "concurrently": "^7.6.0",
+    "istanbul-lib-coverage": "^3.2.0",
+    "istanbul-lib-report": "^3.0.0",
+    "istanbul-reports": "^3.1.5",
+    "cross-env": "^7.0.3",
     "eslint": "^8.31.0",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "jest-preview": "^0.2.3",
     "jsdom": "^21.0.0",
+    "nyc": "^15.1.0",
     "playwright": "^1.29.2",
+    "playwright-test-coverage": "^1.2.8",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4",
@@ -88,20 +93,24 @@
     "build:cap": "vite build --config=vite.config.capacitor.js && npx cap copy",
     "build": "tsc && concurrently \"yarn build:tauri\" \"yarn build:cap\"",
     "dev:web": "vite --config=vite.config.web.js",
+    "dev:web:cov": "npm run dev:web",
     "serve:tauri": "vite --config=vite.config.tauri.js",
     "dev:tauri": "tauri dev",
     "test": "vitest --config=vitest.config.js run",
     "test:watch": "vitest --config=vitest.config.js",
-    "test:cov": "vitest run --config=vitest.config.js --coverage=true",
+    "test:cov": "nyc --silent vitest --config=vitest.config.js run",
     "stryker": "stryker run --fileLogLevel trace --logLevel debug",
     "tauri": "tauri",
     "tauri:build": "tauri build --debug",
     "lint": "eslint --ext ts,tsx src",
     "ionic:serve": "vite serve --config=vite.config.capacitor.js",
     "ionic:build": "npm run build",
-    "e2e": "playwright test --workers 4",
-    "e2e:headed": "playwright test --headed --workers 4",
-    "e2e:debug": "playwright test --headed --debug"
+    "e2e": "playwright test",
+    "e2e:headed": "playwright test --headed",
+    "e2e:debug": "playwright test --headed --debug",
+    "e2e:cov": "npm run e2e",
+    "cov:report": "nyc report --reporter=html --reporter=text",
+    "cov": "npm run test:cov && npm run e2e:cov && npm run cov:report"
   },
   "browserslist": {
     "production": [
@@ -115,5 +124,8 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@3.2.2"
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false
+  }
 }

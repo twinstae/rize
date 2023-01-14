@@ -42,3 +42,4 @@ playwright-report
 reports/mutation/mutation.html
 stryker.log
 .yarn
+.nyc_output

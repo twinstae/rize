@@ -1,0 +1,33 @@
+{
+  "all": true,
+  "include": [
+    "src/**/*.{ts,tsx}"
+  ],
+  "exclude": [
+    "coverage/**",
+	  "**/*.d.ts",
+    "**/*.{test,spec}.{js,jsx,ts,tsx}",
+    "src/constants.ts",
+    "src/config/localStorageRepo.ts",
+    "src/setupTests.js",
+    "src/capacitor/**/*",
+    "src/tauri/**/*",
+    "node_modules/**/*"
+  ],
+  "exclude-after-remap": false,
+  "reporter": ["html", "text", "text-summary", "json"],
+  "parserPlugins": [
+    "asyncGenerators",
+    "bigInt",
+    "classProperties",
+    "classPrivateProperties",
+    "classPrivateMethods",
+    "dynamicImport",
+    "importMeta",
+    "numericSeparator",
+    "objectRestSpread",
+    "optionalCatchBinding",
+    "topLevelAwait",
+    "typescript"
+  ]
+}

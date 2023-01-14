@@ -49,6 +49,7 @@ export const useStackNavigation = (): Navigation => {
   const { name, params } = activity;
   const { push, pop, replace } = useFlow();
 
+  const navigate = (path: string) => push(...parsePath(path));
   return {
     params: () => params,
     useSearchParams: () => {
@@ -59,13 +60,13 @@ export const useStackNavigation = (): Navigation => {
       ];
     },
     current: () => name as ActivityName,
-    navigate: (path: string) => push(...parsePath(path)),
+    navigate,
     goBack: () => pop(),
     redirect: (path: string) => replace(...parsePath(path), { animate: false }),
     Link: (props: { className?: string, to: string; children: React.ReactNode }) =>
       React.createElement(
         'a',
-        { href: props.to, onClick: (e: React.MouseEvent) => { e.preventDefault(); push(...parsePath(props.to)); }, className: props.className },
+        { href: props.to, onClick: (e: React.MouseEvent) => { e.preventDefault(); navigate(props.to); }, className: props.className },
         props.children
       ),
   };

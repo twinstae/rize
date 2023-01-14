@@ -3,7 +3,7 @@
 /** @type {import('@playwright/test').PlaywrightTestConfig} */
 const config = {
   testMatch: 'src/**/*.spec.ts',
-  timeout: 30 * 1000,
+  timeout: 60 * 1000,
   use: {
     trace: 'on-first-retry',
     viewport: {
@@ -12,9 +12,9 @@ const config = {
     }
   },
   webServer: {
-    command: 'npm run dev:web', // command to launch
+    command: 'npm run dev:web:cov', // command to launch
     port: 5173, // port to await for
-    timeout: 10 * 1000
+    timeout: 30 * 1000
   }
 };
 
