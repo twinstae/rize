@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
     "beforeBuildCommand": "npm run build:tauri",
-    "beforeDevCommand": "npm run dev:vite",
+    "beforeDevCommand": "npm run serve:tauri",
     "devPath": "http://localhost:5173",
     "distDir": "../src/tauri/dist"
   },
@@ -50,8 +50,8 @@
     "windows": [
       {
         "title": "react-tauri",
-        "width": 512,
-        "height": 968,
+        "width": 351,
+        "height": 768,
         "resizable": false,
         "fullscreen": false
       }

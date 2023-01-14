@@ -16,7 +16,7 @@ function ThemeRadio({ theme }: { theme: string }) {
   const { profile, setProfile } = useProfile();
   return (
     <FormLabel className="flex flex-col">
-      <HStack className="gap-2 justify-between w-full">
+      <HStack className="gap-2 justify-start w-full">
         <Radio value={theme} id={`${theme}-radio`} name="theme" onChange={(e) => {
           if (e.target.checked){
             setProfile(theme);

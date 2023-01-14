@@ -29,6 +29,7 @@
     "i18next": "^22.4.9",
     "jotai": "^1.12.1",
     "jotai-tanstack-query": "^0.4.0",
+    "korean-regexp": "^1.0.9",
     "nanostores": "^0.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -86,7 +87,8 @@
     "build:tauri": "vite build --config=vite.config.tauri.js",
     "build:cap": "vite build --config=vite.config.capacitor.js && npx cap copy",
     "build": "tsc && concurrently \"yarn build:tauri\" \"yarn build:cap\"",
-    "dev:vite": "vite --config=vite.config.tauri.js",
+    "dev:web": "vite --config=vite.config.web.js",
+    "serve:tauri": "vite --config=vite.config.tauri.js",
     "dev:tauri": "tauri dev",
     "test": "vitest --config=vitest.config.js run",
     "test:watch": "vitest --config=vitest.config.js",
@@ -97,7 +99,9 @@
     "lint": "eslint --ext ts,tsx src",
     "ionic:serve": "vite serve --config=vite.config.capacitor.js",
     "ionic:build": "npm run build",
-    "e2e:ct": "playwright test -c playwright-ct.config.ts"
+    "e2e": "playwright test --workers 4",
+    "e2e:headed": "playwright test --headed --workers 4",
+    "e2e:debug": "playwright test --headed --debug"
   },
   "browserslist": {
     "production": [

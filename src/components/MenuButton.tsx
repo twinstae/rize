@@ -2,22 +2,21 @@ import React from 'react';
 import { useTranslation } from '../i18n/i18n';
 
 import { strs } from '../i18n/i18n';
-import { Tooltip } from './Tooltip';
 import HamBurgerIcon from './icons/HamBurgerIcon';
+import IconButtonWithTooltip from './IconButtonWithTooltip';
 
 function MenuButton() {
   const { t } = useTranslation();
 
   return (
-    <Tooltip tip={t(strs.메뉴)} className="tooltip-bottom">
-      <label
-        htmlFor="my-drawer"
-        className="btn btn-sm btn-ghost drawer-button"
-        aria-label={t(strs.메뉴) ?? ''}
-      >
-        <HamBurgerIcon />
-      </label>
-    </Tooltip>
+    <IconButtonWithTooltip 
+      onClick={() => {
+        (document.getElementById('my-drawer') as HTMLInputElement).checked = true;
+      }}
+      icon={<HamBurgerIcon />}
+      className="tooltip-bottom drawer-button"
+      aria-label={t(strs.메뉴) ?? ''}
+    />
   );
 }
 

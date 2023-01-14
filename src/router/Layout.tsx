@@ -10,8 +10,7 @@ function Wait({ children }: { children: React.ReactNode }){
   useConfig('username', ['{_nickname_}', '위즈원']);
   useMailList().waitForAll();
   useDependencies().usePlatform();
-  throw new Error('test');
-  return <>{children}</>;
+  return <div>{children}</div>;
 }
 
 export function wrapLayout(OriginalPage: React.FC): React.FC {

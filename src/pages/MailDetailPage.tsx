@@ -24,7 +24,7 @@ function MailDetailPage() {
       <div className="p-1 h-full overflow-y-auto">
         <header className="p-4 relative">
           <FavoriteStar mailId={mail.id} />
-          <ProfileImage member={mail.member} size="base" />
+          <ProfileImage member={mail.member} size="base" className="mr-2" />
           <strong>{toOriginalName(mail.member)} </strong>
           <span className="text-gray-500 absolute top-0 right-10">
             {mail.time}

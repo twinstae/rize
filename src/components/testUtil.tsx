@@ -10,7 +10,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event/setup/setup';
 import React, { Suspense } from 'react';
-import { Dependencies, createFakeDependencies } from '../hooks/Dependencies';
+import { DependenciesContext, createFakeDependencies } from '../hooks/Dependencies';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientAtom } from 'jotai-tanstack-query';
 import { Provider } from 'jotai';
@@ -37,7 +37,6 @@ export async function render(
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        // ✅ turns retries off
         retry: false,
       },
     },
@@ -46,9 +45,9 @@ export async function render(
     <QueryClientProvider client={queryClient}>
       <Provider initialValues={[[queryClientAtom, queryClient]]}>
         <Suspense fallback={<div>loading...</div>}>
-          <Dependencies.Provider value={createFakeDependencies()}>
+          <DependenciesContext.Provider value={createFakeDependencies()}>
             {ui}
-          </Dependencies.Provider>
+          </DependenciesContext.Provider>
         </Suspense>
       </Provider>
     </QueryClientProvider>,

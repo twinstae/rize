@@ -1,7 +1,7 @@
-import TEST_MAIL_BODY_DICT from '../public/mail_body_dict.json';
-import MEMBER_NAME from '../public/member_name.json';
-import TEST_MAIL_LIST from '../public/pm_list.json';
-import TAG_TO_MAIL_DICT from '../public/tag_to_mail_dict.json';
+import TEST_MAIL_BODY_DICT from '../test/mail_body_dict.json';
+import MEMBER_NAME from '../test/member_name.json';
+import TEST_MAIL_LIST from '../test/pm_list.json';
+import TAG_TO_MAIL_DICT from '../test/tag_to_mail_dict.json';
 import { MailRepository } from './types';
 import { JsonValue } from '../types/json';
 export const fileList = [

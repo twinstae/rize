@@ -10,16 +10,16 @@ import {
   toOriginalName,
 } from './mailListModel';
 import type { MailBodyT, MailRepository, MailT, RawMailT } from './types';
-import createFlexSearchIndex from '../search/createFlexSearchIndex';
+import createRegexSearchIndex from '../search/createRegexSearchIndex';
 import { currentTagAtom } from './useTag';
 import atomWithAsyncInit from '../hooks/atomWithAsyncInit';
 
 export interface MailListResult {
   waitForAll: () => void;
   mailList: () => {
-    all: (RawMailT & MailBodyT)[];
-    unread: (RawMailT & MailBodyT)[];
-    favorite: (RawMailT & MailBodyT)[];
+    all: (RawMailT & MailBodyT & { bodyText: string })[];
+    unread: (RawMailT & MailBodyT & { bodyText: string })[];
+    favorite: (RawMailT & MailBodyT & { bodyText: string })[];
 };
   useMailById: (id: string) => (MailT & MailBodyT) | undefined;
   useToOriginalName: () => (member: string) => IZONE | '운영팀';
@@ -83,7 +83,7 @@ export function createUseMailList(mailRepository: MailRepository) {
     queryFn: mailRepository.getAllMailList,
   }));
 
-  const mailListAtom = atom<(MailT & MailBodyT)[]>((get) => {
+  const mailListAtom = atom<(MailT & MailBodyT & { bodyText: string })[]>((get) => {
     const rawMailList = get(rawMailListAtom);
     const mailBodyDict = get(mailBodyDictAtom);
     const nameToNumberDict = get(nameToNumberDictAtom);
@@ -91,6 +91,7 @@ export function createUseMailList(mailRepository: MailRepository) {
     return rawMailList?.map((mail) => ({
       ...mail,
       ...mailBodyDict[mail.id],
+      bodyText: mailBodyDict[mail.id].body.replace(/<[^>]+>/g, ' ').replaceAll('&nbsp;', ' ').replaceAll('{이미지}', ''),
       member: toOriginalName(nameToNumberDict)(mail.member),
     })) || [];
   });
@@ -118,7 +119,7 @@ export function createUseMailList(mailRepository: MailRepository) {
     };
   };
 
-  const indexAtom = atom((get) => createFlexSearchIndex(get(mailListAtom).map(mail => ({
+  const indexAtom = atom((get) => createRegexSearchIndex(get(mailListAtom).map(mail => ({
     ...mail,
     body: mail.body?.replace(new RegExp('&nbsp;', 'g'), ' ') ?? ''
   }))));

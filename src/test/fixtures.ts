@@ -8,13 +8,15 @@ const rawYuriBody = {
   images: ['img/mail/3/20210428/6d5c96191d428d6c236160aa04bbb4d4.jpeg'],
 };
 
-export const YURI_MAIL_M25752: MailT & MailBodyT = {
+export const YURI_MAIL_M25752: MailT & MailBodyT & { bodyText: string } = {
   ...rawYuri,
   ...rawYuriBody,
+  bodyText: rawYuriBody.body.replace(/<[^>]+>/g, ' ').replaceAll('&nbsp;', ' ').replaceAll('{이미지}', ''),
 };
 
-export const TEST_MAIL_2: IndexMail = {
+export const TEST_MAIL_2: IndexMail & { bodyText: string } = {
   id: 'm345',
   subject: 'おはよう💕',
-  body: '좋은아침😊💕 이침엔 핫초코지👍ㅎ おはよう😊💕 朝ホットチョコレートか👍',
+  body: '<p>좋은아침😊💕 이침엔 핫초코지👍ㅎ</p> <p>おはよう😊💕 朝ホットチョコレートか👍</p> {이미지}',
+  bodyText: '좋은아침😊💕 이침엔 핫초코지👍ㅎ おはよう😊💕 朝ホットチョコレートか👍',
 };

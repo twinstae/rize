@@ -11,7 +11,7 @@ function TagList({ mailId }: TagListProps) {
   const tags = useMailTags(mailId);
 
   return (
-    <>
+    <ul>
       {tags
         .filter((tag) => tag !== FAVORITE && tag !== UNREAD)
         .map((content) => (
@@ -21,7 +21,7 @@ function TagList({ mailId }: TagListProps) {
             </span>
           </li>
         ))}
-    </>
+    </ul>
   );
 }
 

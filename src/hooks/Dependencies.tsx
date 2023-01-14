@@ -62,15 +62,15 @@ export const createFakeDependencies: () => DependencyT = () => ({
 });
 
 const fakeDependencies = createFakeDependencies();
-export const Dependencies = React.createContext<DependencyT>(fakeDependencies);
+export const DependenciesContext = React.createContext<DependencyT>(fakeDependencies);
 
 export function useDependencies() {
-  return useContext(Dependencies) as Required<DependencyT>;
+  return useContext(DependenciesContext) as Required<DependencyT>;
 }
 
 export const DependenciesWrapper = (
   value: ReturnType<typeof useDependencies>
-) => createWrapper(Dependencies.Provider, { value });
+) => createWrapper(DependenciesContext.Provider, { value });
 
 export function useMailList(){
   return useDependencies().useMailList();

@@ -86,12 +86,6 @@ export const useFakeNavigation = () => {
   return fakeNavigation;
 };
 
-if (typeof window.afterEach === 'function') {
-  afterEach(() => {
-    fakeNavigation.clear();
-  });
-}
-
 function useNavigation() {
   return useDependencies().useNavigationImpl();
 }

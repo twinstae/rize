@@ -31,7 +31,7 @@ function AlbumPage() {
         result={result}
         width={window.innerWidth}
         height={height}
-        estimateSize={() => rem(8)}
+        estimateSize={() => window.innerWidth / 4}
         VirtualRowItem={({virtualItem}) => (
           <HStack key={virtualItem.key} className="gap-1 p-0.5"  style={{
             position: 'absolute',
@@ -45,7 +45,7 @@ function AlbumPage() {
             <span className="absolute bottom-0 left-0 text-xs bg-base-100 rounded p-0.5 z-10">{result[virtualItem.index][0].time.slice(2,10)}</span>
             {result[virtualItem.index].map(({image, mailId},i) => (
               <Link key={i} to={toMailDetail(mailId)} aria-label={mailId + ' 메일로 이동'} className="focus:ring-3">
-                <Image style={{ borderRadius: '1rem', objectFit: 'cover', aspectRatio: '1/1' }} width={128} path={image.replace(/\..+/, '_tmb.jpg')} />
+                <Image style={{ borderRadius: '1rem', objectFit: 'cover', aspectRatio: '1/1' }} width={window.innerWidth / 4} path={image.replace(/\..+/, '_tmb.jpg')} />
               </Link>
             ))}
           </HStack>

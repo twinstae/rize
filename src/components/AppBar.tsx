@@ -28,7 +28,6 @@ function AppBar() {
 
   function handleClose() {
     setIsOpen(false);
-    setKeywordInput('');
   }
 
   function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -59,7 +58,7 @@ function AppBar() {
           handleClose();
         }}
         className="tooltip-bottom"
-        aria-label={t(strs.닫기)}
+        aria-label={t(strs.검색창_닫기)}
         icon={<XMarkIcon />}
       />
     </HStack>
