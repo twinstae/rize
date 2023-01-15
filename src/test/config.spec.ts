@@ -21,8 +21,11 @@ test('설정 페이지', async ({ page }) => {
   await page.getByRole('combobox', { name: 'Languages' }).selectOption('ko');
 
   // '프로필 선택'
+  await page.getByLabel('la-vie-en-rose').check();
   await page.getByLabel('instagram').check();
   await page.screenshot({ path: 'playwright/screenshot'+'/profile.png' });
 
-  await page.getByRole('button', { name: ko.돌아가기 }).click();
+  await page.getByText('테스트 페이지 (개발자용)').click();  
+  await page.getByRole('button', { name: '에러 일으키기' }).click();
+  await page.getByRole('button', { name: '앱 다시 시작하기' }).click();
 });

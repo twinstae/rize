@@ -2,28 +2,31 @@ import { atom, useAtom, useAtomValue } from 'jotai';
 import { waitForAll } from 'jotai/utils';
 import { atomsWithQuery } from 'jotai-tanstack-query';
 
-import { IZONE, MEMBER_LIST } from '../constants';
+import { IZONE } from '../constants';
 import {
   addTagToMail,
   removeTagFromMail,
   reverseTagToMail,
   toOriginalName,
 } from './mailListModel';
-import type { MailBodyT, MailRepository, MailT, RawMailT } from './types';
+import type { MailBodyT, MailRepository, RawMailT, MailT } from './types';
 import createRegexSearchIndex from '../search/createRegexSearchIndex';
 import { currentTagAtom } from './useTag';
 import atomWithAsyncInit from '../hooks/atomWithAsyncInit';
+import filterTruthy from '../filterTruthy';
 
 export interface MailListResult {
   waitForAll: () => void;
   mailList: () => {
-    all: (RawMailT & MailBodyT & { bodyText: string })[];
-    unread: (RawMailT & MailBodyT & { bodyText: string })[];
-    favorite: (RawMailT & MailBodyT & { bodyText: string })[];
-};
-  useMailById: (id: string) => (MailT & MailBodyT) | undefined;
+    all: MailT[];
+    unread: MailT[];
+    favorite: MailT[];
+  };
+  useMailById: (id: string) => (MailT) | undefined;
   useToOriginalName: () => (member: string) => IZONE | '운영팀';
   useStatus: () => { [fileName: string]: boolean | undefined };
+  useCurrentMode: () => ['all' | 'unread' | 'favorite', (mode: 'all' | 'unread' | 'favorite') => void],
+  useCurrentMailList: () => MailT[];
   useTags: () => {
     tagToMailDict: Record<string, string[]>;
     isFavorited: (mailId: string) => boolean;
@@ -83,7 +86,7 @@ export function createUseMailList(mailRepository: MailRepository) {
     queryFn: mailRepository.getAllMailList,
   }));
 
-  const mailListAtom = atom<(MailT & MailBodyT & { bodyText: string })[]>((get) => {
+  const mailListAtom = atom<(RawMailT & MailBodyT & { bodyText: string })[]>((get) => {
     const rawMailList = get(rawMailListAtom);
     const mailBodyDict = get(mailBodyDictAtom);
     const nameToNumberDict = get(nameToNumberDictAtom);
@@ -91,6 +94,7 @@ export function createUseMailList(mailRepository: MailRepository) {
     return rawMailList?.map((mail) => ({
       ...mail,
       ...mailBodyDict[mail.id],
+      images: filterTruthy(mailBodyDict[mail.id].images),
       bodyText: mailBodyDict[mail.id].body.replace(/<[^>]+>/g, ' ').replaceAll('&nbsp;', ' ').replaceAll('{이미지}', ''),
       member: toOriginalName(nameToNumberDict)(mail.member),
     })) || [];
@@ -108,7 +112,8 @@ export function createUseMailList(mailRepository: MailRepository) {
       isFavorited: (mailId: string) => favoriteSet.has(mailId),
       isUnread: (mailId: string) => unreadSet.has(mailId),
       useMailTags: (mailId: string) => {
-        return dict.get(mailId) ?? [];
+        const tags =  dict.get(mailId);
+        return tags ?? [];
       },
       addTagToMail: (tag: string, targetMailId: string) => {
         setTagToMailDict(addTagToMail(tag, targetMailId));
@@ -121,7 +126,7 @@ export function createUseMailList(mailRepository: MailRepository) {
 
   const indexAtom = atom((get) => createRegexSearchIndex(get(mailListAtom).map(mail => ({
     ...mail,
-    body: mail.body?.replace(new RegExp('&nbsp;', 'g'), ' ') ?? ''
+    body: mail.body.replace(new RegExp('&nbsp;', 'g'), ' ')
   }))));
 
   const keywordAtom = atom('');
@@ -135,15 +140,12 @@ export function createUseMailList(mailRepository: MailRepository) {
     const searchResult = index.search(keyword);
     const inSearchResult = (id: string) => searchResult.has(id);
 
-    const tagSet = tagToMailDict[tag];
+    // const tagSet = tagToMailDict[tag];
     const createByTag = (tag: string) => {
-      if (MEMBER_LIST.includes(tag as IZONE)) {
-        return (mail: MailT) => mail.member === tag;
-      }
-      if (tag === '' || tagSet === undefined) {
-        return () => true;
-      }
-      return (mail: MailT) => tagSet.includes(mail.id);
+      // if (MEMBER_LIST.includes(tag as IZONE)) {
+      return (mail: RawMailT) => mail.member === tag;
+      // }
+      // return (mail: RawMailT) => tagSet.includes(mail.id);
     };
     const byTag = createByTag(tag);
     const unreadSet = new Set(tagToMailDict[UNREAD]);
@@ -168,12 +170,20 @@ export function createUseMailList(mailRepository: MailRepository) {
     };
   });
 
+  const currentModeAtom = atom<'all' | 'unread' | 'favorite'>('all');
+  const currentMailListAtom = atom((get) => {
+    const result = get(filtertedMailListAtom);
+    const currentMode = get(currentModeAtom);
+    return result[currentMode];
+  });
   return (): MailListResult => {
     return {
       waitForAll: () => {
         useAtomValue(waitForAll([statusAtom, waitAtom, filtertedMailListAtom]));
       },
       mailList: () => useAtomValue(filtertedMailListAtom),
+      useCurrentMode: () => useAtom(currentModeAtom),
+      useCurrentMailList: () => useAtomValue(currentMailListAtom),
       useMailById: (id) => {
         const mailList = useAtomValue(mailListAtom);
         return mailList.find((mail) => mail.id === id);

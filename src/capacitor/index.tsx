@@ -7,7 +7,6 @@ import '@kidonng/daisyui/index.css';
 import 'uno.css';
 import '@stackflow/basic-ui/index.css';
 import React, { useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
 
 import AppMain from '../App';
 import RizeLogo from '../components/RizeLogo';
@@ -56,13 +55,12 @@ const Wrapper = DependenciesWrapper({
 });
 
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const root = createRoot(document.getElementById('root')!);
-
-root.render(
+const CapacitorApp = (
   <React.StrictMode>
     <Wrapper>
       <AppMain />
     </Wrapper>
   </React.StrictMode>
 );
+
+export default CapacitorApp;

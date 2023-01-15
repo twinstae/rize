@@ -2,6 +2,7 @@ import { fs } from '@tauri-apps/api';
 import { atom, onMount } from 'nanostores';
 import { StorageRepository } from '../global';
 import { createSuspender } from '../hooks/splashEndAtom';
+import withDefault from '../withDefault';
 
 const path = 'output/local_config.json';
 const [suspender, resolve] = createSuspender();
@@ -11,14 +12,12 @@ onMount(storageAtom, () => {
   fs.readTextFile(path, {
     dir: fs.BaseDirectory.Download,
   })
-    .catch(() => '{}')
+    .catch(withDefault('{}'))
     .then(jsonText => {
       storageAtom.set(JSON.parse(jsonText));
     }).finally(() => {
       resolve();
     });
-
-  return () => undefined;
 });
 
 storageAtom.subscribe(value => {
@@ -35,11 +34,11 @@ storageAtom.subscribe(value => {
 
 export const createFsStorageRepository = (): StorageRepository<string> => {
   return {
-    getItem: async (key: string) => {
+    async getItem(key: string) {
       await suspender;
       return storageAtom.get()[key];
     },
-    setItem: async (key: string, value: string) => {
+    async setItem(key: string, value: string) {
       await suspender;
       const old = storageAtom.get();
       return storageAtom.set({...old, [key]: value});

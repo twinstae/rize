@@ -7,6 +7,7 @@ import useNavigation from '../router/useNavigation';
 import XMarkIcon from './icons/XMarkIcon';
 import { HStack } from './rize-ui';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
+import invariant from '../invariant';
 
 function LeftDrawler({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation();
@@ -26,9 +27,8 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
             <h2 className="p-2 text-xl">{t(strs.메뉴)}</h2>
             <IconButtonWithTooltip 
               onClick={() => {
-                if (checkboxRef.current){
-                  checkboxRef.current.checked = false;
-                }
+                invariant(checkboxRef.current);
+                checkboxRef.current.checked = false;
               }}
               icon={<XMarkIcon />}
               className="tooltip-bottom drawer-button right-0 top-0 p-0 focus:border-2 focus:border-primary"

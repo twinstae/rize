@@ -41,11 +41,11 @@ const fakeMailRepository: MailRepository = {
 };
 
 export const updateFakeStatus = (status: Record<string, boolean>) => {
-  for (const key in status){
-    if (status[key] === false){
+  Object.keys(status)
+    .filter(key => status[key] === false)
+    .forEach(key => {
       fakeFs[key] = null;
-    }
-  }
+    });
 };
 
 export default fakeMailRepository;

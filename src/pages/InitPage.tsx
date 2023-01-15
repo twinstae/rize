@@ -4,6 +4,7 @@ import { useDependencies, useMailList } from '../hooks/Dependencies';
 import { fileList } from '../mailList/fakeMailRepository';
 import { useQueryClient } from '@tanstack/react-query';
 import { splashEnd } from '../hooks/splashEndAtom';
+import invariant from '../invariant';
 
 const InitPage = () => {
   const { fsJSON, RizeLogo } = useDependencies();
@@ -73,7 +74,7 @@ const InitPage = () => {
                     type="checkbox"
                     checked={value}
                     className="checkbox checkbox-secondary checkbox-xs"
-                    onChange={() => undefined}
+                    readOnly
                   />
                   <label>
                     {name}
@@ -81,9 +82,11 @@ const InitPage = () => {
                       type="file"
                       disabled={value}
                       onChange={(e) => {
+                        const files = (e.currentTarget as HTMLInputElement).files;
+                        invariant(files);
                         setUploaded(old => ({
                           ...old,
-                          [name]: ((e.currentTarget as HTMLInputElement).files?.length ?? 0) > 0,
+                          [name]: files.length > 0,
                         }));
                       }}
                     />

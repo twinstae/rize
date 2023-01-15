@@ -2,6 +2,7 @@ import { atom } from 'jotai';
 
 export function createSuspender(){
   let _resolve = () => undefined;
+  _resolve();
   const suspender = new Promise((resolve) => {
     _resolve = () => {
       resolve(null);

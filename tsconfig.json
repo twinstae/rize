@@ -16,7 +16,11 @@
       "isolatedModules": true,
       "noEmit": true,
       "jsx": "react-jsx",
-      "sourceMap": true
+      "sourceMap": true,
+      "paths": {
+        "@App/*": ["./src/web/*"],
+      },
+      "baseUrl": "./"
     },
     "include": ["src", "vitest", "presetDaisy.js"]
 }

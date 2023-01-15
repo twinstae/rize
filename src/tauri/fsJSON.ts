@@ -6,6 +6,7 @@ import { JsonValue } from '../types/json';
 const cache = new Map();
 
 const readJSONfile = async (path: string) => {
+  console.log(cache);
   if (cache.has(path)){
     return cache.get(path);
   }
@@ -14,7 +15,6 @@ const readJSONfile = async (path: string) => {
       dir: fs.BaseDirectory.Download,
     })
     .then(JSON.parse)
-    .catch(console.error)
     .then((data) => {
       cache.set(path, data);
       return data;

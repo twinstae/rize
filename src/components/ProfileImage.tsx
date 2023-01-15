@@ -27,7 +27,7 @@ const sizes = {
   sm: rem(1.5) / 4,
 };
 
-const ProfileImage: React.FC<Props> = ({ member, size = 'base', theme, className }) => {
+const ProfileImage: React.FC<Props> = ({ member, size, theme, className }) => {
   const { Image } = useDependencies();
 
   return (

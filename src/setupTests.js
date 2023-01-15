@@ -47,6 +47,9 @@ if (typeof window.matchMedia !== 'function') {
 }
 
 afterAll(() => {
+  if (! window.__coverage__){
+    return;
+  }
   const context = libReport.createContext({
     dir: './.nyc_output',
     coverageMap: libCoverage.createCoverageMap(window.__coverage__),

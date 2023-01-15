@@ -1,5 +1,6 @@
+import invariant from '../invariant';
 import { IZONE, MEMBER_LIST, memberNameDict } from '../constants';
-import { MailT } from './types';
+import { RawMailT } from './types';
 
 export const modes = ['all', 'unread', 'favorite'] as const;
 export type TabMode = typeof modes[number];
@@ -32,9 +33,8 @@ export function addTagToMail(tag: string, targetMailId: string) {
 export function removeTagFromMail(tag: string, targetMailId: string) {
   return (old: Record<string, string[]>) => {
     const newDict = jsonClone(old);
-    if (newDict[tag]) {
-      newDict[tag] = newDict[tag].filter((mailId) => targetMailId !== mailId);
-    }
+    invariant(newDict[tag]);
+    newDict[tag] = newDict[tag].filter((mailId) => targetMailId !== mailId);
 
     return newDict;
   };
@@ -50,7 +50,7 @@ export function filterByModeAndTag(
   isUnread: (mailId: string) => boolean
 ) {
   return (mode: TabMode, tag: string) => {
-    const byMode = (mail: MailT): boolean => {
+    const byMode = (mail: RawMailT): boolean => {
       if (mode === 'unread') {
         return isUnread(mail.id);
       }
@@ -61,7 +61,7 @@ export function filterByModeAndTag(
       return true;
     };
 
-    const byTag: (mail: MailT) => boolean = (mail) => {
+    const byTag: (mail: RawMailT) => boolean = (mail) => {
       if (MEMBER_LIST.includes(tag as IZONE)) {
         return mail.member === tag;
       }
@@ -72,6 +72,6 @@ export function filterByModeAndTag(
       return tagToMailDict[tag].includes(mail.id);
     };
 
-    return (item: MailT) => byMode(item) && byTag(item);
+    return (item: RawMailT) => byMode(item) && byTag(item);
   };
 }

@@ -4,13 +4,17 @@ import InitPage from '../pages/InitPage';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
 import useConfig from '../config/useConfig';
 
-function Wait({ children }: { children: React.ReactNode }){
+function Wait({ children, name }: { children: React.ReactNode, name: string }){
   useConfig('lang', 'ko');
   useConfig('profile', 'one-the-story');
   useConfig('username', ['{_nickname_}', '위즈원']);
   useMailList().waitForAll();
   useDependencies().usePlatform();
-  return <div>{children}</div>;
+  return (
+    <div className={name}>
+      {children}
+    </div>
+  );
 }
 
 export function wrapLayout(OriginalPage: React.FC): React.FC {
@@ -18,7 +22,7 @@ export function wrapLayout(OriginalPage: React.FC): React.FC {
     return (
       <AppScreen backgroundColor="bg-base-100">
         <Suspense fallback={<InitPage />}>
-          <Wait>
+          <Wait name={OriginalPage.name}>
             <OriginalPage />
           </Wait>
         </Suspense>

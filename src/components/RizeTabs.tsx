@@ -7,10 +7,11 @@ interface RizeTabsProps<T> {
   value: (item: T) => string;
   Label: React.FC<{ index: number}>;
   Content: (props: {index: number}) => JSX.Element;
+  onChange?: ((details: { value: string | null; }) => void)
 }
 
-export function RizeTabs<T>({ data, value, Label, Content }: RizeTabsProps<T>) {
-  const [state, send] = useMachine(tabs.machine({ id: 'rize-tabs', value: value(data[0]) }));
+export function RizeTabs<T>({ data, value, Label, Content, onChange }: RizeTabsProps<T>) {
+  const [state, send] = useMachine(tabs.machine({ id: 'rize-tabs', value: value(data[0]), onChange }));
 
   const api = tabs.connect(state, send, normalizeProps);
 

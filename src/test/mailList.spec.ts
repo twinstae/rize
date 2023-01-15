@@ -24,6 +24,7 @@ test('메일 목록', async ({ page }) => {
   await $searchInput.fill('마ㅈ');
   await page.screenshot({ path: 'playwright/screenshot'+'/search-partial.png' });
   await $searchInput.fill('마지막이라니');
-  await $searchInput.fill('');
+  await $searchInput.press('Escape');
+  await page.getByRole('button', { name: ko.검색 }).click();
   await page.getByRole('button', { name: ko.검색창_닫기 }).click();
 });

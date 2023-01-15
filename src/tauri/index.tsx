@@ -8,7 +8,6 @@ import 'uno.css';
 import '@stackflow/basic-ui/index.css';
 
 import React from 'react';
-import { createRoot } from 'react-dom/client';
 
 import App from '../App';
 import RizeLogo from '../components/RizeLogo';
@@ -28,7 +27,7 @@ const useMailList = createUseMailList(fsMailRepository);
 const Image = TauriImage;
 
 storageRepo.getItem('lang').then((lang) => {
-  i18n.changeLanguage(lang ?? 'ko');
+  i18n.changeLanguage(lang);
 });
 
 const Wrapper = DependenciesWrapper({
@@ -47,12 +46,12 @@ const Wrapper = DependenciesWrapper({
 });
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const root = createRoot(document.getElementById('root')!);
-
-root.render(
+const TauriApp = (
   <React.StrictMode>
     <Wrapper>
       <App />
     </Wrapper>
   </React.StrictMode>
 );
+
+export default TauriApp;

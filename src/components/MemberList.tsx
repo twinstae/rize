@@ -29,7 +29,7 @@ function MemberListItem({ name, text }: MemberListItemProps) {
         className="mb-2 p-1 pl-3"
         aria-selected={selected}
       >
-        <ProfileImage member={name} size="sm" /> {text || name}
+        <ProfileImage member={name} size="sm" /> {text}
       </button>
     </li>
   );

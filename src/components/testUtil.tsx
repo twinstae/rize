@@ -41,11 +41,12 @@ export async function render(
       },
     },
   });
+  const fakeDepencies = createFakeDependencies();
   const result = originalRender(
     <QueryClientProvider client={queryClient}>
       <Provider initialValues={[[queryClientAtom, queryClient]]}>
         <Suspense fallback={<div>loading...</div>}>
-          <DependenciesContext.Provider value={createFakeDependencies()}>
+          <DependenciesContext.Provider value={fakeDepencies}>
             {ui}
           </DependenciesContext.Provider>
         </Suspense>
@@ -53,6 +54,7 @@ export async function render(
     </QueryClientProvider>,
     options,
   );
+  fakeDepencies.usePlatform();
   const user = userEvent.setup();
   await waitFor(() => {
     expect(screen.queryByText('loading...')).toBe(null);

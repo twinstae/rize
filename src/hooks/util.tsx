@@ -18,11 +18,6 @@ export const createWrapper = <P extends { [key: string]: any }>(
   return ({ children }) => <Provider {...props}>{children}</Provider>;
 };
 
-export const pipeWrapper = (...WrapperList: WrapperT[]): WrapperT => {
-  return ({ children }) =>
-    WrapperList.reduce((acc, Wrapper) => <Wrapper>{acc}</Wrapper>, children);
-};
-
 export const shuffle: <T>(array: Array<T>) => Array<T> = (array) => {
   let curId = array.length;
   while (0 !== curId) {

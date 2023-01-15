@@ -1,12 +1,12 @@
 import { atom, useAtomValue } from 'jotai';
 import { fs } from '@tauri-apps/api';
+import filterTruthy from '../filterTruthy';
 
 async function getProfileList(){
   return fs.readDir('output/img/profile', {
     dir: fs.BaseDirectory.Download
   })
-    .then(entries => entries.map(entry => entry.name ?? '').filter(name => name))
-    .catch(() => ['la-vie-en-rose', 'instagram']);
+    .then(entries => filterTruthy(entries.map(entry => entry.name)));
 }
 
 const profileListAtom = atom(getProfileList);

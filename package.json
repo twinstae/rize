@@ -94,7 +94,7 @@
     "build": "tsc && concurrently \"yarn build:tauri\" \"yarn build:cap\"",
     "dev:web": "vite --config=vite.config.web.js",
     "dev:web:cov": "npm run dev:web",
-    "serve:tauri": "vite --config=vite.config.tauri.js",
+    "serve:tauri": "nyc --silent vite --config=vite.config.tauri.js",
     "dev:tauri": "tauri dev",
     "test": "vitest --config=vitest.config.js run",
     "test:watch": "vitest --config=vitest.config.js",
@@ -110,7 +110,8 @@
     "e2e:debug": "playwright test --headed --debug",
     "e2e:cov": "npm run e2e",
     "cov:report": "nyc report --reporter=html --reporter=text",
-    "cov": "npm run test:cov && npm run e2e:cov && npm run cov:report"
+    "cov:tauri": "node ./src/test/renderTestResult.js",
+    "cov": "npm run test:cov && npm run e2e:cov && npm run cov:tauri && npm run cov:report"
   },
   "browserslist": {
     "production": [

@@ -15,7 +15,7 @@ function MenuButton() {
       }}
       icon={<HamBurgerIcon />}
       className="tooltip-bottom drawer-button"
-      aria-label={t(strs.메뉴) ?? ''}
+      aria-label={t(strs.메뉴)}
     />
   );
 }

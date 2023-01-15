@@ -11,3 +11,9 @@ export interface StorageRepository<T> {
   setItem: (key: string, value: T) => Promise<void>;
   removeItem: (key: string) => Promise<void>;
 }
+
+declare global {
+  interface Window {
+    __coverage__: unknown | undefined
+  }
+}

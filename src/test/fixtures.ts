@@ -1,4 +1,4 @@
-import { MailBodyT, MailT, RawMailT } from '../mailList/types';
+import { MailBodyT, RawMailT } from '../mailList/types';
 import { IndexMail } from '../search/types';
 
 const rawYuri: RawMailT = { 'id': 'm25752', 'member': '조유리', 'subject': '위즈원에게', 'preview': '위즈원!!!안녕하세요 유리입니다아오늘은 평소 보내던 메일과는 조금 다른 메일이 될', 'time': '2021/04/28 23:00' };
@@ -8,7 +8,7 @@ const rawYuriBody = {
   images: ['img/mail/3/20210428/6d5c96191d428d6c236160aa04bbb4d4.jpeg'],
 };
 
-export const YURI_MAIL_M25752: MailT & MailBodyT & { bodyText: string } = {
+export const YURI_MAIL_M25752: RawMailT & MailBodyT & { bodyText: string } = {
   ...rawYuri,
   ...rawYuriBody,
   bodyText: rawYuriBody.body.replace(/<[^>]+>/g, ' ').replaceAll('&nbsp;', ' ').replaceAll('{이미지}', ''),

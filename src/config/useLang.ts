@@ -16,9 +16,7 @@ function useLang() {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    if (typeof lang === 'string'){
-      i18n.changeLanguage(lang);
-    }
+    i18n.changeLanguage(lang);
   }, [lang]);
 
   return {

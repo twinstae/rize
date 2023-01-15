@@ -39,7 +39,7 @@ const setSearchParams = (newInit: URLSearchParams) => {
 
 const mutateHistory = (mutate: (old: typeof history) => void) => {
   mutate(history);
-  setSearchParams(new URLSearchParams((history.at(-1) ?? '?').split('?')[1] ?? ''));
+  setSearchParams(new URLSearchParams(history[history.length -1].split('?')[1]));
 };
 
 const fakeNavigation = {
@@ -47,8 +47,8 @@ const fakeNavigation = {
     mutateHistory((old) => { old.length = 0; old.push(paths.ROOT); });
   },
   params: () => {
-    const [, id] = history[history.length - 1].match(/\/mail\/(.+)/) ?? [];
-    return { id };
+    const current = history[history.length - 1].split('?')[1];
+    return Object.fromEntries(new URLSearchParams(current).entries());
   },
   useSearchParams: () => {
     return [
@@ -63,7 +63,9 @@ const fakeNavigation = {
     old.push(path);
   }),
   goBack: () => mutateHistory((old) => {
-    old.pop();
+    if(old.length > 1){
+      old.pop();
+    }
   }),
   redirect: (path: string) => mutateHistory((old) => {
     old[old.length - 1] = path;

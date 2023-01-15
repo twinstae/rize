@@ -9,7 +9,7 @@ import {
   TabMode,
   toOriginalName,
 } from './mailListModel';
-import { MailT } from './types';
+import { RawMailT } from './types';
 
 const tagToMailDict = {
   tag1: ['mail1', 'mail2'],
@@ -40,18 +40,18 @@ it('removeTagFromMail', () => {
   expect(result['tag1']).toEqual(['mail2']);
 });
 
-const UNREAD_UNFAVORITED_YURI_MAIL1: MailT = {
+const UNREAD_UNFAVORITED_YURI_MAIL1: RawMailT = {
   ...YURI_MAIL_M25752,
   id: 'mail1',
 };
 
-const READ_FAVORITED_HITOMI_MAIL2: MailT = {
+const READ_FAVORITED_HITOMI_MAIL2: RawMailT = {
   ...YURI_MAIL_M25752,
   member: '혼다 히토미',
   id: 'mail2',
 };
 
-const UNREAD_UNFAVORITED_YURI_MAIL3: MailT = {
+const UNREAD_UNFAVORITED_YURI_MAIL3: RawMailT = {
   ...YURI_MAIL_M25752,
   id: 'mail3',
 };

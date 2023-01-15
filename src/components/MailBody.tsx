@@ -2,6 +2,7 @@ import React from 'react';
 
 import useUsername from '../config/useUsername';
 import { useDependencies } from '../hooks/Dependencies';
+import invariant from '../invariant';
 
 interface Props {
   mailBody: {
@@ -14,9 +15,12 @@ function MailBody({ mailBody }: Props) {
   const { Image } = useDependencies();
   const usernameService = useUsername();
   const body = usernameService.replaceUsername(mailBody.body);
+  const images = mailBody.images;
   const parts = body.split('{이미지}');
   function getPath(index: number) {
-    return mailBody ? mailBody.images[index] : 'img/404.jpeg';
+    const imagePath = images[index];
+    invariant(imagePath, `${index}, ${JSON.stringify(images)}`);
+    return imagePath;
   }
 
   return (
@@ -32,7 +36,7 @@ function MailBody({ mailBody }: Props) {
               __html: part,
             }}
           ></div>
-          {i < parts.length - 1 && (
+          {i < images.length && (
             <Image
               path={getPath(i)}
               style={{ width: '100%', borderRadius: '0.5rem' }}

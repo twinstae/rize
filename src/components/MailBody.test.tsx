@@ -2,7 +2,7 @@ import React from 'react';
 import MailBody from './MailBody';
 import { render } from './testUtil';
 
-const TEST_PATH = '';
+const TEST_PATH = 'test.jpg';
 
 describe('MailBody', () => {
   it('MailBody는 메일 본문과 이미지를 분리해서 렌더링한다', async () => {

@@ -9,12 +9,17 @@ import { wrapLayout } from './Layout';
 import { Navigation } from './useNavigation';
 import { basicUIPlugin } from '@stackflow/basic-ui';
 import AlbumPage from '../pages/AlbumPage';
+import Test from '../test/Test';
+import invariant from '../invariant';
+import toObject from '../toObject';
+import NonNullableValueObject from '../NonUndefinedObject';
 
 const activities = {
   Config: wrapLayout(Config),
   MailListPage: wrapLayout(MailListPage),
   MailDetailPage: wrapLayout(MailDetailPage),
   AlbumPage: wrapLayout(AlbumPage),
+  Test: wrapLayout(Test)
 };
 
 const activityNames = Object.keys(activities);
@@ -34,29 +39,25 @@ export const parsePath = (
   path: string
 ): [ActivityName, Record<string, string>] => {
   const [name, rawParams] = path.split('?');
-  const params = rawParams
-    ? Object.fromEntries(rawParams.split('&').map((param) => param.split('=')))
-    : {};
-  if (!(name in activities)) {
-    throw Error(`${path} is not in activities.\n ${activityNames.join('\n')}`);
-  }
+  const params = rawParams ? toObject(new URLSearchParams(rawParams)) : {};
+  invariant(name in activities, `${path} is not in activities.\n ${activityNames.join('\n')}`);
 
   return [name as ActivityName, params];
 };
 
 export const useStackNavigation = (): Navigation => {
-  const activity = useActivity();
-  const { name, params } = activity;
+  const { name, params } = useActivity();
   const { push, pop, replace } = useFlow();
 
-  const navigate = (path: string) => push(...parsePath(path));
+  const navigate = (path: string) => {
+    push(...parsePath(path));
+  };
   return {
     params: () => params,
     useSearchParams: () => {
-      const result = JSON.parse(JSON.stringify(params));
       return [
-        new URLSearchParams(result),
-        (newInit) => replace(name as ActivityName, { ...params, newInit }),
+        new URLSearchParams(NonNullableValueObject(params)),
+        (newInit: URLSearchParams) => replace(name as ActivityName, { ...params, ...toObject(newInit) }),
       ];
     },
     current: () => name as ActivityName,

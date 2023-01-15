@@ -11,8 +11,11 @@
     "src/config/localStorageRepo.ts",
     "src/setupTests.js",
     "src/capacitor/**/*",
-    "src/tauri/**/*",
-    "node_modules/**/*"
+    "src/web/**/*",
+    "src/tauri/serverMailRepository.ts",
+    "node_modules/**/*",
+    "src/test/**/*",
+    "src/invariant.ts"
   ],
   "exclude-after-remap": false,
   "reporter": ["html", "text", "text-summary", "json"],

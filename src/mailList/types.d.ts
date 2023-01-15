@@ -9,7 +9,7 @@ export type RawMailT = {
   preview: string;
 };
 
-export type MailT = RawMailT;
+export type MailT = RawMailT & MailBodyT & { bodyText: string };
 
 export type MailBodyT = {
   body: string;
