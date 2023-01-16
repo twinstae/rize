@@ -10,7 +10,6 @@
     "src/constants.ts",
     "src/config/localStorageRepo.ts",
     "src/setupTests.js",
-    "src/capacitor/**/*",
     "src/web/**/*",
     "src/tauri/serverMailRepository.ts",
     "node_modules/**/*",

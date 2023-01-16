@@ -45,7 +45,6 @@ const Wrapper = DependenciesWrapper({
   RizeLogo,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const TauriApp = (
   <React.StrictMode>
     <Wrapper>

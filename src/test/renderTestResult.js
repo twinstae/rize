@@ -16,8 +16,8 @@ function render(item){
     console.log(`${RED_ON_DEFAULT} X ${item.message}\n${item.stack}${RESET}`);
   }
 }
-
-fs.readFile('C:\\Users\\taeheekim\\Downloads\\output\\test_result.json', {
+const OUTPUT = '/home/taehee/Downloads/output/';
+fs.readFile(OUTPUT + 'test_result.json', {
   encoding: 'utf-8'
 })
   .then(json => {
@@ -33,7 +33,7 @@ fs.readFile('C:\\Users\\taeheekim\\Downloads\\output\\test_result.json', {
     });
   });
 
-fs.readFile('C:\\Users\\taeheekim\\Downloads\\output\\coverage.json', {
+fs.readFile(OUTPUT + 'coverage.json', {
   encoding: 'utf-8'
 })
   .then((json) => {

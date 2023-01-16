@@ -5,8 +5,9 @@ import React, { Suspense } from 'react';
 
 import { ImageProps } from '../components/MockImage';
 import { suspend } from 'suspend-react';
+import invariant from '../invariant';
 
-const ROOT = 'https://rize-taehee-kim.s3.ap-northeast-2.amazonaws.com/';
+const ROOT = 'https://image.rabolution.com/';
 
 const parseDirname = (path: string) => {
   const temp = path.split('/');
@@ -15,9 +16,46 @@ const parseDirname = (path: string) => {
 
 const cache: Map<string, string> = new Map();
 
-const downloadFile = async (path: string): Promise<string> => {
+const directoryDict = new Map<string, Promise<void>>();
+const loadingDict = new Map<string, Promise<string>>();
+
+const downloadFile = async (path: string): Promise<void> => {
+  const dirPath = parseDirname('output/'+path);
+  const dirPathPromise = directoryDict.get(dirPath);
+  if (dirPathPromise) {
+    await dirPathPromise;
+  } else {
+    const promise = Filesystem.mkdir({
+      path: dirPath,
+      directory: Directory.Cache,
+      recursive: true,
+    }).catch(() => undefined);
+    directoryDict.set(dirPath, promise);
+    await promise;
+  }        
+  
+  if (loadingDict.get(path)){
+    return;
+  }
+
+  const srcPromise = Http.downloadFile({
+    url: encodeURI(ROOT + path.replace('img/', '')),
+    filePath: 'output/'+path,
+    fileDirectory: Directory.Cache,
+    method: 'GET',
+  }).then((result) => result.path && Capacitor.convertFileSrc(result.path)  || '')
+    .catch(() => '');
+  loadingDict.set(path, srcPromise);
+  
+  const src = await srcPromise;
+  cache.set(path, src || '');
+};
+
+async function getCacheSrc(path: string): Promise<string>{
   if (cache.has(path)){
-    return cache.get(path) || '';
+    const src = cache.get(path);
+    invariant(src !== undefined);
+    return src.replace('http://192.168.219.107:5174//', 'http://localhost/');
   }
   const result = await Filesystem.stat({
     path: 'output/'+path,
@@ -26,29 +64,15 @@ const downloadFile = async (path: string): Promise<string> => {
 
   if(result){
     cache.set(path, Capacitor.convertFileSrc(result.uri));
-  } else {
-    const url = await Http.downloadFile({
-      url: encodeURI(ROOT + path),
-      filePath: 'output/'+path,
-      fileDirectory: Directory.Cache,
-      method: 'GET',
-    }).then((result) => result.path && Capacitor.convertFileSrc(result.path) || '')
-      .catch(async () => {
-        await Filesystem.mkdir({
-          path: parseDirname('output/'+path),
-          directory: Directory.Cache,
-          recursive: true,
-        });
-        return downloadFile(path);
-      });
-    cache.set(path, url);
+    return getCacheSrc(path);
   }
-
-  return cache.get(path) || '';
-};
+  void downloadFile(path);
+  return encodeURI(ROOT + path.replace('img/', ''));
+}
 
 const ImageLoaded: React.FC<ImageProps> = ({ path, style, width }) => {
-  const src = suspend(() => downloadFile(path), ['image', path]);
+  const src = suspend(() => getCacheSrc(path), ['image', path]);
+
   return (
     <img
       src={src}
@@ -59,6 +83,15 @@ const ImageLoaded: React.FC<ImageProps> = ({ path, style, width }) => {
 };
 
 const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
+  if (path === '') {
+    return (
+      <img
+        src={`https://via.placeholder.com/${width}`}
+        width={width * 4}
+        style={style}
+      />
+    );
+  }
   return (
     <Suspense
       fallback={

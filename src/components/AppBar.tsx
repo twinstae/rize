@@ -13,7 +13,6 @@ import XMarkIcon from './icons/XMarkIcon';
 import useNavigation from '../router/useNavigation';
 import paths from '../router/paths';
 import PhotoIcon from './icons/PhotoIcon';
-import { Tooltip } from './Tooltip';
 
 function AppBar() {
   const [, search] = useMailList().useSearch();
@@ -67,11 +66,9 @@ function AppBar() {
       <MenuButton />
       <DarkModeButton />
       <SelectedTag />
-      <Tooltip tip={t(strs.앨범)} className="tooltip-bottom">
-        <Link to={paths.ALBUM} className="btn btn-ghost btn-sm">
-          <PhotoIcon aria-label={t(strs.앨범)} />
-        </Link>
-      </Tooltip>
+      <Link to={paths.ALBUM} className="btn btn-ghost btn-sm">
+        <PhotoIcon aria-label={t(strs.앨범)} />
+      </Link>
       <IconButtonWithTooltip
         onClick={() => {
           setIsOpen(true);          

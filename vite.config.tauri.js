@@ -12,4 +12,7 @@ export default mergeConfig(viteCommon, {
   build: {
     outDir: path.resolve(__dirname, './src/tauri/dist'),
   },
+  server: {
+    port: 5173
+  }
 });

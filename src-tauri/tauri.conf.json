@@ -50,9 +50,9 @@
     "windows": [
       {
         "title": "react-tauri",
-        "width": 351,
-        "height": 768,
-        "resizable": false,
+        "width": 512,
+        "height": 1024,
+        "resizable": true,
         "fullscreen": false
       }
     ],

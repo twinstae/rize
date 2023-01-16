@@ -5,6 +5,7 @@ import paths from '../router/paths';
 import type { JsonValue } from '../types/json';
 import type { Navigation } from '../router/useNavigation';
 import invariant from '../invariant';
+import { atom } from 'nanostores';
 
 const ko = koJson.translation;
 const user = userEvent.setup();
@@ -34,14 +35,17 @@ const rize: {
   }
 };
 
-rize.test('별명을 바꿀 수 있다', async ({ navigation }) => {
-  const page = within(document.getElementsByClassName(paths.TEST)[0] as HTMLElement);
-  await user.click(page.getByRole('button', {
-    name: ko.돌아가기
-  }));
-  navigation.redirect(paths.CONFIG);
+function getPageByPath(path: string){
+  const pageElement = document.getElementsByClassName(path)[0];
+  invariant(pageElement instanceof HTMLElement);
+  return within(pageElement);
+}
+
+rize.test('별명을 바꿀 수 있다', async () => {
+  const page = getPageByPath(paths.TEST);
+  await user.click(page.getByLabelText(ko.돌아가기));
   await wait(1000);
-  const page2 = within(document.getElementsByClassName(paths.CONFIG)[0] as HTMLElement);
+  const page2 = getPageByPath(paths.CONFIG);
   const $toInput = page2.getByLabelText(ko.으로);
   await user.clear($toInput);
   await user.type($toInput, '위즈');
@@ -51,7 +55,7 @@ rize.test('별명을 바꿀 수 있다', async ({ navigation }) => {
 
 // '언어 바꾸기'
 rize.test('프로필을 바꿀 수 있다', async  () => {
-  const page = within(document.getElementsByClassName(paths.CONFIG)[0] as HTMLElement);
+  const page = getPageByPath(paths.CONFIG);
   await user.click(page.getByLabelText('latest'));
   await user.click(page.getByLabelText('violeta'));
   await user.click(page.getByLabelText('instagram'));
@@ -62,7 +66,7 @@ rize.test('프로필을 바꿀 수 있다', async  () => {
 });
 
 rize.test('테마를 바꿀 수 있다', async () => {
-  const page = within(document.getElementsByClassName(paths.MAIL_LIST)[0] as HTMLElement);
+  const page = getPageByPath(paths.MAIL_LIST);
   await user.click(page.getByRole('button', {
     name: ko.닫기
   }));
@@ -72,7 +76,7 @@ rize.test('테마를 바꿀 수 있다', async () => {
 
 
 rize.test('멤버로 필터할 수 있다', async () => {
-  const page = within(document.getElementsByClassName(paths.MAIL_LIST)[0] as HTMLElement);
+  const page = getPageByPath(paths.MAIL_LIST);
   await user.click(page.getByRole('button', { name: ko.메뉴 }));
   await user.click(page.getByRole('button', { name: '장원영' }));
   await user.click(page.getByRole('button', { name: ko.전체 }));
@@ -80,7 +84,7 @@ rize.test('멤버로 필터할 수 있다', async () => {
 });
 
 rize.test('메일을 검색할 수 있다.', async () => {
-  const page = within(document.getElementsByClassName(paths.MAIL_LIST)[0] as HTMLElement);
+  const page = getPageByPath(paths.MAIL_LIST);
   await user.click(page.getByRole('button', { name: ko.검색 }));
   const $searchInput = page.getByPlaceholderText(ko.검색하기) as HTMLInputElement;
   await user.click($searchInput);
@@ -94,7 +98,7 @@ rize.test('메일을 검색할 수 있다.', async () => {
 
 rize.test('메일을 좋아요 할 수 있다.', async () => {
   await wait(500);
-  const page = within(document.getElementsByClassName(paths.MAIL_LIST)[0] as HTMLElement);
+  const page = getPageByPath(paths.MAIL_LIST);
   const yenaItem = page.getByRole('heading', { name: '사랑하는 위즈원에게' }).parentElement as HTMLHeadingElement;
   await user.click(within(yenaItem).getByLabelText('중요 표시'));
   const yenaItem2 = page.getByRole('heading', { name: '사랑하는 위즈원에게' }).parentElement as HTMLHeadingElement;
@@ -103,16 +107,16 @@ rize.test('메일을 좋아요 할 수 있다.', async () => {
 });
 
 rize.test('메일을 볼 수 있다', async () => {
-  const page = within(document.getElementsByClassName(paths.MAIL_LIST)[0] as HTMLElement);
+  const page = getPageByPath(paths.MAIL_LIST);
   await user.click(page.getByRole('heading', { name: '사랑하는 위즈원에게' }));
-  const page2 = within(document.getElementsByClassName(paths.MAIL_DETAIL)[0] as HTMLElement);
+  const page2 = getPageByPath(paths.MAIL_DETAIL);
   await page2.findByText('사랑하는 우리 위즈원❤️');
   const paragraph = await page2.findByText('너무 많이 고맙고 변함없이 너무 많이 사랑해요❤️');
   paragraph.scrollIntoView({behavior: 'smooth'});
   await wait(500);
   await user.click(await page2.findByRole('link', { name: '다음 메일 보기' }));
   await wait(500);
-  const page3 = within(document.getElementsByClassName(paths.MAIL_DETAIL)[0] as HTMLElement);
+  const page3 = getPageByPath(paths.MAIL_DETAIL);
   await user.click(await page3.findByRole('button', {
     name: ko.돌아가기
   }));
@@ -120,10 +124,10 @@ rize.test('메일을 볼 수 있다', async () => {
 
 rize.test('앨범을 볼 수 있다', async () => {
   await wait(500);
-  const page2 = within(document.getElementsByClassName(paths.MAIL_LIST)[0] as HTMLElement);
+  const page2 = getPageByPath(paths.MAIL_LIST);
   await user.click(await page2.findByLabelText(ko.앨범));
   await wait(500);
-  const page3 = within(document.getElementsByClassName(paths.ALBUM)[0] as HTMLElement);
+  const page3 = getPageByPath(paths.ALBUM);
   await user.click(await page3.findByRole('button', {
     name: ko.돌아가기
   }));
@@ -131,13 +135,15 @@ rize.test('앨범을 볼 수 있다', async () => {
 
 rize.test('탭을 바꿀 수 있다.', async () => {
   await wait(500);
-  const page2 = within(document.getElementsByClassName(paths.MAIL_LIST)[0] as HTMLElement);
+  const page2 = getPageByPath(paths.MAIL_LIST);
   await user.click(await page2.findByRole('tab', { name: /읽지 않음/ }));
   await wait(500);
   await user.click(await page2.findByRole('tab', { name: /중요/ }));
   await wait(500);
   await user.click(await page2.findByRole('tab', { name: /전체/ }));
 });
+
+export const testResultAtom = atom<ResultT[]>([]);
 
 async function initTest({ navigation, writeJSONfile }: {
   navigation: Navigation,
@@ -156,27 +162,29 @@ async function initTest({ navigation, writeJSONfile }: {
     oldError(args[0]);
   };
   
-  const result: ResultT[] = [];
+  testResultAtom.set([]);
 
   try {
     for (const [message, test] of tests){
       await test({ navigation })
         .then(() => {
-          result.push({
+          testResultAtom.set([...testResultAtom.get(), {
             pass: true,
             message,
-          });
+          }]);
+          console.log('pass', message);
         })
         .catch((error) => {
           console.error(error.stack);
-          result.push({
+          testResultAtom.set([...testResultAtom.get(), {
             pass: false,
             message,
             stack: error.stack
-          });
+          }]);
         });
     }
   } finally {
+    const result = testResultAtom.get();
     writeJSONfile('test_result.json')(result);
     console.log('collect test result!');
     console.log('result', result);

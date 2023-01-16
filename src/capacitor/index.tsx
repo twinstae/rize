@@ -14,13 +14,16 @@ import { DependenciesWrapper, useColorMode } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
 import fakeMailRepository from '../mailList/fakeMailRepository';
 import { createUseMailList } from '../mailList/useMailList';
-import { useStackNavigation } from '../router/useStatckNavigation';
 import fsJSON from './fsJSON';
 import S3Image from './S3Image';
 import storageRepo from './storageRepo';
 // import fsMailRepository from './fsMailRepository';
 import { App } from '@capacitor/app';
 import useFsProfileList from './useFsProfileList';
+import useNavigation from '../router/useNavigation';
+import { useStackNavigation } from '../router/useStatckNavigation';
+import { useAtom } from 'jotai';
+import { isSplashEndAtom } from '../hooks/splashEndAtom';
 
 
 const mailRepository = fakeMailRepository;
@@ -32,7 +35,8 @@ storageRepo.getItem('lang').then((lang) => {
 
 const Wrapper = DependenciesWrapper({
   usePlatform: () => {
-    const navigation = useStackNavigation();
+    useAtom(isSplashEndAtom);
+    const navigation = useNavigation();
     useEffect(() => {
       App.addListener('backButton', () => {
         navigation.goBack();

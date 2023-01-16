@@ -13,6 +13,7 @@ import Test from '../test/Test';
 import invariant from '../invariant';
 import toObject from '../toObject';
 import NonNullableValueObject from '../NonUndefinedObject';
+import { historySyncPlugin } from '@stackflow/plugin-history-sync';
 
 const activities = {
   Config: wrapLayout(Config),
@@ -30,9 +31,23 @@ export const { Stack, useFlow } = stackflow({
   transitionDuration: 350,
   activities,
   initialActivity: () => 'MailListPage',
-  plugins: [basicRendererPlugin(), basicUIPlugin({
-    theme: 'cupertino',
-  }),],
+  plugins: [
+    basicRendererPlugin(),
+    basicUIPlugin({
+      theme: 'cupertino',
+    }),
+    historySyncPlugin({
+      routes: {
+        MailListPage: '/',
+        MailDetailPage: '/mail/:mailId',
+        AlbumPage: '/album',
+        Config: '/config',
+        Test: '/test',
+      },
+      fallbackActivity: () => 'Test',
+      useHash: false,
+    }),
+  ],
 });
 
 export const parsePath = (
