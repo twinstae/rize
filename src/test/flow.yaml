@@ -1,0 +1,7 @@
+appId: com.lec.rize
+---
+- launchApp
+- tapOn: "사랑하는 위즈원에게"
+- assertVisible: "사랑하는 우리 위즈원❤️"
+- tapOn: "다음 메일 보기"
+- tapOn: "돌아가기"
