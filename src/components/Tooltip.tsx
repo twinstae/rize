@@ -2,7 +2,7 @@ import React from 'react';
 
 interface TooltipProps {
   tip: string;
-  className: string;
+  className?: string;
   children: React.ReactNode;
 }
 
