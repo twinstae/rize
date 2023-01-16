@@ -1,16 +1,15 @@
-import { defineConfig } from 'vite';
+import { mergeConfig } from 'vite';
 import path from 'path';
 import viteCommon from './vite-common';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default mergeConfig(viteCommon, {
   resolve: {
     alias: {
       '@App': path.resolve(__dirname, './src/web'),
     },
   },
   build: {
-    outDir: './src/web/dist'
+    outDir: path.resolve(__dirname, './src/web/dist'),
   },
-  ...viteCommon,
 });

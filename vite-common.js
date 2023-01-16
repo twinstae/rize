@@ -7,6 +7,7 @@ import presetDaisy from './presetDaisy.js';
 // eslint-disable-next-line no-undef
 const env = process.env;
 export default defineConfig({
+  root: './',
   plugins: [
     react({
       babel: {
