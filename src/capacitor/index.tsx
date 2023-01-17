@@ -12,12 +12,11 @@ import AppMain from '../App';
 import RizeLogo from '../components/RizeLogo';
 import { DependenciesWrapper, useColorMode } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
-import fakeMailRepository from '../mailList/fakeMailRepository';
 import { createUseMailList } from '../mailList/useMailList';
 import fsJSON from './fsJSON';
 import S3Image from './S3Image';
 import storageRepo from './storageRepo';
-// import fsMailRepository from './fsMailRepository';
+import fsMailRepository from './fsMailRepository';
 import { App } from '@capacitor/app';
 import useFsProfileList from './useFsProfileList';
 import useNavigation from '../router/useNavigation';
@@ -26,7 +25,7 @@ import { useAtom } from 'jotai';
 import { isSplashEndAtom } from '../hooks/splashEndAtom';
 
 
-const mailRepository = fakeMailRepository;
+const mailRepository = fsMailRepository;
 const useMailList = createUseMailList(mailRepository);
 
 storageRepo.getItem('lang').then((lang) => {
@@ -57,7 +56,6 @@ const Wrapper = DependenciesWrapper({
   useProfileList: useFsProfileList,
   RizeLogo,
 });
-
 
 const CapacitorApp = (
   <React.StrictMode>
