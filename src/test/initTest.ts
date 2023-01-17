@@ -40,7 +40,7 @@ function getPageByPath(path: string){
 }
 
 rize.test('별명을 바꿀 수 있다', async () => {
-  getPageByPath(paths.TEST)('button', ko.돌아가기).click();
+  await getPageByPath(paths.TEST)('button', ko.돌아가기).click();
   await wait(1000);
   const page2 = getPageByPath(paths.CONFIG);
   const $toInput = page2('textbox', ko.으로);
