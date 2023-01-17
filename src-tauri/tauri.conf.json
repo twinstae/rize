@@ -49,7 +49,7 @@
     },
     "windows": [
       {
-        "title": "react-tauri",
+        "title": "rize",
         "width": 512,
         "height": 1024,
         "resizable": true,

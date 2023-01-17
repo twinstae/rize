@@ -3,7 +3,7 @@ import Unocss from 'unocss/vite';
 import {presetUno, transformerDirectives} from 'unocss';
 import { defineConfig } from 'vite';
 import presetDaisy from './presetDaisy.js';
-
+import istanbul from 'babel-plugin-istanbul';
 // eslint-disable-next-line no-undef
 const env = process.env;
 export default defineConfig({
@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: ['istanbul']
+        plugins: [[istanbul]]
       }
     }),
     Unocss({

@@ -89,8 +89,7 @@
     "typescript": "^4.9.4",
     "unocss": "^0.45.21",
     "vite": "^4.0.4",
-    "vitest": "^0.27.0",
-    "vm": "^0.1.0"
+    "vitest": "^0.27.0"
   },
   "scripts": {
     "build:tauri": "vite build --config=vite.config.tauri.js",
@@ -105,7 +104,7 @@
     "test:cov": "nyc --silent vitest --config=vitest.config.js run",
     "stryker": "stryker run --fileLogLevel trace --logLevel debug",
     "tauri": "tauri",
-    "tauri:build": "tauri build --debug",
+    "tauri:build": "tauri build",
     "lint": "eslint --ext ts,tsx src",
     "ionic:serve": "nyc --silent vite serve --config=vite.config.capacitor.js",
     "ionic:build": "npm run build",
