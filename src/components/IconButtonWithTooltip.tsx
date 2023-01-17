@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { Tooltip } from './Tooltip';
 
-type P = {
+type P = React.ComponentProps<'button'> & {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   icon: React.ReactElement;
   'aria-label': string;
@@ -13,11 +13,10 @@ const IconButtonWithTooltip = forwardRef<HTMLButtonElement, P>((props, ref) => {
   return (
     <Tooltip tip={props['aria-label']} className={props['className']}>
       <button
+        {...props}
         type="button"
         ref={ref}
-        onClick={props.onClick}
         className="btn btn-ghost btn-sm focus:border-2 p-1"
-        aria-label={props['aria-label']}
       >
         {props.icon}
       </button>

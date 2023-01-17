@@ -4,16 +4,16 @@ import { useTranslation } from '../i18n/i18n';
 import { strs } from '../i18n/i18n';
 import HamBurgerIcon from './icons/HamBurgerIcon';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
-import { drawlerIdContext } from './LeftDrawer';
+import { drawlerContext } from './LeftDrawer';
 
 function MenuButton() {
   const { t } = useTranslation();
-  const drawlerId = useContext(drawlerIdContext);
+  const { handleOpen } = useContext(drawlerContext);
 
   return (
-    <IconButtonWithTooltip 
+    <IconButtonWithTooltip
       onClick={() => {
-        (document.getElementById(drawlerId) as HTMLInputElement).checked = true;
+        handleOpen();
       }}
       icon={<HamBurgerIcon />}
       className="tooltip-bottom drawer-button"
