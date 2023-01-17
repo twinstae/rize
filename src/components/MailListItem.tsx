@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useId } from 'react';
 
 import useUsername from '../config/useUsername';
 import type { MailBodyT, RawMailT } from '../mailList/types';
@@ -17,7 +17,7 @@ interface MailListItemProps {
 
 function highlight(text: string, keyword: string){
   if (keyword === ''){
-    return text;
+    return text.slice(0, 50);
   }
   const regex = getCachedRegex(keyword);
   
@@ -33,11 +33,13 @@ function MailListItem({ mail, style }: MailListItemProps) {
   const { isUnread } = useTags();
   const [keyword] = useMailList().useSearch();
 
+  const labelId = useId();
   return (
     <li
       id={'mail-' + mail.id}
       className={`p-2 border-b-1 border-base-200 relative ${isUnread(mail.id) && 'unread'}`}
       style={style}
+      aria-labelledby={labelId}
     >
       <Link to={toMailDetail(mail.id)}>
         <div style={{ position: 'relative' }}>
@@ -48,17 +50,19 @@ function MailListItem({ mail, style }: MailListItemProps) {
             <span className="text-gray-500 w-fit">{mail.time.slice(2,10)}</span>
             <TagList mailId={mail.id} />
           </div>
-          <h3 className="p-0 m-0 overflow-hidden text-ellipsis font-bold"
-            dangerouslySetInnerHTML={{
-              __html:highlight(mail.subject, keyword)
-            }}>
-          </h3>
-          <p
-            className="w-full p-0 overflow-hidden text-ellipsis nowrap"
-            dangerouslySetInnerHTML={{
-              __html: highlight(replaceUsername(mail.bodyText), keyword)
-            }}
-          ></p>
+          <label id={labelId}>
+            <h3 className="p-0 m-0 overflow-hidden text-ellipsis font-bold"
+              dangerouslySetInnerHTML={{
+                __html:highlight(mail.subject, keyword)
+              }}>
+            </h3>
+            <p
+              className="w-full p-0 overflow-hidden text-ellipsis nowrap"
+              dangerouslySetInnerHTML={{
+                __html: highlight(replaceUsername(mail.bodyText), keyword)
+              }}
+            ></p>
+          </label>
         </div>
       </Link>
     </li>
