@@ -38,7 +38,7 @@ const InitPage = () => {
       {Object.values(status).some((v) => v === false) && (
         <form
           ref={formRef}
-          className="flex flex-col p-8"
+          className="flex flex-col p-4"
           onSubmit={async (e) => {
             e.preventDefault();
             if (!everyOk) return;
@@ -65,6 +65,10 @@ const InitPage = () => {
               });
           }}
         >
+          <p className="rounded-lg bg-red-100 p-2">
+            Downloads 폴더에 백업한 output 폴더를 넣어주세요. <br/>
+            문제가 있다면 <a href="https://open.kakao.com/o/gPbArZ4c" target="_blank" rel="noreferrer" className="link text-pink-500">AS 오픈카톡방</a>을 찾아주세요.
+          </p>
           <ul>
             {fileList.map((name) => {
               const value = merged[name];
@@ -73,7 +77,7 @@ const InitPage = () => {
                   <input
                     type="checkbox"
                     checked={value}
-                    className="checkbox checkbox-secondary checkbox-xs"
+                    className="checkbox checkbox-primary checkbox-xs checked:border-red-500"
                     readOnly
                   />
                   <label>
