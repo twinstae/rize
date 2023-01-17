@@ -1,6 +1,8 @@
 import invariant from '../invariant';
 import { IZONE, MEMBER_LIST, memberNameDict } from '../constants';
-import { RawMailT } from './types';
+import { MailT, RawMailT } from './types';
+import { Index } from '../search/types';
+import { UNREAD, FAVORITE } from './useMailList';
 
 export const modes = ['all', 'unread', 'favorite'] as const;
 export type TabMode = typeof modes[number];
@@ -44,34 +46,42 @@ export function toOriginalName(nameToNumberDict: Record<string, number>) {
   return (raw: string) => memberNameDict[nameToNumberDict[raw]];
 }
 
-export function filterByModeAndTag(
+export function getFilteredMailResult(
+  tag: string,
   tagToMailDict: Record<string, string[]>,
-  isFavorited: (mailId: string) => boolean,
-  isUnread: (mailId: string) => boolean
-) {
-  return (mode: TabMode, tag: string) => {
-    const byMode = (mail: RawMailT): boolean => {
-      if (mode === 'unread') {
-        return isUnread(mail.id);
-      }
-      if (mode === 'favorite') {
-        return isFavorited(mail.id);
-      }
+  mailList: MailT[],
+  index: Index,
+  keyword: string
+){
+  const searchResult = index.search(keyword);
+  const inSearchResult = (id: string) => searchResult.has(id);
 
-      return true;
+  const tagSet = tagToMailDict[tag];
+  const createByTag = (tag: string) => {
+    if (MEMBER_LIST.includes(tag as IZONE)) {
+      return (mail: RawMailT) => mail.member === tag;
+    }
+    return (mail: RawMailT) => tagSet.includes(mail.id);
+  };
+  const byTag = createByTag(tag);
+  const unreadSet = new Set(tagToMailDict[UNREAD]);
+  const favoriteSet = new Set(tagToMailDict[FAVORITE]);
+  
+  const allMailList = tag 
+    ? mailList.filter(mail => byTag(mail))
+    : mailList;
+
+  if (keyword === ''){
+    return {
+      'all': allMailList,
+      'unread': allMailList.filter((mail) => unreadSet.has(mail.id)),
+      'favorite': allMailList.filter((mail) => favoriteSet.has(mail.id))
     };
+  }
 
-    const byTag: (mail: RawMailT) => boolean = (mail) => {
-      if (MEMBER_LIST.includes(tag as IZONE)) {
-        return mail.member === tag;
-      }
-
-      if (tag === '' || tagToMailDict[tag] === undefined) {
-        return true;
-      }
-      return tagToMailDict[tag].includes(mail.id);
-    };
-
-    return (item: RawMailT) => byMode(item) && byTag(item);
+  return {
+    'all': allMailList.filter((mail) => inSearchResult(mail.id)),
+    'unread': allMailList.filter((mail) => unreadSet.has(mail.id) && inSearchResult(mail.id)),
+    'favorite': allMailList.filter((mail) => favoriteSet.has(mail.id) && inSearchResult(mail.id))
   };
 }

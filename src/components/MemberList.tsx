@@ -20,13 +20,7 @@ function MemberListItem({ name, text }: MemberListItemProps) {
         onClick={() => {
           setTag(name);
         }}
-        style={{
-          textAlign: 'left',
-          borderLeft: '3px solid ' + (selected ? '#ff69b4' : 'lightgrey'),
-          transition: 'border 125ms ease',
-          padding: '0.25rem'
-        }}
-        className="mb-2 p-1 pl-3"
+        className="member-item mb-2 p-1 pl-3 text-left border-l-3"
         aria-selected={selected}
       >
         <ProfileImage member={name} size="sm" /> {text}

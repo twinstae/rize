@@ -33,11 +33,7 @@ const ProfileImage: React.FC<Props> = ({ member, size, theme, className }) => {
   return (
     <Image
       path={getPath(member, theme)}
-      style={{
-        float: 'left',
-        borderRadius: '50%',
-      }}
-      className={className}
+      className={className + ' float-left rounded-full'}
       width={sizes[size]}
     />
   );

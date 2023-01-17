@@ -1,25 +1,29 @@
+import createRegexSearchIndex from 'src/search/createRegexSearchIndex';
 import { MEMBER_LIST } from '../constants';
-import { YURI_MAIL_M25752 } from '../test/fixtures';
+import { HITOMI_MAIL, YURI_MAIL_M25752 } from '../test/fixtures';
 import fakeMailRepository from './fakeMailRepository';
 import {
   addTagToMail,
-  filterByModeAndTag,
+  getFilteredMailResult,
   removeTagFromMail,
   reverseTagToMail,
-  TabMode,
   toOriginalName,
 } from './mailListModel';
-import { RawMailT } from './types';
+import { MailT } from './types';
+import { FAVORITE, UNREAD } from './useMailList';
 
 const tagToMailDict = {
   tag1: ['mail1', 'mail2'],
+  조유리: ['mail1', 'mail3'],
+  [UNREAD]: ['mail3'],
+  [FAVORITE]: ['mail1', 'mail2'],
 };
 
 it('reverseTagToMail', () => {
   const result = reverseTagToMail(tagToMailDict);
 
-  expect(result.get('mail1')).toEqual(['tag1']);
-  expect(result.get('mail2')).toEqual(['tag1']);
+  expect(result.get('mail1')).toEqual(['tag1', '조유리', FAVORITE]);
+  expect(result.get('mail2')).toEqual(['tag1', FAVORITE]);
 });
 
 it('addTagToMail: 기존 태그에 메일 추가', () => {
@@ -40,48 +44,99 @@ it('removeTagFromMail', () => {
   expect(result['tag1']).toEqual(['mail2']);
 });
 
-const UNREAD_UNFAVORITED_YURI_MAIL1: RawMailT = {
+const READ_FAVORITED_YURI_MAIL1: MailT = {
   ...YURI_MAIL_M25752,
   id: 'mail1',
 };
 
-const READ_FAVORITED_HITOMI_MAIL2: RawMailT = {
-  ...YURI_MAIL_M25752,
-  member: '혼다 히토미',
+const READ_FAVORITED_HITOMI_MAIL2: MailT = {
+  ...HITOMI_MAIL,
   id: 'mail2',
 };
 
-const UNREAD_UNFAVORITED_YURI_MAIL3: RawMailT = {
+const UNREAD_UNFAVORITED_YURI_MAIL3: MailT = {
   ...YURI_MAIL_M25752,
   id: 'mail3',
 };
 
-const testSuites: [string, [TabMode, string], [boolean, boolean, boolean]][] = [
-  ['both mode and tag', ['unread', 'tag1'], [true, false, false]],
-  ['only by tag', ['all', 'tag1'], [true, true, false]],
-  ['empty tag', ['all', 'not exists tag'], [true, true, true]],
-  ['by member tag', ['all', '조유리'], [true, false, true]],
-  ['only by mode', ['favorite', ''], [false, true, false]],
-  ['all', ['all', ''], [true, true, true]],
-];
-
-testSuites.forEach(([label, input, expected]) => {
-  it(label, () => {
-    const predicate = filterByModeAndTag(
-      tagToMailDict,
-      (mailId) => mailId === READ_FAVORITED_HITOMI_MAIL2.id,
-      (mailId) =>
-        mailId === UNREAD_UNFAVORITED_YURI_MAIL3.id ||
-        mailId === UNREAD_UNFAVORITED_YURI_MAIL1.id
-    )(...input);
-
-    expect(
-      [
-        UNREAD_UNFAVORITED_YURI_MAIL1,
+const testSuites: [
+  string,
+  [string, string],
+  {
+    all: MailT[];
+    favorite: MailT[];
+    unread: MailT[];
+  }
+][] = [
+  [
+    'both keyword and tag',
+    ['유리입니다', 'tag1'],
+    {
+      all: [READ_FAVORITED_YURI_MAIL1],
+      favorite: [READ_FAVORITED_YURI_MAIL1],
+      unread: [],
+    },
+  ],
+  [
+    'only by tag',
+    ['', 'tag1'],
+    {
+      all: [READ_FAVORITED_YURI_MAIL1, READ_FAVORITED_HITOMI_MAIL2],
+      favorite: [READ_FAVORITED_YURI_MAIL1, READ_FAVORITED_HITOMI_MAIL2],
+      unread: [],
+    },
+  ],
+  [
+    'empty tag',
+    ['', ''],
+    {
+      all: [
+        READ_FAVORITED_YURI_MAIL1,
         READ_FAVORITED_HITOMI_MAIL2,
         UNREAD_UNFAVORITED_YURI_MAIL3,
-      ].map(predicate)
-    ).toEqual(expected);
+      ],
+      favorite: [READ_FAVORITED_YURI_MAIL1, READ_FAVORITED_HITOMI_MAIL2],
+      unread: [UNREAD_UNFAVORITED_YURI_MAIL3],
+    },
+  ],
+  [
+    'by member tag',
+    ['', '조유리'],
+    {
+      all: [READ_FAVORITED_YURI_MAIL1, UNREAD_UNFAVORITED_YURI_MAIL3],
+      favorite: [READ_FAVORITED_YURI_MAIL1],
+      unread: [UNREAD_UNFAVORITED_YURI_MAIL3],
+    },
+  ],
+  [
+    'only by keyword',
+    ['유리입니다', ''],
+    {
+      all: [READ_FAVORITED_YURI_MAIL1, UNREAD_UNFAVORITED_YURI_MAIL3],
+      favorite: [READ_FAVORITED_YURI_MAIL1],
+      unread: [UNREAD_UNFAVORITED_YURI_MAIL3],
+    },
+  ],
+  ['all', ['all', ''], { all: [], favorite: [], unread: [] }],
+];
+
+testSuites.forEach(([label, [keyword, tag], expected]) => {
+  it(label, () => {
+    const MAIL_LIST = [
+      READ_FAVORITED_YURI_MAIL1,
+      READ_FAVORITED_HITOMI_MAIL2,
+      UNREAD_UNFAVORITED_YURI_MAIL3,
+    ];
+    const index = createRegexSearchIndex(MAIL_LIST);
+    const result = getFilteredMailResult(
+      tag,
+      tagToMailDict,
+      MAIL_LIST,
+      index,
+      keyword
+    );
+
+    expect(result).toEqual(expected);
   });
 });
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface ImageProps extends React.ComponentProps<'img'> {
   path: string;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
   width: number;
 }
 

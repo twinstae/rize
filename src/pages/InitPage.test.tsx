@@ -27,7 +27,7 @@ describe('InitPage', () => {
     expect(await screen.findByText('렌더!')).toBeInTheDocument();
   });
 
-  it('없는 파일이 있는 채로 upload 버튼을 누르면, 렌더되지 않는다.', async () => {
+  it('필요한 파일을 업로드하면 메일 목록 페이지로 넘어간다', async () => {
     updateFakeStatus({ 'pm_list.json': false });
     
     const { user, screen } = await render(<Story />);
@@ -38,13 +38,6 @@ describe('InitPage', () => {
     await user.click(uploadButton);
 
     expect(screen.queryByText('렌더!')).not.toBeInTheDocument();
-  });
-
-  it('필요한 파일을 업로드하면 메일 목록 페이지로 넘어간다', async () => {
-    updateFakeStatus({ 'pm_list.json': false });
-    
-    const { user, screen } = await render(<Story />);
-    expect(screen.queryByText('렌더!')).not.toBeInTheDocument();
 
     const file = new File([JSON.stringify(TEST_MAIL_LIST.slice(0,2), null, 2)], 'pm_list.json', {type: 'application/json'});
     file.text = async () => JSON.stringify(TEST_MAIL_LIST.slice(0,2), null, 2);
@@ -52,9 +45,6 @@ describe('InitPage', () => {
     const input = screen.getByLabelText(/pm_list.json/i) as HTMLInputElement;
     await user.upload(input, file);
     expect(input.files).toHaveLength(1);
-    const uploadButton = screen.getByRole('button', {
-      name: 'upload'
-    });
     await user.click(uploadButton);
     expect(await screen.findByText('렌더!')).toBeInTheDocument();
   });

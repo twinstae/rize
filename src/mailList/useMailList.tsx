@@ -5,6 +5,7 @@ import { atomsWithQuery } from 'jotai-tanstack-query';
 import { IZONE } from '../constants';
 import {
   addTagToMail,
+  getFilteredMailResult,
   removeTagFromMail,
   reverseTagToMail,
   toOriginalName,
@@ -137,37 +138,7 @@ export function createUseMailList(mailRepository: MailRepository) {
     const mailList = get(mailListAtom);
     const index = get(indexAtom);
     const keyword = get(keywordAtom);
-    const searchResult = index.search(keyword);
-    const inSearchResult = (id: string) => searchResult.has(id);
-
-    // const tagSet = tagToMailDict[tag];
-    const createByTag = (tag: string) => {
-      // if (MEMBER_LIST.includes(tag as IZONE)) {
-      return (mail: RawMailT) => mail.member === tag;
-      // }
-      // return (mail: RawMailT) => tagSet.includes(mail.id);
-    };
-    const byTag = createByTag(tag);
-    const unreadSet = new Set(tagToMailDict[UNREAD]);
-    const favoriteSet = new Set(tagToMailDict[FAVORITE]);
-    
-    const allMailList = tag 
-      ? mailList.filter(mail => byTag(mail))
-      : mailList;
-
-    if (keyword === ''){
-      return {
-        'all': allMailList,
-        'unread': allMailList.filter((mail) => unreadSet.has(mail.id)),
-        'favorite': allMailList.filter((mail) => favoriteSet.has(mail.id))
-      };
-    }
-
-    return {
-      'all': allMailList.filter((mail) => inSearchResult(mail.id)),
-      'unread': allMailList.filter((mail) => unreadSet.has(mail.id) && inSearchResult(mail.id)),
-      'favorite': allMailList.filter((mail) => favoriteSet.has(mail.id) && inSearchResult(mail.id))
-    };
+    return getFilteredMailResult(tag, tagToMailDict, mailList, index, keyword);
   });
 
   const currentModeAtom = atom<'all' | 'unread' | 'favorite'>('all');

@@ -28,10 +28,7 @@ function MailBody({ mailBody }: Props) {
       {parts.map((part, i) => (
         <div key={part + i}>
           <div
-            style={{
-              lineHeight: '1.6rem',
-              padding: '1rem',
-            }}
+            className="p-4 leading-6"
             dangerouslySetInnerHTML={{
               __html: part,
             }}
@@ -39,7 +36,7 @@ function MailBody({ mailBody }: Props) {
           {i < images.length && (
             <Image
               path={getPath(i)}
-              style={{ width: '100%', borderRadius: '0.5rem' }}
+              className="w-full rounded-lg"
               width={416}
             />
           )}

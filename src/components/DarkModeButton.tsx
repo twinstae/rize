@@ -11,14 +11,15 @@ export const RawDarkModeButton = () => {
   const { t } = useTranslation();
   const { isDark, toggleDark } = useDarkMode();
 
-  useHotkeys('ctrl+d', toggleDark, {
+  const key = 'ctrl+d';
+  useHotkeys(key, toggleDark, {
   }, [toggleDark]);
   return (
     <IconButtonWithTooltip
       onClick={() => toggleDark()}
       icon={isDark ? <MoonIcon /> : <SunIcon />}
       className="ml-3 tooltip-bottom"
-      aria-label={t(isDark ? strs.다크 : strs.밝게) + '(ctrl+d)'}
+      aria-label={`${t(isDark ? strs.다크 : strs.밝게)} (${key})`}
     />
   );
 };

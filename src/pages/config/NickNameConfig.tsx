@@ -40,9 +40,9 @@ function NickNameConfig() {
       </FormLabel>
       <div>
         <h4 className="font-bold">{t(strs.예시)}</h4>
-        <span>안녕 <strong>{beforeInput}</strong>, 오늘도 화이팅!</span>
+        <span>안녕 <strong>{before}</strong>, 오늘도 화이팅!</span>
         <br />
-        <span>안녕 <strong>{afterInput}</strong>, 오늘도 화이팅!</span>
+        <span>안녕 <strong>{after}</strong>, 오늘도 화이팅!</span>
       </div>
     </VStack>
   );

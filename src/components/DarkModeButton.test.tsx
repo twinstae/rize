@@ -12,9 +12,12 @@ describe('DarkModeButton', () => {
     const { user, screen } = await render(<RawDarkModeButton />);
 
     await user.click(screen.getByRole('button', { name: /밝게/ }));
-    await user.click(screen.getByRole('button', { name: /다크/ }));
+    
+    await user.click(screen.getByRole('button', { name: /\(ctrl\+d\)/ }));
 
-    screen.getByRole('button', { name: /밝게/ });
+    await user.keyboard('{Ctrl>}d');
+
+    await user.click(screen.getByRole('button', { name: /다크/ }));
   });
 
   it('DarkModeButton을 영어로 번역할 수 있다', async () => {

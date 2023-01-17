@@ -17,6 +17,13 @@ afterEach(() => {
 const oldError = console.error;
 
 console.error = (...args) => {
+  if(args[0].includes('Error: Uncaught')){
+    return;
+  }
+  if(args[0].includes('The above error occurred in the')){
+    return;
+  }
+  
   if(args[0].includes('Warning: ReactDOM.render is no longer supported in React 18')){
     return;
   }

@@ -27,15 +27,14 @@ function VirtualList<T>({ result, width, height, VirtualRowItem, fallback, estim
       style={{
         width,
         height,
-        overflowY: 'auto',
       }}
+      className="overflow-y-auto"
     >
       <ul
         style={{
           height: `${rowVirtualizer.getTotalSize()}px`,
-          width: '100%',
-          position: 'relative',
         }}
+        className="w-full relative"
       >
         {result.length !== 0 ? (
           rowVirtualizer.getVirtualItems().map((virtualItem) => (

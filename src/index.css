@@ -83,6 +83,13 @@ html[data-theme="izone"] {
   --er: 354, 79%, 49%;
 }
 
+.member-item[aria-selected="true"]{
+  border-color: hsl(var(--p) / var(--tw-bg-opacity));
+}
+.member-item[aria-selected="false"]{
+  border-color: lightgray;
+}
+
 .btn-primary, .badge-primary {
   --un-bg-opacity: 1;
   color: white !important;

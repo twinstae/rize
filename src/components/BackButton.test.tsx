@@ -16,5 +16,9 @@ describe('BackButton', () => {
 
     await user.click(screen.getByLabelText(ko.translation.돌아가기));
     expect(navigation.current()).toBe(paths.ROOT);
+
+    navigation.navigate(paths.CONFIG);
+    await user.keyboard('{Backspace}');
+    expect(navigation.current()).toBe(paths.ROOT);
   });
 });
