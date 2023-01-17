@@ -13,13 +13,15 @@ import Test from '../test/Test';
 import invariant from '../invariant';
 import toObject from '../toObject';
 import NonNullableValueObject from '../NonUndefinedObject';
+import ChatPage from '../pages/ChatPage';
 
 const activities = {
   Config: wrapLayout(Config),
   MailListPage: wrapLayout(MailListPage),
   MailDetailPage: wrapLayout(MailDetailPage),
   AlbumPage: wrapLayout(AlbumPage),
-  Test: wrapLayout(Test)
+  Test: wrapLayout(Test),
+  ChatPage: wrapLayout(ChatPage)
 };
 
 const activityNames = Object.keys(activities);
@@ -55,18 +57,23 @@ export const useStackNavigation = (): Navigation => {
   const navigate = (path: string) => {
     push(...parsePath(path));
   };
+  const redirect = (path: string) => replace(...parsePath(path), { animate: false });
   return {
     params: () => params,
     useSearchParams: () => {
       return [
         new URLSearchParams(NonNullableValueObject(params)),
-        (newInit: URLSearchParams) => replace(name as ActivityName, { ...params, ...toObject(newInit) }),
+        (newInit: URLSearchParams) => {
+          const searchParams = new URLSearchParams(NonNullableValueObject({ ...params, ...toObject(newInit) }));
+
+          redirect(name + '?' + searchParams.toString());
+        },
       ];
     },
     current: () => name as ActivityName,
     navigate,
     goBack: () => pop(),
-    redirect: (path: string) => replace(...parsePath(path), { animate: false }),
+    redirect,
     Link: (props: { className?: string, to: string; children: React.ReactNode }) =>
       React.createElement(
         'a',
