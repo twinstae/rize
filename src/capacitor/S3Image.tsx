@@ -51,7 +51,10 @@ const downloadFile = async (path: string): Promise<void> => {
   cache.set(path, src || '');
 };
 
-async function getCacheSrc(path: string): Promise<string>{
+async function getCacheSrc(path: string, width: number): Promise<string>{
+  if (path === '') {
+    return `https://via.placeholder.com/${width}`;
+  }
   if (cache.has(path)){
     const src = cache.get(path);
     invariant(src !== undefined);
@@ -64,14 +67,14 @@ async function getCacheSrc(path: string): Promise<string>{
 
   if(result){
     cache.set(path, Capacitor.convertFileSrc(result.uri));
-    return getCacheSrc(path);
+    return getCacheSrc(path, width);
   }
   void downloadFile(path);
   return encodeURI(ROOT + path.replace('img/', ''));
 }
 
 const ImageLoaded: React.FC<ImageProps> = ({ path, style, width }) => {
-  const src = suspend(() => getCacheSrc(path), ['image', path]);
+  const src = suspend(() => getCacheSrc(path, width), ['image', path, width]);
 
   return (
     <img
@@ -83,15 +86,6 @@ const ImageLoaded: React.FC<ImageProps> = ({ path, style, width }) => {
 };
 
 const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
-  if (path === '') {
-    return (
-      <img
-        src={`https://via.placeholder.com/${width}`}
-        width={width * 4}
-        style={style}
-      />
-    );
-  }
   return (
     <Suspense
       fallback={
