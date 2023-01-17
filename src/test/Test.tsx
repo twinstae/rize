@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import BackButton from '../components/BackButton';
 import { useDependencies } from '../hooks/Dependencies';
 import { useQuery } from '@tanstack/react-query';
-import initTest from './initTest';
+import initTest, { ResultT, testResultAtom } from './initTest';
 import { VStack } from '../components/rize-ui';
 import useNavigation from '../router/useNavigation';
 import useConfig from '../config/useConfig';
 import { RESET } from 'jotai/utils';
+import { useStore } from '@nanostores/react';
 
 const assert = (assertion: boolean, message: string) => {
   if (assertion === false) throw Error(message);
@@ -103,6 +104,38 @@ function Result({ suite: [message, run] }: { suite: Suite<DependenciesT> }) {
   );
 }
 
+function TestResult(){
+  const testResult: ResultT[] = useStore(testResultAtom);
+
+  if (testResult.length === 0) {
+    return <></>;
+  }
+  return (
+    <ul className="bg-base-100 shadow-lg ring-2 w-full overflow-y-scroll p-1 rounded-lg">
+      {testResult.map(result => (
+        <li key={result.message}>
+          {result.pass ? (
+            <>
+              <span className="text-green-600">PASS:</span> {result.message}
+            </>
+          ) : (
+            <>
+              <div tabIndex={0} className="collapse collapse-plus">
+                <div className="collapse-title text-xl font-medium">
+                  <span className="text-red-600">FAIL:</span> {result.message}
+                </div>
+                <div className="collapse-content break-words h-full"> 
+                  <p>{result.stack}</p>
+                </div>
+              </div>
+            </>
+          )} 
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function Test() {
   const [isError, setIsError] = useState(false);
   const { fsJSON } = useDependencies();
@@ -117,8 +150,10 @@ function Test() {
   }, [isError]);
 
   return (
-    <div>
-      <BackButton />
+    <VStack className="p-2">
+      <div className="p-1">
+        <BackButton />
+      </div>
       <ul>
         {testSuites?.map((suite) => (
           <Result suite={suite} key={suite[0]} />
@@ -132,7 +167,8 @@ function Test() {
           initTest({ navigation, writeJSONfile: fsJSON.writeJSONfile });
         }}>e2e 테스트 시작</button>
       </VStack>
-    </div>
+      <TestResult />
+    </VStack>
   );
 }
 
