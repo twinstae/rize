@@ -58,7 +58,7 @@ async function getCacheSrc(path: string, width: number): Promise<string>{
   if (cache.has(path)){
     const src = cache.get(path);
     invariant(src !== undefined);
-    return src.replace('http://192.168.219.107:5174//', 'http://localhost/');
+    return src.replace(`http://${location.hostname}:5174//`, 'http://localhost/');
   }
   const result = await Filesystem.stat({
     path: 'output/'+path,
@@ -73,7 +73,7 @@ async function getCacheSrc(path: string, width: number): Promise<string>{
   return encodeURI(ROOT + path.replace('img/', ''));
 }
 
-const ImageLoaded: React.FC<ImageProps> = ({ path, style, width }) => {
+const ImageLoaded: React.FC<ImageProps> = ({ path, style, width, ...props }) => {
   const src = suspend(() => getCacheSrc(path, width), ['image', path, width]);
 
   return (
@@ -81,11 +81,12 @@ const ImageLoaded: React.FC<ImageProps> = ({ path, style, width }) => {
       src={src}
       width={width * 4}
       style={style}
+      {...props}
     />
   );
 };
 
-const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
+const S3Image: React.FC<ImageProps> = ({ path, style, width, ...props }) => {
   return (
     <Suspense
       fallback={
@@ -93,10 +94,11 @@ const S3Image: React.FC<ImageProps> = ({ path, style, width }) => {
           src={`https://via.placeholder.com/${width}`}
           width={width * 4}
           style={style}
+          {...props}
         />
       }
     >
-      <ImageLoaded path={path} style={style} width={width} />
+      <ImageLoaded path={path} style={style} width={width} {...props}/>
     </Suspense>
   );
 };
