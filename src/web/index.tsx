@@ -26,30 +26,30 @@ const useMailList = createUseMailList(fakeMailRepository);
 const Image = MockImage;
 
 storageRepo.getItem('lang').then((lang) => {
-  i18n.changeLanguage(lang);
+	i18n.changeLanguage(lang);
 });
 
 const Wrapper = DependenciesWrapper({
-  usePlatform: () => {
-    useAtom(isSplashEndAtom);
-  },
-  storageRepo,
-  useNavigationImpl: useStackNavigation,
-  Image,
-  useColorMode,
-  fsJSON: fakeFsJSON,
-  mailRepository: fakeMailRepository,
-  useMailList,
-  useProfileList,
-  RizeLogo,
+	usePlatform: () => {
+		useAtom(isSplashEndAtom);
+	},
+	storageRepo,
+	useNavigationImpl: useStackNavigation,
+	Image,
+	useColorMode,
+	fsJSON: fakeFsJSON,
+	mailRepository: fakeMailRepository,
+	useMailList,
+	useProfileList,
+	RizeLogo,
 });
 
 const WebApp = (
-  <React.StrictMode>
-    <Wrapper>
-      <App />
-    </Wrapper>
-  </React.StrictMode>
+	<React.StrictMode>
+		<Wrapper>
+			<App />
+		</Wrapper>
+	</React.StrictMode>
 );
 
 export default WebApp;

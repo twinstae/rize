@@ -1,19 +1,19 @@
 type UsernameT = {
-  before: string;
-  after: string;
-  setBefore: (newBefore: string) => void;
-  setAfter: (newAfter: string) => void;
-  replaceUsername: (text: string) => string;
+	before: string;
+	after: string;
+	setBefore: (newBefore: string) => void;
+	setAfter: (newAfter: string) => void;
+	replaceUsername: (text: string) => string;
 };
 
 export interface StorageRepository<T> {
-  getItem: (key: string) => Promise<T | undefined>;
-  setItem: (key: string, value: T) => Promise<void>;
-  removeItem: (key: string) => Promise<void>;
+	getItem: (key: string) => Promise<T | undefined>;
+	setItem: (key: string, value: T) => Promise<void>;
+	removeItem: (key: string) => Promise<void>;
 }
 
 declare global {
-  interface Window {
-    __coverage__: unknown | undefined
-  }
+	interface Window {
+		__coverage__: unknown | undefined;
+	}
 }

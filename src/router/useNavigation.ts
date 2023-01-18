@@ -2,100 +2,102 @@ import React from 'react';
 import { useDependencies } from '../hooks/Dependencies';
 import paths from './paths';
 
-export type LinkProps = React.ComponentProps<'a'> & { to: string; children: React.ReactNode; className?: string }
+export type LinkProps = React.ComponentProps<'a'> & { to: string; children: React.ReactNode; className?: string };
 
 export interface Navigation {
-  params: () => Readonly<{ [key: string]: string | undefined }>;
-  useSearchParams: (defaultInit?: URLSearchParams) => readonly [
-    URLSearchParams,
-    (
-      nextInit: URLSearchParams,
-      navigateOptions?:
-        | {
-          replace?: boolean | undefined;
-          state?: unknown;
-        }
-        | undefined
-    ) => void
-  ];
-  current: () => string;
-  navigate: (path: string) => void;
-  goBack: () => void;
-  redirect: (path: string) => void;
-  Link: (props: LinkProps) => JSX.Element;
+	params: () => Readonly<{ [key: string]: string | undefined }>;
+	useSearchParams: (defaultInit?: URLSearchParams) => readonly [
+		URLSearchParams,
+		(
+			nextInit: URLSearchParams,
+			navigateOptions?:
+				| {
+						replace?: boolean | undefined;
+						state?: unknown;
+				  }
+				| undefined,
+		) => void,
+	];
+	current: () => string;
+	navigate: (path: string) => void;
+	goBack: () => void;
+	redirect: (path: string) => void;
+	Link: (props: LinkProps) => JSX.Element;
 }
 
 const history = [paths.ROOT];
 
 const searchParams = new URLSearchParams();
 const setSearchParams = (newInit: URLSearchParams) => {
-  [...searchParams.keys()].forEach((key) => {
-    searchParams.delete(key);
-  });
-  new URLSearchParams(newInit).forEach((value, key) =>
-    searchParams.set(key, value)
-  );
+	[...searchParams.keys()].forEach((key) => {
+		searchParams.delete(key);
+	});
+	new URLSearchParams(newInit).forEach((value, key) => searchParams.set(key, value));
 };
 
 const mutateHistory = (mutate: (old: typeof history) => void) => {
-  mutate(history);
-  setSearchParams(new URLSearchParams(history[history.length -1].split('?')[1]));
+	mutate(history);
+	setSearchParams(new URLSearchParams(history[history.length - 1].split('?')[1]));
 };
 
 const fakeNavigation = {
-  clear: () => {
-    mutateHistory((old) => { old.length = 0; old.push(paths.ROOT); });
-  },
-  params: () => {
-    const current = history[history.length - 1].split('?')[1];
-    return Object.fromEntries(new URLSearchParams(current).entries());
-  },
-  useSearchParams: () => {
-    return [
-      searchParams,
-      setSearchParams,
-    ];
-  },
-  current: () => {
-    return history[history.length - 1];
-  },
-  navigate: (path: string) => mutateHistory((old) => {
-    old.push(path);
-  }),
-  goBack: () => mutateHistory((old) => {
-    if(old.length > 1){
-      old.pop();
-    }
-  }),
-  redirect: (path: string) => mutateHistory((old) => {
-    old[old.length - 1] = path;
-  }),
-  Link: (props: LinkProps) =>
-    React.createElement(
-      'a',
-      {
-        href: props.to, onClick: (e: Event) => {
-          e.preventDefault();
-          mutateHistory((old) => {
-            old.push(props.to);
-          });
-        }
-      },
-      props.children
-    ),
+	clear: () => {
+		mutateHistory((old) => {
+			old.length = 0;
+			old.push(paths.ROOT);
+		});
+	},
+	params: () => {
+		const current = history[history.length - 1].split('?')[1];
+		return Object.fromEntries(new URLSearchParams(current).entries());
+	},
+	useSearchParams: () => {
+		return [searchParams, setSearchParams];
+	},
+	current: () => {
+		return history[history.length - 1];
+	},
+	navigate: (path: string) =>
+		mutateHistory((old) => {
+			old.push(path);
+		}),
+	goBack: () =>
+		mutateHistory((old) => {
+			if (old.length > 1) {
+				old.pop();
+			}
+		}),
+	redirect: (path: string) =>
+		mutateHistory((old) => {
+			old[old.length - 1] = path;
+		}),
+	Link: (props: LinkProps) =>
+		React.createElement(
+			'a',
+			{
+				href: props.to,
+				onClick: (e: Event) => {
+					e.preventDefault();
+					mutateHistory((old) => {
+						old.push(props.to);
+					});
+				},
+			},
+			props.children,
+		),
 } satisfies Navigation & { clear: () => void };
 export const useFakeNavigation = () => {
-  return fakeNavigation;
+	return fakeNavigation;
 };
 
 function useNavigation() {
-  return useDependencies().useNavigationImpl();
+	return useDependencies().useNavigationImpl();
 }
 
-export function useSearchParam(key: string){
-  const navigation = useNavigation();
-  const [searchParams] = navigation.useSearchParams();
-  return searchParams.get(key);
+export function useSearchParam(key: string) {
+	const navigation = useNavigation();
+	const [searchParams] = navigation.useSearchParams();
+	return searchParams.get(key);
 }
 
 export default useNavigation;

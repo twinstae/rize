@@ -27,30 +27,30 @@ const useMailList = createUseMailList(fsMailRepository);
 const Image = TauriImage;
 
 storageRepo.getItem('lang').then((lang) => {
-  i18n.changeLanguage(lang);
+	i18n.changeLanguage(lang);
 });
 
 const Wrapper = DependenciesWrapper({
-  usePlatform: () => {
-    useAtom(isSplashEndAtom);
-  },
-  storageRepo,
-  useNavigationImpl: useStackNavigation,
-  Image,
-  useColorMode,
-  fsJSON,
-  mailRepository: fsMailRepository,
-  useMailList,
-  useProfileList: useFsProfileList,
-  RizeLogo,
+	usePlatform: () => {
+		useAtom(isSplashEndAtom);
+	},
+	storageRepo,
+	useNavigationImpl: useStackNavigation,
+	Image,
+	useColorMode,
+	fsJSON,
+	mailRepository: fsMailRepository,
+	useMailList,
+	useProfileList: useFsProfileList,
+	RizeLogo,
 });
 
 const TauriApp = (
-  <React.StrictMode>
-    <Wrapper>
-      <App />
-    </Wrapper>
-  </React.StrictMode>
+	<React.StrictMode>
+		<Wrapper>
+			<App />
+		</Wrapper>
+	</React.StrictMode>
 );
 
 export default TauriApp;

@@ -16,12 +16,12 @@ import NonNullableValueObject from '../NonUndefinedObject';
 import ChatPage from '../pages/ChatPage';
 
 const activities = {
-  Config: wrapLayout(Config),
-  MailListPage: wrapLayout(MailListPage),
-  MailDetailPage: wrapLayout(MailDetailPage),
-  AlbumPage: wrapLayout(AlbumPage),
-  Test: wrapLayout(Test),
-  ChatPage: wrapLayout(ChatPage)
+	Config: wrapLayout(Config),
+	MailListPage: wrapLayout(MailListPage),
+	MailDetailPage: wrapLayout(MailDetailPage),
+	AlbumPage: wrapLayout(AlbumPage),
+	Test: wrapLayout(Test),
+	ChatPage: wrapLayout(ChatPage),
 };
 
 const activityNames = Object.keys(activities);
@@ -29,56 +29,61 @@ const activityNames = Object.keys(activities);
 type ActivityName = keyof typeof activities;
 
 export const { Stack, useFlow } = stackflow({
-  transitionDuration: 350,
-  activities,
-  initialActivity: () => 'MailListPage',
-  plugins: [
-    basicRendererPlugin(),
-    basicUIPlugin({
-      theme: 'cupertino',
-    }),
-  ],
+	transitionDuration: 350,
+	activities,
+	initialActivity: () => 'MailListPage',
+	plugins: [
+		basicRendererPlugin(),
+		basicUIPlugin({
+			theme: 'cupertino',
+		}),
+	],
 });
 
-export const parsePath = (
-  path: string
-): [ActivityName, Record<string, string>] => {
-  const [name, rawParams] = path.split('?');
-  const params = rawParams ? toObject(new URLSearchParams(rawParams)) : {};
-  invariant(name in activities, `${path} is not in activities.\n ${activityNames.join('\n')}`);
+export const parsePath = (path: string): [ActivityName, Record<string, string>] => {
+	const [name, rawParams] = path.split('?');
+	const params = rawParams ? toObject(new URLSearchParams(rawParams)) : {};
+	invariant(name in activities, `${path} is not in activities.\n ${activityNames.join('\n')}`);
 
-  return [name as ActivityName, params];
+	return [name as ActivityName, params];
 };
 
 export const useStackNavigation = (): Navigation => {
-  const { name, params } = useActivity();
-  const { push, pop, replace } = useFlow();
+	const { name, params } = useActivity();
+	const { push, pop, replace } = useFlow();
 
-  const navigate = (path: string) => {
-    push(...parsePath(path));
-  };
-  const redirect = (path: string) => replace(...parsePath(path), { animate: false });
-  return {
-    params: () => params,
-    useSearchParams: () => {
-      return [
-        new URLSearchParams(NonNullableValueObject(params)),
-        (newInit: URLSearchParams) => {
-          const searchParams = new URLSearchParams(NonNullableValueObject({ ...params, ...toObject(newInit) }));
+	const navigate = (path: string) => {
+		push(...parsePath(path));
+	};
+	const redirect = (path: string) => replace(...parsePath(path), { animate: false });
+	return {
+		params: () => params,
+		useSearchParams: () => {
+			return [
+				new URLSearchParams(NonNullableValueObject(params)),
+				(newInit: URLSearchParams) => {
+					const searchParams = new URLSearchParams(NonNullableValueObject({ ...params, ...toObject(newInit) }));
 
-          redirect(name + '?' + searchParams.toString());
-        },
-      ];
-    },
-    current: () => name as ActivityName,
-    navigate,
-    goBack: () => pop(),
-    redirect,
-    Link: (props: { className?: string, to: string; children: React.ReactNode }) =>
-      React.createElement(
-        'a',
-        { href: props.to, onClick: (e: React.MouseEvent) => { e.preventDefault(); navigate(props.to); }, className: props.className },
-        props.children
-      ),
-  };
+					redirect(name + '?' + searchParams.toString());
+				},
+			];
+		},
+		current: () => name as ActivityName,
+		navigate,
+		goBack: () => pop(),
+		redirect,
+		Link: (props: { className?: string; to: string; children: React.ReactNode }) =>
+			React.createElement(
+				'a',
+				{
+					href: props.to,
+					onClick: (e: React.MouseEvent) => {
+						e.preventDefault();
+						navigate(props.to);
+					},
+					className: props.className,
+				},
+				props.children,
+			),
+	};
 };

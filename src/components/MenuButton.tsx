@@ -7,19 +7,19 @@ import IconButtonWithTooltip from './IconButtonWithTooltip';
 import { drawlerContext } from './LeftDrawer';
 
 function MenuButton() {
-  const { t } = useTranslation();
-  const { handleOpen } = useContext(drawlerContext);
+	const { t } = useTranslation();
+	const { handleOpen } = useContext(drawlerContext);
 
-  return (
-    <IconButtonWithTooltip
-      onClick={() => {
-        handleOpen();
-      }}
-      icon={<HamBurgerIcon />}
-      className="tooltip-bottom drawer-button"
-      aria-label={t(strs.메뉴)}
-    />
-  );
+	return (
+		<IconButtonWithTooltip
+			onClick={() => {
+				handleOpen();
+			}}
+			icon={<HamBurgerIcon />}
+			className="tooltip-bottom drawer-button"
+			aria-label={t(strs.메뉴)}
+		/>
+	);
 }
 
 export default MenuButton;

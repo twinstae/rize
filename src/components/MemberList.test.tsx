@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import { MEMBER_LIST } from '../constants';
@@ -7,25 +6,24 @@ import SelectedTag from './SelectedTag';
 import { render } from './testUtil';
 
 describe('MemberList x SelectedTag', () => {
-  it('멤버를 클릭하면, 그 멤버의 태그가 선택된다', async () => {
-    const name = MEMBER_LIST[0];
-    const Story = () => {
-      return (
-        <div>
-          <SelectedTag />
-          <MemberList />
-        </div>
-      );
-    };
+	it('멤버를 클릭하면, 그 멤버의 태그가 선택된다', async () => {
+		const name = MEMBER_LIST[0];
+		const Story = () => {
+			return (
+				<div>
+					<SelectedTag />
+					<MemberList />
+				</div>
+			);
+		};
 
-    const { user, screen } = await render(<Story />);
-    const theMember = screen.getByText(name);
-    expect(theMember.getAttribute('aria-selected')).toBe('false');
+		const { user, screen } = await render(<Story />);
+		const theMember = screen.getByText(name);
+		expect(theMember.getAttribute('aria-selected')).toBe('false');
 
-    await user.click(theMember);
+		await user.click(theMember);
 
-    expect(screen.getByTestId('selected-tag')).toHaveTextContent(name);
-    expect(theMember.getAttribute('aria-selected')).toBe('true');
-
-  });
+		expect(screen.getByTestId('selected-tag')).toHaveTextContent(name);
+		expect(theMember.getAttribute('aria-selected')).toBe('true');
+	});
 });
