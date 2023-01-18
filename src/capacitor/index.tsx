@@ -31,19 +31,20 @@ const useMailList = createUseMailList(mailRepository);
 storageRepo.getItem('lang').then((lang) => {
   i18n.changeLanguage(lang);
 });
+let initiated = false;
 
 const Wrapper = DependenciesWrapper({
   usePlatform: () => {
     useAtom(isSplashEndAtom);
     const navigation = useNavigation();
     useEffect(() => {
-      App.addListener('backButton', () => {
-        navigation.goBack();
-      });
-
-      return () => {
-        App.removeAllListeners();
-      };
+      if (initiated === false){
+        App.addListener('backButton', () => {
+          navigation.goBack();
+        });
+        initiated = true;
+        console.log('here');
+      }
     });
   },
   storageRepo,
