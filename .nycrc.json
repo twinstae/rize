@@ -13,6 +13,7 @@
     "src/tauri/serverMailRepository.ts",
     "node_modules/**/*",
     "src/test/**/*",
+    "src/pages/ChatPage.tsx",
     "src/invariant.ts"
   ],
   "exclude-after-remap": false,

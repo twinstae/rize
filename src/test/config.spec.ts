@@ -12,18 +12,15 @@ test('설정 페이지', async ({ page }) => {
   const $toInput = page.getByLabel(ko.으로);
   await $toInput.click();
   await $toInput.fill('위즈');
-  await page.screenshot({ path: 'playwright/screenshot'+'/name.png' });
   await $toInput.fill('위즈원');
 
   // '언어 바꾸기'
   await page.getByRole('combobox', { name: ko.언어 }).selectOption('en');
-  await page.screenshot({ path: 'playwright/screenshot'+'/enghish.png' });
   await page.getByRole('combobox', { name: 'Languages' }).selectOption('ko');
 
   // '프로필 선택'
   await page.getByLabel('la-vie-en-rose').check();
   await page.getByLabel('instagram').check();
-  await page.screenshot({ path: 'playwright/screenshot'+'/profile.png' });
 
   await page.getByText('테스트 페이지 (개발자용)').click();  
   await page.getByRole('button', { name: '에러 일으키기' }).click();

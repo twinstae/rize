@@ -30,5 +30,20 @@ describe('MailDetailPage', () => {
 
     // mail image
     expect(screen.getAllByRole('img').at(-1)).toHaveAttribute('src', 'http://localhost:8000/img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg');
+
+    expect(screen.queryByLabelText('다음 메일 보기')).not.toBeInTheDocument();    
+  });
+  it('다음 메일이 있으면 다음 메일보기를 눌러서 다음 메일로 replace할 수 있다', async () => {
+    const { navigate, useSearchParams } = useFakeNavigation();
+    navigate(toMailDetail('m25700'));
+
+    const { user, screen } = await render(<MailDetailPage />);
+
+    screen.getByText('최예나');
+    await user.click(screen.getByRole('link', { name: '다음 메일 보기' }));
+
+    const [searchParams] = useSearchParams();
+    const NEXT_ID = 'm25672';
+    expect(searchParams.get('mailId')).toBe(NEXT_ID);
   });
 });

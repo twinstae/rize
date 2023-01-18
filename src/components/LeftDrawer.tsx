@@ -41,19 +41,21 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
     }
   }, [isOpen]);
   useHotkeys('Tab', (e) => {
-    invariant(drawerSideRef.current);
-    const nodes = drawerSideRef.current.querySelectorAll('*');
-    const tabbable = Array.from(nodes).filter(n => n instanceof HTMLElement && n.tabIndex >= 0) as HTMLElement[];
-
-    let index = document.activeElement ? tabbable.indexOf(document.activeElement as HTMLElement) : -1;
-    if (index === -1 && e.shiftKey) index = 0;
-
-    index += tabbable.length + (e.shiftKey ? -1 : 1);
-    index %= tabbable.length;
-
-    tabbable[index].focus();
-    e.preventDefault();
-  });
+    if (isOpen) {
+      invariant(drawerSideRef.current);
+      const nodes = drawerSideRef.current.querySelectorAll('*');
+      const tabbable = Array.from(nodes).filter(n => n instanceof HTMLElement && n.tabIndex >= 0) as HTMLElement[];
+  
+      let index = document.activeElement ? tabbable.indexOf(document.activeElement as HTMLElement) : -1;
+      if (index === -1 && e.shiftKey) index = 0;
+  
+      index += tabbable.length + (e.shiftKey ? -1 : 1);
+      index %= tabbable.length;
+  
+      tabbable[index].focus();
+      e.preventDefault();
+    }
+  }, [isOpen]);
   useHotkeys('Esc', () => handleClose());
   return (
     <div className="drawer bg-base-100 ">
@@ -63,7 +65,7 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
         } else {
           handleClose();
         }
-      }}/>
+      }} tabIndex={-1}/>
       <div className="drawer-content overflow-x-hidden">
         <drawlerContext.Provider value={{handleOpen}}>
           {children}

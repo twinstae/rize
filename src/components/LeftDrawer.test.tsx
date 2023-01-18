@@ -17,13 +17,19 @@ describe('LeftDrawler', () => {
 
     const openButton = screen.getByLabelText(ko.translation.메뉴);
     await user.click(openButton);
-    
+    openButton.focus();
+    await user.keyboard('{Enter}');
     const closeButton = screen.getByLabelText(ko.translation.닫기);
-    expect(closeButton).toHaveFocus();
     await user.click(closeButton);
-    expect(openButton).toHaveFocus();
+    const checkbox = screen.getByLabelText('close drawer') as HTMLInputElement;
+    expect(checkbox.checked).toBe(false);
+    await user.click(checkbox);
+    expect(checkbox.checked).toBe(true);
+    await user.click(checkbox);
+    expect(checkbox.checked).toBe(false);
   });
-  it('LeftDrawler는 focus lock이 걸린다', async () => {
+
+  it('LeftDrawler가 열리면 focus lock이 걸린다', async () => {
     const { user, screen } = await render(
       <LeftDrawler>
         <MenuButton />
@@ -31,7 +37,8 @@ describe('LeftDrawler', () => {
     );
 
     const openButton = screen.getByLabelText(ko.translation.메뉴);
-    await user.click(openButton);
+    openButton.focus();
+    await user.keyboard('{Enter}');
     const closeButton = screen.getByLabelText(ko.translation.닫기);
     screen.getByRole('link', { name: ko.translation.설정 }).focus();
     await user.tab();
@@ -44,6 +51,10 @@ describe('LeftDrawler', () => {
     await user.tab();
     expect(closeButton).toHaveFocus();
     await user.keyboard('{Escape}');
+    expect(openButton).toHaveFocus();
+
+    await user.tab();
+    await user.tab({ shift: true });
     expect(openButton).toHaveFocus();
   });
 });

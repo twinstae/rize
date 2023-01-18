@@ -73,8 +73,8 @@ rize.test('멤버로 필터할 수 있다', async () => {
 
 rize.test('테마를 바꿀 수 있다', async () => {
   const page = getPageByPath(paths.MAIL_LIST);
-  await page('button', ko.밝게 + '(ctrl+d)').click();
-  await page('button', ko.다크 + '(ctrl+d)').click();
+  await page('button', ko.밝게 + ' (ctrl+d)').click();
+  await page('button', ko.다크 + ' (ctrl+d)').click();
 });
 
 rize.test('메일을 검색할 수 있다.', async () => {

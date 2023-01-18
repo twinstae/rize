@@ -32,9 +32,10 @@ function VirtualList<T>({ result, width, height, VirtualRowItem, fallback, estim
     >
       <ul
         style={{
+          width,
           height: `${rowVirtualizer.getTotalSize()}px`,
         }}
-        className="w-full relative"
+        className="relative"
       >
         {result.length !== 0 ? (
           rowVirtualizer.getVirtualItems().map((virtualItem) => (

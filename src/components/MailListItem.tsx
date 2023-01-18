@@ -8,7 +8,7 @@ import FavoriteStar from './FavoriteStar';
 import ProfileImage from './ProfileImage';
 import TagList from './TagList';
 import { useMailList, useTags } from '../hooks/Dependencies';
-import highlight from 'src/search/highlight';
+import highlight from '../search/highlight';
 
 interface MailListItemProps {
   mail: RawMailT & MailBodyT & { bodyText: string };
