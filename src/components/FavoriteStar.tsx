@@ -23,12 +23,15 @@ function FavoriteStar({ mailId }: FavoriteStarProps) {
 
 	return (
 		<IconButtonWithTooltip
-			className="rounded-full top-0 right-0 absolute tooltip-left"
-			onClick={(e) => {
+			className="top-0 right-0 absolute"
+			onClick={(e: React.MouseEvent) => {
 				e.preventDefault();
 				e.stopPropagation();
 				toggleFavorite();
 			}}
+			direction="left"
+			circle="circle"
+			size="sm"
 			icon={mailIsFavorited ? <StarIcon className="text-yellow-400" /> : <EmptyStarIcon className="text-slate-400" />}
 			aria-label={mailIsFavorited ? '중요 취소' : '중요 표시'}
 		/>

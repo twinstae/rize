@@ -16,7 +16,9 @@ function MenuButton() {
 				handleOpen();
 			}}
 			icon={<HamBurgerIcon />}
-			className="tooltip-bottom drawer-button"
+			direction="bottom"
+			className="drawer-button"
+			size="sm"
 			aria-label={t(strs.메뉴)}
 		/>
 	);

@@ -91,7 +91,9 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 							ref={closeButtonRef}
 							onClick={() => handleClose()}
 							icon={<XMarkIcon />}
-							className="tooltip-bottom drawer-button right-0 top-0 p-0 focus:border-2 focus:border-primary"
+							className="drawer-button right-0 top-0 p-0 focus:border-2 focus:border-primary"
+							direction="bottom"
+							circle="circle"
 							aria-label={t(strs.닫기)}
 						/>
 					</HStack>

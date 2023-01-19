@@ -73,7 +73,7 @@
         "assetScope": ["$DOWNLOAD/output/img/**/*"]
       },
       "shell": {
-        "open": "https://open.kakao.com/o/gPbArZ4c"
+        "open": true
       },
       "dialog": {
         "all": true

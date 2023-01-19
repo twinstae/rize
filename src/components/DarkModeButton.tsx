@@ -17,7 +17,9 @@ export const RawDarkModeButton = () => {
 		<IconButtonWithTooltip
 			onClick={() => toggleDark()}
 			icon={isDark ? <MoonIcon /> : <SunIcon />}
-			className="ml-3 tooltip-bottom"
+			className="ml-3"
+			direction="bottom"
+			size="sm"
 			aria-label={`${t(isDark ? strs.다크 : strs.밝게)} (${key})`}
 		/>
 	);

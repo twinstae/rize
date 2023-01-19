@@ -1,3 +1,4 @@
+import type { JSXElementConstructor } from 'react';
 type UsernameT = {
 	before: string;
 	after: string;
@@ -11,6 +12,9 @@ export interface StorageRepository<T> {
 	setItem: (key: string, value: T) => Promise<void>;
 	removeItem: (key: string) => Promise<void>;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RizeReactElement =keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 
 declare global {
 	interface Window {
