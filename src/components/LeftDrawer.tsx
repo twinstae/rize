@@ -69,7 +69,7 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 				type="checkbox"
 				className="drawer-toggle"
 				onChange={(e) => {
-					if (e.target.checked) {
+					if (e.currentTarget.checked) {
 						handleOpen();
 					} else {
 						handleClose();

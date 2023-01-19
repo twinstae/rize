@@ -10,7 +10,7 @@ function LangConfig() {
 	const { t } = useTranslation();
 	return (
 		<div className="card bg-base-100 ring-1 ring-slate-300 shadow-xl p-4">
-			<ConfigHeading title={t(strs.언어_선택하기) + ' : ' + lang} />
+			<ConfigHeading title={`${t(strs.언어_선택하기)} : ${lang}`} />
 			<label>
 				{t(strs.언어)}{' '}
 				{lang && (
@@ -18,7 +18,7 @@ function LangConfig() {
 						className="select select-bordered select-sm"
 						defaultValue={lang}
 						onChange={(e) => {
-							setLang(e.target.value);
+							setLang(e.currentTarget.value);
 						}}
 					>
 						{langList.map((value) => (

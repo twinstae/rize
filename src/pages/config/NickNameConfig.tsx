@@ -21,8 +21,8 @@ function NickNameConfig() {
 					className="input-sm"
 					value={beforeInput}
 					onChange={(e) => {
-						setBeforeInput(e.target.value);
-						setBefore(e.target.value);
+						setBeforeInput(e.currentTarget.value);
+						setBefore(e.currentTarget.value);
 					}}
 				/>
 				<span className="label-text">{t(strs.에서)}</span>
@@ -32,8 +32,8 @@ function NickNameConfig() {
 					className="input-sm"
 					value={afterInput}
 					onChange={(e) => {
-						setAfterInput(e.target.value);
-						setAfter(e.target.value);
+						setAfterInput(e.currentTarget.value);
+						setAfter(e.currentTarget.value);
 					}}
 				/>
 				<span className="label-text">{t(strs.으로)}</span>

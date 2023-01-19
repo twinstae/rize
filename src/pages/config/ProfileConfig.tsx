@@ -23,7 +23,7 @@ function ThemeRadio({ theme }: { theme: string }) {
 					id={`${theme}-radio`}
 					name="theme"
 					onChange={(e) => {
-						invariant(e.target.checked);
+						invariant(e.currentTarget.checked);
 						setProfile(theme);
 					}}
 					checked={profile === theme}
