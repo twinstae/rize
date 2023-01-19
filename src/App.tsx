@@ -1,5 +1,5 @@
-import '../i18n/i18n';
-import '../index.css';
+import './i18n/i18n';
+import './index.css';
 // daisyUI assumes Tailwind CSS's Preflight
 import '@unocss/reset/tailwind.css';
 // Import daisyUI **BEFORE** UnoCSS
