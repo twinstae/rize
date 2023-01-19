@@ -26,8 +26,8 @@ const useConfigAtom = <JsonValue>(key: string, initialValue: JsonValue) => {
 				async removeItem(key) {
 					return storageRepo.removeItem(key);
 				},
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			})),
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		) as any;
 	}
 	return atomDict[key];

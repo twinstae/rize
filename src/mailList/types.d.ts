@@ -3,13 +3,13 @@ import { JsonValue } from '../types/json';
 
 export type RawMailT = {
 	id: string;
-	member: IZONE | '운영팀';
+	member: string;
 	time: string;
 	subject: string;
 	preview: string;
 };
 
-export type MailT = RawMailT & MailBodyT & { bodyText: string };
+export type MailT = RawMailT & MailBodyT & { member: IZONE | '운영팀', bodyText: string };
 
 export type MailBodyT = {
 	body: string;

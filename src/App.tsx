@@ -12,6 +12,11 @@ function ErrorFallback({ error }: { error: Error }) {
 			<p className="text-xs" style={{ wordWrap: 'break-word' }}>
 				{error.stack}
 			</p>
+			문제가 있다면{' '}
+			<a href="https://open.kakao.com/o/gPbArZ4c" target="_blank" rel="noreferrer" className="link text-pink-500">
+				AS 오픈카톡방
+			</a>
+			을 찾아주세요.
 			<button
 				className="btn btn-primary"
 				onClick={() => {

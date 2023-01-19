@@ -25,6 +25,7 @@
     "@xstate/test": "^0.5.1",
     "@zag-js/react": "^0.3.3",
     "@zag-js/tabs": "^0.2.6",
+    "ajv": "^8.12.0",
     "daisyui": "^2.47.0",
     "flexsearch": "0.7.21",
     "framer-motion": "^8.3.4",
@@ -42,7 +43,9 @@
     "react-router-dom": "^6.6.2",
     "suspend-react": "^0.0.9",
     "unocss-preset-daisy": "^1.2.0",
-    "xstate": "^4.35.2"
+    "xstate": "^4.35.2",
+    "zod": "^3.20.2",
+    "zod-to-json-schema": "^3.20.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

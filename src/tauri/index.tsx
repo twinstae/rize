@@ -15,20 +15,24 @@ import { useColorMode, DependenciesWrapper } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 import { useStackNavigation } from '../router/useStatckNavigation';
-import fsJSON from './fsJSON';
-import fsMailRepository from './fsMailRepository';
-import fsStorageRepo from './fsStorageRepo';
+// import fsJSON from './fsJSON';
+// import fsMailRepository from './fsMailRepository';
+// import fsStorageRepo from './fsStorageRepo';
 import TauriImage from './TauriImage';
 import { useAtom } from 'jotai';
 import { isSplashEndAtom } from '../hooks/splashEndAtom';
 import useFsProfileList from './useFsProfileList';
-const storageRepo = fsStorageRepo;
-const useMailList = createUseMailList(fsMailRepository);
+import fakeMailRepository, { fakeFsJSON, updateFakeStatus } from '../mailList/fakeMailRepository';
+import fakeStorageRepo from '../config/fakeStorageRepo';
+const storageRepo = fakeStorageRepo;
+const useMailList = createUseMailList(fakeMailRepository);
 const Image = TauriImage;
 
 storageRepo.getItem('lang').then((lang) => {
 	i18n.changeLanguage(lang);
 });
+
+updateFakeStatus({ 'pm_list.json': false });
 
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => {
@@ -38,8 +42,8 @@ const Wrapper = DependenciesWrapper({
 	useNavigationImpl: useStackNavigation,
 	Image,
 	useColorMode,
-	fsJSON,
-	mailRepository: fsMailRepository,
+	fsJSON: fakeFsJSON,
+	mailRepository: fakeMailRepository,
 	useMailList,
 	useProfileList: useFsProfileList,
 	RizeLogo,

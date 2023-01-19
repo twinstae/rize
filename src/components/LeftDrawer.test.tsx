@@ -34,7 +34,7 @@ describe('LeftDrawler', () => {
 			</LeftDrawler>,
 		);
 
-		const openButton = screen.getByLabelText(ko.translation.메뉴);
+		const openButton = await screen.findByLabelText(ko.translation.메뉴);
 		openButton.focus();
 		await user.keyboard('{Enter}');
 		const closeButton = screen.getByLabelText(ko.translation.닫기);

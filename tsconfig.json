@@ -19,6 +19,7 @@
       "sourceMap": true,
       "paths": {
         "@App/*": ["./src/web/*"],
+				"@rize/alert": ["./src/error/fakeRizeAlert.ts"]
       },
       "baseUrl": "./"
     },

@@ -5,6 +5,9 @@ import { fileList } from '../mailList/fakeMailRepository';
 import { useQueryClient } from '@tanstack/react-query';
 import { splashEnd } from '../hooks/splashEndAtom';
 import invariant from '../invariant';
+import { z } from 'zod';
+import { rawMailSchema } from '../mailList/schema';
+import { rizeAlert } from '@rize/alert';
 
 const InitPage = () => {
 	const { fsJSON, RizeLogo } = useDependencies();
@@ -87,14 +90,38 @@ const InitPage = () => {
 										{name}
 										<input
 											type="file"
-											disabled={value}
-											onChange={(e) => {
-												const files = (e.currentTarget as HTMLInputElement).files;
+											accept="application/json"
+											onChange={(event) => {
+												const input = event.currentTarget as HTMLInputElement;
+												const files = input.files;
 												invariant(files);
-												setUploaded((old) => ({
-													...old,
-													[name]: files.length > 0,
-												}));
+												invariant(files.length > 0);
+												files[0].text()
+													.then(text => {
+														if (name !== files[0].name) {
+															throw Error('파일 명이 다릅니다');
+														}
+														const data = JSON.parse(text);
+														const result = z.array(rawMailSchema).safeParse(data);
+														if(result.success){
+															setUploaded((old) => ({
+																...old,
+																[name]: true
+															}));
+														} else {
+															throw Error(result.error.errors[0].path.join(' -> ') + ' 에서 ' + result.error.errors[0].code + ' ' + result.error.errors[0].message);
+														}
+													})
+													.catch(error =>{
+														if (error.message.includes('JSON')){
+															rizeAlert('JSON 파일이 깨져서 읽을 수 없습니다. \n' + error.message);
+														} else {
+															rizeAlert(error.message);
+														}
+														
+														input.value = '';
+													});
+												
 											}}
 										/>
 									</label>

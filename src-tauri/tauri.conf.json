@@ -74,6 +74,9 @@
       },
       "shell": {
         "open": "https://open.kakao.com/o/gPbArZ4c"
+      },
+      "dialog": {
+        "all": true
       }
     },
     "security": {
