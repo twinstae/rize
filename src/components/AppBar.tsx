@@ -42,7 +42,6 @@ function AppBar() {
 			<div className="flex-1 relative">
 				<input
 					id="search-bar"
-					autoFocus
 					type="text"
 					className="input input-bordered input-sm p-1 rounded w-full"
 					placeholder={t(strs.검색하기)}
