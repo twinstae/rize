@@ -1,8 +1,8 @@
-import { Document } from 'flexsearch';
+import { Document as FlexDocument } from 'flexsearch';
 import type { CreateIndex, IndexMail } from './types';
 
 const createFlexSearchIndex: CreateIndex = (mailList: IndexMail[]) => {
-	const docIndex = new Document({
+	const docIndex = new FlexDocument({
 		document: {
 			id: '', // 'id'
 			index: ['subject', 'body'],
