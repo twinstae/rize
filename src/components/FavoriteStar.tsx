@@ -13,14 +13,12 @@ interface FavoriteStarProps {
 
 function FavoriteStar({ mailId }: FavoriteStarProps) {
 	const { t } = useTranslation();
-	const { addTagToMail, removeTagFromMail, isFavorited } = useTags();
-	const mailIsFavorited = isFavorited(mailId);
+	const { useToggleTagToMail, useIsFavorited } = useTags();
+	const toggleTagToMail = useToggleTagToMail();
+	const mailIsFavorited = useIsFavorited(mailId);
+
 	const toggleFavorite = () => {
-		if (mailIsFavorited) {
-			removeTagFromMail(FAVORITE, mailId);
-		} else {
-			addTagToMail(FAVORITE, mailId);
-		}
+		toggleTagToMail(FAVORITE, mailId);
 	};
 
 	return (

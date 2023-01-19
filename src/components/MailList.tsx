@@ -12,7 +12,7 @@ interface Props {
 const height = window.innerHeight - rem(5.5);
 
 function MailList({ index }: Props) {
-	const result = useMailList().mailList()[modes[index]];
+	const result = useMailList().mailList(modes[index]);
 	// The virtualizer
 	return (
 		<VirtualList

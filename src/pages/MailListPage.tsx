@@ -22,7 +22,7 @@ function MailListPage() {
 				data={modes}
 				value={(mode) => mode}
 				Label={({ index }) => {
-					const result = useMailList().mailList()[modes[index]];
+					const result = useMailList().mailList(modes[index]);
 
 					return (
 						<span className="text-md">

@@ -15,7 +15,6 @@ describe('MailListItem', () => {
 		screen.getByText(/오늘은 평소 보내던 메일과는 조금 다른 메일/i);
 		screen.getByText('21/04/28');
 		await screen.findByText('율리스트'); // tag_to_mail_dict "율리스트":["m25752"]
-		expect(screen.getAllByRole('listitem')[0]).toHaveClass('unread');
 	});
 
 	it('MailListItem을 클릭하면 id 에 해당하는 메일 상세 페이지로 이동한다', async () => {

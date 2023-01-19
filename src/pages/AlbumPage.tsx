@@ -19,11 +19,11 @@ function chunk<T>(arr: Array<T>, count: number): Array<Array<T>> {
 function AlbumPage() {
 	const { Image } = useDependencies();
 	const [mode] = useMailList().useCurrentMode();
-	const mailList = useMailList().mailList();
+	const mailList = useMailList().mailList(mode);
 	const { Link } = useNavigation();
 
 	const result = chunk(
-		mailList[mode].flatMap((mail) => mail.images.map((image) => ({ image, mailId: mail.id, time: mail.time }))),
+		mailList.flatMap((mail) => mail.images.map((image) => ({ image, mailId: mail.id, time: mail.time }))),
 		4,
 	);
 
@@ -54,9 +54,9 @@ function AlbumPage() {
 						</span>
 						{result[virtualItem.index].map(({ image, mailId }, i) => (
 							<Link
-								key={i}
+								key={`${mailId}-${i}`}
 								to={toMailDetail(mailId)}
-								aria-label={mailId + ' 메일로 이동'}
+								aria-label={`${mailId} 메일로 이동`}
 								className="focus:ring-3 w-1/4"
 							>
 								<Image

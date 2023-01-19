@@ -1,5 +1,5 @@
-import { atom, useAtom, useAtomValue } from 'jotai';
-import { waitForAll } from 'jotai/utils';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { selectAtom, waitForAll } from 'jotai/utils';
 import { atomsWithQuery } from 'jotai-tanstack-query';
 
 import { IZONE } from '../constants';
@@ -16,26 +16,24 @@ import { currentTagAtom } from './useTag';
 import atomWithAsyncInit from '../hooks/atomWithAsyncInit';
 import filterTruthy from '../filterTruthy';
 import invariant from '../invariant';
+import { useCallback } from 'react';
+
+type Mode = 'all' | 'unread' | 'favorite';
 
 export interface MailListResult {
 	waitForAll: () => void;
-	mailList: () => {
-		all: MailT[];
-		unread: MailT[];
-		favorite: MailT[];
-	};
+	mailList: (mode: Mode) => MailT[];
 	useMailById: (id: string) => MailT | undefined;
 	useToOriginalName: () => (member: string) => IZONE | '운영팀';
 	useStatus: () => { [fileName: string]: boolean | undefined };
-	useCurrentMode: () => ['all' | 'unread' | 'favorite', (mode: 'all' | 'unread' | 'favorite') => void];
+	useCurrentMode: () => [Mode, (mode: Mode) => void];
 	useCurrentMailList: () => MailT[];
 	useTags: () => {
-		tagToMailDict: Record<string, string[]>;
-		isFavorited: (mailId: string) => boolean;
-		isUnread: (mailId: string) => boolean;
+		useTagToMailDict: () => Record<string, string[]>;
+		useIsFavorited: (mailId: string) => boolean;
+		useIsUnread: (mailId: string) => boolean;
 		useMailTags: (mailId: string) => string[];
-		addTagToMail: (tag: string, mail: string) => void;
-		removeTagFromMail: (tag: string, mail: string) => void;
+		useToggleTagToMail: () => (tag: string, mail: string) => void;
 	};
 	useSearch: () => [string, (keyword: string) => void];
 }
@@ -112,26 +110,35 @@ export function createUseMailList(mailRepository: MailRepository) {
 		);
 	});
 
+	const unreadAtom = selectAtom(tagToMailDictAtom, (tagToMailDict) => new Set(tagToMailDict[UNREAD]));
+	const favoriteAtom = selectAtom(tagToMailDictAtom, (tagToMailDict) => new Set(tagToMailDict[FAVORITE]));
+
 	const useTags = () => {
-		const [tagToMailDict, setTagToMailDict] = useAtom(tagToMailDictAtom);
-		const dict = useAtomValue(mailToTagDictAtom);
-
-		const unreadSet = new Set(tagToMailDict[UNREAD]);
-		const favoriteSet = new Set(tagToMailDict[FAVORITE]);
-
 		return {
-			tagToMailDict,
-			isFavorited: (mailId: string) => favoriteSet.has(mailId),
-			isUnread: (mailId: string) => unreadSet.has(mailId),
-			useMailTags: (mailId: string) => {
-				const tags = dict.get(mailId);
-				return tags ?? [];
+			useTagToMailDict() {
+				return useAtomValue(tagToMailDictAtom);
 			},
-			addTagToMail: (tag: string, targetMailId: string) => {
-				setTagToMailDict(addTagToMail(tag, targetMailId));
+			useIsFavorited(mailId: string) {
+				return useAtomValue(selectAtom(favoriteAtom, useCallback((favoriteSet) => favoriteSet.has(mailId), [mailId])));
 			},
-			removeTagFromMail: (tag: string, targetMailId: string) => {
-				setTagToMailDict(removeTagFromMail(tag, targetMailId));
+			useIsUnread(mailId: string) {
+				return useAtomValue(selectAtom(unreadAtom, useCallback((unreadSet) => unreadSet.has(mailId), [mailId])));
+			},
+			useMailTags(mailId: string) {
+				return useAtomValue(selectAtom(mailToTagDictAtom, useCallback((dict) =>  dict.get(mailId) ?? [], [mailId])));
+			},
+			useToggleTagToMail() {
+				const setTagToMailDict = useSetAtom(tagToMailDictAtom);
+				
+				return (tag: string, targetMailId: string) => {
+					setTagToMailDict((tagToMailDict: Record<string, string[]>) => {
+						if (tagToMailDict[tag].includes(targetMailId)){
+							return removeTagFromMail(tag, targetMailId);
+						} else {
+							return addTagToMail(tag, targetMailId);
+						}
+					});
+				};
 			},
 		};
 	};
@@ -167,7 +174,17 @@ export function createUseMailList(mailRepository: MailRepository) {
 			waitForAll: () => {
 				useAtomValue(waitForAll([statusAtom, waitAtom, filtertedMailListAtom]));
 			},
-			mailList: () => useAtomValue(filtertedMailListAtom),
+			mailList: (mode: 'all' | 'unread' | 'favorite') => {
+				return useAtomValue(selectAtom(filtertedMailListAtom, useCallback(({all, unread, favorite}) => {
+					if (mode === 'unread'){
+						return unread;
+					}
+					if (mode === 'favorite'){
+						return favorite;
+					}
+					return all;
+				}, [mode])));
+			},
 			useCurrentMode: () => useAtom(currentModeAtom),
 			useCurrentMailList: () => useAtomValue(currentMailListAtom),
 			useMailById: (id) => {
