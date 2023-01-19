@@ -18,17 +18,18 @@ function chunk<T>(arr: Array<T>, count: number): Array<Array<T>> {
 
 function AlbumPage() {
 	const { Image } = useDependencies();
-	const { all } = useMailList().mailList();
+	const [mode] = useMailList().useCurrentMode();
+	const mailList = useMailList().mailList();
 	const { Link } = useNavigation();
 
 	const result = chunk(
-		all.flatMap((mail) => mail.images.map((image) => ({ image, mailId: mail.id, time: mail.time }))),
+		mailList[mode].flatMap((mail) => mail.images.map((image) => ({ image, mailId: mail.id, time: mail.time }))),
 		4,
 	);
 
 	return (
 		<VStack className="relative bg-base-100">
-			<BackButton direction="top" className="absolute bottom-2 right-4 btn-primary p-2 btn-circle" />
+			<BackButton direction="top" variant="primary" circle="circle" className="absolute bottom-2 right-4" />
 			<VirtualList
 				result={result}
 				width={window.innerWidth}
