@@ -39,23 +39,35 @@ function AppBar() {
 			<label htmlFor="search-bar" className="flex flex-row justify-between align-middle items-center">
 				<span className="p-2 font-bold">{t(strs.검색)}</span>
 			</label>
-			<input
-				id="search-bar"
-				autoFocus
-				type="text"
-				className="flex-1 input input-bordered input-sm p-1 rounded"
-				placeholder={t(strs.검색하기)}
-				onKeyUp={handleKeyUp}
-				value={keywordInput}
-				onChange={(e) => {
-					setKeywordInput(e.target.value);
-				}}
-			/>
+			<div className="flex-1 relative">
+				<input
+					id="search-bar"
+					autoFocus
+					type="text"
+					className="input input-bordered input-sm p-1 rounded w-full"
+					placeholder={t(strs.검색하기)}
+					onKeyUp={handleKeyUp}
+					value={keywordInput}
+					onChange={(e) => {
+						setKeywordInput(e.target.value);
+					}}
+				/>
+				{keywordInput && <IconButtonWithTooltip
+					onClick={() => {
+						setKeywordInput('');
+					}}
+					variant='ghost'
+					size="sm"
+					className="absolute right-1 tooltip-bottom text-red-600"
+					aria-label="검색창 지우기"
+					icon={<XMarkIcon />}
+				/>}
+			</div>
 			<IconButtonWithTooltip
 				onClick={() => {
 					handleClose();
 				}}
-				className="tooltip-bottom"
+				direction="bottom"
 				aria-label={t(strs.검색창_닫기)}
 				icon={<XMarkIcon />}
 			/>
@@ -72,7 +84,7 @@ function AppBar() {
 				onClick={() => {
 					setIsOpen(true);
 				}}
-				className="ml-2 tooltip-bottom"
+				direction="bottom"
 				icon={<MagnifyingGlassIcon />}
 				aria-label={t(strs.검색)}
 			/>
