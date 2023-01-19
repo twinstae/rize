@@ -35,7 +35,8 @@ function HStack({ className, children, ...props }: React.ComponentProps<'div'>) 
 	);
 }
 
-export type ButtonProps<T extends React.ElementType> = { as?: T; variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle', className?: string, children?: React.ReactNode | React.ReactNode[] };
+export type ButtonProps<T extends React.ElementType> = { as?: T; variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle', className?: string, children?: React.ReactNode | React.ReactNode[] }
+	& React.ComponentProps<T>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Button = polymorphicForwardRef(function Button<T extends React.ElementType>({

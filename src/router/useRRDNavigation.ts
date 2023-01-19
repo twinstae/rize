@@ -19,7 +19,7 @@ const useRRDNavigation = (): Navigation => {
 		redirect: (path: string) => {
 			navigate(path, { replace: true });
 		},
-		Link: ({ className, to, children }: LinkProps) => React.createElement(Link, { to, className }, children),
+		Link: ({ className, to, children, ...props }: LinkProps) => React.createElement(Link, { to, className, 'aria-label': props['aria-label'] }, children),
 	};
 };
 

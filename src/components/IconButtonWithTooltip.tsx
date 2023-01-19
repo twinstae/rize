@@ -13,13 +13,12 @@ type IconButtonWithTooltipComponentProps<T extends React.ElementType> = ButtonPr
 }
 
 const IconButtonWithTooltip = polymorphicForwardRef(function IconButtonWithTooltip<T extends React.ElementType>(
-	{ as, variant = 'ghost', direction='bottom', ...props }: IconButtonWithTooltipComponentProps<T>,
+	{ as, variant = 'ghost', direction='bottom', className, ...props }: IconButtonWithTooltipComponentProps<T>,
 	ref: PolymorphicRef<T>,
 ){
 	const As = (as || 'button') as 'button';
-
 	return (
-		<Tooltip tip={props['aria-label']} className={props['className'] + ` tooltip-${direction}`}>
+		<Tooltip tip={props['aria-label']} className={className + ` tooltip-${direction}`}>
 			<Button as={As} type="button" ref={ref} variant={variant} {...props} className="focus:border-2 p-1">
 				{props.icon}
 			</Button>

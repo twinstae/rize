@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type React from 'react';
-import type { JSXElementConstructor } from 'react';
 type UsernameT = {
 	before: string;
 	after: string;
