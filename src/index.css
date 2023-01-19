@@ -273,3 +273,12 @@ html[data-theme="izone"] {
 .chat-end .chat-bubble:before {
   left: 100%;
 }
+
+.phone {
+	margin: 2rem auto;
+	border: 3px solid black;
+	border-radius: 2rem;
+	width: 512px;
+	height: 1024px;
+	padding: 0.5rem;
+}

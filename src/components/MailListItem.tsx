@@ -42,16 +42,18 @@ function MailListItem({ mail, style }: MailListItemProps) {
 					<label id={labelId}>
 						<h3
 							className="p-0 m-0 overflow-hidden text-ellipsis font-bold"
+							// rome-ignore lint/security/noDangerouslySetInnerHtml: <for marked highlighed>
 							dangerouslySetInnerHTML={{
 								__html: highlight(mail.subject, keyword),
 							}}
-						></h3>
+						/>
 						<p
 							className="w-full p-0 overflow-hidden text-ellipsis nowrap"
+							// rome-ignore lint/security/noDangerouslySetInnerHtml: <for marked highlighed>
 							dangerouslySetInnerHTML={{
 								__html: highlight(replaceUsername(mail.bodyText), keyword),
 							}}
-						></p>
+						/>
 					</label>
 				</div>
 			</Link>

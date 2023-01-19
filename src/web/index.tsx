@@ -1,12 +1,3 @@
-import '../i18n/i18n';
-import '../index.css';
-// daisyUI assumes Tailwind CSS's Preflight
-import '@unocss/reset/tailwind.css';
-// Import daisyUI **BEFORE** UnoCSS
-import '@kidonng/daisyui/index.css';
-import 'uno.css';
-import '@stackflow/basic-ui/index.css';
-
 import React from 'react';
 
 import App from '../App';

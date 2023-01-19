@@ -1,13 +1,36 @@
-// vi-dom adds custom vi matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/vi-dom
+import './builded.css';
+
 import '@testing-library/jest-dom';
-import { vi, afterEach, afterAll } from 'vitest';
+import { vi, expect, afterEach, afterAll } from 'vitest';
 import { useFakeNavigation } from './router/useNavigation';
 import libReport from 'istanbul-lib-report';
 import reports from 'istanbul-reports';
 import libCoverage from 'istanbul-lib-coverage';
+
+import { jestPreviewConfigure } from 'jest-preview';
+jestPreviewConfigure({ autoPreview: true });
+document.documentElement.setAttribute('data-theme', 'izone');
+
+expect.extend({
+	toBeSelected: (received) => {
+		if (!(received instanceof HTMLElement)){
+			return {
+				message: () => `expected ${received} is not a HTMLElement`,
+				pass: false,
+			};
+		}
+		if (received.getAttribute('aria-selected') !== 'true') {
+			return {
+				message: () => `expected ${received}[aria-selected="true"]\n ${received.outerHTML}`,
+				pass: false,
+			};
+		}
+		return {
+			message: () => `expected ${received}[aria-selected="false"]\n ${received.outerHTML}`,
+			pass: true,
+		};
+	},
+});
 
 afterEach(() => {
 	const fakeNavigation = useFakeNavigation();
@@ -63,7 +86,7 @@ afterAll(() => {
 
 	reports
 		.create('json', {
-			file: (Math.random() * 100000000).toFixed(0).toString() + '-coverage.json',
+			file: `${(Math.random() * 100000000).toFixed(0).toString()}-coverage.json`,
 		})
 		.execute(context);
 });

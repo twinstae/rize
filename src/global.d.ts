@@ -49,4 +49,15 @@ declare global {
 	interface Window {
 		__coverage__: unknown | undefined;
 	}
+
+	interface CustomMatchers<R = unknown> {
+		toBeSelected(): R
+	}
+	
+	namespace Vi {
+		// eslint-disable-next-line @typescript-eslint/no-empty-interface
+		interface Assertion extends CustomMatchers {}
+		// eslint-disable-next-line @typescript-eslint/no-empty-interface
+		interface AsymmetricMatchersContaining extends CustomMatchers {}
+	}
 }

@@ -22,7 +22,7 @@ export function RizeTabs<T>({ data, value, Label, Content, onChange }: RizeTabsP
 					<button
 						{...api.getTriggerProps({ value: value(item) })}
 						key={value(item)}
-						className={'bg-base-100 tab tab-bordered w-1/3 ' + (value(item) === api.value ? 'tab-active' : '')}
+						className={`bg-base-100 tab tab-bordered w-1/3 ${(value(item) === api.value ? 'tab-active' : '')}`}
 					>
 						<Label index={index} />
 					</button>

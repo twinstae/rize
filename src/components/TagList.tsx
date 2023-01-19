@@ -15,8 +15,8 @@ function TagList({ mailId }: TagListProps) {
 			{tags
 				.filter((tag) => tag !== FAVORITE && tag !== UNREAD)
 				.map((content) => (
-					<li key={content}>
-						<span className="badge badge-primary">{content}</span>
+					<li key={content} className="badge badge-primary" aria-label={content}>
+						{content}
 					</li>
 				))}
 		</ul>

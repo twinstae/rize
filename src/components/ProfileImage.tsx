@@ -30,7 +30,7 @@ const sizes = {
 const ProfileImage: React.FC<Props> = ({ member, size, theme, className }) => {
 	const { Image } = useDependencies();
 
-	return <Image path={getPath(member, theme)} className={className + ' float-left rounded-full'} width={sizes[size]} />;
+	return <Image path={getPath(member, theme)} className={`${className} float-left rounded-full`} width={sizes[size]} />;
 };
 
 export default ProfileImage;
