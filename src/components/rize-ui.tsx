@@ -1,6 +1,7 @@
 import React from 'react';
 import VirtualList from './VirtualStack';
-import type { RizeReactElement } from '../global';
+import type { PolymorphicRef } from '../global';
+import polymorphicForwardRef from '../pages/polymorphicForwardRef';
 
 function FormLabel({ className, children, ...props }: React.ComponentProps<'label'>) {
 	return (
@@ -34,19 +35,19 @@ function HStack({ className, children, ...props }: React.ComponentProps<'div'>) 
 	);
 }
 
-export type ButtonProps<T> = { as?: T; variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle' };
+export type ButtonProps<T extends React.ElementType> = { as?: T; variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle', className?: string, children?: React.ReactNode | React.ReactNode[] };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Button = React.forwardRef(function Button<T extends RizeReactElement>({
-	as = 'button',
+const Button = polymorphicForwardRef(function Button<T extends React.ElementType>({
+	as,
 	className,
 	variant = 'primary',
 	size = 'base',
 	circle = '',
 	children,
 	...props
-}: React.ComponentProps<T> & ButtonProps<T>, ref: React.Ref<HTMLElement>) {
-	const Element = as;
+}: ButtonProps<T>, ref?: PolymorphicRef<T>,) {
+	const Element = as || 'button';
 	return (
 		<Element ref={ref} {...props} className={`btn btn-${variant} btn-${size} btn-${circle} ` + className}>
 			{children}

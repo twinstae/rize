@@ -1,34 +1,30 @@
-import React, { type ForwardedRef, forwardRef } from 'react';
+import React from 'react';
 import { Tooltip } from './Tooltip';
-import { Button, ButtonProps } from './rize-ui';
-import type { RizeReactElement } from '../global';
+import { Button } from './rize-ui';
+import type { PolymorphicRef } from '../global';
+import polymorphicForwardRef from '../pages/polymorphicForwardRef';
 
-type P<T extends RizeReactElement = 'button'> = React.ComponentProps<T> &
-	ButtonProps<T> & {
-		as?: T;
-		onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
-		icon: React.ReactElement;
-		'aria-label': string;
-		className?: string;
-		direction?: 'left' | 'top' | 'bottom';
-	};
+type IconButtonWithTooltipComponentProps<T extends React.ElementType> = { as?: T; variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle' } & {
+	onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+	icon: React.ReactElement;
+	'aria-label': string;
+	className?: string;
+	direction?: 'left' | 'top' | 'bottom';
+}
 
-// eslint-disable-next-line react/display-name
-const IconButtonWithTooltip: React.FC<P<'button' | 'a'> & React.RefAttributes<HTMLElement>> = forwardRef(
-	<T extends RizeReactElement, E extends HTMLElement = HTMLButtonElement>(
-		{ as = 'button', variant = 'ghost', direction='bottom', ...props }: P<T>,
-		ref: ForwardedRef<E>,
-	) => {
-		return (
-			<Tooltip tip={props['aria-label']} className={props['className'] + ` tooltip-${direction}`}>
-				<Button as={as} type="button" ref={ref} variant={variant} {...props} className="focus:border-2 p-1">
-					{props.icon}
-				</Button>
-			</Tooltip>
-		);
-		
-	},
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-) as any;
+const IconButtonWithTooltip = polymorphicForwardRef(function IconButtonWithTooltip<T extends React.ElementType>(
+	{ as, variant = 'ghost', direction='bottom', ...props }: IconButtonWithTooltipComponentProps<T>,
+	ref: PolymorphicRef<T>,
+){
+	const As = (as || 'button') as 'button';
+
+	return (
+		<Tooltip tip={props['aria-label']} className={props['className'] + ` tooltip-${direction}`}>
+			<Button as={As} type="button" ref={ref} variant={variant} {...props} className="focus:border-2 p-1">
+				{props.icon}
+			</Button>
+		</Tooltip>
+	);
+});
 
 export default IconButtonWithTooltip;
