@@ -101,6 +101,8 @@ export function createUseMailList(mailRepository: MailRepository) {
 					...mailBody,
 					images: filterTruthy(mailBody.images),
 					bodyText: mailBody.body
+						.replaceAll('<br>', '\n')
+						.replaceAll('<p>', '\n<p>')
 						.replace(/<[^>]+>/g, ' ')
 						.replaceAll('&nbsp;', ' ')
 						.replaceAll('{이미지}', ''),
