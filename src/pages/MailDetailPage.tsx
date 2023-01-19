@@ -57,7 +57,7 @@ function MailDetailPage() {
 			</div>
 			<VStack className="fixed bottom-2 right-2 gap-2">
 				<IconButtonWithTooltip
-					aria-label="파파고 번역"
+					aria-label={t(strs.파파고_번역하기)}
 					as="a"
 					variant="primary"
 					circle="circle"

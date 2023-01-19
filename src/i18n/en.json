@@ -8,6 +8,8 @@
     "전체": "All",
     "읽지_않음": "Unread",
     "중요": "Favorite",
+		"중요_표시": "Add to Favorite",
+		"중요_취소": "Cancel Favorite",
     "닉네임_바꾸기": "Change Nickname",
     "에서": "from",
     "으로": "to",
@@ -24,6 +26,7 @@
     "돌아가기": "Go Back",
     "선택한_테마": "Selected Theme",
     "앨범":"Album",
-    "다음_메일_보기": "Next Mail"
+    "다음_메일_보기": "Next Mail",
+		"파파고_번역하기": "Translate with Papago"
   }
 }
