@@ -10,9 +10,15 @@ function BackButton({
 	direction = 'bottom',
 	width = 'fit',
 	className = '',
-	variant='ghost',
-	circle=''
-}: { direction?: 'bottom' | 'top' | 'left'; width?: 'full' | 'fit'; className?: string, variant?: 'ghost' | 'primary', circle?: '' | 'circle' }) {
+	variant = 'ghost',
+	circle = '',
+}: {
+	direction?: 'bottom' | 'top' | 'left';
+	width?: 'full' | 'fit';
+	className?: string;
+	variant?: 'ghost' | 'primary';
+	circle?: '' | 'circle';
+}) {
 	const navigation = useNavigation();
 	const { t } = useTranslation();
 

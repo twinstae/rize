@@ -9,7 +9,7 @@ export type RawMailT = {
 	preview: string;
 };
 
-export type MailT = RawMailT & MailBodyT & { member: IZONE | '운영팀', bodyText: string };
+export type MailT = RawMailT & MailBodyT & { member: IZONE | '운영팀'; bodyText: string };
 
 export type MailBodyT = {
 	body: string;

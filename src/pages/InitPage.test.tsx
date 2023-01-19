@@ -26,10 +26,10 @@ describe('InitPage', () => {
 
 		expect(await screen.findByText('렌더!')).toBeInTheDocument();
 	});
-	
+
 	const VALID_JSON = JSON.stringify(TEST_MAIL_LIST.slice(0, 2), null, 2);
 
-	function JSONFile(data: string, name: string){
+	function JSONFile(data: string, name: string) {
 		const file = new File([data], name, {
 			type: 'application/json',
 		});
@@ -73,7 +73,7 @@ describe('InitPage', () => {
 		expect(_alertLogs[1]).toMatch('JSON 파일이 깨져서 읽을 수 없습니다.');
 		expect(input.files).toHaveLength(0);
 
-		await user.upload(input, JSONFile(JSON.stringify([{ id: 'm1234'}]), 'pm_list.json'));
+		await user.upload(input, JSONFile(JSON.stringify([{ id: 'm1234' }]), 'pm_list.json'));
 		expect(_alertLogs).toHaveLength(3);
 		expect(_alertLogs[2]).toMatch('0 -> member 에서 invalid_type Required');
 		expect(input.files).toHaveLength(0);

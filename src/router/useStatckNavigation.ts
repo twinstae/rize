@@ -72,7 +72,7 @@ export const useStackNavigation = (): Navigation => {
 		navigate,
 		goBack: () => pop(),
 		redirect,
-		Link: ({ to, children, ...props}: { className?: string; to: string; children: React.ReactNode }) =>
+		Link: ({ to, children, ...props }: { className?: string; to: string; children: React.ReactNode }) =>
 			React.createElement(
 				'a',
 				{

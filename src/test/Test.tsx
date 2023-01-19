@@ -101,18 +101,18 @@ function Result({ suite: [message, run] }: { suite: Suite<DependenciesT> }) {
 	);
 }
 
-function FailResultItem({ result }: { result: {message: string, stack: string}}){
+function FailResultItem({ result }: { result: { message: string; stack: string } }) {
 	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<>
 			<label className="text-xl font-medium">
 				<span className="text-red-600">FAIL:</span> {result.message}
-				<input type="checkbox" checked={isOpen} onChange={(e) => setIsOpen(e.currentTarget.checked)} hidden/>
+				<input type="checkbox" checked={isOpen} onChange={(e) => setIsOpen(e.currentTarget.checked)} hidden />
 				{isOpen ? ' -' : ' +'}
 			</label>
 			{isOpen && (
 				<div className="break-words h-full">
-					<div dangerouslySetInnerHTML={{__html: result.stack}} className="text-result"/>
+					<div dangerouslySetInnerHTML={{ __html: result.stack }} className="text-result" />
 				</div>
 			)}
 		</>

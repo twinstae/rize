@@ -86,12 +86,11 @@ export function createUseMailList(mailRepository: MailRepository) {
 		queryFn: mailRepository.getAllMailList,
 	}));
 
-	const mailListAtom = atom<(RawMailT & MailBodyT & { member:IZONE | '운영팀', bodyText: string })[]>((get) => {
+	const mailListAtom = atom<(RawMailT & MailBodyT & { member: IZONE | '운영팀'; bodyText: string })[]>((get) => {
 		const rawMailList = get(rawMailListAtom);
 		const mailBodyDict = get(mailBodyDictAtom);
 		const nameToNumberDict = get(nameToNumberDictAtom);
 
-		
 		return (
 			rawMailList?.map((mail) => {
 				const mailBody = mailBodyDict[mail.id];

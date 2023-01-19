@@ -14,7 +14,7 @@ export interface Navigation {
 				| {
 						replace?: boolean | undefined;
 						state?: unknown;
-					}
+				  }
 				| undefined,
 		) => void,
 	];
@@ -71,7 +71,7 @@ const fakeNavigation = {
 		mutateHistory((old) => {
 			old[old.length - 1] = path;
 		}),
-	Link: ({to ,...props}: LinkProps) =>
+	Link: ({ to, ...props }: LinkProps) =>
 		React.createElement(
 			'a',
 			{

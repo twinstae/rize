@@ -29,8 +29,15 @@ describe('MailDetailPage', () => {
 		screen.getByText(/그동안 정말 정말 고마웠어ㅎㅎ/);
 
 		// mail image
-		expect(screen.getAllByRole('img').filter(el => el instanceof HTMLImageElement && el.src === 'http://localhost:8000/img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg'))
-			.toHaveLength(1);
+		expect(
+			screen
+				.getAllByRole('img')
+				.filter(
+					(el) =>
+						el instanceof HTMLImageElement &&
+						el.src === 'http://localhost:8000/img/mail/1/20210428/5e8a460718a30b23fdefe53dab01309f.jpeg',
+				),
+		).toHaveLength(1);
 
 		expect(screen.queryByLabelText('다음 메일 보기')).not.toBeInTheDocument();
 	});
