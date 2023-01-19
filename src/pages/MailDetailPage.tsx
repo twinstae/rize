@@ -11,6 +11,7 @@ import { strs, useTranslation } from '../i18n/i18n';
 import { toMailDetail } from '../router/paths';
 import IconButtonWithTooltip from '../components/IconButtonWithTooltip';
 import { VStack } from '../components/rize-ui';
+import useLang from '../config/useLang';
 
 function MailDetailPage() {
 	const { t } = useTranslation();
@@ -21,6 +22,7 @@ function MailDetailPage() {
 	const mail = useMailList().useMailById(mailId);
 	invariant(mail);
 	const currentMailList = useMailList().useCurrentMailList();
+	const { lang } = useLang();
 
 	const curretMailIndex = currentMailList.indexOf(mail);
 	const nextMail = currentMailList[curretMailIndex + 1];
@@ -61,7 +63,7 @@ function MailDetailPage() {
 					circle="circle"
 					size="base"
 					direction="left"
-					href={encodeURI('https://papago.naver.com/?sk=ja&tk=ko&hn=0&st='+mail.bodyText)}
+					href={encodeURI(`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`)}
 					target="_blank"
 					icon={<img src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png" />}
 				/>
