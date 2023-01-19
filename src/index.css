@@ -104,6 +104,10 @@ html[data-theme="izone"] {
   border: none;
 }
 
+.test-result div.MailListPage {
+	background-color: red;
+}
+
 .tab.tab-active {
   border-color: #f06d9c;
   color: #f06d9c;

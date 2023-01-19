@@ -101,6 +101,24 @@ function Result({ suite: [message, run] }: { suite: Suite<DependenciesT> }) {
 	);
 }
 
+function FailResultItem({ result }: { result: {message: string, stack: string}}){
+	const [isOpen, setIsOpen] = useState(false);
+	return (
+		<>
+			<label className="text-xl font-medium">
+				<span className="text-red-600">FAIL:</span> {result.message}
+				<input type="checkbox" checked={isOpen} onChange={(e) => setIsOpen(e.currentTarget.checked)} hidden/>
+				{isOpen ? ' -' : ' +'}
+			</label>
+			{isOpen && (
+				<div className="break-words h-full">
+					<div dangerouslySetInnerHTML={{__html: result.stack}} className="text-result"/>
+				</div>
+			)}
+		</>
+	);
+}
+
 function TestResult() {
 	const testResult: ResultT[] = useStore(testResultAtom);
 
@@ -116,16 +134,7 @@ function TestResult() {
 							<span className="text-green-600">PASS:</span> {result.message}
 						</>
 					) : (
-						<>
-							<div tabIndex={0} className="collapse collapse-plus">
-								<div className="collapse-title text-xl font-medium">
-									<span className="text-red-600">FAIL:</span> {result.message}
-								</div>
-								<div className="collapse-content break-words h-full">
-									<p>{result.stack}</p>
-								</div>
-							</div>
-						</>
+						<FailResultItem result={result} />
 					)}
 				</li>
 			))}
@@ -147,7 +156,7 @@ function Test() {
 	}, [isError]);
 
 	return (
-		<VStack className="p-2">
+		<VStack className="p-2 bg-base-100 min-h-screen">
 			<div className="p-1">
 				<BackButton />
 			</div>
