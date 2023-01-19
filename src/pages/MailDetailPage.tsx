@@ -9,6 +9,8 @@ import { useMailList } from '../hooks/Dependencies';
 import invariant from '../invariant';
 import { strs, useTranslation } from '../i18n/i18n';
 import { toMailDetail } from '../router/paths';
+import IconButtonWithTooltip from '../components/IconButtonWithTooltip';
+import { VStack } from '../components/rize-ui';
 
 function MailDetailPage() {
 	const { t } = useTranslation();
@@ -51,7 +53,20 @@ function MailDetailPage() {
 					</a>
 				)}
 			</div>
-			<BackButton direction="top" className="fixed bottom-2 right-2 btn-primary p-2 btn-circle" />
+			<VStack className="fixed bottom-2 right-2 gap-2">
+				<IconButtonWithTooltip
+					aria-label="파파고 번역"
+					as="a"
+					variant="primary"
+					circle="circle"
+					size="base"
+					direction="left"
+					href={encodeURI('https://papago.naver.com/?sk=ja&tk=ko&hn=0&st='+mail.bodyText)}
+					target="_blank"
+					icon={<img src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png" />}
+				/>
+				<BackButton direction="left" variant="primary" circle="circle" />
+			</VStack>
 		</div>
 	);
 }
