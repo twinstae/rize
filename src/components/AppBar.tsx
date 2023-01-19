@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { strs, useTranslation } from '../i18n/i18n';
 import DarkModeButton from './DarkModeButton';
@@ -34,6 +34,8 @@ function AppBar() {
 		}
 	}
 
+	const isComposingRef = useRef(false);
+
 	return isOpen ? (
 		<HStack className="h-14 bg-base-100 px-2 py-1 border-b-2 border-gray-200 items-center justify-between">
 			<label htmlFor="search-bar" className="flex flex-row justify-between align-middle items-center">
@@ -47,8 +49,18 @@ function AppBar() {
 					placeholder={t(strs.검색하기)}
 					onKeyUp={handleKeyUp}
 					value={keywordInput}
+					onCompositionStart={()=>{
+						isComposingRef.current = true;
+						console.log('composing start');
+					}}
+					onCompositionEnd={()=>{
+						isComposingRef.current = false;
+						console.log('composing end');
+					}}
 					onChange={(e) => {
-						setKeywordInput(e.target.value);
+						if (isComposingRef.current){
+							setKeywordInput(e.target.value);
+						}
 					}}
 				/>
 				{keywordInput && (
