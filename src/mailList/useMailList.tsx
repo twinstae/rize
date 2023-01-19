@@ -15,6 +15,7 @@ import createRegexSearchIndex from '../search/createRegexSearchIndex';
 import { currentTagAtom } from './useTag';
 import atomWithAsyncInit from '../hooks/atomWithAsyncInit';
 import filterTruthy from '../filterTruthy';
+import invariant from '../invariant';
 
 export interface MailListResult {
 	waitForAll: () => void;
@@ -90,17 +91,22 @@ export function createUseMailList(mailRepository: MailRepository) {
 		const mailBodyDict = get(mailBodyDictAtom);
 		const nameToNumberDict = get(nameToNumberDictAtom);
 
+		
 		return (
-			rawMailList?.map((mail) => ({
-				...mail,
-				...mailBodyDict[mail.id],
-				images: filterTruthy(mailBodyDict[mail.id].images),
-				bodyText: mailBodyDict[mail.id].body
-					.replace(/<[^>]+>/g, ' ')
-					.replaceAll('&nbsp;', ' ')
-					.replaceAll('{이미지}', ''),
-				member: toOriginalName(nameToNumberDict)(mail.member),
-			})) || []
+			rawMailList?.map((mail) => {
+				const mailBody = mailBodyDict[mail.id];
+				invariant(mailBody, `mail_body_dict.json 에 ${mail.id} 메일의 body와 images가 없습니다!`);
+				return {
+					...mail,
+					...mailBody,
+					images: filterTruthy(mailBody.images),
+					bodyText: mailBody.body
+						.replace(/<[^>]+>/g, ' ')
+						.replaceAll('&nbsp;', ' ')
+						.replaceAll('{이미지}', ''),
+					member: toOriginalName(nameToNumberDict)(mail.member),
+				};
+			}) || []
 		);
 	});
 
