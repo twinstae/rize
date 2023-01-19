@@ -52,16 +52,18 @@ function AppBar() {
 						setKeywordInput(e.target.value);
 					}}
 				/>
-				{keywordInput && <IconButtonWithTooltip
-					onClick={() => {
-						setKeywordInput('');
-					}}
-					variant='ghost'
-					size="sm"
-					className="absolute right-1 tooltip-bottom text-red-600"
-					aria-label="검색창 지우기"
-					icon={<XMarkIcon />}
-				/>}
+				{keywordInput && (
+					<IconButtonWithTooltip
+						onClick={() => {
+							setKeywordInput('');
+						}}
+						variant='ghost'
+						size="sm"
+						className="absolute right-1 tooltip-bottom text-red-600"
+						aria-label="검색창 지우기"
+						icon={<XMarkIcon />}
+					/>
+				)}
 			</div>
 			<IconButtonWithTooltip
 				onClick={() => {
@@ -77,9 +79,14 @@ function AppBar() {
 			<MenuButton />
 			<DarkModeButton />
 			<SelectedTag />
-			<Link to={paths.ALBUM} className="btn btn-ghost btn-sm">
-				<PhotoIcon aria-label={t(strs.앨범)} />
-			</Link>
+			<IconButtonWithTooltip
+				as={Link}
+				to={paths.ALBUM}
+				variant="ghost"
+				size="sm"
+				icon={<PhotoIcon />}
+				aria-label={t(strs.앨범)}
+			/>
 			<IconButtonWithTooltip
 				onClick={() => {
 					setIsOpen(true);

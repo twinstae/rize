@@ -1,10 +1,10 @@
 import React from 'react';
 import { Tooltip } from './Tooltip';
-import { Button } from './rize-ui';
+import { Button, type ButtonProps } from './rize-ui';
 import type { PolymorphicRef } from '../global';
 import polymorphicForwardRef from '../pages/polymorphicForwardRef';
 
-type IconButtonWithTooltipComponentProps<T extends React.ElementType> = { as?: T; variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle' } & {
+type IconButtonWithTooltipComponentProps<T extends React.ElementType> = ButtonProps<T> & {
 	onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 	icon: React.ReactElement;
 	'aria-label': string;
