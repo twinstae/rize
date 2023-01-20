@@ -12,6 +12,7 @@ import XMarkIcon from './icons/XMarkIcon';
 import useNavigation from '../router/useNavigation';
 import paths from '../router/paths';
 import PhotoIcon from './icons/PhotoIcon';
+import XCircleIcon from './icons/XCircleIcon';
 
 function AppBar() {
 	const [, search] = useMailList().useSearch();
@@ -70,9 +71,9 @@ function AppBar() {
 						}}
 						variant='ghost'
 						size="sm"
-						className="absolute right-1 tooltip-bottom text-red-600"
+						className="absolute right-0 tooltip-bottom text-gray-400"
 						aria-label="검색창 지우기"
-						icon={<XMarkIcon />}
+						icon={<XCircleIcon />}
 					/>
 				)}
 			</div>
