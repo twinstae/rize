@@ -16,12 +16,12 @@ export type ResultT =
 	| {
 			pass: true;
 			message: string;
-	  }
+		}
 	| {
 			pass: false;
 			message: string;
 			stack: string;
-	  };
+		};
 
 async function wait(delay: number) {
 	return new Promise((resolve) => setTimeout(resolve, delay));

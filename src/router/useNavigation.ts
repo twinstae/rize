@@ -14,7 +14,7 @@ export interface Navigation {
 				| {
 						replace?: boolean | undefined;
 						state?: unknown;
-				  }
+					}
 				| undefined,
 		) => void,
 	];
