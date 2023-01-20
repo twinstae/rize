@@ -1,5 +1,3 @@
-import './builded.css';
-
 import '@testing-library/jest-dom';
 import { vi, expect, afterEach, afterAll } from 'vitest';
 import { useFakeNavigation } from './router/useNavigation';
@@ -7,8 +5,8 @@ import libReport from 'istanbul-lib-report';
 import reports from 'istanbul-reports';
 import libCoverage from 'istanbul-lib-coverage';
 
-import { jestPreviewConfigure } from 'jest-preview';
-jestPreviewConfigure({ autoPreview: true });
+// import { jestPreviewConfigure } from 'jest-preview';
+// jestPreviewConfigure({ autoPreview: true });
 document.documentElement.setAttribute('data-theme', 'izone');
 
 expect.extend({
