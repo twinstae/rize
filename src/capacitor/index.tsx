@@ -6,7 +6,6 @@ import { DependenciesWrapper, useColorMode } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 
-import S3Image from './S3Image';
 import storageRepo from './storageRepo';
 import { App } from '@capacitor/app';
 import useFsProfileList from './useFsProfileList';
@@ -16,6 +15,7 @@ import { useAtom } from 'jotai';
 import { isSplashEndAtom } from '../hooks/splashEndAtom';
 import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
+import S3Image from './S3Image';
 // import mailRepository, { fakeFsJSON as fsJSON, updateFakeStatus } from '../mailList/fakeMailRepository';
 // updateFakeStatus({ 'pm_list.json': false });
 const useMailList = createUseMailList(mailRepository);

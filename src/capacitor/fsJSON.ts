@@ -1,25 +1,30 @@
 import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
 
 import { JsonValue } from '../types/json';
-
+const directory = Directory.Cache;
 const readJSONfile = (path: string) =>
 	Filesystem.readFile({
 		path: 'output/' + path,
-		directory: Directory.Cache,
+		directory,
 		encoding: Encoding.UTF8,
 	}).then((result) => JSON.parse(result.data));
 
 const writeJSONfile = (path: string) => async (dict: JsonValue): Promise<void> => {
+	console.log(dict);
 	return Filesystem.writeFile({
 		path: 'output/' + path,
 		data: JSON.stringify(dict),
-		directory: Directory.Cache,
+		directory,
 		encoding: Encoding.UTF8,
 	})
-		.catch(() => {
+		.catch((e) => {
+			if (e.message.includes('NO_DATA')){
+				throw e;
+			}
 			return Filesystem.mkdir({
 				path: 'output',
-				directory: Directory.Cache,
+				directory,
+				recursive: true,
 			})
 				.catch((error) => {
 					if (error.message === 'Current directory does already exist.') return;
