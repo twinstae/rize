@@ -52,15 +52,18 @@ function AppBar() {
 					value={keywordInput}
 					onCompositionStart={()=>{
 						isComposingRef.current = true;
-						console.log('composing start');
 					}}
 					onCompositionEnd={()=>{
 						isComposingRef.current = false;
-						console.log('composing end');
 					}}
 					onChange={(e) => {
-						if (isComposingRef.current){
-							setKeywordInput(e.target.value);
+						if (
+							isComposingRef.current 
+							|| e.currentTarget.value.length < keywordInput.length
+							|| e.currentTarget.value.at(-1) !== keywordInput.at(-1)
+							|| /[가-힇ㄱ-ㅎㅏ-ㅣぁ-ゔァ-ヴー々〆〤一-龥]/.test(e.currentTarget.value.at(-1) ?? '') === false
+						){
+							setKeywordInput(e.currentTarget.value);
 						}
 					}}
 				/>

@@ -83,8 +83,7 @@ rize.test('메일을 검색할 수 있다.', async () => {
 	await page('button', ko.검색).click();
 	const $searchInput = page('textbox', ko.검색);
 	await $searchInput.click();
-	await $searchInput.type('tw');
-	await $searchInput.type('itter');
+	await $searchInput.type('wiz*one');
 	await $searchInput.clear();
 	await $searchInput.type('{Escape}');
 	await page('button', ko.검색).click();
