@@ -6,7 +6,6 @@ const USERNAME_KEY = 'username';
 export const useUsername: () => UsernameT = () => {
 	const [[before, after], setUsername] = useConfig<[string, string]>(USERNAME_KEY, ['{_nickname_}', '위즈원']);
 
-	const regex = new RegExp(before, 'g');
 	return {
 		before,
 		after,
@@ -16,7 +15,7 @@ export const useUsername: () => UsernameT = () => {
 		setAfter: (newAfter: string) => {
 			setUsername([before, newAfter]);
 		},
-		replaceUsername: (text: string) => text.replace(regex, after),
+		replaceUsername: (text: string) => text.replaceAll(before, after),
 	};
 };
 
