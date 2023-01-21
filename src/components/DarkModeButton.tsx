@@ -11,7 +11,7 @@ export const RawDarkModeButton = () => {
 	const { t } = useTranslation();
 	const { isDark, toggleDark } = useDarkMode();
 
-	const key = 'ctrl+d';
+	const key = 'd';
 	useHotkeys(key, toggleDark, {}, [toggleDark]);
 	return (
 		<IconButtonWithTooltip
@@ -20,7 +20,7 @@ export const RawDarkModeButton = () => {
 			className="ml-3"
 			direction="bottom"
 			size="sm"
-			aria-label={`${t(isDark ? strs.다크 : strs.밝게)} (${key})`}
+			aria-label={`${t(isDark ? strs.다크 : strs.밝게)}(${key})`}
 		/>
 	);
 };

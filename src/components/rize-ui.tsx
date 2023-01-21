@@ -11,6 +11,10 @@ function FormLabel({ className, children, ...props }: React.ComponentProps<'labe
 	);
 }
 
+function KBD({ children }: { children: React.ReactNode }){
+	return <kbd className="kbd text-sm bg-slate-100">{children}</kbd>;
+}
+
 function Input({ className, ...props }: React.ComponentProps<'input'>) {
 	return <input {...props} className={'input input-bordered ' + className} />;
 }
@@ -57,4 +61,4 @@ const Button = polymorphicForwardRef(function Button<T extends React.ElementType
 	);
 });
 
-export { FormLabel, Input, Radio, VStack, HStack, VirtualList, Button };
+export { FormLabel, Input, Radio, VStack, HStack, VirtualList, Button, KBD };

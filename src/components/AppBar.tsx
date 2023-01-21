@@ -13,11 +13,12 @@ import useNavigation from '../router/useNavigation';
 import paths from '../router/paths';
 import PhotoIcon from './icons/PhotoIcon';
 import XCircleIcon from './icons/XCircleIcon';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 function AppBar() {
 	const [, search] = useMailList().useSearch();
 	const [keywordInput, setKeywordInput] = useState('');
-	const { Link } = useNavigation();
+	const { Link, navigate } = useNavigation();
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -29,11 +30,17 @@ function AppBar() {
 		setIsOpen(false);
 	}
 
-	function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
-		if (e.key === 'Escape') {
-			handleClose();
-		}
-	}
+	useHotkeys('a', () => {
+		navigate(paths.ALBUM);
+	});
+
+	useHotkeys('Escape', () => {
+		setIsOpen(false);
+	});
+
+	useHotkeys('/', () => {
+		setIsOpen(true);
+	});
 
 	const isComposingRef = useRef(false);
 
@@ -48,7 +55,6 @@ function AppBar() {
 					type="text"
 					className="input input-bordered input-sm p-1 rounded w-full"
 					placeholder={t(strs.검색하기)}
-					onKeyUp={handleKeyUp}
 					value={keywordInput}
 					onCompositionStart={()=>{
 						isComposingRef.current = true;
@@ -108,7 +114,7 @@ function AppBar() {
 				}}
 				direction="bottom"
 				icon={<MagnifyingGlassIcon />}
-				aria-label={t(strs.검색)}
+				aria-label={t(strs.검색)+'(/)'}
 			/>
 		</HStack>
 	);

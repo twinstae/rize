@@ -11,9 +11,9 @@ describe('DarkModeButton', () => {
 
 		await user.click(screen.getByRole('button', { name: /밝게/ }));
 
-		await user.click(screen.getByRole('button', { name: /\(ctrl\+d\)/ }));
+		await user.click(screen.getByRole('button', { name: /\(d\)/ }));
 
-		await user.keyboard('{Ctrl>}d');
+		await user.keyboard('d');
 
 		await user.click(screen.getByRole('button', { name: /다크/ }));
 	});
