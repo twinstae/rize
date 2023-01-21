@@ -3,7 +3,7 @@
   "build": {
     "beforeBuildCommand": "npm run build:tauri",
     "beforeDevCommand": "npm run serve:tauri",
-    "devPath": "http://192.168.219.107:5173",
+    "devPath": "http://localhost:5173",
     "distDir": "../src/tauri/dist"
   },
   "package": {
