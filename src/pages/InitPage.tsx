@@ -61,10 +61,14 @@ const InitPage = () => {
 									queryKey: [file.name],
 								});
 							});
-							void client.invalidateQueries({
-								queryKey: ['status'],
-							});
+							setTimeout(() => {
+								void client.invalidateQueries({
+									queryKey: ['status'],
+								});
+							}, 1000);
 						});
+						
+						location.reload();
 					}}
 				>
 					<p className="rounded-lg bg-red-100 p-2">
@@ -103,7 +107,7 @@ const InitPage = () => {
 															throw Error('파일 명이 다릅니다');
 														}
 														const data = JSON.parse(text);
-														const result = z.array(rawMailSchema).safeParse(data);
+														const result = name === 'pm_list.json' ? z.array(rawMailSchema).safeParse(data) : { success: true } as const;
 														if (result.success) {
 															setUploaded((old) => ({
 																...old,

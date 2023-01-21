@@ -131,11 +131,11 @@ export function createUseMailList(mailRepository: MailRepository) {
 				const setTagToMailDict = useSetAtom(tagToMailDictAtom);
 				
 				return (tag: string, targetMailId: string) => {
-					setTagToMailDict((tagToMailDict: Record<string, string[]>) => {
+					setTagToMailDict((tagToMailDict: Record<string, string[]>): Record<string, string[]> => {
 						if (tagToMailDict[tag].includes(targetMailId)){
-							return removeTagFromMail(tag, targetMailId);
+							return removeTagFromMail(tag, targetMailId)(tagToMailDict);
 						} else {
-							return addTagToMail(tag, targetMailId);
+							return addTagToMail(tag, targetMailId)(tagToMailDict);
 						}
 					});
 				};
