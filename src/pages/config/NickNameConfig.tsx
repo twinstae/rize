@@ -14,7 +14,7 @@ function NickNameConfig() {
 	const [afterInput, setAfterInput] = useState(after);
 
 	return (
-		<VStack className="card bg-base-100 ring-1 ring-slate-300 shadow-xl p-4">
+		<VStack className="card bg-base-100 ring-1 ring-slate-300 shadow-md p-4">
 			<ConfigHeading title={t(strs.닉네임_바꾸기)} />
 			<FormLabel>
 				<Input

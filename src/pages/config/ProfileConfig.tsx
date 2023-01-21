@@ -44,7 +44,7 @@ function ProfileConfig() {
 	const { t } = useTranslation();
 
 	return (
-		<VStack className="card bg-base-100 ring-1 ring-slate-300 shadow-xl p-4">
+		<VStack className="card bg-base-100 ring-1 ring-slate-300 shadow-md p-4">
 			<FormLabel htmlFor="profile-select">
 				<ConfigHeading title={t(strs.프로필_바꾸기)} />
 			</FormLabel>

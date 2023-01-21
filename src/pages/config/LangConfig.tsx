@@ -9,7 +9,7 @@ function LangConfig() {
 	const { lang, setLang, langList } = useLang();
 	const { t } = useTranslation();
 	return (
-		<div className="card bg-base-100 ring-1 ring-slate-300 shadow-xl p-4">
+		<div className="card bg-base-100 ring-1 ring-slate-300 shadow-md p-4">
 			<ConfigHeading title={`${t(strs.언어_선택하기)} : ${lang}`} />
 			<label>
 				{t(strs.언어)}{' '}
