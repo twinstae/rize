@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/react';
 import { createUseCacheSrc, CacheRepo, createDirList } from './useCacheSrc';
-import invariant from 'src/invariant';
+import invariant from '../invariant';
 
 const file: Record<string, undefined | true> = {
 	'/img/': true,
@@ -29,20 +29,21 @@ const fakeCacheRepo = {
 		const dirs = createDirList([path]);
 		return dirs.every(parent => parent in file);
 	},
-	async isFileExists(path: string){
-		return path in file;
+	async getCacheSrc(path: string){
+		if (path in file){
+			return 'http://cache'+path;
+		}
+		return undefined;
 	},
 	async readDir(path: string){
 		invariant(path in file);
-		const result = Object.keys(file).filter(p => p.startsWith(path) && p !== path)
-			.filter(p => {
-				const remain = p.replaceAll(path, '');				
-				return remain.endsWith('/') && remain.slice(0, remain.length - 1).includes('/') === false;
-			});
-		return result;
+		const result = Object.keys(file).filter(p => p.startsWith(path) && p !== path);
+			
+		return result.map(path => ({ path, src: 'http://cache'+path, type: 'directory' }));
 	},
 	async downloadFile(url: string, path: string){
 		file[path] = true;
+		return this.getCacheSrc(path);
 	},
 	getRemoteSrc(path: string){
 		return 'http://remote'+path;
@@ -66,8 +67,8 @@ it('createDirList', () =>{
 describe('useCacheSrc', () => {
 	it('', async () => {
 		const init = createUseCacheSrc(fakeCacheRepo);
-		const useCacheSrc = await init(fileList);
-		expect(useCacheSrc('/img/mail/1/20210101/test.jpg')).toBe('http://remote/img/mail/1/20210101/test.jpg');
+		const useCacheSrc = await init(createDirList(fileList));
+		expect(useCacheSrc('/img/mail/1/20210101/test.jpg')).toBe('http://cache/img/mail/1/20210101/test.jpg');
 		
 		expect(useCacheSrc('/img/profile/one-the-story/혼다 히토미.jpg')).toBe('http://remote/img/profile/one-the-story/혼다 히토미.jpg');
 		expect(useCacheSrc('/img/profile/one-the-story/권은비.jpg')).toBe('http://remote/img/profile/one-the-story/권은비.jpg');
@@ -78,6 +79,5 @@ describe('useCacheSrc', () => {
 			expect(useCacheSrc('/img/profile/one-the-story/권은비.jpg')).toBe('http://cache/img/profile/one-the-story/권은비.jpg');
 			expect(useCacheSrc('/img/profile/one-the-story/혼다 히토미.jpg')).toBe('http://cache/img/profile/one-the-story/혼다 히토미.jpg');
 		});
-		expect(useCacheSrc('/img/mail/1/20210101/test.jpg')).toBe('http://cache/img/mail/1/20210101/test.jpg');
 	});
 });

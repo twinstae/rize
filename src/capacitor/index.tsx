@@ -16,6 +16,7 @@ import { isSplashEndAtom } from '../hooks/splashEndAtom';
 import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
 import S3Image from './S3Image';
+import useCacheSrcAtom from './useCacheSrc';
 // import mailRepository, { fakeFsJSON as fsJSON, updateFakeStatus } from '../mailList/fakeMailRepository';
 // updateFakeStatus({ 'pm_list.json': false });
 const useMailList = createUseMailList(mailRepository);
@@ -28,6 +29,7 @@ let initiated = false;
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => {
 		useAtom(isSplashEndAtom);
+		useAtom(useCacheSrcAtom);
 		const navigation = useNavigation();
 		useEffect(() => {
 			if (initiated === false) {
@@ -35,7 +37,6 @@ const Wrapper = DependenciesWrapper({
 					navigation.goBack();
 				});
 				initiated = true;
-				console.log('here');
 			}
 		});
 	},

@@ -13,7 +13,7 @@ export default mergeConfig(viteCommon, {
 	build: {
 		outDir: path.resolve(__dirname, './src/capacitor/dist'),
 	},
-	server: {
-		port: 5174,
-	}
+	// server: {
+	// 	port: 5174,
+	// }
 });
