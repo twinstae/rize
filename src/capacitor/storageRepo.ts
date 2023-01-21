@@ -1,44 +1,16 @@
-import { atom, onMount } from 'nanostores';
-import { StorageRepository } from '../global';
-import { createSuspender } from '../hooks/splashEndAtom';
-import fsJSON from './fsJSON';
-
-const path = 'local_config.json';
-const [suspender, resolve] = createSuspender();
-const storageAtom = atom({} as Record<string, string>);
-
-onMount(storageAtom, () => {
-	fsJSON
-		.readJSONfile(path)
-		.then((data) => {
-			storageAtom.set(data);
-		})
-		.catch(console.error)
-		.finally(() => {
-			resolve();
-		});
-});
-
-storageAtom.subscribe((value) => {
-	fsJSON.writeJSONfile(path)(value);
-});
+import type { StorageRepository } from '../global';
+import { Preferences } from '@capacitor/preferences';
 
 export const createFsStorageRepository = (): StorageRepository<string> => {
 	return {
 		async getItem(key: string) {
-			await suspender;
-			return storageAtom.get()[key];
+			return Preferences.get({ key }).then(({ value }) => value ?? undefined);
 		},
 		async setItem(key: string, value: string) {
-			await suspender;
-			const old = storageAtom.get();
-			return storageAtom.set({ ...old, [key]: value });
+			return Preferences.set({ key, value });
 		},
 		async removeItem(key: string) {
-			await suspender;
-			const old = storageAtom.get();
-			delete old[key];
-			return storageAtom.set({ ...old });
+			return Preferences.remove({ key });
 		},
 	};
 };

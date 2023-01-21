@@ -1,4 +1,4 @@
-import { StorageRepository } from '../global';
+import type { StorageRepository } from '../global';
 
 interface FakeRepository extends StorageRepository<string> {
 	_storage: Record<string, string>;

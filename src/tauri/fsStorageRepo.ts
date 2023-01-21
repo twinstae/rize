@@ -1,6 +1,6 @@
 import { fs } from '@tauri-apps/api';
 import { atom, onMount } from 'nanostores';
-import { StorageRepository } from '../global';
+import type { StorageRepository } from '../global';
 import { createSuspender } from '../hooks/splashEndAtom';
 import withDefault from '../withDefault';
 
