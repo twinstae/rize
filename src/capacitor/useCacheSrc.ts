@@ -16,27 +16,6 @@ export interface CacheRepo {
 	getRemoteSrc(path: string): string
 }
 
-const cache: Record<string, string | undefined> = {
-};
-const loading: Record<string, undefined | true> = {
-};
-let initiated = false;
-
-let timeoutId: undefined | string | number | NodeJS.Timeout = undefined;
-export function createDirList(pathList: string[]){
-	return [
-		...new Set(pathList.flatMap(v => {
-			const chunks = v.split('/');
-			let current = '/';
-			const result = [];
-			for (const chunk of chunks.slice(1, chunks.length - 1)){
-				current += chunk + '/';
-				result.push(current);
-			}
-			return result;
-		}))
-	];
-}
 
 const capacitorCacheRepo = {
 	async saveCache(cache: Record<string, string | undefined>){
@@ -100,6 +79,15 @@ const capacitorCacheRepo = {
 } satisfies CacheRepo;
 
 export function createUseCacheSrc(repo: CacheRepo){
+
+	const cache: Record<string, string | undefined> = {
+	};
+	const loading: Record<string, undefined | true> = {
+	};
+	let initiated = false;
+
+	let timeoutId: undefined | string | number | NodeJS.Timeout = undefined;
+
 	function useCacheSrc(path: string){
 		if (path in cache){
 			return cache[path];
@@ -141,6 +129,7 @@ export function createUseCacheSrc(repo: CacheRepo){
 		for (const path of pathList){
 			if (! (path in cache)){
 				await repo.makeDir(path);
+				cache[path] = cache['img/']?.replace('img/', path);
 			}
 		}
 		return;
@@ -152,7 +141,6 @@ export function createUseCacheSrc(repo: CacheRepo){
 		const loaded = await repo.loadCache();
 		if(loaded && (loaded['img/'] === validSrc)){
 			Object.assign(cache, loaded);
-			console.log(cache);
 			return;
 		}
 
