@@ -8,6 +8,7 @@ export default mergeConfig(viteCommon, {
 		alias: {
 			'@App': path.resolve(__dirname, './src/web'),
 			'@rize/alert': path.resolve(__dirname, './src/web/webAlert.ts'),
+			'@rize/PlatformConfig': path.resolve(__dirname, './src/web/WebConfig.tsx'),
 		},
 	},
 	build: {

@@ -1,10 +1,9 @@
-import { FormLabel, Input, VStack } from '../../components/rize-ui-web';
-import React, { useState } from 'react';
-import { useTranslation } from '../../i18n/i18n';
 
+import React, { useState } from 'react';
+import { FormLabel, Input } from '../../components/rize-ui-web';
+import { useTranslation, strs } from '../../i18n/i18n';
 import useUsername from '../../config/useUsername';
-import { strs } from '../../i18n/i18n';
-import ConfigHeading from './ConfigHeading';
+import ConfigCard from './ConfigCard';
 
 function NickNameConfig() {
 	const { t } = useTranslation();
@@ -14,8 +13,7 @@ function NickNameConfig() {
 	const [afterInput, setAfterInput] = useState(after);
 
 	return (
-		<VStack className="card bg-base-100 ring-1 ring-slate-300 shadow-md p-4">
-			<ConfigHeading title={t(strs.닉네임_바꾸기)} />
+		<ConfigCard title={t(strs.닉네임_바꾸기)}>
 			<FormLabel>
 				<Input
 					className="input-sm"
@@ -25,7 +23,7 @@ function NickNameConfig() {
 						setBefore(e.currentTarget.value);
 					}}
 				/>
-				<span className="label-text">{t(strs.에서)}</span>
+				{t(strs.에서)}
 			</FormLabel>
 			<FormLabel>
 				<Input
@@ -36,7 +34,7 @@ function NickNameConfig() {
 						setAfter(e.currentTarget.value);
 					}}
 				/>
-				<span className="label-text">{t(strs.으로)}</span>
+				{t(strs.으로)}
 			</FormLabel>
 			<div>
 				<h4 className="font-bold">{t(strs.예시)}</h4>
@@ -48,7 +46,7 @@ function NickNameConfig() {
 					안녕 <strong>{after}</strong>, 오늘도 화이팅!
 				</span>
 			</div>
-		</VStack>
+		</ConfigCard>
 	);
 }
 

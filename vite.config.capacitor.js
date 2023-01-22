@@ -8,6 +8,7 @@ export default mergeConfig(viteCommon, {
 		alias: {
 			'@App': path.resolve(__dirname, './src/capacitor'),
 			'@rize/alert': path.resolve(__dirname, './src/capacitor/capacitorAlert.ts'),
+			'@rize/PlatformConfig': path.resolve(__dirname, './src/capacitor/CapacitorConfig.tsx'),
 		},
 	},
 	build: {

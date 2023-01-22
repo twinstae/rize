@@ -38,6 +38,7 @@ export default defineConfig(async () => {
 			alias: {
 				'@App': path.resolve(__dirname, './src/tauri'),
 				'@rize/alert': path.resolve(__dirname, './src/tauri/tauriAlert.ts'),
+				'@rize/PlatformConfig': path.resolve(__dirname, './src/tauri/TauriConfig.tsx'),
 			},
 		},
 		clearScreen: false,
