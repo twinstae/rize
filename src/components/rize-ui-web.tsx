@@ -1,7 +1,6 @@
 import React from 'react';
 import VirtualList from './VirtualStack';
-import type { PolymorphicRef } from '../global';
-import polymorphicForwardRef from '../pages/polymorphicForwardRef';
+import type { PolymorphicComponentProps, PolymorphicRef } from '../global';
 
 function FormLabel({ className, children, ...props }: React.ComponentProps<'label'>) {
 	return (
@@ -16,7 +15,7 @@ function Text({ className, children, ...props }: { children: React.ReactNode, cl
 }
 
 function KBD({ className, children, ...props }: { children: React.ReactNode, className?: string }){
-	return <kbd {...props} className={'kbd text-sm bg-slate-100 '+className}>{children}</kbd>;
+	return <kbd {...props} className={'kbd text-sm '+className}>{children}</kbd>;
 }
 
 function Input({ className, ...props }: React.ComponentProps<'input'>) {
@@ -43,26 +42,30 @@ const HStack = React.forwardRef<HTMLDivElement, React.ComponentProps<'div'> & { 
 	);
 });
 
-export type ButtonProps<T extends React.ElementType> = {
-	as?: T;
-	variant?: 'primary' | 'ghost';
-	size?: 'sm' | 'base';
-	circle?: '' | 'circle';
-	className?: string;
-	children?: React.ReactNode | React.ReactNode[];
-} & React.ComponentProps<T>;
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Button = polymorphicForwardRef(function Button<T extends React.ElementType>(
-	{ as, className, variant = 'primary', size = 'base', circle = '', children, ...props }: ButtonProps<T>,
-	ref?: PolymorphicRef<T>,
-) {
+export type ButtonProps= { variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle', children: React.ReactNode, className?: string, };
+
+const Button: <T extends React.ElementType = 'span'>(
+  props: PolymorphicComponentProps<T, ButtonProps>,
+) => React.ReactElement | null = React.forwardRef(function Button<T extends React.ElementType = 'button'>({
+	as,
+	className,
+	variant = 'primary',
+	size = 'base',
+	circle = '',
+	children,
+	...props
+}: PolymorphicComponentProps<T, ButtonProps>, ref?: PolymorphicRef<T>) {
 	const Element = as || 'button';
 	return (
-		<Element ref={ref} {...props} className={`btn btn-${variant} btn-${size} btn-${circle} ` + className}>
+		<Element ref={ref} {...props} className={`btn btn-${variant} btn-${size} btn-${circle} ` + className ?? ''}>
 			{children}
 		</Element>
 	);
 });
 
-export { FormLabel, Input, Radio, VStack, HStack, VirtualList, Button, KBD, Text };
+const FloatingArea = ({ children }: { children: React.ReactNode | React.ReactNode[] }) => (
+	<VStack className="absolute bottom-2 right-2 gap-2">{children}</VStack>
+);
+
+export { FormLabel, Input, Radio, VStack, HStack, VirtualList, Button, KBD, Text, FloatingArea };

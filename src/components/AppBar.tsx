@@ -36,6 +36,8 @@ function AppBar() {
 
 	useHotkeys('Escape', () => {
 		setIsOpen(false);
+	}, {
+		enableOnFormTags: true
 	});
 
 	useHotkeys('/', () => {
@@ -90,7 +92,7 @@ function AppBar() {
 				onClick={() => {
 					handleClose();
 				}}
-				direction="bottom"
+				direction="left"
 				aria-label={t(strs.검색창_닫기)}
 				icon={<XMarkIcon />}
 			/>
@@ -106,7 +108,7 @@ function AppBar() {
 				variant="ghost"
 				size="sm"
 				icon={<PhotoIcon />}
-				aria-label={t(strs.앨범)}
+				aria-label={t(strs.앨범)+'(a)'}
 			/>
 			<IconButtonWithTooltip
 				onClick={() => {

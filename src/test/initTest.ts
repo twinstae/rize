@@ -5,6 +5,7 @@ import type { Navigation } from '../router/useNavigation';
 import invariant from '../invariant';
 import { atom } from 'nanostores';
 import scopedUser from './scopedUser';
+import userEvent from '@testing-library/user-event';
 
 const ko = koJson.translation;
 
@@ -74,19 +75,18 @@ rize.test('멤버로 필터할 수 있다', async () => {
 
 rize.test('테마를 바꿀 수 있다', async () => {
 	const page = getPageByPath(paths.MAIL_LIST);
-	await page('button', ko.밝게 + ' (ctrl+d)').click();
-	await page('button', ko.다크 + ' (ctrl+d)').click();
+	await page('button', new RegExp(ko.밝게)).click();
+	await page('button', new RegExp(ko.다크)).click();
 });
 
 rize.test('메일을 검색할 수 있다.', async () => {
 	const page = getPageByPath(paths.MAIL_LIST);
-	await page('button', ko.검색).click();
+	await page('button', new RegExp(ko.검색)).click();
 	const $searchInput = page('textbox', ko.검색);
 	await $searchInput.click();
 	await $searchInput.type('wiz*one');
-	await $searchInput.clear();
-	await $searchInput.type('{Escape}');
-	await page('button', ko.검색).click();
+	await page('button', ko.검색창_지우기).click();
+	await userEvent.keyboard('{Escape}');
 	await page('button', ko.검색창_닫기).click();
 });
 
@@ -111,7 +111,7 @@ rize.test('메일을 볼 수 있다', async () => {
 
 rize.test('앨범을 볼 수 있다', async () => {
 	const page2 = getPageByPath(paths.MAIL_LIST);
-	await page2('link', ko.앨범).click();
+	await page2('link', new RegExp(ko.앨범)).click();
 	await wait(1000);
 	const page3 = getPageByPath(paths.ALBUM);
 	await page3('button', ko.돌아가기).click();

@@ -27,6 +27,8 @@
     "선택한_테마": "Selected Theme",
     "앨범":"Album",
     "다음_메일_보기": "Next Mail",
-		"파파고_번역하기": "Translate with Papago"
+		"파파고_번역하기": "Translate with Papago",
+		"검색창_지우기": "clear search",
+		"단축키": "Shortcut"
   }
 }
