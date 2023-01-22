@@ -45,6 +45,38 @@
       }
     },
     "allowlist": {
+			"window": {
+				"all": false,
+				"center": false,
+				"close": false,
+				"create": false,
+				"hide": false,
+				"maximize": false,
+				"minimize": false,
+				"print": false,
+				"requestUserAttention": false,
+				"setAlwaysOnTop": false,
+				"setCursorGrab": false,
+				"setCursorIcon": false,
+				"setCursorPosition": false,
+				"setCursorVisible": false,
+				"setDecorations": false,
+				"setFocus": false,
+				"setFullscreen": false,
+				"setIcon": false,
+				"setIgnoreCursorEvents": false,
+				"setMaxSize": false,
+				"setMinSize": false,
+				"setPosition": false,
+				"setResizable": false,
+				"setSize": true,
+				"setSkipTaskbar": false,
+				"setTitle": false,
+				"show": false,
+				"startDragging": false,
+				"unmaximize": false,
+				"unminimize": false
+			},
       "path": {
         "all": true
       },
@@ -54,7 +86,7 @@
       },
       "http": {
         "all": true,
-        "scope": ["http://localhost:5173/**/*", "https://fonts.googleapis.com/**/*"]
+        "scope": ["http://localhost:8000/**/*", "http://localhost:5173/**/*", "https://fonts.googleapis.com/**/*"]
       },
       "protocol": {
         "asset": true,
@@ -79,7 +111,7 @@
         "title": "rize",
         "width": 512,
         "height": 1024,
-        "resizable": true,
+        "resizable": false,
         "fullscreen": false
       }
     ]

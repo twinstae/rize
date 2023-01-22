@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { VStack, HStack, KBD } from '../components/rize-ui';
+import { appWindow, LogicalSize } from '@tauri-apps/api/window';
+import { VStack, HStack, KBD, Button } from '../components/rize-ui-web';
 import BackButton from '../components/BackButton';
 import DarkModeButton from '../components/DarkModeButton';
 import LangConfig from './config/LangConfig';
@@ -28,6 +29,16 @@ const Config = () => {
 					<li className="list-none"><KBD>k</KBD>: 이전 메일</li>
 				</VStack>
 				<ProfileConfig />
+				<HStack className="gap-2">
+					<Button onClick={() => {
+						appWindow.setSize(new LogicalSize(512, 1024))
+							.then(() => { location.reload(); });
+					}}>512 x 1024</Button>
+					<Button onClick={() => {
+						appWindow.setSize(new LogicalSize(414, 896))
+							.then(() => { location.reload(); });
+					}}>414 x 896</Button>
+				</HStack>
 				<TestingButton />
 			</VStack>
 		</VStack>
