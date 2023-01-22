@@ -16,6 +16,14 @@ export interface CacheRepo {
 	getRemoteSrc(path: string): string
 }
 
+export function getDirPath(path: string){
+	for (let i = 1; i <= path.length; i++){
+		if (path[path.length - i] === '/'){
+			return path.slice(0, path.length - i + 1);
+		}
+	}
+	return '';
+}
 
 const capacitorCacheRepo = {
 	async saveCache(cache: Record<string, string | undefined>){
@@ -101,13 +109,19 @@ export function createUseCacheSrc(repo: CacheRepo){
 				.then((src) => {
 					cache[path] = src;
 
-					clearTimeout(timeoutId);
-					timeoutId = setTimeout(() => {
-						void repo.saveCache(cache);
-						console.log('캐시를 저장했습니다.');
-					}, 1000);
+					if (timeoutId === undefined){
+						timeoutId = setTimeout(() => {
+							void repo.saveCache(cache);
+							timeoutId === undefined;
+						}, 1000);
+					}
+					
 				})
-				.catch(() =>{
+				.catch(async (e) =>{
+					if (e.message.includes('directory')){
+						await repo.makeDir(getDirPath(path));
+					}
+
 					loading[path] = undefined;
 				});
 		}

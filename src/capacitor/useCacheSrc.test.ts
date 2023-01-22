@@ -1,8 +1,6 @@
-import { waitFor } from '@testing-library/react';
-import { createUseCacheSrc, CacheRepo } from './useCacheSrc';
+import { createUseCacheSrc, CacheRepo, getDirPath } from './useCacheSrc';
 import invariant from '../invariant';
 import { vi } from 'vitest';
-import { createSuspender } from '../hooks/splashEndAtom';
 
 export function createDirList(pathList: string[]){
 	return [
@@ -19,8 +17,7 @@ export function createDirList(pathList: string[]){
 	];
 }
 
-const [suspender, resolve] = createSuspender();
-function createFakeCacheRepo(){
+function createFakeCacheRepo(log: (message: string) => void){
 	const file: Record<string, undefined | true> = {
 		'img/': true,
 		'img/mail/': true,
@@ -35,7 +32,7 @@ function createFakeCacheRepo(){
 	const fakeCacheRepo = {
 		async saveCache(cache: Record<string, string | undefined>){
 			Object.assign(savedCache, cache);
-			resolve();
+			log('saveCache');
 		},
 		async loadCache(){
 			return savedCache;
@@ -93,29 +90,42 @@ it('createDirList', () =>{
 	]);
 });
 
+it('getDirPath', () => {
+	expect(getDirPath('img')).toBe('');
+	expect(getDirPath('img/rabbit.jpg')).toBe('img/');
+	expect(getDirPath('img/profile/one-the-story/혼다 히토미.jpg')).toBe('img/profile/one-the-story/');
+});
+
 describe('useCacheSrc', () => {
-	it('', async () => {
+	it('scenario', async () => {
 		vi.useFakeTimers();
-		const fakeCacheRepo = createFakeCacheRepo();
+		const logs: string[] = [];
+		const fakeCacheRepo = createFakeCacheRepo((message) => { logs.push(message); });
 		const init = createUseCacheSrc(fakeCacheRepo);
 		const useCacheSrc = await init(createDirList(fileList));
+		// repo를 초기화한 직후에 cache를 저장한다.
+		expect(logs).toEqual(['saveCache']);
 		expect(useCacheSrc('img/mail/1/20210101/test.jpg')).toBe('http://cache/img/mail/1/20210101/test.jpg');
 		
 		expect(useCacheSrc('img/profile/one-the-story/혼다 히토미.jpg')).toBe('http://remote/img/profile/one-the-story/혼다 히토미.jpg');
 		expect(useCacheSrc('img/profile/one-the-story/권은비.jpg')).toBe('http://remote/img/profile/one-the-story/권은비.jpg');
 		expect(useCacheSrc('img/profile/one-the-story/권은비.jpg')).toBe('http://remote/img/profile/one-the-story/권은비.jpg');
-		expect(useCacheSrc('img/profile/one-the-story/혼다 히토미.jpg')).toBe('http://remote/img/profile/one-the-story/혼다 히토미.jpg');
 
 		await vi.runAllTimersAsync();
-		await suspender;
 		expect(useCacheSrc('img/profile/one-the-story/권은비.jpg')).toBe('http://cache/img/profile/one-the-story/권은비.jpg');
 		expect(useCacheSrc('img/profile/one-the-story/혼다 히토미.jpg')).toBe('http://cache/img/profile/one-the-story/혼다 히토미.jpg');
+		// 데이터를 여러 개 가져와도 한 번만 저장한다 (쓰로틀링)
+		expect(logs).toEqual(['saveCache', 'saveCache']);
 
 		const init2 = createUseCacheSrc(fakeCacheRepo);
 		const useCacheSrc2 = await init2(createDirList(fileList));
-
+		// 다시 초기화한 뒤에도 저장한다
+		expect(logs).toEqual(['saveCache', 'saveCache', 'saveCache']);
 		expect(useCacheSrc2('img/profile/one-the-story/권은비.jpg')).toBe('http://cache/img/profile/one-the-story/권은비.jpg');
 		expect(useCacheSrc2('img/profile/one-the-story/혼다 히토미.jpg')).toBe('http://cache/img/profile/one-the-story/혼다 히토미.jpg');
+
+		// 다운 받은 이미지가 없으면 캐시는 업데이트되지 않는다
+		expect(logs).toEqual(['saveCache', 'saveCache', 'saveCache']);
 		vi.useRealTimers();
 	});
 });
