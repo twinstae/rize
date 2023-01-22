@@ -9,14 +9,16 @@ import ProfileImage from './ProfileImage';
 import TagList from './TagList';
 import { useMailList, useTags } from '../hooks/Dependencies';
 import highlight from '../search/highlight';
+import { HStack, VStack } from './rize-ui-web';
 
 function ItemBody({ subject, bodyText, labelId }: { labelId: string, subject: string, bodyText: string }){
 	const { replaceUsername } = useUsername();
 	const [keyword] = useMailList().useSearch();
 
 	return (
-		<label id={labelId}>
+		<>
 			<h3
+				id={labelId}
 				className="p-0 m-0 overflow-hidden text-ellipsis font-bold"
 				// rome-ignore lint/security/noDangerouslySetInnerHtml: <for marked highlighed>
 				dangerouslySetInnerHTML={{
@@ -30,13 +32,13 @@ function ItemBody({ subject, bodyText, labelId }: { labelId: string, subject: st
 					__html: highlight(replaceUsername(bodyText), keyword),
 				}}
 			/>
-		</label>
+		</>
 	);
 }
 function ItemProfileImage({ member, mailId }: { mailId: string, member: string }){
 	const isUnread = useTags().useIsUnread(mailId);
 	return (
-		<ProfileImage member={member} size="base" className={isUnread ? 'unread' : undefined} />
+		<ProfileImage member={member} size="base" className={`${isUnread ? 'unread' : ''} mr-2`} />
 	);
 }
 
@@ -51,21 +53,21 @@ function MailListItem({ mail, style }: MailListItemProps) {
 	const labelId = useId();
 	return (
 		<li
-			className="p-2 border-b-1 border-base-200 relative focus-within:ring-2"
+			className="p-1 border-b-1 border-base-200 relative focus-within:ring-2"
 			style={style}
 			aria-labelledby={labelId}
 		>
+			<FavoriteStar mailId={mail.id} />
 			<Link to={toMailDetail(mail.id)}>
-				<div className="relative">
-					<ItemProfileImage member={mail.member} mailId={mail.id} />
-					<FavoriteStar mailId={mail.id} />
-					<div className="flex flex-row flex-wrap gap-1">
+				<ItemProfileImage member={mail.member} mailId={mail.id} />
+				<VStack>
+					<HStack className="gap-2">
 						<span>{mail.member}</span>
-						<span className="text-gray-500 w-fit">{mail.time.slice(2, 10)}</span>
+						<time className="text-gray-500 w-fit" dateTime={mail.time.replaceAll('/', '-')}>{mail.time.slice(2, 10)}</time>
 						<TagList mailId={mail.id} />
-					</div>
+					</HStack>
 					<ItemBody labelId={labelId} subject={mail.subject} bodyText={mail.bodyText} />
-				</div>
+				</VStack>
 			</Link>
 		</li>
 	);

@@ -5,7 +5,7 @@ import DarkModeButton from './DarkModeButton';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import MenuButton from './MenuButton';
 import SelectedTag from './SelectedTag';
-import { HStack } from './rize-ui';
+import { HStack } from './rize-ui-web';
 import { useMailList } from '../hooks/Dependencies';
 import MagnifyingGlassIcon from './icons/MagnifyingGlassIcon';
 import XMarkIcon from './icons/XMarkIcon';

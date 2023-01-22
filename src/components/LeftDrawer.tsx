@@ -6,7 +6,7 @@ import MemberList from './MemberList';
 import paths from '../router/paths';
 import useNavigation from '../router/useNavigation';
 import XMarkIcon from './icons/XMarkIcon';
-import { HStack } from './rize-ui';
+import { HStack } from './rize-ui-web';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import invariant from '../invariant';
 

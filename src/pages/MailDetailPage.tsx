@@ -10,7 +10,7 @@ import invariant from '../invariant';
 import { strs, useTranslation } from '../i18n/i18n';
 import { toMailDetail } from '../router/paths';
 import IconButtonWithTooltip from '../components/IconButtonWithTooltip';
-import { VStack } from '../components/rize-ui';
+import { VStack } from '../components/rize-ui-web';
 import useLang from '../config/useLang';
 
 function MailDetailPage() {

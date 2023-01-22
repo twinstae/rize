@@ -4,7 +4,7 @@ import { rem } from '../theme/rem';
 import MailListItem from './MailListItem';
 import { useMailList } from '../hooks/Dependencies';
 import { modes } from '../mailList/mailListModel';
-import { VirtualList } from './rize-ui';
+import { VirtualList } from './rize-ui-web';
 interface Props {
 	index: number;
 }
@@ -19,7 +19,7 @@ function MailList({ index }: Props) {
 			result={result}
 			width={window.innerWidth}
 			height={height}
-			estimateSize={() => rem(5.5)}
+			estimateSize={() => rem(5)}
 			VirtualRowItem={({ virtualItem }) => (
 				<MailListItem
 					key={virtualItem.key}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip } from './Tooltip';
-import { Button, type ButtonProps } from './rize-ui';
+import { Button, type ButtonProps } from './rize-ui-web';
 import type { PolymorphicRef } from '../global';
 import polymorphicForwardRef from '../pages/polymorphicForwardRef';
 

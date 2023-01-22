@@ -11,8 +11,12 @@ function FormLabel({ className, children, ...props }: React.ComponentProps<'labe
 	);
 }
 
-function KBD({ children }: { children: React.ReactNode }){
-	return <kbd className="kbd text-sm bg-slate-100">{children}</kbd>;
+function Text({ className, children, ...props }: { children: React.ReactNode, className?: string }){
+	return <span {...props} className={className}>{children}</span>;
+}
+
+function KBD({ className, children, ...props }: { children: React.ReactNode, className?: string }){
+	return <kbd {...props} className={'kbd text-sm bg-slate-100 '+className}>{children}</kbd>;
 }
 
 function Input({ className, ...props }: React.ComponentProps<'input'>) {
@@ -31,13 +35,13 @@ function VStack({ className, children, ...props }: React.ComponentProps<'div'>) 
 	);
 }
 
-function HStack({ className, children, ...props }: React.ComponentProps<'div'>) {
+const HStack = React.forwardRef<HTMLDivElement, React.ComponentProps<'div'> & { children: React.ReactNode }>(function HStack({ className, children, ...props }, ref) {
 	return (
-		<div {...props} className={'flex flex-row ' + className}>
+		<div {...props} className={'flex flex-row ' + className} ref={ref}>
 			{children}
 		</div>
 	);
-}
+});
 
 export type ButtonProps<T extends React.ElementType> = {
 	as?: T;
@@ -61,4 +65,4 @@ const Button = polymorphicForwardRef(function Button<T extends React.ElementType
 	);
 });
 
-export { FormLabel, Input, Radio, VStack, HStack, VirtualList, Button, KBD };
+export { FormLabel, Input, Radio, VStack, HStack, VirtualList, Button, KBD, Text };

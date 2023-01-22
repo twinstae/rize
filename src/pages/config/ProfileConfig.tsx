@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormLabel, HStack, Radio, VStack } from '../../components/rize-ui';
+import { FormLabel, HStack, Radio, VStack } from '../../components/rize-ui-web';
 import { useTranslation } from '../../i18n/i18n';
 
 import ProfileImage from '../../components/ProfileImage';
@@ -11,7 +11,7 @@ import ConfigHeading from './ConfigHeading';
 import invariant from '../../invariant';
 
 const shuffledIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-const shuffledMembers = shuffledIndex.map((i) => MEMBER_LIST[i]).slice(0, 8);
+const shuffledMembers = shuffledIndex.map((i) => MEMBER_LIST[i]).slice(0, (window.innerWidth - 60 ) / 50);
 
 function ThemeRadio({ theme }: { theme: string }) {
 	const { profile, setProfile } = useProfile();

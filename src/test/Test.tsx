@@ -4,7 +4,7 @@ import BackButton from '../components/BackButton';
 import { useDependencies } from '../hooks/Dependencies';
 import { useQuery } from '@tanstack/react-query';
 import initTest, { ResultT, testResultAtom } from './initTest';
-import { VStack } from '../components/rize-ui';
+import { VStack } from '../components/rize-ui-web';
 import useNavigation from '../router/useNavigation';
 import useConfig from '../config/useConfig';
 import { RESET } from 'jotai/utils';

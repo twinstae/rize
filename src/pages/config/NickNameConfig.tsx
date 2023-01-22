@@ -1,4 +1,4 @@
-import { FormLabel, Input, VStack } from '../../components/rize-ui';
+import { FormLabel, Input, VStack } from '../../components/rize-ui-web';
 import React, { useState } from 'react';
 import { useTranslation } from '../../i18n/i18n';
 

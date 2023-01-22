@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
-import { HStack, VStack, VirtualList } from '../components/rize-ui';
+import { HStack, VStack, VirtualList } from '../components/rize-ui-web';
 import BackButton from '../components/BackButton';
 import useNavigation from '../router/useNavigation';
 import { toMailDetail } from '../router/paths';

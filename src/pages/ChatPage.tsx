@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ProfileImage from '../components/ProfileImage';
-import { Button, VStack } from '../components/rize-ui';
+import { Button, VStack } from '../components/rize-ui-web';
 
 function Chat({
 	name,
