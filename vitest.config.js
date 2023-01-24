@@ -10,6 +10,7 @@ export default defineConfig({
 		alias: {
 			'@App': path.resolve(__dirname, './src/web'),
 			'@rize/alert': path.resolve(__dirname, './src/error/fakeRizeAlert.ts'),
+			'@rize/PlatformConfig': path.resolve(__dirname, './src/web/WebConfig.tsx'),
 		},
 	},
 	test: {

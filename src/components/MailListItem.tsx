@@ -45,9 +45,10 @@ function ItemProfileImage({ member, mailId }: { mailId: string, member: string }
 interface MailListItemProps {
 	mail: RawMailT & MailBodyT & { bodyText: string };
 	style?: CSSProperties;
+	index: number
 }
 
-function MailListItem({ mail, style }: MailListItemProps) {
+function MailListItem({ mail, style, index }: MailListItemProps) {
 	const { Link } = useNavigation();
 
 	const labelId = useId();
@@ -58,7 +59,7 @@ function MailListItem({ mail, style }: MailListItemProps) {
 			aria-labelledby={labelId}
 		>
 			<FavoriteStar mailId={mail.id} />
-			<Link to={toMailDetail(mail.id)}>
+			<Link to={toMailDetail(mail.id)} data-index={index} className="virtual-item">
 				<ItemProfileImage member={mail.member} mailId={mail.id} />
 				<VStack>
 					<HStack className="gap-2">

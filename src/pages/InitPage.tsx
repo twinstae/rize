@@ -56,19 +56,16 @@ const InitPage = () => {
 								}),
 						);
 						await Promise.all(files.map((file) => fsJSON.writeJSONfile(file.name)(file.data))).then(() => {
-							files.forEach((file) => {
-								void client.invalidateQueries({
+							return Promise.all(files.map((file) => {
+								client.invalidateQueries({
 									queryKey: [file.name],
 								});
+							}));
+						}).then(() => {
+							return client.invalidateQueries({
+								queryKey: ['status'],
 							});
-							setTimeout(() => {
-								void client.invalidateQueries({
-									queryKey: ['status'],
-								});
-							}, 1000);
 						});
-						
-						location.reload();
 					}}
 				>
 					<p className="rounded-lg bg-red-100 p-2">

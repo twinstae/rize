@@ -12,9 +12,9 @@ function ShortcutConfig() {
 			<li className="list-none"><KBD> ← Backspace</KBD>: 뒤로가기</li>
 			<li className="list-none"><KBD>a</KBD>: 앨범</li>
 			<li className="list-none"><KBD>d</KBD>: 다크 테마 전환</li>
-			<li className="list-none"><KBD>f</KBD>: 중요</li>
+			{/* <li className="list-none"><KBD>f</KBD>: 중요</li>
 			<li className="list-none"><KBD>j</KBD>: 다음 메일</li>
-			<li className="list-none"><KBD>k</KBD>: 이전 메일</li>
+			<li className="list-none"><KBD>k</KBD>: 이전 메일</li> */}
 		</ConfigCard>
 	);
 }

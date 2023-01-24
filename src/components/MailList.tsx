@@ -15,7 +15,7 @@ const height = window.innerHeight - rem(5.5);
 function MailList({ index }: Props) {
 	const result = useMailList().mailList(modes[index]);
 	const { isReverse, toggle } = useOrder();
-	// The virtualizer
+
 	return (
 		<div className="relative">
 			<VirtualList
@@ -35,6 +35,7 @@ function MailList({ index }: Props) {
 							transform: `translateY(${virtualItem.start}px)`,
 						}}
 						mail={result[isReverse ? result.length - virtualItem.index - 1 : virtualItem.index]}
+						index={virtualItem.index}
 					/>
 				)}
 				fallback={

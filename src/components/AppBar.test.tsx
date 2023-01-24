@@ -9,7 +9,7 @@ describe('AppBar', () => {
 	it('조합 중인 한글이 두 번 입력되지 않는다.', async () => {
 		const { user, screen } = await render(<AppBar />);
 
-		await user.click(screen.getByLabelText(new RegExp(ko.translation.검색)));
+		await user.keyboard('/');
 
 		const searchInput = screen.getByRole('textbox', { name: ko.translation.검색 });
 		fireEvent.compositionStart(searchInput);
@@ -38,8 +38,7 @@ describe('AppBar', () => {
 		await user.type(searchInput, 'iz*one all with you ❤️❤️ 1111 / !{Escape}');
 		expect(searchInput).toHaveValue('iz*one all with you ❤️❤️ 1111 / !');
 		
-
-		await user.click(screen.getByLabelText(ko.translation.검색));
+		await user.click(screen.getByLabelText(new RegExp(ko.translation.검색)));
 		await user.click(screen.getByLabelText(ko.translation.검색창_닫기));
 	});
 });

@@ -12,6 +12,8 @@ import { toMailDetail } from '../router/paths';
 import IconButtonWithTooltip from '../components/IconButtonWithTooltip';
 import { VStack } from '../components/rize-ui-web';
 import useLang from '../config/useLang';
+import { useHotkeys } from 'react-hotkeys-hook';
+import useOrder from '../config/useOrder';
 
 function MailDetailPage() {
 	const { t } = useTranslation();
@@ -25,8 +27,31 @@ function MailDetailPage() {
 	const { lang } = useLang();
 
 	const curretMailIndex = currentMailList.indexOf(mail);
-	const nextMail = currentMailList[curretMailIndex + 1];
+	const { isReverse } = useOrder();
+	const prevMail = currentMailList[curretMailIndex + (isReverse ? 1 : -1)];
+	const nextMail = currentMailList[curretMailIndex + (isReverse ? -1 : 1)];
 
+	function goNext(){
+		if(nextMail){
+			setSearchParams(
+				new URLSearchParams({
+					mailId: nextMail.id,
+				}),
+			);
+		}
+	}
+	function goPrev() {
+		if(prevMail){
+			setSearchParams(
+				new URLSearchParams({
+					mailId: prevMail.id,
+				}),
+			);
+		}	
+	}
+	useHotkeys('j', () => goNext());
+	useHotkeys('k', () => goPrev());
+	
 	return (
 		<div className="w-full h-screen relative bg-base-100">
 			<div className="p-1 h-full overflow-y-auto">
@@ -43,11 +68,7 @@ function MailDetailPage() {
 						href={toMailDetail(nextMail.id)}
 						onClick={(e) => {
 							e.preventDefault();
-							setSearchParams(
-								new URLSearchParams({
-									mailId: nextMail.id,
-								}),
-							);
+							goNext();
 						}}
 						className="btn btn-primary btn-sm"
 					>
