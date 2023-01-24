@@ -1,0 +1,36 @@
+{
+  "name": "rize",
+  "reason": {
+    "react-jsx": 3
+  },
+  "jsx": { "version": 4, "mode": "classic" },
+  "suffix": ".bs.js",
+  "sources": [
+    {
+      "dir": "src/rescript-test",
+      "subdirs": true
+    }
+  ],
+  "bsc-flags": [
+    "-bs-super-errors",
+    "-bs-no-version-header"
+  ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "bs-dependencies": [
+    "@rescript/react"
+  ],
+  "bs-dev-dependencies": [],
+  "gentypeconfig": {
+    "language": "typescript",
+    "generatedFileExtension": ".gen.tsx",
+		"module": "es6",
+    "shims": {
+      "ReasonReact": "ReactShim"
+    }
+  }
+}

@@ -44,3 +44,4 @@ stryker.log
 .yarn
 .nyc_output
 __pycache__/capacitor-coverage-collector.cpython-310.pyc
+lib
