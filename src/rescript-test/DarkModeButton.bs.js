@@ -11,11 +11,20 @@ function DarkModeButton(props) {
       });
   var setIsDark = match[1];
   var isDark = match[0];
+  React.useEffect((() => {
+		if (window.matchMedia !== undefined) {
+			setIsDark(window.matchMedia('(prefers-color-scheme:dark)').matches);
+		}
+	}), []);
   var onClick = function (param) {
     Curry._1(setIsDark, (function (old) {
             return !old;
           }));
   };
+  React.useEffect((() => {
+		const $html = document.getElementsByTagName('html')[0];
+		$html.setAttribute('data-theme', isDark ? 'forest' : 'emerald');
+	}), [isDark]);
   return React.createElement("button", {
               "aria-label": isDark ? "현재 다크 모드" : "현재 라이트 모드",
               onClick: onClick
