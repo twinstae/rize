@@ -1,10 +1,10 @@
 import React from 'react';
 
-import ko from '../i18n/ko.json';
 import { useFakeNavigation } from '../router/useNavigation';
 import MailDetailPage from './MailDetailPage';
 import { render } from '../components/testUtil';
 import { toMailDetail } from '../router/paths';
+import { ko } from '../i18n/i18n';
 
 describe('MailDetailPage', () => {
 	it('MailDetailPage 제목, 별명, 미리보기, 시간이 있다', async () => {
@@ -21,7 +21,7 @@ describe('MailDetailPage', () => {
 
 		const { screen } = await render(<MailDetailPage />);
 
-		await screen.findAllByLabelText(ko.translation.돌아가기);
+		await screen.findAllByLabelText(ko.돌아가기);
 		screen.getByLabelText('중요 표시');
 
 		screen.getByText('장원영');

@@ -12,7 +12,7 @@ describe('IconButtonWithTooltip', () => {
 					done = true;
 				}}
 				icon={<XMarkIcon />}
-				aria-label="테스트 버튼"
+				ariaLabel="테스트 버튼"
 			/>,
 		);
 
