@@ -94,7 +94,7 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 							className="drawer-button right-0 top-0 p-0 focus:border-2 focus:border-primary"
 							direction="bottom"
 							circle="circle"
-							aria-label={t(strs.닫기)}
+							ariaLabel={t(strs.닫기)}
 						/>
 					</HStack>
 					<MemberList />

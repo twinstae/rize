@@ -35,7 +35,7 @@ function BackButton({
 			className={`w-${width} ${className}`}
 			icon={<ArrowLeftIcon />}
 			onClick={backHandler}
-			aria-label={t(strs.돌아가기)}
+			ariaLabel={t(strs.돌아가기)}
 		/>
 	);
 }

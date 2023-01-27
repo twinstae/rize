@@ -1,6 +1,6 @@
 import React from 'react';
 import VirtualList from './VirtualStack';
-import type { PolymorphicComponentProps, PolymorphicRef } from '../global';
+import type { PolymorphicComponentProps, PolymorphicComponentPropsWithRef, PolymorphicRef } from '../global';
 
 function FormLabel({ className, children, ...props }: React.ComponentProps<'label'>) {
 	return (
@@ -43,10 +43,10 @@ const HStack = React.forwardRef<HTMLDivElement, React.ComponentProps<'div'> & { 
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ButtonProps= { variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle', children: React.ReactNode, className?: string, };
+export type ButtonProps= { variant?: 'primary' | 'ghost'; size?: 'sm' | 'base'; circle?: '' | 'circle', children?: React.ReactNode, className?: string, };
 
-const Button: <T extends React.ElementType = 'span'>(
-  props: PolymorphicComponentProps<T, ButtonProps>,
+const Button: <T extends React.ElementType = 'button'>(
+  props: PolymorphicComponentPropsWithRef<T, ButtonProps>,
 ) => React.ReactElement | null = React.forwardRef(function Button<T extends React.ElementType = 'button'>({
 	as,
 	className,

@@ -33,7 +33,7 @@ function FavoriteStar({ mailId }: FavoriteStarProps) {
 			circle="circle"
 			size="sm"
 			icon={mailIsFavorited ? <StarIcon className="text-yellow-400" /> : <EmptyStarIcon className="text-slate-400" />}
-			aria-label={mailIsFavorited ? t(strs.중요_취소) : t(strs.중요_표시)}
+			ariaLabel={mailIsFavorited ? t(strs.중요_취소) : t(strs.중요_표시)}
 		/>
 	);
 }

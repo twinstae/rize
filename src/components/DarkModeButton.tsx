@@ -20,7 +20,7 @@ export const RawDarkModeButton = () => {
 			className="ml-3"
 			direction="bottom"
 			size="sm"
-			aria-label={`${t(isDark ? strs.다크 : strs.밝게)}(${key})`}
+			ariaLabel={`${t(isDark ? strs.다크 : strs.밝게)}(${key})`}
 		/>
 	);
 };

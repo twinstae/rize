@@ -83,7 +83,7 @@ function AppBar() {
 						variant='ghost'
 						size="sm"
 						className="absolute right-0 tooltip-bottom text-gray-400"
-						aria-label="검색창 지우기"
+						ariaLabel="검색창 지우기"
 						icon={<XCircleIcon />}
 					/>
 				)}
@@ -93,7 +93,7 @@ function AppBar() {
 					handleClose();
 				}}
 				direction="left"
-				aria-label={t(strs.검색창_닫기)}
+				ariaLabel={t(strs.검색창_닫기)}
 				icon={<XMarkIcon />}
 			/>
 		</HStack>
@@ -108,7 +108,7 @@ function AppBar() {
 				variant="ghost"
 				size="sm"
 				icon={<PhotoIcon />}
-				aria-label={t(strs.앨범)+'(a)'}
+				ariaLabel={t(strs.앨범)+'(a)'}
 			/>
 			<IconButtonWithTooltip
 				onClick={() => {
@@ -116,7 +116,7 @@ function AppBar() {
 				}}
 				direction="bottom"
 				icon={<MagnifyingGlassIcon />}
-				aria-label={t(strs.검색)+'(/)'}
+				ariaLabel={t(strs.검색)+'(/)'}
 			/>
 		</HStack>
 	);
