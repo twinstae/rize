@@ -1,31 +1,25 @@
 import React from 'react';
 
-import ko from '../i18n/ko.json';
 import MenuButton from './MenuButton';
 import LeftDrawler from './LeftDrawer';
 import { render } from './testUtil';
+import toggleTest from '../test/toggleTest';
+import { ko } from '../i18n/i18n';
 
 describe('LeftDrawler', () => {
-	it('LeftDrawler를 열고 닫을 수 있다', async () => {
-		const { user, screen } = await render(
-			<LeftDrawler>
-				<MenuButton />
-			</LeftDrawler>,
-		);
-
-		const openButton = screen.getByLabelText(ko.translation.메뉴);
-		await user.click(openButton);
-		openButton.focus();
-		await user.keyboard('{Enter}');
-		const closeButton = screen.getByLabelText(ko.translation.닫기);
-		await user.click(closeButton);
-		const checkbox = screen.getByLabelText('close drawer') as HTMLInputElement;
-		expect(checkbox.checked).toBe(false);
-		await user.click(checkbox);
-		expect(checkbox.checked).toBe(true);
-		await user.click(checkbox);
-		expect(checkbox.checked).toBe(false);
-	});
+	toggleTest(<LeftDrawler><MenuButton /></LeftDrawler>,
+		{
+			role: 'button',
+			offOnNames: [ko.메뉴, ko.닫기],
+			key: '{Space}',
+			async expectOff({ screen }){
+				expect(screen.getByRole('checkbox')).not.toBeChecked();
+			},
+			async expectOn({ screen }){
+				expect(screen.getByRole('checkbox')).toBeChecked();
+			}
+		}
+	);
 
 	it('LeftDrawler가 열리면 focus lock이 걸린다', async () => {
 		const { user, screen } = await render(
@@ -34,11 +28,11 @@ describe('LeftDrawler', () => {
 			</LeftDrawler>,
 		);
 
-		const openButton = await screen.findByLabelText(ko.translation.메뉴);
+		const openButton = await screen.findByLabelText(ko.메뉴);
 		openButton.focus();
 		await user.keyboard('{Enter}');
-		const closeButton = screen.getByLabelText(ko.translation.닫기);
-		screen.getByRole('link', { name: ko.translation.설정 }).focus();
+		const closeButton = screen.getByLabelText(ko.닫기);
+		screen.getByRole('link', { name: ko.설정 }).focus();
 		await user.tab();
 		expect(closeButton).toHaveFocus();
 		openButton.focus();

@@ -52,8 +52,8 @@ export async function render(ui: any, options?: any): Promise<any> {
 		expect(screen.queryByText('loading...')).toBe(null);
 	});
 	return {
-		screen,
 		...result,
+		screen,
 		user,
 	};
 }
