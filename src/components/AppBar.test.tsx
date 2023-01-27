@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from './testUtil';
 
-import ko from '../i18n/ko.json';
 import AppBar from './AppBar';
 import { fireEvent } from '@testing-library/react';
+import { ko } from '../i18n/i18n';
 
 describe('AppBar', () => {
 	it('조합 중인 한글이 두 번 입력되지 않는다.', async () => {
@@ -11,7 +11,7 @@ describe('AppBar', () => {
 
 		await user.keyboard('/');
 
-		const searchInput = screen.getByRole('textbox', { name: ko.translation.검색 });
+		const searchInput = screen.getByRole('textbox', { name: ko.검색 });
 		fireEvent.compositionStart(searchInput);
 		// 한글 입력을 할 수 있다. 물론 두 번도 된다.
 		await user.type(searchInput, '아이즈원ありがとう마라탱탱{Backspace}{Backspace}탕');
@@ -38,7 +38,7 @@ describe('AppBar', () => {
 		await user.type(searchInput, 'iz*one all with you ❤️❤️ 1111 / !{Escape}');
 		expect(searchInput).toHaveValue('iz*one all with you ❤️❤️ 1111 / !');
 		
-		await user.click(screen.getByLabelText(new RegExp(ko.translation.검색)));
-		await user.click(screen.getByLabelText(ko.translation.검색창_닫기));
+		await user.click(screen.getByLabelText(new RegExp(ko.검색)));
+		await user.click(screen.getByLabelText(ko.검색창_닫기));
 	});
 });
