@@ -1,4 +1,3 @@
-import { atom, useAtom } from 'jotai';
 import React, { useContext, useEffect } from 'react';
 
 import { createUseMailList, MailListResult } from '../mailList/useMailList';
@@ -10,6 +9,7 @@ import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
 import type { FsJSON, MailRepository } from '../mailList/types';
 import { Navigation, useFakeNavigation } from '../router/useNavigation';
 import { createWrapper } from './util';
+import useConfig from '../config/useConfig';
 
 type DependencyT = {
 	usePlatform: () => void;
@@ -27,10 +27,8 @@ type DependencyT = {
 	RizeLogo?: (props: { onAnimationEnd?: () => void }) => JSX.Element;
 };
 
-export const darkModeAtom = atom(false);
-
 export function useColorMode() {
-	const [darkMode, setDarkMode] = useAtom(darkModeAtom);
+	const [darkMode, setDarkMode] = useConfig<boolean>('colorMode', true);
 	useEffect(() => {
 		document.getElementsByTagName('html')[0].setAttribute('data-theme', darkMode ? 'dark' : 'izone');
 	}, [darkMode]);
