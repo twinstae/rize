@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import VirtualList from './VirtualStack';
 import type { PolymorphicComponentProps, PolymorphicComponentPropsWithRef, PolymorphicRef } from '../global';
+import { useTouchRipple } from './useTouchRipple';
 
 function FormLabel({ className, children, ...props }: React.ComponentProps<'label'>) {
 	return (
@@ -10,7 +11,7 @@ function FormLabel({ className, children, ...props }: React.ComponentProps<'labe
 	);
 }
 
-function Text({ className, children, ...props }: { children: React.ReactNode, className?: string }){
+function Text({ className, children, ...props }: { children: React.ReactNode, className?: string } & React.ComponentProps<'span'>){
 	return <span {...props} className={className}>{children}</span>;
 }
 
@@ -18,8 +19,12 @@ function KBD({ className, children, ...props }: { children: React.ReactNode, cla
 	return <kbd {...props} className={'kbd text-sm '+className}>{children}</kbd>;
 }
 
-function Input({ className, ...props }: React.ComponentProps<'input'>) {
-	return <input {...props} className={'input input-bordered ' + className} />;
+function TextInput({ className, size='base', ...props }: Omit<React.ComponentProps<'input'>, 'size'> & { size?: 'sm' | 'base' }) {
+	return <input {...props} className={`input input-bordered input-${size} ` + className} />;
+}
+
+function Checkbox({ className, ...props }: React.ComponentProps<'input'>) {
+	return <input {...props} type="checkbox" className={'input input-bordered ' + className} />;
 }
 
 function Radio({ className, ...props }: React.ComponentProps<'input'>) {
@@ -57,8 +62,14 @@ const Button: <T extends React.ElementType = 'button'>(
 	...props
 }: PolymorphicComponentProps<T, ButtonProps>, ref?: PolymorphicRef<T>) {
 	const Element = as || 'button';
+
+	const defaultRef: PolymorphicRef<T> = useRef<HTMLElement>(null);
+	const actualRef = ref ?? defaultRef;
+	const platform = 'android';
+	useTouchRipple(actualRef, platform === 'android');
+
 	return (
-		<Element ref={ref} {...props} className={`btn btn-${variant} btn-${size} btn-${circle} ` + className ?? ''}>
+		<Element ref={actualRef} {...props} className={`btn btn-${variant} btn-${size} btn-${circle} relative ` + className ?? ''}>
 			{children}
 		</Element>
 	);
@@ -68,4 +79,4 @@ const FloatingArea = ({ children }: { children: React.ReactNode | React.ReactNod
 	<VStack className="absolute bottom-2 right-2 gap-2">{children}</VStack>
 );
 
-export { FormLabel, Input, Radio, VStack, HStack, VirtualList, Button, KBD, Text, FloatingArea };
+export { Button, TextInput, FormLabel, Radio, VStack, HStack, VirtualList, KBD, Text, FloatingArea, Checkbox };
