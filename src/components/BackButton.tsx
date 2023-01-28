@@ -12,12 +12,14 @@ function BackButton({
 	className = '',
 	variant = 'ghost',
 	circle = '',
+	size = 'sm'
 }: {
 	direction?: 'bottom' | 'top' | 'left';
 	width?: 'full' | 'fit';
 	className?: string;
 	variant?: 'ghost' | 'primary';
 	circle?: '' | 'circle';
+	size?: 'sm' | 'base'
 }) {
 	const navigation = useNavigation();
 	const { t } = useTranslation();
@@ -25,10 +27,12 @@ function BackButton({
 	function backHandler() {
 		navigation.goBack();
 	}
-	useHotkeys('backspace', backHandler, [navigation]);
+	useHotkeys('backspace', backHandler, {
+		enableOnFormTags: false
+	}, [navigation]);
 	return (
 		<IconButtonWithTooltip
-			size="base"
+			size={size}
 			variant={variant}
 			circle={circle}
 			direction={direction}

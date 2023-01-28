@@ -282,3 +282,52 @@ html[data-theme="izone"] {
 	height: 1024px;
 	padding: 0.5rem;
 }
+
+html {
+	--k-touch-ripple-opacity: 0.15;
+	--k-touch-ripple-black: rgba(0, 0, 0, var(--k-touch-ripple-opacity));
+	--k-touch-ripple-white: rgba(255, 255, 255, var(--k-touch-ripple-opacity));
+	--k-touch-ripple-color: var(--k-touch-ripple-white);
+}
+
+.k-touch-ripple-wave {
+	left: 0;
+	top: 0;
+	position: absolute !important;
+	border-radius: 50%;
+	pointer-events: none;
+	z-index: -1;
+	padding: 0;
+	margin: 0;
+	font-size: 0;
+	transform: translate3d(0px, 0px, 0) scale(0);
+	background-color: var(--k-touch-ripple-color);
+	animation: 200ms forwards k-touch-ripple-in;
+	display: block !important;
+}
+
+.btn-ghost .k-touch-ripple-wave {
+	--k-touch-ripple-color: var(--k-touch-ripple-black);
+}
+
+.k-touch-ripple-wave.k-touch-ripple-wave-out {
+	transform: var(--k-ripple-transform);
+	animation: 300ms forwards k-touch-ripple-out;
+}
+
+@keyframes k-touch-ripple-in {
+	from {
+		transform: translate3d(0px, 0px, 0) scale(0);
+	}
+	to {
+		transform: var(--k-ripple-transform);
+	}
+}
+@keyframes k-touch-ripple-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}

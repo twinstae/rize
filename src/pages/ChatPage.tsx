@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ProfileImage from '../components/ProfileImage';
-import { Button, VStack } from '../components/rize-ui-web';
+import { Button, TextInput, VStack } from '../components/rize-ui-web';
 
 function Chat({
 	name,
@@ -79,10 +79,10 @@ function ChatForm({ sendMessage }: { sendMessage: (message: string) => void }) {
 				setMessageInput('');
 			}}
 		>
-			<input
+			<TextInput
 				type="text"
-				className="input input-bordered flex-1"
 				name="message"
+				className="w-full"
 				value={messageInput}
 				onChange={(event) => {
 					setMessageInput(event.currentTarget.value);

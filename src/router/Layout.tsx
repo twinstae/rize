@@ -14,7 +14,7 @@ function Wait({ children, name }: { children: React.ReactNode; name: string }) {
 }
 
 export function wrapLayout(OriginalPage: React.FC): React.FC {
-	return function Page() {
+	return function WrappedPage() {
 		return (
 			<AppScreen backgroundColor="bg-base-100">
 				<Suspense fallback={<InitPage />}>

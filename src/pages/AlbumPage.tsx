@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
-import { HStack, VStack, VirtualList } from '../components/rize-ui-web';
+import { HStack, VStack, VirtualList, Text } from '../components/rize-ui-web';
 import BackButton from '../components/BackButton';
 import useNavigation from '../router/useNavigation';
 import { toMailDetail } from '../router/paths';
@@ -29,7 +29,6 @@ function AlbumPage() {
 
 	return (
 		<VStack className="relative bg-base-100">
-			<BackButton direction="top" variant="primary" circle="circle" className="absolute bottom-2 right-4" />
 			<VirtualList
 				result={result}
 				width={window.innerWidth}
@@ -49,9 +48,9 @@ function AlbumPage() {
 							gap: '0.25rem',
 						}}
 					>
-						<span className="absolute bottom-0 left-0 text-xs bg-base-100 rounded p-0.5 z-10">
+						<Text className="absolute bottom-0 left-0 text-xs bg-base-100 rounded p-0.5 z-10">
 							{result[virtualItem.index][0].time.slice(2, 10)}
-						</span>
+						</Text>
 						{result[virtualItem.index].map(({ image, mailId }, i) => (
 							<Link
 								key={`${mailId}-${i}`}
@@ -68,8 +67,9 @@ function AlbumPage() {
 						))}
 					</HStack>
 				)}
-				fallback={<div>이미지가 없습니다</div>}
+				fallback={<Text>이미지가 없습니다</Text>}
 			/>
+			<BackButton direction="top" variant="primary" circle="circle" size="base" className="absolute bottom-2 right-4" />
 		</VStack>
 	);
 }

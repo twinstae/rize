@@ -81,7 +81,7 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 				<drawlerContext.Provider value={{ handleOpen }}>{children}</drawlerContext.Provider>
 			</div>
 			<div ref={drawerSideRef} className="drawer-side">
-				<label htmlFor={drawlerId} className="drawer-overlay bg-secondary">
+				<label htmlFor={drawlerId} className="drawer-overlay">
 					close drawer
 				</label>
 				<div className="menu bg-base-100 pl-4 pr-1 w-2/3 relative">

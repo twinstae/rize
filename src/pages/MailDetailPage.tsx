@@ -10,11 +10,10 @@ import invariant from '../invariant';
 import { strs, useTranslation } from '../i18n/i18n';
 import { toMailDetail } from '../router/paths';
 import IconButtonWithTooltip from '../components/IconButtonWithTooltip';
-import { VStack } from '../components/rize-ui-web';
+import { Button, VStack } from '../components/rize-ui-web';
 import useLang from '../config/useLang';
 import { useHotkeys } from 'react-hotkeys-hook';
 import useOrder from '../config/useOrder';
-
 function MailDetailPage() {
 	const { t } = useTranslation();
 	const [, setSearchParams] = useNavigation().useSearchParams();
@@ -64,16 +63,16 @@ function MailDetailPage() {
 				</header>
 				<MailBody mailBody={mail} />
 				{nextMail && (
-					<a
+					<Button
+						as="a"
 						href={toMailDetail(nextMail.id)}
-						onClick={(e) => {
+						onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
 							e.preventDefault();
 							goNext();
 						}}
-						className="btn btn-primary btn-sm"
 					>
 						{t(strs.다음_메일_보기)}
-					</a>
+					</Button>
 				)}
 			</div>
 			<VStack className="fixed bottom-2 right-2 gap-2">
@@ -88,7 +87,7 @@ function MailDetailPage() {
 					target="_blank"
 					icon={<img src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png" />}
 				/>
-				<BackButton direction="left" variant="primary" circle="circle" />
+				<BackButton direction="left" variant="primary" circle="circle" size="base" />
 			</VStack>
 		</div>
 	);

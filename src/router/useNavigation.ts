@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type ForwardRefExoticComponent, type RefAttributes } from 'react';
 import { useDependencies } from '../hooks/Dependencies';
 import paths from './paths';
 
@@ -22,7 +22,7 @@ export interface Navigation {
 	navigate: (path: string) => void;
 	goBack: () => void;
 	redirect: (path: string) => void;
-	Link: (props: LinkProps) => JSX.Element;
+	Link: ForwardRefExoticComponent<LinkProps & RefAttributes<HTMLAnchorElement>>;
 }
 
 const history = [paths.ROOT];
@@ -71,10 +71,12 @@ const fakeNavigation = {
 		mutateHistory((old) => {
 			old[old.length - 1] = path;
 		}),
-	Link: ({ to, ...props }: LinkProps) =>
+	// eslint-disable-next-line react/display-name
+	Link: React.forwardRef(({ to, ...props }: LinkProps, ref) =>
 		React.createElement(
 			'a',
 			{
+				ref,
 				href: to,
 				onClick: (e: Event) => {
 					e.preventDefault();
@@ -85,7 +87,7 @@ const fakeNavigation = {
 				...props,
 			},
 			props.children,
-		),
+		)),
 } satisfies Navigation & { clear: () => void };
 export const useFakeNavigation = () => {
 	return fakeNavigation;

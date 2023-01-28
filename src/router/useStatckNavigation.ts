@@ -72,10 +72,12 @@ export const useStackNavigation = (): Navigation => {
 		navigate,
 		goBack: () => pop(),
 		redirect,
-		Link: ({ to, children, ...props }: { className?: string; to: string; children: React.ReactNode }) =>
+		// eslint-disable-next-line react/display-name
+		Link: React.forwardRef(({ to, children, ...props }: { className?: string; to: string; children: React.ReactNode }, ref) =>
 			React.createElement(
 				'a',
 				{
+					ref,
 					href: to,
 					onClick: (e: React.MouseEvent) => {
 						e.preventDefault();
@@ -84,6 +86,6 @@ export const useStackNavigation = (): Navigation => {
 					...props,
 				},
 				children,
-			),
+			))
 	};
 };

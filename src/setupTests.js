@@ -19,12 +19,12 @@ expect.extend({
 		}
 		if (received.getAttribute('aria-selected') !== 'true') {
 			return {
-				message: () => `expected ${received}[aria-selected="true"]\n ${received.outerHTML}`,
+				message: () => `expected ${received.tagName.toLowerCase()}[aria-selected="true"]\n\n ${received.outerHTML}`,
 				pass: false,
 			};
 		}
 		return {
-			message: () => `expected ${received}[aria-selected="false"]\n ${received.outerHTML}`,
+			message: () => `expected ${received.tagName.toLowerCase()}[aria-selected="false"]\n\n ${received.outerHTML}`,
 			pass: true,
 		};
 	},

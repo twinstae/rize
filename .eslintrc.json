@@ -39,6 +39,7 @@
     ],
     "react/prop-types": "off"
   },
+	"ignorePatterns": ["**/*.gen.tsx"],
   "settings": {
     "react": {
       "createClass": "createReactClass", // Regex for Component Factory to use,

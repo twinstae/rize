@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { FormLabel, Input } from '../../components/rize-ui-web';
+import { FormLabel, TextInput } from '../../components/rize-ui-web';
 import { useTranslation, strs } from '../../i18n/i18n';
 import useUsername from '../../config/useUsername';
 import ConfigCard from './ConfigCard';
@@ -15,7 +15,7 @@ function NickNameConfig() {
 	return (
 		<ConfigCard title={t(strs.닉네임_바꾸기)}>
 			<FormLabel>
-				<Input
+				<TextInput
 					className="input-sm"
 					value={beforeInput}
 					onChange={(e) => {
@@ -26,7 +26,7 @@ function NickNameConfig() {
 				{t(strs.에서)}
 			</FormLabel>
 			<FormLabel>
-				<Input
+				<TextInput
 					className="input-sm"
 					value={afterInput}
 					onChange={(e) => {

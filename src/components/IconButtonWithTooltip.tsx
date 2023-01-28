@@ -19,6 +19,7 @@ const IconButtonWithTooltip: <T extends React.ElementType = 'button'>(
 			as,
 			variant = 'ghost',
 			direction = 'bottom',
+			circle = 'circle',
 			className,
 			onKeyUp,
 			ariaLabel,
@@ -34,6 +35,7 @@ const IconButtonWithTooltip: <T extends React.ElementType = 'button'>(
 					type="button"
 					ref={ref}
 					variant={variant}
+					circle={circle}
 					onKeyUp={(e: React.KeyboardEvent<HTMLElement>) => {
 						if (e.key === 'Space') {
 							props.onClick?.(e);

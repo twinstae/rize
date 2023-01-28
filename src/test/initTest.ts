@@ -1,13 +1,11 @@
-import koJson from '../i18n/ko.json';
 import paths from '../router/paths';
 import type { JsonValue } from '../types/json';
 import type { Navigation } from '../router/useNavigation';
 import invariant from '../invariant';
 import { atom } from 'nanostores';
 import scopedUser from './scopedUser';
-import userEvent from '@testing-library/user-event';
+import { ko } from '../i18n/i18n';
 
-const ko = koJson.translation;
 
 const oldError = console.error;
 type RunT = (dep: { navigation: Navigation }) => Promise<void>;
@@ -79,17 +77,6 @@ rize.test('테마를 바꿀 수 있다', async () => {
 	await page('button', new RegExp(ko.다크)).click();
 });
 
-rize.test('메일을 검색할 수 있다.', async () => {
-	const page = getPageByPath(paths.MAIL_LIST);
-	await page('button', new RegExp(ko.검색)).click();
-	const $searchInput = page('textbox', ko.검색);
-	await $searchInput.click();
-	await $searchInput.type('wiz*one');
-	await page('button', ko.검색창_지우기).click();
-	await userEvent.keyboard('{Escape}');
-	await page('button', ko.검색창_닫기).click();
-});
-
 rize.test('메일을 좋아요 할 수 있다.', async () => {
 	const page = getPageByPath(paths.MAIL_LIST);
 	await page('listitem', /사랑하는 위즈원에게/).to('button', '중요 표시').click();
@@ -123,6 +110,18 @@ rize.test('탭을 바꿀 수 있다.', async () => {
 	await page2('tab', /읽지 않음/).click();
 	await page2('tab', /중요/).click();
 	await page2('tab', /전체/).click();
+});
+
+rize.test('메일을 검색할 수 있다.', async () => {
+	const page = getPageByPath(paths.MAIL_LIST);
+	await page('button', new RegExp(ko.검색)).click();
+	const $searchInput = page('searchbox', ko.검색);
+	await $searchInput.type('위');
+	await $searchInput.type('즈');
+	await $searchInput.type('원');
+	await $searchInput.clear();
+	await page('button', ko.검색창_닫기).click();
+	
 });
 
 export const testResultAtom = atom<ResultT[]>([]);

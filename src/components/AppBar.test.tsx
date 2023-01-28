@@ -11,7 +11,7 @@ describe('AppBar', () => {
 
 		await user.keyboard('/');
 
-		const searchInput = screen.getByRole('textbox', { name: ko.검색 });
+		const searchInput = screen.getByRole('searchbox', { name: ko.검색 });
 		fireEvent.compositionStart(searchInput);
 		// 한글 입력을 할 수 있다. 물론 두 번도 된다.
 		await user.type(searchInput, '아이즈원ありがとう마라탱탱{Backspace}{Backspace}탕');
@@ -31,7 +31,7 @@ describe('AppBar', () => {
 		expect(searchInput).toHaveValue('아이즈원');
 
 		// 버튼으로도 지워진다
-		await user.click(screen.getByRole('button', {name:'검색창 지우기'}));
+		await user.clear(searchInput);
 		expect(searchInput).toHaveValue('');
 
 		// 영어나 숫자 이모지도 입력할 수 있다.

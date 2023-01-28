@@ -27,7 +27,7 @@ function ErrorFallback({ error }: { error: Error }) {
 			</a>
 			을 찾아주세요.
 			<button
-				className="btn btn-primary"
+				className="btn btn-ghost btn-primary btn-circle tooltip-top"
 				onClick={() => {
 					location.reload();
 				}}

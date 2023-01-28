@@ -4,7 +4,7 @@ import { rem } from '../theme/rem';
 import MailListItem from './MailListItem';
 import { useMailList } from '../hooks/Dependencies';
 import { modes } from '../mailList/mailListModel';
-import { Button, FloatingArea, VirtualList } from './rize-ui-web';
+import { Button, FloatingArea, VirtualList, Text, VStack } from './rize-ui-web';
 import useOrder from '../config/useOrder';
 interface Props {
 	index: number;
@@ -17,7 +17,7 @@ function MailList({ index }: Props) {
 	const { isReverse, toggle } = useOrder();
 
 	return (
-		<div className="relative">
+		<VStack className="relative">
 			<VirtualList
 				result={result}
 				width={window.innerWidth}
@@ -39,9 +39,9 @@ function MailList({ index }: Props) {
 					/>
 				)}
 				fallback={
-					<div className="flex justify-center align-center text-2xl bg-base-100" role="alert">
+					<Text className="justify-center align-center text-2xl bg-base-100" role="alert">
 						검색결과가 없습니다
-					</div>
+					</Text>
 				}
 			/>
 			<FloatingArea>
@@ -51,7 +51,7 @@ function MailList({ index }: Props) {
 					{isReverse ? '오랜순' : '최신순'}
 				</Button>
 			</FloatingArea>
-		</div>
+		</VStack>
 	);
 }
 

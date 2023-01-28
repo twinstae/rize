@@ -19,8 +19,9 @@ const useRRDNavigation = (): Navigation => {
 		redirect: (path: string) => {
 			navigate(path, { replace: true });
 		},
-		Link: ({ className, to, children, ...props }: LinkProps) =>
-			React.createElement(Link, { to, className, 'aria-label': props['aria-label'] }, children),
+		// eslint-disable-next-line react/display-name
+		Link: React.forwardRef(({ className, to, children, ...props }: LinkProps, ref) =>
+			React.createElement(Link, { ref, to, className, 'aria-label': props['aria-label'] }, children)),
 	};
 };
 

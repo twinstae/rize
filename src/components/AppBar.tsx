@@ -5,14 +5,13 @@ import DarkModeButton from './DarkModeButton';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import MenuButton from './MenuButton';
 import SelectedTag from './SelectedTag';
-import { HStack } from './rize-ui-web';
+import { FormLabel, HStack, TextInput, Text } from './rize-ui-web';
 import { useMailList } from '../hooks/Dependencies';
 import MagnifyingGlassIcon from './icons/MagnifyingGlassIcon';
 import XMarkIcon from './icons/XMarkIcon';
 import useNavigation from '../router/useNavigation';
 import paths from '../router/paths';
 import PhotoIcon from './icons/PhotoIcon';
-import XCircleIcon from './icons/XCircleIcon';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 function AppBar() {
@@ -48,15 +47,13 @@ function AppBar() {
 
 	return isOpen ? (
 		<HStack className="h-14 bg-base-100 px-2 py-1 border-b-2 border-gray-200 items-center justify-between">
-			<label htmlFor="search-bar" className="flex flex-row justify-between align-middle items-center">
-				<span className="p-2 font-bold">{t(strs.검색)}</span>
-			</label>
-			<div className="flex-1 relative">
-				<input
-					id="search-bar"
-					type="text"
-					className="input input-bordered input-sm p-1 rounded w-full"
-					placeholder={t(strs.검색하기)}
+			<FormLabel className="w-full justify-between align-middle items-center">
+				<Text className="font-bold w-12">{t(strs.검색)}</Text>
+				<TextInput
+					type="search"
+					name="search"
+					size="sm"
+					className="w-full"
 					value={keywordInput}
 					onCompositionStart={()=>{
 						isComposingRef.current = true;
@@ -75,26 +72,15 @@ function AppBar() {
 						}
 					}}
 				/>
-				{keywordInput && (
-					<IconButtonWithTooltip
-						onClick={() => {
-							setKeywordInput('');
-						}}
-						variant='ghost'
-						size="sm"
-						className="absolute right-0 tooltip-bottom text-gray-400"
-						ariaLabel="검색창 지우기"
-						icon={<XCircleIcon />}
-					/>
-				)}
-			</div>
+			</FormLabel>
 			<IconButtonWithTooltip
 				onClick={() => {
 					handleClose();
 				}}
 				direction="left"
-				ariaLabel={t(strs.검색창_닫기)}
+				size="sm"
 				icon={<XMarkIcon />}
+				ariaLabel={t(strs.검색창_닫기)}
 			/>
 		</HStack>
 	) : (
@@ -115,6 +101,7 @@ function AppBar() {
 					setIsOpen(true);
 				}}
 				direction="bottom"
+				size="sm"
 				icon={<MagnifyingGlassIcon />}
 				ariaLabel={t(strs.검색)+'(/)'}
 			/>

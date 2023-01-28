@@ -19,11 +19,11 @@ describe('MemberList x SelectedTag', () => {
 
 		const { user, screen } = await render(<Story />);
 		const theMember = screen.getByText(name);
-		expect(theMember.getAttribute('aria-selected')).toBe('false');
+		expect(theMember).not.toBeSelected();
 
 		await user.click(theMember);
 
 		expect(screen.getByTestId('selected-tag')).toHaveTextContent(name);
-		expect(theMember.getAttribute('aria-selected')).toBe('true');
+		expect(theMember).toBeSelected();
 	});
 });

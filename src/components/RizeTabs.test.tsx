@@ -15,18 +15,18 @@ describe('RizeTabs', () => {
 		);
 
 		const allTab = screen.getByRole('tab', { name: 'all 탭' });
-		expect(allTab).toHaveAttribute('aria-selected', 'true');
+		expect(allTab).toBeSelected();
 
 		const filterTab = screen.getByRole('tab', { name: 'filter 탭' });
 		await user.click(filterTab);
 
-		expect(filterTab).toHaveAttribute('aria-selected', 'true');
-		expect(allTab).toHaveAttribute('aria-selected', 'false');
+		expect(filterTab).toBeSelected();
+		expect(allTab).not.toBeSelected();
 
 		await user.keyboard('{ArrowLeft}');
 		await waitFor(() => {
-			expect(filterTab).toHaveAttribute('aria-selected', 'false');
-			expect(allTab).toHaveAttribute('aria-selected', 'true');
+			expect(filterTab).not.toBeSelected();
+			expect(allTab).toBeSelected();
 		});
 	});
 });
