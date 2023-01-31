@@ -84,14 +84,6 @@ html[data-theme="izone"] {
   --er: 354, 79%, 49%;
 }
 
-.member-item[aria-selected="true"]{
-  --tw-bg-opacity: 1;
-  border-color: hsl(var(--p) / var(--tw-bg-opacity));
-}
-.member-item[aria-selected="false"]{
-  border-color: lightgray;
-}
-
 .btn-primary, .badge-primary {
   --un-bg-opacity: 1;
   color: white !important;
@@ -330,4 +322,12 @@ html {
 	to {
 		opacity: 0;
 	}
+}
+
+input.member-item:checked + label {
+	@apply border-pink-300;
+}
+
+input.member-item:focus + label {
+	@apply ring-1;
 }
