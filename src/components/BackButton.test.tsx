@@ -1,24 +1,15 @@
 import React from 'react';
 
 import paths from '../router/paths';
-import { useFakeNavigation } from '../router/useNavigation';
 import BackButton from './BackButton';
-import { render } from './testUtil';
 import { ko } from '../i18n/i18n';
+import linkTest from 'src/router/linkTest';
 
 describe('BackButton', () => {
-	it('클릭하면 뒤로 돌아간다', async () => {
-		const navigation = useFakeNavigation();
-		navigation.navigate(paths.CONFIG);
-		expect(navigation.current()).toBe(paths.CONFIG);
-
-		const { user, screen } = await render(<BackButton />);
-
-		await user.click(screen.getByLabelText(ko.돌아가기));
-		expect(navigation.current()).toBe(paths.ROOT);
-
-		navigation.navigate(paths.CONFIG);
-		await user.keyboard('{Backspace}');
-		expect(navigation.current()).toBe(paths.ROOT);
+	linkTest(<BackButton />, {
+		name: ko.돌아가기,
+		given: paths.CONFIG,
+		expected: paths.ROOT,
+		key: '{Backspace}'
 	});
 });

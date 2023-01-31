@@ -7,4 +7,4 @@ export default {
 	MAIL_DETAIL: 'MailDetailPage',
 	CONFIG: 'Config',
 	TEST: 'Test',
-};
+} as const;

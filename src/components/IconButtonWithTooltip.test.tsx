@@ -4,7 +4,7 @@ import IconButtonWithTooltip from './IconButtonWithTooltip';
 import XMarkIcon from './icons/XMarkIcon';
 
 describe('IconButtonWithTooltip', () => {
-	it('IconButtonWithTooltip에는 제목, 별명, 미리보기, 시간이 있다', async () => {
+	it('라벨로 버튼을 찾아서 클릭할 수 있다', async () => {
 		let done = false;
 		const { screen, user } = await render(
 			<IconButtonWithTooltip

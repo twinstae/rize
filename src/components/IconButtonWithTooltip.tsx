@@ -23,6 +23,7 @@ const IconButtonWithTooltip: <T extends React.ElementType = 'button'>(
 			className,
 			onKeyUp,
 			ariaLabel,
+			icon,
 			...props
 		}: PolymorphicComponentProps<T, IconButtonWithTooltipComponentProps>,
 		ref?: PolymorphicRef<T>
@@ -46,7 +47,7 @@ const IconButtonWithTooltip: <T extends React.ElementType = 'button'>(
 					{...props}
 					className="focus:border-2 p-1"
 				>
-					{props.icon}
+					{icon}
 				</Button>
 			</Tooltip>
 		);

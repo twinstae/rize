@@ -2,9 +2,9 @@ import React from 'react';
 import { render } from './testUtil';
 import { YURI_MAIL_M25752 } from '../test/fixtures';
 
-import { toMailDetail } from '../router/paths';
-import { useFakeNavigation } from '../router/useNavigation';
+import paths, { toMailDetail } from '../router/paths';
 import MailListItem from './MailListItem';
+import linkTest from 'src/router/linkTest';
 
 describe('MailListItem', () => {
 	it('MailListItem에는 제목, 별명, 미리보기, 시간이 있다', async () => {
@@ -17,12 +17,10 @@ describe('MailListItem', () => {
 		await screen.findByText('율리스트'); // tag_to_mail_dict "율리스트":["m25752"]
 	});
 
-	it('MailListItem을 클릭하면 id 에 해당하는 메일 상세 페이지로 이동한다', async () => {
-		const { screen, user } = await render(<MailListItem mail={YURI_MAIL_M25752} index={1} />);
-		const navigation = useFakeNavigation();
-
-		await user.click(screen.getByText(YURI_MAIL_M25752.subject));
-
-		expect(navigation.current()).toBe(toMailDetail(YURI_MAIL_M25752.id));
+	linkTest(<MailListItem mail={YURI_MAIL_M25752} index={1} />, {
+		name: new RegExp(YURI_MAIL_M25752.subject),
+		given: paths.ROOT,
+		expected: toMailDetail(YURI_MAIL_M25752.id),
+		key: '{Enter}'
 	});
 });

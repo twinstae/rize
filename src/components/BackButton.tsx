@@ -24,7 +24,8 @@ function BackButton({
 	const navigation = useNavigation();
 	const { t } = useTranslation();
 
-	function backHandler() {
+	function backHandler(event?: React.MouseEvent | KeyboardEvent) {
+		event?.preventDefault();
 		navigation.goBack();
 	}
 	useHotkeys('backspace', backHandler, {
@@ -32,6 +33,9 @@ function BackButton({
 	}, [navigation]);
 	return (
 		<IconButtonWithTooltip
+			as="a"
+			href=""
+			type={undefined}
 			size={size}
 			variant={variant}
 			circle={circle}
