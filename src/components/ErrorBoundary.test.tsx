@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { render } from './testUtil';
 import ErrorBoundary from './ErrorBoundary';
 
-function Vilan() {
+function Villain() {
 	const [isError, setIsError] = useState(false);
 	if (isError) {
 		throw Error('test error');
@@ -22,7 +22,7 @@ describe('ErrorBoundary', () => {
 	it('error가 발생하면 fallback을 보여준다', async () => {
 		const { user, screen } = await render(
 			<ErrorBoundary fallback={({ error }) => <span>{error.message}</span>}>
-				<Vilan />
+				<Villain />
 			</ErrorBoundary>,
 		);
 
