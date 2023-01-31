@@ -8,6 +8,8 @@ function Wait({ children, name }: { children: React.ReactNode; name: string }) {
 	useConfig('lang', 'ko');
 	useConfig('profile', 'one-the-story');
 	useConfig('username', ['{_nickname_}', '위즈원']);
+	useConfig('colorMode', true);
+	useConfig('order', false);
 	useMailList().waitForAll();
 	useDependencies().usePlatform();
 	return <div className={name}>{children}</div>;
