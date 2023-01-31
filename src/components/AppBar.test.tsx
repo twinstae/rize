@@ -4,6 +4,7 @@ import { render } from './testUtil';
 import AppBar from './AppBar';
 import { fireEvent } from '@testing-library/react';
 import { ko } from '../i18n/i18n';
+import { act } from 'react-dom/test-utils';
 
 describe('AppBar', () => {
 	it('조합 중인 한글이 두 번 입력되지 않는다.', async () => {
@@ -29,8 +30,14 @@ describe('AppBar', () => {
 		await user.type(searchInput, '{Backspace}'.repeat(8));
 		
 		expect(searchInput).toHaveValue('아이즈원');
+		
+		// 중간에 공백을 넣는 건 가능하다.
+		act(() => {
+			fireEvent.change(searchInput, { target: { value: '아이즈 원' } });
+		});
 
-		// 버튼으로도 지워진다
+		expect(searchInput).toHaveValue('아이즈 원');
+
 		await user.clear(searchInput);
 		expect(searchInput).toHaveValue('');
 

@@ -65,7 +65,7 @@ function AppBar() {
 						if (
 							isComposingRef.current 
 							|| e.currentTarget.value.length < keywordInput.length
-							|| e.currentTarget.value.at(-1) !== keywordInput.at(-1)
+							|| e.currentTarget.value.at(-1) !== e.currentTarget.value.at(-2)
 							|| /[가-힇ㄱ-ㅎㅏ-ㅣぁ-ゔァ-ヴー々〆〤一-龥]/.test(e.currentTarget.value.at(-1) ?? '') === false
 						){
 							setKeywordInput(e.currentTarget.value);
