@@ -1,7 +1,7 @@
 import type { StorageRepository } from '../global';
 import { Preferences } from '@capacitor/preferences';
 
-export const createFsStorageRepository = (): StorageRepository<string> => {
+export const createPreferenceStorageRepository = (): StorageRepository<string> => {
 	return {
 		async getItem(key: string) {
 			return Preferences.get({ key }).then(({ value }) => value ?? undefined);
@@ -15,4 +15,4 @@ export const createFsStorageRepository = (): StorageRepository<string> => {
 	};
 };
 
-export default createFsStorageRepository();
+export default createPreferenceStorageRepository();
