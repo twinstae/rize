@@ -1,6 +1,6 @@
-const konstaConfig = require('konsta/config');
 
-module.exports = konstaConfig({
+
+module.exports = {
 	// content: [
 	// 	'./index.html',
 	// 	'./src/**/*.{js,ts,jsx,tsx}',
@@ -21,4 +21,4 @@ module.exports = konstaConfig({
 	// 	],
 	// },
 	plugins: [require('daisyui')],
-});
+};
