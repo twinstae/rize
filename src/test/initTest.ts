@@ -41,7 +41,7 @@ function getPageByPath(path: string) {
 }
 
 rize.test('별명을 바꿀 수 있다', async () => {
-	await getPageByPath(paths.TEST)('button', ko.돌아가기).click();
+	await getPageByPath(paths.TEST)('link', ko.돌아가기).click();
 	await wait(1000);
 	const page2 = getPageByPath(paths.CONFIG);
 	const $toInput = page2('textbox', ko.으로);
@@ -58,16 +58,16 @@ rize.test('프로필을 바꿀 수 있다', async () => {
 	await page('radio', 'violeta').click();
 	await page('radio', 'instagram').click();
 
-	await page('button', ko.돌아가기).click();
+	await page('link', ko.돌아가기).click();
 	await wait(1000);
 });
 
 rize.test('멤버로 필터할 수 있다', async () => {
 	const page = getPageByPath(paths.MAIL_LIST);
-	await page('button', ko.메뉴).click();
-	await page('button', '장원영').click();
-	await page('button', ko.전체).click();
-	await page('button', ko.닫기).click();
+	await page('button', new RegExp(ko.메뉴)).click();
+	await page('radio', '장원영').click();
+	await page('radio', ko.전체).click();
+	await page('button', new RegExp(ko.닫기)).click();
 	await wait(1000);
 });
 
@@ -93,7 +93,7 @@ rize.test('메일을 볼 수 있다', async () => {
 	await nextMailButton.click();
 	await wait(1000);
 	const page3 = getPageByPath(paths.MAIL_DETAIL);
-	await page3('button', ko.돌아가기).click();
+	await page3('link', ko.돌아가기).click();
 });
 
 rize.test('앨범을 볼 수 있다', async () => {
@@ -101,7 +101,7 @@ rize.test('앨범을 볼 수 있다', async () => {
 	await page2('link', new RegExp(ko.앨범)).click();
 	await wait(1000);
 	const page3 = getPageByPath(paths.ALBUM);
-	await page3('button', ko.돌아가기).click();
+	await page3('link', ko.돌아가기).click();
 	await wait(1000);
 });
 
