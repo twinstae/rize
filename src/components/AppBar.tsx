@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { strs, useTranslation } from '../i18n/i18n';
 import DarkModeButton from './DarkModeButton';
@@ -20,13 +20,15 @@ function AppBar() {
 	const { Link, navigate } = useNavigation();
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useState(false);
-
 	useEffect(() => {
 		search(keywordInput);
 	}, [keywordInput, search]);
 
-	function handleClose() {
+	function close() {
 		setIsOpen(false);
+	}
+	function open() {
+		setIsOpen(true);
 	}
 
 	useHotkeys('a', () => {
@@ -34,48 +36,36 @@ function AppBar() {
 	});
 
 	useHotkeys('Escape', () => {
-		setIsOpen(false);
+		close();
 	}, {
 		enableOnFormTags: true
 	});
 
-	useHotkeys('/', () => {
-		setIsOpen(true);
+	useHotkeys('/', (e) => {
+		e.preventDefault();
+		open();
 	});
 
-	const isComposingRef = useRef(false);
 
 	return isOpen ? (
-		<HStack className="h-14 bg-base-100 px-2 py-1 border-b-2 border-gray-200 items-center justify-between">
+		<HStack className="h-14 p-2 border-b-1 items-center justify-between">
 			<FormLabel className="w-full justify-between align-middle items-center">
 				<Text className="font-bold w-12">{t(strs.검색)}</Text>
 				<TextInput
 					type="search"
 					name="search"
 					size="sm"
-					className="w-full"
+					width="full"
+					autofocus
 					value={keywordInput}
-					onCompositionStart={()=>{
-						isComposingRef.current = true;
-					}}
-					onCompositionEnd={()=>{
-						isComposingRef.current = false;
-					}}
 					onChange={(e) => {
-						if (
-							isComposingRef.current 
-							|| e.currentTarget.value.length < keywordInput.length
-							|| e.currentTarget.value.at(-1) !== e.currentTarget.value.at(-2)
-							|| /[가-힇ㄱ-ㅎㅏ-ㅣぁ-ゔァ-ヴー々〆〤一-龥]/.test(e.currentTarget.value.at(-1) ?? '') === false
-						){
-							setKeywordInput(e.currentTarget.value);
-						}
+						setKeywordInput(e.currentTarget.value);
 					}}
 				/>
 			</FormLabel>
 			<IconButtonWithTooltip
 				onClick={() => {
-					handleClose();
+					close();
 				}}
 				direction="left"
 				size="sm"
@@ -84,7 +74,7 @@ function AppBar() {
 			/>
 		</HStack>
 	) : (
-		<HStack className="h-14 bg-base-100 p-2 border-b-2 border-gray-200 items-center justify-between">
+		<HStack className="h-14 p-2 border-b-1 items-center justify-between">
 			<MenuButton />
 			<DarkModeButton />
 			<SelectedTag />
@@ -98,7 +88,7 @@ function AppBar() {
 			/>
 			<IconButtonWithTooltip
 				onClick={() => {
-					setIsOpen(true);
+					open();
 				}}
 				direction="bottom"
 				size="sm"
