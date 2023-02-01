@@ -29,6 +29,8 @@
     "다음_메일_보기": "Next Mail",
 		"파파고_번역하기": "Translate with Papago",
 		"검색창_지우기": "clear search",
-		"단축키": "Shortcut"
+		"단축키": "Shortcut",
+		"최신순": "late",
+		"오랜순": "old"
   }
 }
