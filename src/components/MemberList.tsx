@@ -16,11 +16,12 @@ function MemberListItem({ name, text }: MemberListItemProps) {
 	const id = React.useId();
 
 	const checked = name === tag || text === tag;
+
 	useEffect(() => {
-		if(checked){
+		if (tag === name && ref.current !== document.activeElement){
 			ref.current?.focus();
 		}
-	}, [checked]);
+	}, [tag]);
 	return (
 		<>
 			<input

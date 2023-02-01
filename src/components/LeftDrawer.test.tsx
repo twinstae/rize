@@ -10,7 +10,7 @@ describe('LeftDrawler', () => {
 	toggleTest(<LeftDrawler><MenuButton /></LeftDrawler>,
 		{
 			role: 'button',
-			offOnNames: [ko.메뉴, ko.닫기],
+			offOnNames: [new RegExp(ko.메뉴), new RegExp(ko.닫기)],
 			key: '{Space}',
 			async expectOff({ screen }){
 				expect(screen.getByRole('checkbox')).not.toBeChecked();
@@ -28,25 +28,17 @@ describe('LeftDrawler', () => {
 			</LeftDrawler>,
 		);
 
-		const openButton = await screen.findByLabelText(ko.메뉴);
-		openButton.focus();
-		await user.keyboard('{Enter}');
-		const closeButton = screen.getByLabelText(ko.닫기);
-		screen.getByRole('link', { name: ko.설정 }).focus();
+		const openButton = await screen.findByRole('button', { name: new RegExp(ko.메뉴) });
+		await user.click(openButton);
+		const settingLink = screen.getByRole('link', { name: ko.설정 });
+		settingLink.focus();
+		expect(settingLink).toHaveFocus();
 		await user.tab();
+		const closeButton = screen.getByRole('button', { name: new RegExp(ko.닫기) });
 		expect(closeButton).toHaveFocus();
-		openButton.focus();
-		await user.tab();
-		expect(closeButton).toHaveFocus();
-		closeButton.blur();
-		expect(closeButton).not.toHaveFocus();
-		await user.tab();
-		expect(closeButton).toHaveFocus();
-		await user.keyboard('{Escape}');
-		expect(openButton).toHaveFocus();
-
-		await user.tab();
 		await user.tab({ shift: true });
+		expect(settingLink).toHaveFocus();
+		await user.keyboard('{Escape}');
 		expect(openButton).toHaveFocus();
 	});
 });

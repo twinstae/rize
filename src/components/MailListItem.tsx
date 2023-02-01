@@ -10,6 +10,7 @@ import TagList from './TagList';
 import { useMailList, useTags } from '../hooks/Dependencies';
 import highlight from '../search/highlight';
 import { HStack, VStack } from './rize-ui-web';
+import useLang from '../config/useLang';
 
 function ItemBody({ subject, bodyText, labelId }: { labelId: string, subject: string, bodyText: string }){
 	const { replaceUsername } = useUsername();
@@ -50,8 +51,11 @@ interface MailListItemProps {
 
 function MailListItem({ mail, style, index }: MailListItemProps) {
 	const { Link } = useNavigation();
+	const { lang } = useLang();
 
 	const labelId = useId();
+	
+	const date = new Date(mail.time.replaceAll('/', '-').replace(' ', 'T'));
 	return (
 		<li
 			className="p-1 border-b-1 border-base-200 relative focus-within:ring-2"
@@ -64,7 +68,9 @@ function MailListItem({ mail, style, index }: MailListItemProps) {
 				<VStack>
 					<HStack className="gap-2">
 						<span>{mail.member}</span>
-						<time className="text-gray-500 w-fit" dateTime={mail.time.replaceAll('/', '-')}>{mail.time.slice(2, 10)}</time>
+						<time className="text-gray-500 w-fit" dateTime={date.toISOString()}>
+							<abbr aria-label={new Intl.DateTimeFormat(lang, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(date)}>{mail.time.slice(2, 10)}</abbr>
+						</time>
 						<TagList mailId={mail.id} />
 					</HStack>
 					<ItemBody labelId={labelId} subject={mail.subject} bodyText={mail.bodyText} />

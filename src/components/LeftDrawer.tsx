@@ -9,6 +9,7 @@ import XMarkIcon from './icons/XMarkIcon';
 import { HStack } from './rize-ui-web';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import invariant from '../invariant';
+import focusLock from '../hooks/focusLock';
 
 type DrawerContextT = {
 	handleOpen: () => void;
@@ -41,20 +42,11 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 		}
 	}, [isOpen]);
 	useHotkeys(
-		'Tab',
+		'Tab, Shift+Tab',
 		(e) => {
-			if (isOpen) {
+			if (isOpen){
 				invariant(drawerSideRef.current);
-				const nodes = drawerSideRef.current.querySelectorAll('*');
-				const tabbable = Array.from(nodes).filter((n) => n instanceof HTMLElement && n.tabIndex >= 0) as HTMLElement[];
-
-				let index = document.activeElement ? tabbable.indexOf(document.activeElement as HTMLElement) : -1;
-				if (index === -1 && e.shiftKey) index = 0;
-
-				index += tabbable.length + (e.shiftKey ? -1 : 1);
-				index %= tabbable.length;
-
-				tabbable[index].focus();
+				focusLock(drawerSideRef.current, e);
 				e.preventDefault();
 			}
 		},
@@ -94,12 +86,13 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 							className="drawer-button right-0 top-0 p-0 focus:border-2 focus:border-primary"
 							direction="bottom"
 							circle="circle"
-							ariaLabel={t(strs.닫기)}
+							ariaLabel={t(strs.닫기)+'(Esc)'}
+							tabIndex={isOpen ? undefined : -1}
 						/>
 					</HStack>
 					<MemberList />
 					<div id="to-config">
-						<Link to={paths.CONFIG} className="mt-4 btn btn-primary btn-sm">
+						<Link to={paths.CONFIG} className="mt-4 btn btn-primary btn-sm"  tabIndex={isOpen ? undefined : -1}>
 							{t(strs.설정)}
 						</Link>
 					</div>
