@@ -45,11 +45,7 @@ function MailList({ index }: Props) {
 				}
 			/>
 			<FloatingArea>
-				<Button variant="primary" circle="circle" className="shadow-lg" onClick={() => {
-					toggle();
-				}}>
-					{isReverse ? '오랜순' : '최신순'}
-				</Button>
+				<OrderToggleButton />
 			</FloatingArea>
 		</VStack>
 	);
