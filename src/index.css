@@ -331,3 +331,17 @@ input.member-item:checked + label {
 input.member-item:focus + label {
 	@apply ring-1;
 }
+
+
+@supports (content: "x" / "y") {
+  span.tooltip:before {
+		content: attr(data-tip) / "";
+	}
+}
+
+@supports not (content: "x" / "y") {
+  span.tooltip:before {
+		content: attr(data-tip);
+		alt: '';
+	}
+}
