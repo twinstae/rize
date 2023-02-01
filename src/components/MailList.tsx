@@ -4,17 +4,20 @@ import { rem } from '../theme/rem';
 import MailListItem from './MailListItem';
 import { useMailList } from '../hooks/Dependencies';
 import { modes } from '../mailList/mailListModel';
-import { Button, FloatingArea, VirtualList, Text, VStack } from './rize-ui-web';
+import { FloatingArea, VirtualList, Text, VStack } from './rize-ui-web';
 import useOrder from '../config/useOrder';
+import OrderToggleButton from './OrderToggleButton';
+import { getItem } from '../utils';
+
 interface Props {
 	index: number;
 }
 
-const height = window.innerHeight - rem(5.5);
+const height = window.innerHeight - rem(6);
 
 function MailList({ index }: Props) {
 	const result = useMailList().mailList(modes[index]);
-	const { isReverse, toggle } = useOrder();
+	const { isReverse } = useOrder();
 
 	return (
 		<VStack className="relative">
@@ -34,7 +37,7 @@ function MailList({ index }: Props) {
 							height: `${virtualItem.size}px`,
 							transform: `translateY(${virtualItem.start}px)`,
 						}}
-						mail={result[isReverse ? result.length - virtualItem.index - 1 : virtualItem.index]}
+						mail={getItem(isReverse, result, virtualItem.index)}
 						index={virtualItem.index}
 					/>
 				)}
