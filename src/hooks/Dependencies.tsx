@@ -12,7 +12,7 @@ import { createWrapper } from './util';
 import useConfig from '../config/useConfig';
 
 type DependencyT = {
-	usePlatform: () => void;
+	usePlatform: () => { platform: 'test' | 'darwin' | 'linux' | 'win32' | string };
 	useNavigationImpl?: () => Navigation;
 	storageRepo?: StorageRepository<string>;
 	useColorMode?: () => {
@@ -41,7 +41,7 @@ export function useColorMode() {
 }
 
 export const createFakeDependencies: () => DependencyT = () => ({
-	usePlatform: () => undefined,
+	usePlatform: () => ({ platform: 'test' }),
 	useNavigationImpl: () => useFakeNavigation(),
 	storageRepo: fakeStorageRepo,
 	Image: MockImage,

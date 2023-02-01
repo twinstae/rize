@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import { Device } from '@capacitor/device';
 import AppMain from '../App';
 import RizeLogo from '../components/RizeLogo';
 import { DependenciesWrapper, useColorMode } from '../hooks/Dependencies';
@@ -17,6 +17,7 @@ import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
 import S3Image from './S3Image';
 import useCacheSrcAtom from './useCacheSrc';
+import { suspend } from 'suspend-react';
 // import mailRepository, { fakeFsJSON as fsJSON, updateFakeStatus } from '../mailList/fakeMailRepository';
 // updateFakeStatus({ 'pm_list.json': false });
 const useMailList = createUseMailList(mailRepository);
@@ -39,6 +40,8 @@ const Wrapper = DependenciesWrapper({
 				initiated = true;
 			}
 		});
+		const { platform } = suspend(() => Device.getInfo(), ['platform']);
+		return { platform };
 	},
 	storageRepo,
 	useNavigationImpl: useStackNavigation,

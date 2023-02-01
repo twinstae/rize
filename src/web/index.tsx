@@ -23,6 +23,7 @@ storageRepo.getItem('lang').then((lang) => {
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => {
 		useAtom(isSplashEndAtom);
+		return { platform: 'web' };
 	},
 	storageRepo,
 	useNavigationImpl: useStackNavigation,

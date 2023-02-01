@@ -10,10 +10,10 @@ const config: CapacitorConfig = {
 			enabled: true
 		}
 	},
-	// server: {
-	// 	url: 'http://localhost:5174/',
-	// 	cleartext: true
-	// }
+	server: {
+		url: 'http://localhost:5174/',
+		cleartext: true
+	}
 };
 
 export default config;

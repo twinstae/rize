@@ -13,6 +13,9 @@ import Image from './TauriImage';
 import useProfileList from './useFsProfileList';
 import { useAtom } from 'jotai';
 import { isSplashEndAtom } from '../hooks/splashEndAtom';
+import { platform as getPlatform } from '@tauri-apps/api/os';
+import { suspend } from 'suspend-react';
+
 // import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
 // import fakeStorageRepo from '../config/fakeStorageRepo';
 // import { MockImage } from '../components/MockImage';
@@ -30,6 +33,8 @@ storageRepo.getItem('lang').then((lang) => {
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => {
 		useAtom(isSplashEndAtom);
+		const platform = suspend(() => getPlatform(), ['platform']);
+		return { platform };
 	},
 	storageRepo,
 	useNavigationImpl: useStackNavigation,
