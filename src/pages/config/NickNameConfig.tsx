@@ -17,6 +17,7 @@ function NickNameConfig() {
 			<FormLabel>
 				<TextInput
 					className="input-sm"
+					name="username-before"
 					value={beforeInput}
 					onChange={(e) => {
 						setBeforeInput(e.currentTarget.value);
@@ -28,6 +29,7 @@ function NickNameConfig() {
 			<FormLabel>
 				<TextInput
 					className="input-sm"
+					name="username-after"
 					value={afterInput}
 					onChange={(e) => {
 						setAfterInput(e.currentTarget.value);
