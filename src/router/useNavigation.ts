@@ -25,7 +25,7 @@ export interface Navigation {
 	Link: ForwardRefExoticComponent<LinkProps & RefAttributes<HTMLAnchorElement>>;
 }
 
-const history = [paths.ROOT];
+const history: string[] = [paths.ROOT];
 
 const searchParams = new URLSearchParams();
 const setSearchParams = (newInit: URLSearchParams) => {
