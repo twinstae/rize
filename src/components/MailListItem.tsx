@@ -62,7 +62,6 @@ function MailListItem({ mail, style, index }: MailListItemProps) {
 			style={style}
 			aria-labelledby={labelId}
 		>
-			<FavoriteStar mailId={mail.id} />
 			<Link to={toMailDetail(mail.id)} data-index={index} className="virtual-item">
 				<ItemProfileImage member={mail.member} mailId={mail.id} />
 				<VStack>
@@ -76,6 +75,7 @@ function MailListItem({ mail, style, index }: MailListItemProps) {
 					<ItemBody labelId={labelId} subject={mail.subject} bodyText={mail.bodyText} />
 				</VStack>
 			</Link>
+			<FavoriteStar mailId={mail.id} />
 		</li>
 	);
 }
