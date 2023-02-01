@@ -11,7 +11,7 @@ function SelectedTag() {
 	const [tag] = useTag();
 	return (
 		<HStack data-testid="selected-tag" className='text-lg'>
-			{<ProfileImage member={MEMBER_LIST.includes(tag as IZONE) ? tag : ''} size="sm" />}
+			{<ProfileImage member={MEMBER_LIST.includes(tag as IZONE) ? tag : ''} size="md" />}
 			<Text className='ml-2'>{tag || t(strs.전체)}</Text>
 		</HStack>
 	);
