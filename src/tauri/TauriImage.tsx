@@ -20,7 +20,7 @@ const TauriLoaded: React.FC<ImageProps> = ({ path, style, width, ...props }) => 
 const TauriImage: React.FC<ImageProps> = ({ width, style, ...props }) => {
 	return (
 		<Suspense
-			fallback={<img src={`https://via.placeholder.com/${width}`} {...props} width={width * 4} style={style} />}
+			fallback={<img src={`https://via.placeholder.com/${Math.floor(width)}`} {...props} width={width * 4} style={style} />}
 		>
 			<TauriLoaded width={width} style={style} {...props} />
 		</Suspense>
