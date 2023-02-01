@@ -51,6 +51,7 @@ function MailDetailPage() {
 	useHotkeys('j', () => goNext());
 	useHotkeys('k', () => goPrev());
 	
+	const date = new Date(mail.time.replaceAll('/', '-').replace(' ', 'T'));
 	return (
 		<div className="w-full h-screen relative bg-base-100">
 			<div className="p-1 h-full overflow-y-auto">
@@ -58,7 +59,9 @@ function MailDetailPage() {
 					<FavoriteStar mailId={mail.id} />
 					<ProfileImage member={mail.member} size="base" className="mr-2" />
 					<strong>{toOriginalName(mail.member)} </strong>
-					<span className="text-gray-500 absolute top-0 right-10">{mail.time}</span>
+					<time className="text-gray-500 w-fit" dateTime={date.toISOString()}>
+						<abbr aria-label={new Intl.DateTimeFormat(lang, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(date)}>{mail.time}</abbr>
+					</time>
 					<h3 className="p-0 m-0 overflow-hidden text-ellipsis font-bold">{mail.subject}</h3>
 				</header>
 				<MailBody mailBody={mail} />
