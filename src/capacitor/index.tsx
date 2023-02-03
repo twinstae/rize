@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Device } from '@capacitor/device';
+import { App } from '@capacitor/app';
+import { suspend } from 'suspend-react';
 import AppMain from '../App';
 import RizeLogo from '../components/RizeLogo';
-import { DependenciesWrapper, useColorMode } from '../hooks/Dependencies';
+import { DependenciesWrapper } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 
 import storageRepo from './storageRepo';
-import { App } from '@capacitor/app';
 import useFsProfileList from './useFsProfileList';
 import useNavigation from '../router/useNavigation';
 import { useStackNavigation } from '../router/useStatckNavigation';
@@ -17,7 +18,7 @@ import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
 import S3Image from './S3Image';
 import useCacheSrcAtom from './useCacheSrc';
-import { suspend } from 'suspend-react';
+import { useColorMode } from '../theme/useColorMode';
 // import mailRepository, { fakeFsJSON as fsJSON, updateFakeStatus } from '../mailList/fakeMailRepository';
 // updateFakeStatus({ 'pm_list.json': false });
 const useMailList = createUseMailList(mailRepository);

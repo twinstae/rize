@@ -7,9 +7,5 @@
 		"CapacitorHttp": {
 			"enabled": true
 		}
-	},
-	"server": {
-		"url": "http://localhost:5174/",
-		"cleartext": true
 	}
 }

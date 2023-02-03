@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TagList from './TagList';
-import { FAVORITE } from '../mailList/useMailList';
+import { FAVORITE } from '../mailList/mailListModel';
 import { render } from './testUtil';
 
 describe('TagList', () => {

@@ -4,6 +4,8 @@ import { atomsWithQuery } from 'jotai-tanstack-query';
 
 import { IZONE } from '../constants';
 import {
+	FAVORITE,
+	UNREAD,
 	addTagToMail,
 	getFilteredMailResult,
 	removeTagFromMail,
@@ -38,8 +40,6 @@ export interface MailListResult {
 	useSearch: () => [string, (keyword: string) => void];
 }
 
-export const UNREAD = '읽지 않음';
-export const FAVORITE = '💖';
 
 export function createUseMailList(mailRepository: MailRepository) {
 	const [mailBodyDictAtom] = atomsWithQuery(() => ({

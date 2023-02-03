@@ -10,7 +10,7 @@ import {
 	toOriginalName,
 } from './mailListModel';
 import { MailT } from './types';
-import { FAVORITE, UNREAD } from './useMailList';
+import { FAVORITE, UNREAD } from './mailListModel';
 
 const tagToMailDict = {
 	tag1: ['mail1', 'mail2'],

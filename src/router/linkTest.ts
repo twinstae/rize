@@ -1,5 +1,5 @@
 import { render } from '../components/testUtil';
-import { useFakeNavigation } from './useNavigation';
+import { useFakeNavigation } from './useFakeNavigation';
 
 function linkTest(
 	element: React.ReactElement,

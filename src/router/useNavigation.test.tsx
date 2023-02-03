@@ -1,5 +1,5 @@
 import paths from './paths';
-import { useFakeNavigation } from './useNavigation';
+import { useFakeNavigation } from './useFakeNavigation';
 
 describe('useNavigation 계약', () => {
 	const navigation = useFakeNavigation();

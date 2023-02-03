@@ -3,19 +3,19 @@ import React from 'react';
 import MenuButton from './MenuButton';
 import LeftDrawler from './LeftDrawer';
 import { render } from './testUtil';
-import toggleTest from '../test/toggleTest';
+import openCloseTest from '../test/openCloseTest';
 import { ko } from '../i18n/i18n';
 
 describe('LeftDrawler', () => {
-	toggleTest(<LeftDrawler><MenuButton /></LeftDrawler>,
+	openCloseTest(<LeftDrawler><MenuButton /></LeftDrawler>,
 		{
 			role: 'button',
-			offOnNames: [new RegExp(ko.메뉴), new RegExp(ko.닫기)],
-			key: '{Space}',
-			async expectOff({ screen }){
+			closeOpenNames: [new RegExp(ko.메뉴), new RegExp(ko.닫기)],
+			keys: ['m', '{Escape}'],
+			async expectClose({ screen }){
 				expect(screen.getByRole('checkbox')).not.toBeChecked();
 			},
-			async expectOn({ screen }){
+			async expectOpen({ screen }){
 				expect(screen.getByRole('checkbox')).toBeChecked();
 			}
 		}

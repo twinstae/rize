@@ -1,7 +1,7 @@
 import React from 'react';
 
 import EmptyStarIcon from './icons/EmptyStarIcon';
-import { FAVORITE } from '../mailList/useMailList';
+import { FAVORITE } from '../mailList/mailListModel';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import { useTags } from '../hooks/Dependencies';
 import StarIcon from './icons/StarIcon';

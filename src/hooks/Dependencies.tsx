@@ -7,9 +7,9 @@ import fakeStorageRepo from '../config/fakeStorageRepo';
 import type { StorageRepository } from '../global';
 import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
 import type { FsJSON, MailRepository } from '../mailList/types';
-import { Navigation, useFakeNavigation } from '../router/useNavigation';
 import { createWrapper } from './util';
-import useConfig from '../config/useConfig';
+import { Navigation } from '../router/useNavigation';
+import { useFakeNavigation } from '../router/useFakeNavigation';
 
 type DependencyT = {
 	usePlatform: () => { platform: 'test' | 'darwin' | 'linux' | 'win32' | string };
@@ -27,8 +27,8 @@ type DependencyT = {
 	RizeLogo?: (props: { onAnimationEnd?: () => void }) => JSX.Element;
 };
 
-export function useColorMode() {
-	const [darkMode, setDarkMode] = useConfig<boolean>('colorMode', true);
+function useColorMode() {
+	const [darkMode, setDarkMode] = React.useState(true);
 	useEffect(() => {
 		document.getElementsByTagName('html')[0].setAttribute('data-theme', darkMode ? 'dark' : 'izone');
 	}, [darkMode]);

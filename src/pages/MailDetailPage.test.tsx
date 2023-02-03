@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useFakeNavigation } from '../router/useNavigation';
+import { useFakeNavigation } from '../router/useFakeNavigation';
 import MailDetailPage from './MailDetailPage';
 import { render } from '../components/testUtil';
 import { toMailDetail } from '../router/paths';

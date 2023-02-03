@@ -2,7 +2,9 @@ import invariant from '../invariant';
 import { IZONE, MEMBER_LIST, memberNameDict } from '../constants';
 import { MailT, RawMailT } from './types';
 import { Index } from '../search/types';
-import { UNREAD, FAVORITE } from './useMailList';
+
+export const UNREAD = '읽지 않음';
+export const FAVORITE = '💖';
 
 export const modes = ['all', 'unread', 'favorite'] as const;
 export type TabMode = typeof modes[number];

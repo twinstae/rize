@@ -2,7 +2,7 @@ import React from 'react';
 
 import App from '../App';
 import RizeLogo from '../components/RizeLogo';
-import { useColorMode, DependenciesWrapper } from '../hooks/Dependencies';
+import { DependenciesWrapper } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 import { useStackNavigation } from '../router/useStatckNavigation';
@@ -12,6 +12,8 @@ import { MockImage } from '../components/MockImage';
 import { useAtom } from 'jotai';
 import { isSplashEndAtom } from '../hooks/splashEndAtom';
 import useProfileList from './useProfileList';
+import { useColorMode } from '../theme/useColorMode';
+
 const storageRepo = fakeStorageRepo;
 const useMailList = createUseMailList(fakeMailRepository);
 const Image = MockImage;

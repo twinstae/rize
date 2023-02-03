@@ -6,7 +6,7 @@ import Config from '../pages/Config';
 import MailDetailPage from '../pages/MailDetailPage';
 import MailListPage from '../pages/MailListPage';
 import { wrapLayout } from './Layout';
-import { Navigation } from './useNavigation';
+import { LinkProps, Navigation } from './useNavigation';
 import { basicUIPlugin } from '@stackflow/basic-ui';
 import AlbumPage from '../pages/AlbumPage';
 import Test from '../test/Test';
@@ -28,7 +28,7 @@ const activityNames = Object.keys(activities);
 
 type ActivityName = keyof typeof activities;
 
-export const { Stack, useFlow } = stackflow({
+export const { Stack, useFlow, useStepFlow } = stackflow({
 	transitionDuration: 350,
 	activities,
 	initialActivity: () => 'MailListPage',
@@ -51,11 +51,24 @@ export const parsePath = (path: string): [ActivityName, Record<string, string>] 
 export const useStackNavigation = (): Navigation => {
 	const { name, params } = useActivity();
 	const { push, pop, replace } = useFlow();
+	const { stepPush, stepReplace } = useStepFlow(name as ActivityName);
 
 	const navigate = (path: string) => {
-		push(...parsePath(path));
+		const [nextName, nextParams] = parsePath(path);
+		if (name === nextName){
+			stepPush(nextParams);
+		} else {
+			push(nextName, nextParams, { animate: true });
+		}
 	};
-	const redirect = (path: string) => replace(...parsePath(path), { animate: false });
+	const redirect = (path: string) => {
+		const [nextName, nextParams] = parsePath(path);
+		if (name === nextName){
+			stepReplace(nextParams);
+		} else {
+			replace(nextName, nextParams, { animate: true });
+		}
+	};
 	return {
 		params: () => params,
 		useSearchParams: () => {
@@ -73,17 +86,21 @@ export const useStackNavigation = (): Navigation => {
 		goBack: () => pop(),
 		redirect,
 		// eslint-disable-next-line react/display-name
-		Link: React.forwardRef(({ to, children, ...props }: { className?: string; to: string; children: React.ReactNode }, ref) =>
+		Link: React.forwardRef(({ to, children, isRedirect = false, ...props }: LinkProps, ref) =>
 			React.createElement(
 				'a',
 				{
+					...props,
 					ref,
 					href: to,
 					onClick: (e: React.MouseEvent) => {
 						e.preventDefault();
-						navigate(to);
+						if (isRedirect){
+							redirect(to);
+						} else {
+							navigate(to);
+						}
 					},
-					...props,
 				},
 				children,
 			))

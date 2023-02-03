@@ -5,7 +5,7 @@ type VirtualListProps<T> = {
 	result: T[];
 	width: number;
 	height: number;
-	VirtualRowItem: React.FC<{ virtualItem: VirtualItem }>;
+	VirtualRowItem: React.FC<{ virtualItem: VirtualItem, style: React.CSSProperties }>;
 	fallback: React.ReactNode;
 	estimateSize: (index: number) => number;
 };
@@ -28,7 +28,7 @@ function VirtualList<T>({ result, width, height, VirtualRowItem, fallback, estim
 				width,
 				height,
 			}}
-			className="overflow-y-auto"
+			className="overflow-y-auto overflow-x-hidden"
 		>
 			<ul
 				style={{
@@ -40,7 +40,14 @@ function VirtualList<T>({ result, width, height, VirtualRowItem, fallback, estim
 				{result.length !== 0 ? (
 					rowVirtualizer
 						.getVirtualItems()
-						.map((virtualItem) => <VirtualRowItem key={virtualItem.key} virtualItem={virtualItem} />)
+						.map((virtualItem) => <VirtualRowItem key={virtualItem.key} virtualItem={virtualItem} style={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							width: '100%',
+							height: `${virtualItem.size}px`,
+							transform: `translateY(${virtualItem.start}px)`,
+						}} />)
 				) : (
 					<div className="flex justify-center align-center text-2xl bg-base-100" role="alert">
 						{fallback}

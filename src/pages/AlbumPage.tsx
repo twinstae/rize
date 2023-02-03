@@ -1,10 +1,12 @@
 import React from 'react';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
-import { HStack, VStack, VirtualList, Text } from '../components/rize-ui-web';
+import { HStack, VirtualList, Text } from '../components/rize-ui-web';
 import BackButton from '../components/BackButton';
 import useNavigation from '../router/useNavigation';
 import { toMailDetail } from '../router/paths';
 import { rem } from '../theme/rem';
+import AppBar from '../components/AppBar';
+import LeftDrawler from '../components/LeftDrawer';
 
 const height = window.innerHeight - rem(0.1);
 
@@ -28,25 +30,18 @@ function AlbumPage() {
 	);
 
 	return (
-		<VStack className="relative bg-base-100">
+		<LeftDrawler>
+			<AppBar />
 			<VirtualList
 				result={result}
 				width={window.innerWidth}
 				height={height}
 				estimateSize={() => window.innerWidth / 4}
-				VirtualRowItem={({ virtualItem }) => (
+				VirtualRowItem={({ virtualItem, style }) => (
 					<HStack
 						key={virtualItem.key}
 						className="gap-1 p-0.5"
-						style={{
-							position: 'absolute',
-							top: 0,
-							left: 0,
-							width: '100%',
-							height: `${virtualItem.size}px`,
-							transform: `translateY(${virtualItem.start}px)`,
-							gap: '0.25rem',
-						}}
+						style={style}
 					>
 						<Text className="absolute bottom-0 left-0 text-xs bg-base-100 rounded p-0.5 z-10">
 							{result[virtualItem.index][0].time.slice(2, 10)}
@@ -70,7 +65,7 @@ function AlbumPage() {
 				fallback={<Text>이미지가 없습니다</Text>}
 			/>
 			<BackButton direction="top" variant="primary" circle="circle" size="base" className="absolute bottom-2 right-4" />
-		</VStack>
+		</LeftDrawler>
 	);
 }
 

@@ -1,53 +1,32 @@
 import React from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
+import invariant from '../invariant';
+
+import useNavigation, { useSearchParam } from '../router/useNavigation';
+import { useMailList } from '../hooks/Dependencies';
+import { strs, useTranslation } from '../i18n/i18n';
+import { toMailDetail } from '../router/paths';
+import useLang from '../config/useLang';
+import useNextPrevMail from '../mailList/useNextPrevMail';
 
 import BackButton from '../components/BackButton';
 import FavoriteStar from '../components/FavoriteStar';
 import MailBody from '../components/MailBody';
 import ProfileImage from '../components/ProfileImage';
-import useNavigation, { useSearchParam } from '../router/useNavigation';
-import { useMailList } from '../hooks/Dependencies';
-import invariant from '../invariant';
-import { strs, useTranslation } from '../i18n/i18n';
-import { toMailDetail } from '../router/paths';
 import IconButtonWithTooltip from '../components/IconButtonWithTooltip';
 import { Button, VStack } from '../components/rize-ui-web';
-import useLang from '../config/useLang';
-import { useHotkeys } from 'react-hotkeys-hook';
-import useOrder from '../config/useOrder';
+import RandomMailButton from '../components/RandomMailButton';
+
 function MailDetailPage() {
 	const { t } = useTranslation();
-	const [, setSearchParams] = useNavigation().useSearchParams();
+	const { Link } = useNavigation();
 	const mailId = useSearchParam('mailId');
 	const toOriginalName = useMailList().useToOriginalName();
 	invariant(mailId);
 	const mail = useMailList().useMailById(mailId);
 	invariant(mail);
-	const currentMailList = useMailList().useCurrentMailList();
 	const { lang } = useLang();
-
-	const curretMailIndex = currentMailList.indexOf(mail);
-	const { isReverse } = useOrder();
-	const prevMail = currentMailList[curretMailIndex + (isReverse ? 1 : -1)];
-	const nextMail = currentMailList[curretMailIndex + (isReverse ? -1 : 1)];
-
-	function goNext(){
-		if(nextMail){
-			setSearchParams(
-				new URLSearchParams({
-					mailId: nextMail.id,
-				}),
-			);
-		}
-	}
-	function goPrev() {
-		if(prevMail){
-			setSearchParams(
-				new URLSearchParams({
-					mailId: prevMail.id,
-				}),
-			);
-		}	
-	}
+	const { nextMail, goNext, goPrev } = useNextPrevMail(mailId);
 	useHotkeys('j', () => goNext());
 	useHotkeys('k', () => goPrev());
 	
@@ -60,25 +39,21 @@ function MailDetailPage() {
 					<ProfileImage member={mail.member} size="base" className="mr-2" />
 					<strong>{toOriginalName(mail.member)} </strong>
 					<time className="text-gray-500 w-fit" dateTime={date.toISOString()}>
-						<abbr aria-label={new Intl.DateTimeFormat(lang, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(date)}>{mail.time}</abbr>
+						<abbr aria-label={new Intl.DateTimeFormat(lang, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(date)}>
+							{mail.time}
+						</abbr>
 					</time>
 					<h3 className="p-0 m-0 overflow-hidden text-ellipsis font-bold">{mail.subject}</h3>
 				</header>
 				<MailBody mailBody={mail} />
 				{nextMail && (
-					<Button
-						as="a"
-						href={toMailDetail(nextMail.id)}
-						onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-							e.preventDefault();
-							goNext();
-						}}
-					>
+					<Button as={Link} to={toMailDetail(nextMail.id)}>
 						{t(strs.다음_메일_보기)}
 					</Button>
 				)}
 			</div>
 			<VStack className="fixed bottom-2 right-2 gap-2">
+				<RandomMailButton />
 				<IconButtonWithTooltip
 					ariaLabel={t(strs.파파고_번역하기)}
 					as="a"

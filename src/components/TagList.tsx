@@ -1,5 +1,5 @@
 import React from 'react';
-import { FAVORITE, UNREAD } from '../mailList/useMailList';
+import { FAVORITE, UNREAD } from '../mailList/mailListModel';
 import { useTags } from '../hooks/Dependencies';
 
 interface TagListProps {

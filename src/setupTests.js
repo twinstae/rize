@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { vi, expect, afterEach, afterAll } from 'vitest';
-import { useFakeNavigation } from './router/useNavigation';
+import { useFakeNavigation } from './router/useFakeNavigation';
 import libReport from 'istanbul-lib-report';
 import reports from 'istanbul-reports';
 import libCoverage from 'istanbul-lib-coverage';

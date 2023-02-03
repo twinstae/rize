@@ -1,8 +1,11 @@
 import React from 'react';
+import { useAtom } from 'jotai';
+import { suspend } from 'suspend-react';
+import { platform as getPlatform } from '@tauri-apps/api/os';
 
 import App from '../App';
 import RizeLogo from '../components/RizeLogo';
-import { useColorMode, DependenciesWrapper } from '../hooks/Dependencies';
+import { DependenciesWrapper } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 import { useStackNavigation } from '../router/useStatckNavigation';
@@ -11,10 +14,8 @@ import mailRepository from './fsMailRepository';
 import storageRepo from './fsStorageRepo';
 import Image from './TauriImage';
 import useProfileList from './useFsProfileList';
-import { useAtom } from 'jotai';
 import { isSplashEndAtom } from '../hooks/splashEndAtom';
-import { platform as getPlatform } from '@tauri-apps/api/os';
-import { suspend } from 'suspend-react';
+import { useColorMode } from '../theme/useColorMode';
 
 // import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
 // import fakeStorageRepo from '../config/fakeStorageRepo';

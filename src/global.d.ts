@@ -61,3 +61,7 @@ declare global {
 		interface AsymmetricMatchersContaining extends CustomMatchers {}
 	}
 }
+
+export type Matcher = | RegExp
+| string
+| ((accessibleName: string, element: Element) => boolean);

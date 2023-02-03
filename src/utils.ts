@@ -6,4 +6,6 @@ const getItem = <T>(isReverse: boolean, result: T[], index: number) => {
 	return result[index];
 };
 
-export { getItem };
+const choice = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+
+export { getItem, choice };

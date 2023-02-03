@@ -15,9 +15,9 @@ import PhotoIcon from './icons/PhotoIcon';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 function AppBar() {
-	const [, search] = useMailList().useSearch();
-	const [keywordInput, setKeywordInput] = useState('');
-	const { Link, navigate } = useNavigation();
+	const [initKeyword, search] = useMailList().useSearch();
+	const [keywordInput, setKeywordInput] = useState(initKeyword);
+	const { Link, navigate, current } = useNavigation();
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useState(false);
 	useEffect(() => {
@@ -35,17 +35,20 @@ function AppBar() {
 		navigate(paths.ALBUM);
 	});
 
-	useHotkeys('Escape', () => {
-		close();
-	}, {
-		enableOnFormTags: true
-	});
+	useHotkeys(
+		'Escape',
+		() => {
+			close();
+		},
+		{
+			enableOnFormTags: true,
+		}
+	);
 
 	useHotkeys('/', (e) => {
 		e.preventDefault();
 		open();
 	});
-
 
 	return isOpen ? (
 		<HStack className="h-14 p-2 border-b-1 items-center justify-between">
@@ -78,14 +81,16 @@ function AppBar() {
 			<MenuButton />
 			<DarkModeButton />
 			<SelectedTag />
-			<IconButtonWithTooltip
-				as={Link}
-				to={paths.ALBUM}
-				variant="ghost"
-				size="sm"
-				icon={<PhotoIcon />}
-				ariaLabel={t(strs.앨범)+'(a)'}
-			/>
+			{current() === paths.MAIL_LIST ? (
+				<IconButtonWithTooltip
+					as={Link}
+					to={paths.ALBUM}
+					variant="ghost"
+					size="sm"
+					icon={<PhotoIcon />}
+					ariaLabel={t(strs.앨범) + '(a)'}
+				/>
+			) : <div className="w-16 h-16"></div>}
 			<IconButtonWithTooltip
 				onClick={() => {
 					open();
@@ -93,7 +98,7 @@ function AppBar() {
 				direction="bottom"
 				size="sm"
 				icon={<MagnifyingGlassIcon />}
-				ariaLabel={t(strs.검색)+'(/)'}
+				ariaLabel={t(strs.검색) + '(/)'}
 			/>
 		</HStack>
 	);

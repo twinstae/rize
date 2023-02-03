@@ -8,6 +8,7 @@ import { FloatingArea, VirtualList, Text, VStack } from './rize-ui-web';
 import useOrder from '../config/useOrder';
 import OrderToggleButton from './OrderToggleButton';
 import { getItem } from '../utils';
+import RandomMailButton from './RandomMailButton';
 
 interface Props {
 	index: number;
@@ -26,17 +27,10 @@ function MailList({ index }: Props) {
 				width={window.innerWidth}
 				height={height}
 				estimateSize={() => rem(5)}
-				VirtualRowItem={({ virtualItem }) => (
+				VirtualRowItem={({ virtualItem, style }) => (
 					<MailListItem
 						key={virtualItem.key}
-						style={{
-							position: 'absolute',
-							top: 0,
-							left: 0,
-							width: '100%',
-							height: `${virtualItem.size}px`,
-							transform: `translateY(${virtualItem.start}px)`,
-						}}
+						style={style}
 						mail={getItem(isReverse, result, virtualItem.index)}
 						index={virtualItem.index}
 					/>
@@ -48,6 +42,7 @@ function MailList({ index }: Props) {
 				}
 			/>
 			<FloatingArea>
+				<RandomMailButton />
 				<OrderToggleButton />
 			</FloatingArea>
 		</VStack>

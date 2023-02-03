@@ -18,7 +18,7 @@ let make = () => {
 		$html.setAttribute('data-theme', isDark ? 'forest' : 'emerald');
 	}"), [isDark])
 
-	<button ariaLabel={isDark ? "현재 다크 모드" : "현재 라이트 모드"} onClick>
+	<button label={isDark ? "현재 다크 모드" : "현재 라이트 모드"} onClick>
 		(isDark ? <MoonIcon /> : <SunIcon />)
 	</button>
 }
