@@ -11,7 +11,7 @@ document.documentElement.setAttribute('data-theme', 'izone');
 
 expect.extend({
 	toBeSelected: (received) => {
-		if (!(received instanceof HTMLElement)){
+		if (!(received instanceof HTMLElement)) {
 			return {
 				message: () => `expected ${received} is not a HTMLElement`,
 				pass: false,
@@ -79,7 +79,7 @@ afterAll(() => {
 	}
 	const context = libReport.createContext({
 		dir: './.nyc_output',
-		coverageMap: libCoverage.createCoverageMap(window.__coverage__),
+		coverageMap: libCoverage.createCoverageMap(window.__coverage__ as any),
 	});
 
 	reports

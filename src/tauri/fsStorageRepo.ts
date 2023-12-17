@@ -1,4 +1,4 @@
-import { fs } from '@tauri-apps/api';
+import { readTextFile, writeTextFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 import { atom, onMount } from 'nanostores';
 import type { StorageRepository } from '../global';
 import { createSuspender } from '../hooks/splashEndAtom';
@@ -9,8 +9,8 @@ const [suspender, resolve] = createSuspender();
 const storageAtom = atom({} as Record<string, string>);
 
 onMount(storageAtom, () => {
-	fs.readTextFile(path, {
-		dir: fs.BaseDirectory.Download,
+	readTextFile(path, {
+		dir: BaseDirectory.Download,
 	})
 		.catch(withDefault('{}'))
 		.then((jsonText) => {
@@ -22,13 +22,13 @@ onMount(storageAtom, () => {
 });
 
 storageAtom.subscribe((value) => {
-	fs.writeFile(
+	writeTextFile(
 		{
 			path: path,
 			contents: JSON.stringify(value),
 		},
 		{
-			dir: fs.BaseDirectory.Download,
+			dir: BaseDirectory.Download,
 		},
 	);
 });

@@ -78,8 +78,26 @@ dependencies:
     specifier: ^3.0.1
     version: 3.0.1(react-dom@18.2.0)(react@18.2.0)
   '@tauri-apps/api':
-    specifier: next
+    specifier: 2.0.0-alpha.12
     version: 2.0.0-alpha.12
+  '@tauri-apps/plugin-dialog':
+    specifier: 2.0.0-alpha.4
+    version: 2.0.0-alpha.4
+  '@tauri-apps/plugin-fs':
+    specifier: 2.0.0-alpha.4
+    version: 2.0.0-alpha.4
+  '@tauri-apps/plugin-http':
+    specifier: 2.0.0-alpha.4
+    version: 2.0.0-alpha.4
+  '@tauri-apps/plugin-os':
+    specifier: 2.0.0-alpha.5
+    version: 2.0.0-alpha.5
+  '@tauri-apps/plugin-shell':
+    specifier: 2.0.0-alpha.4
+    version: 2.0.0-alpha.4
+  '@tauri-apps/plugin-store':
+    specifier: 2.0.0-alpha.4
+    version: 2.0.0-alpha.4
   '@testing-library/dom':
     specifier: ^9.3.3
     version: 9.3.3
@@ -208,6 +226,15 @@ devDependencies:
   '@testing-library/user-event':
     specifier: ^14.5.1
     version: 14.5.1(@testing-library/dom@9.3.3)
+  '@types/istanbul-lib-coverage':
+    specifier: ^2.0.6
+    version: 2.0.6
+  '@types/istanbul-lib-report':
+    specifier: ^3.0.3
+    version: 3.0.3
+  '@types/istanbul-reports':
+    specifier: ^3.0.4
+    version: 3.0.4
   '@types/jsdom':
     specifier: ^21.1.6
     version: 21.1.6
@@ -3454,6 +3481,42 @@ packages:
       '@tauri-apps/cli-win32-ia32-msvc': 2.0.0-alpha.18
       '@tauri-apps/cli-win32-x64-msvc': 2.0.0-alpha.18
     dev: true
+
+  /@tauri-apps/plugin-dialog@2.0.0-alpha.4:
+    resolution: {integrity: sha512-4NxBgDzxrZ8hPE9OMRYwsXYN2BxQYI/5l1UKEI5V4srFTZK81Vj5GGksCf7gQREZg7CmBRCk95qYx338A6oCag==}
+    dependencies:
+      '@tauri-apps/api': 2.0.0-alpha.12
+    dev: false
+
+  /@tauri-apps/plugin-fs@2.0.0-alpha.4:
+    resolution: {integrity: sha512-+CQ1jDBx6lH/oaVe086WyYBAlW/cQdKkdzv6DJ3RKfje+pwglFEODAy6BfRgyM7FSHwktA6QTYsECNEAtih5vg==}
+    dependencies:
+      '@tauri-apps/api': 2.0.0-alpha.12
+    dev: false
+
+  /@tauri-apps/plugin-http@2.0.0-alpha.4:
+    resolution: {integrity: sha512-d/guJ5+XrddUk/wo3xubDMG4UBwFvZtnQYp3X2SUWVjCAM7OIAxVSf5lBXf4qyErKrU1LfrF2mQxP6TUjqnM3g==}
+    dependencies:
+      '@tauri-apps/api': 2.0.0-alpha.12
+    dev: false
+
+  /@tauri-apps/plugin-os@2.0.0-alpha.5:
+    resolution: {integrity: sha512-dedPdad+ykMSZz2KUfrhUDyy32G2WH5aLkYdcACF58KC6GBvKuyR5sQ1ZE/pddo2L6VRhyujLp8zJEfRN3AUcQ==}
+    dependencies:
+      '@tauri-apps/api': 2.0.0-alpha.12
+    dev: false
+
+  /@tauri-apps/plugin-shell@2.0.0-alpha.4:
+    resolution: {integrity: sha512-Go/+EwGVuAXbSg2l2M5E2gT6cir66KV4CXC9P4gPHeead8Ar/B9wQvuINzcrYzL/HCcL7fFfKlqqu/XPTN2qvQ==}
+    dependencies:
+      '@tauri-apps/api': 2.0.0-alpha.12
+    dev: false
+
+  /@tauri-apps/plugin-store@2.0.0-alpha.4:
+    resolution: {integrity: sha512-m+p/UIjE2s6RFgbTUAA2xbWcnjDNbXkT5VXkMHcnaCE1IbW2nFiEOnia3AtZVZGAffQWxRqNfZsbGE5jWEupww==}
+    dependencies:
+      '@tauri-apps/api': 2.0.0-alpha.12
+    dev: false
 
   /@testing-library/dom@9.3.3:
     resolution: {integrity: sha512-fB0R+fa3AUqbLHWyxXa2kGVtf1Fe1ZZFr0Zp6AIbIAzXb2mKbEXl+PCQNUOaq5lbTab5tfctfXRNsWXxa2f7Aw==}
@@ -6981,6 +7044,7 @@ packages:
       chalk: 3.0.0
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}

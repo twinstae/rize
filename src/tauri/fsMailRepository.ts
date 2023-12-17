@@ -1,4 +1,4 @@
-import { fs } from '@tauri-apps/api';
+import { readDir, BaseDirectory } from '@tauri-apps/plugin-fs';
 
 import { fileList } from '../mailList/fakeMailRepository';
 import { MailRepository } from '../mailList/types';
@@ -13,11 +13,10 @@ const fsMailRepository: MailRepository = {
 	getMemberNameDict: async () => readJSONfile('member_name.json'),
 	saveTagToMailDict: writeJSONfile('tag_to_mail_dict.json'),
 	status: async () =>
-		fs
-			.readDir('output', {
-				dir: fs.BaseDirectory.Download,
-				recursive: false,
-			})
+		readDir('output', {
+			dir: BaseDirectory.Download,
+			recursive: false,
+		})
 			.then((result) => {
 				const nameList = result.map((entry) => entry.name);
 				return Object.fromEntries(fileList.map((name) => [name, nameList.includes(name)]));

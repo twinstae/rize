@@ -1,12 +1,11 @@
 import { atom, useAtomValue } from 'jotai';
-import { fs } from '@tauri-apps/api';
+import { readDir, BaseDirectory } from '@tauri-apps/plugin-fs';
 import filterTruthy from '../filterTruthy';
 
 async function getProfileList() {
-	return fs
-		.readDir('output/img/profile', {
-			dir: fs.BaseDirectory.Download,
-		})
+	return readDir('output/img/profile', {
+		dir: BaseDirectory.Download,
+	})
 		.then((entries) =>
 			filterTruthy(entries.filter((entry) => entry.children !== undefined).map((entry) => entry.name)),
 		);

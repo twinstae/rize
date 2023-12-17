@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "npm run build:tauri",
-    "beforeDevCommand": "npm run serve:tauri",
+    "beforeBuildCommand": "pnpm build:tauri",
+    "beforeDevCommand": "pnpm serve:tauri",
     "devPath": "http://localhost:5173",
     "distDir": "../src/tauri/dist"
   },
@@ -43,50 +43,20 @@
         "digestAlgorithm": "sha256",
         "timestampUrl": ""
       }
-    },
-    "allowlist": {
-			"window": {
-				"setSize": true
-			},
-      "path": {
-        "all": true
-      },
-      "fs": {
-        "all": true,
-        "scope": ["$APP/**/*", "$DOWNLOAD/output", "$DOWNLOAD/output/**/*"]
-      },
-      "http": {
-        "all": true,
-        "scope": ["http://localhost:8000/**/*", "http://localhost:5173/**/*", "https://fonts.googleapis.com/**/*"]
-      },
-      "protocol": {
-        "asset": true,
-        "assetScope": ["$DOWNLOAD/output/img/**/*"]
-      },
-      "shell": {
-        "open": true
-      },
-      "dialog": {
-        "all": true
-      },
-			"os": {
-				"all": true
-			}
+      
+      
     },
     "security": {
       "csp": "default-src 'self'; img-src 'self' https://via.placeholder.com/ asset: https://asset.localhost; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com/;",
       "freezePrototype": false
     },
-    "updater": {
-      "active": false
-    },    
     "windows": [
       {
-        "title": "rize",
-        "width": 512,
+        "fullscreen": false,
         "height": 1024,
-        "resizable": false,
-        "fullscreen": false
+        "resizable": true,
+        "title": "rize",
+        "width": 512
       }
     ]
   }

@@ -9,11 +9,12 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event/setup/setup';
-import React, { Suspense } from 'react';
+import React, { PropsWithChildren, Suspense } from 'react';
 import { DependenciesContext, createFakeDependencies } from '../hooks/Dependencies';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientAtom } from 'jotai-tanstack-query';
-import { Provider } from 'jotai';
+import { PrimitiveAtom, Provider } from 'jotai';
+import { useHydrateAtoms } from 'jotai/utils';
 
 export function render<
 	Q extends Queries,
@@ -35,13 +36,21 @@ export async function render(ui: any, options?: any): Promise<any> {
 			},
 		},
 	});
+
+	const HydrateAtoms = ({ initialValues, children }: PropsWithChildren<{ initialValues: [PrimitiveAtom<QueryClient> & { init: QueryClient; }, QueryClient][] }>) => {
+		useHydrateAtoms(initialValues)
+		return children
+	}
+
 	const fakeDepencies = createFakeDependencies();
 	const result = originalRender(
 		<QueryClientProvider client={queryClient}>
-			<Provider initialValues={[[queryClientAtom, queryClient]]}>
-				<Suspense fallback={<div>loading...</div>}>
-					<DependenciesContext.Provider value={fakeDepencies}>{ui}</DependenciesContext.Provider>
-				</Suspense>
+			<Provider>
+				<HydrateAtoms initialValues={[[queryClientAtom, queryClient]]}>
+					<Suspense fallback={<div>loading...</div>}>
+						<DependenciesContext.Provider value={fakeDepencies}>{ui}</DependenciesContext.Provider>
+					</Suspense>
+				</HydrateAtoms>
 			</Provider>
 		</QueryClientProvider>,
 		options,

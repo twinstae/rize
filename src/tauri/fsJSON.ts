@@ -1,4 +1,4 @@
-import { fs } from '@tauri-apps/api';
+import { readTextFile, writeTextFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 
 import { JsonValue } from '../types/json';
 
@@ -8,10 +8,9 @@ const readJSONfile = async (path: string) => {
 	if (cache.has(path)) {
 		return cache.get(path);
 	}
-	return fs
-		.readTextFile('output/' + path, {
-			dir: fs.BaseDirectory.Download,
-		})
+	return readTextFile('output/' + path, {
+		dir: BaseDirectory.Download,
+	})
 		.then(JSON.parse)
 		.then((data) => {
 			cache.set(path, data);
@@ -21,16 +20,15 @@ const readJSONfile = async (path: string) => {
 };
 
 const writeJSONfile = (path: string) => async (dict: JsonValue): Promise<void> => {
-	return fs
-		.writeFile(
-			{
-				path: 'output/' + path,
-				contents: JSON.stringify(dict),
-			},
-			{
-				dir: fs.BaseDirectory.Download,
-			},
-		)
+	return writeTextFile(
+		{
+			path: 'output/' + path,
+			contents: JSON.stringify(dict),
+		},
+		{
+			dir: BaseDirectory.Download,
+		},
+	)
 		.then(() => {
 			cache.set(path, dict);
 		});

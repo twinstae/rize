@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 import { suspend } from 'suspend-react';
-import { platform as getPlatform } from '@tauri-apps/api/os';
+import { platform as getPlatform } from '@tauri-apps/plugin-os';
 
 import App from '../App';
 import RizeLogo from '../components/RizeLogo';
