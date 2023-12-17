@@ -1,6 +1,6 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { selectAtom, waitForAll } from 'jotai/utils';
-import { atomsWithQuery } from 'jotai-tanstack-query';
+import { selectAtom } from 'jotai/utils';
+import { atomWithSuspenseQuery } from 'jotai-tanstack-query';
 
 import { IZONE } from '../constants';
 import {
@@ -42,12 +42,12 @@ export interface MailListResult {
 
 
 export function createUseMailList(mailRepository: MailRepository) {
-	const [mailBodyDictAtom] = atomsWithQuery(() => ({
+	const mailBodyDictAtom = atomWithSuspenseQuery(() => ({
 		queryKey: ['mail_body_dict.json'],
-		queryFn: mailRepository.getMailBodyDict,
+		queryFn: mailRepository.getMailBodyDict
 	}));
 
-	const [nameToNumberDictAtom] = atomsWithQuery(() => ({
+	const nameToNumberDictAtom = atomWithSuspenseQuery(() => ({
 		queryKey: ['member_name.json'],
 		queryFn: mailRepository.getMemberNameDict,
 	}));
@@ -61,34 +61,21 @@ export function createUseMailList(mailRepository: MailRepository) {
 		mailRepository.saveTagToMailDict,
 	);
 
-	let temp: (value: unknown) => void;
-	const suspender = new Promise((resolve) => {
-		temp = resolve;
-	});
-
-	const waitAtom = atom(async () => suspender);
-	const [statusAtom] = atomsWithQuery(() => ({
+	const statusAtom = atomWithSuspenseQuery(() => ({
 		queryKey: ['status'],
-		queryFn: async () => {
-			const status = await mailRepository.status();
-			if (Object.values(status).every((v) => v === true)) {
-				temp('done!');
-			}
-			return status;
-		},
+		queryFn: async () => mailRepository.status(),
 	}));
 
 	const mailToTagDictAtom = atom((get) => reverseTagToMail(get(tagToMailDictAtom)));
-	const [rawMailListAtom] = atomsWithQuery(() => ({
+	const rawMailListAtom = atomWithSuspenseQuery(() => ({
 		queryKey: ['pm_list.json'],
 		queryFn: mailRepository.getAllMailList,
 	}));
 
-	const mailListAtom = atom<(RawMailT & MailBodyT & { member: IZONE | '운영팀'; bodyText: string })[]>((get) => {
-		const rawMailList = get(rawMailListAtom);
-		const mailBodyDict = get(mailBodyDictAtom);
-		const nameToNumberDict = get(nameToNumberDictAtom);
-
+	const mailListAtom = atom<Promise<(RawMailT & MailBodyT & { member: IZONE | '운영팀'; bodyText: string })[]>>(async (get) => {
+		const { data: rawMailList } = await get(rawMailListAtom);
+		const { data: mailBodyDict } = await get(mailBodyDictAtom);
+		const { data: nameToNumberDict } = await get(nameToNumberDictAtom);
 		return (
 			rawMailList?.map((mail) => {
 				const mailBody = mailBodyDict[mail.id];
@@ -143,47 +130,45 @@ export function createUseMailList(mailRepository: MailRepository) {
 		};
 	};
 
-	const indexAtom = atom((get) =>
-		createRegexSearchIndex(
-			get(mailListAtom).map((mail) => ({
+	const indexAtom = atom(async (get) =>{
+		const mailList = await get(mailListAtom)
+
+		return createRegexSearchIndex(
+			mailList.map((mail) => ({
 				...mail,
 				body: mail.body.replace(new RegExp('&nbsp;', 'g'), ' '),
 			})),
-		),
+		)
+	}
 	);
 
 	const keywordAtom = atom('');
 
-	const filtertedMailListAtom = atom((get) => {
+	const filtertedMailListAtom = atom(async (get) => {
+		const mailList = await get(mailListAtom);
+		const index = await get(indexAtom);
 		const tag = get(currentTagAtom);
 		const tagToMailDict = get(tagToMailDictAtom);
-		const mailList = get(mailListAtom);
-		const index = get(indexAtom);
 		const keyword = get(keywordAtom);
 		return getFilteredMailResult(tag, tagToMailDict, mailList, index, keyword);
 	});
 
 	const currentModeAtom = atom<'all' | 'unread' | 'favorite'>('all');
-	const currentMailListAtom = atom((get) => {
-		const result = get(filtertedMailListAtom);
+	const currentMailListAtom = atom(async (get) => {
+		const result = await get(filtertedMailListAtom);
 		const currentMode = get(currentModeAtom);
 		return result[currentMode];
 	});
+	const allAtom = atom((get) => Promise.all([get(statusAtom), get(filtertedMailListAtom)]));
 	return (): MailListResult => {
 		return {
 			waitForAll: () => {
-				useAtomValue(waitForAll([statusAtom, waitAtom, filtertedMailListAtom]));
+				useAtomValue(allAtom);
 			},
 			mailList: (mode: 'all' | 'unread' | 'favorite') => {
-				return useAtomValue(selectAtom(filtertedMailListAtom, useCallback(({all, unread, favorite}) => {
-					if (mode === 'unread'){
-						return unread;
-					}
-					if (mode === 'favorite'){
-						return favorite;
-					}
-					return all;
-				}, [mode])));
+				
+				const filtertedMailList = useAtomValue(filtertedMailListAtom);
+				return filtertedMailList[mode];
 			},
 			useCurrentMode: () => useAtom(currentModeAtom),
 			useCurrentMailList: () => useAtomValue(currentMailListAtom),
@@ -192,10 +177,10 @@ export function createUseMailList(mailRepository: MailRepository) {
 				return mailList.find((mail) => mail.id === id);
 			},
 			useToOriginalName: () => {
-				const nameToNumber = useAtomValue(nameToNumberDictAtom);
+				const { data: nameToNumber } = useAtomValue(nameToNumberDictAtom);
 				return toOriginalName(nameToNumber);
 			},
-			useStatus: () => useAtomValue(statusAtom),
+			useStatus: () => useAtomValue(statusAtom).data,
 			useTags,
 			useSearch: () => useAtom(keywordAtom),
 		};

@@ -1,4 +1,4 @@
-import { AppScreen } from '@stackflow/basic-ui';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 import React, { Suspense } from 'react';
 import InitPage from '../pages/InitPage';
 import { useDependencies, useMailList } from '../hooks/Dependencies';

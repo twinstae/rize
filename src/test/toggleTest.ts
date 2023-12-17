@@ -1,5 +1,5 @@
-import type { ByRoleMatcher } from '@testing-library/dom';
-import type { Screen } from '@testing-library/dom/types/screen';
+import { test, expect } from 'vitest';
+import type { ByRoleMatcher, Screen } from '@testing-library/dom';
 import React from 'react';
 import { render } from '../components/testUtil';
 import { Matcher } from '../global';

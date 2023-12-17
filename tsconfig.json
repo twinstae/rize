@@ -22,8 +22,9 @@
 				"@rize/alert": ["./src/error/fakeRizeAlert.ts"],
 				"@rize/PlatformConfig": ["./src/web/WebConfig.tsx"],
       },
-      "baseUrl": "./"
+      "baseUrl": "./",
+      "types": ["vitest/globals"]
     },
-    "include": ["src", "vitest", "presetDaisy.js"]
+    "include": ["src", "vitest", "src/setupTests.ts"]
 }
   

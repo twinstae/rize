@@ -16,7 +16,7 @@ export default defineConfig({
 	test: {
 		globals: true,
 		environment: 'jsdom',
-		setupFiles: './src/setupTests.js',
+		setupFiles: './src/setupTests.ts',
 		include: ['src/**/*.test.tsx', 'src/**/*.test.ts'],
 		threads: 6,
 		testTimeout: 3000,

@@ -1,16 +1,17 @@
 import './i18n/i18n';
 import './index.css';
 // daisyUI assumes Tailwind CSS's Preflight
-import '@unocss/reset/tailwind.css';
-// Import daisyUI **BEFORE** UnoCSS
-import '@kidonng/daisyui/index.css';
+import '@unocss/reset/tailwind.css';;
 import 'uno.css';
-import '@stackflow/basic-ui/index.css';
+import '@stackflow/plugin-basic-ui/index.css';
 
 import React from 'react';
 import { Stack } from './router/useStatckNavigation';
 import QueryWrapper, { JotaiQueryWrapper } from './hooks/QueryWrapper';
 import ErrorBoundary from './components/ErrorBoundary';
+import { Provider } from 'jotai';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { DevTools } from 'jotai-devtools';
 
 function ErrorFallback({ error }: { error: Error }) {
 	return (
@@ -40,13 +41,18 @@ function ErrorFallback({ error }: { error: Error }) {
 
 function App() {
 	return (
+		<Provider>
 		<QueryWrapper>
 			<JotaiQueryWrapper>
+			
 				<ErrorBoundary fallback={ErrorFallback}>
 					<Stack />
+					{/* <DevTools />
+     				 <ReactQueryDevtools initialIsOpen={false} /> */}
 				</ErrorBoundary>
 			</JotaiQueryWrapper>
 		</QueryWrapper>
+		</Provider>
 	);
 }
 

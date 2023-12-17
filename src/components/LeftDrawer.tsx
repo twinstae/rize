@@ -54,7 +54,7 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 	);
 	useHotkeys('Esc', () => handleClose());
 	return (
-		<div className="drawer bg-base-100 ">
+		<div className="drawer bg-base-100">
 			<input
 				checked={isOpen}
 				id={drawlerId}
@@ -73,10 +73,10 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 				<drawlerContext.Provider value={{ handleOpen }}>{children}</drawlerContext.Provider>
 			</div>
 			<div ref={drawerSideRef} className="drawer-side">
-				<label htmlFor={drawlerId} className="drawer-overlay">
+				<label htmlFor={drawlerId} className="drawer-overlay sr-only">
 					close drawer
 				</label>
-				<div className="menu bg-base-100 pl-4 pr-1 w-2/3 relative">
+				<div className="menu bg-base-100 pl-4 pr-1 w-2/3 relative  h-screen">
 					<HStack className="w-full justify-between">
 						<h2 className="p-2 text-xl">{t(strs.메뉴)}</h2>
 						<IconButtonWithTooltip

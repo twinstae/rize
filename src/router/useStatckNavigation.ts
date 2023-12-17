@@ -7,7 +7,7 @@ import MailDetailPage from '../pages/MailDetailPage';
 import MailListPage from '../pages/MailListPage';
 import { wrapLayout } from './Layout';
 import { LinkProps, Navigation } from './useNavigation';
-import { basicUIPlugin } from '@stackflow/basic-ui';
+import { basicUIPlugin } from '@stackflow/plugin-basic-ui';
 import AlbumPage from '../pages/AlbumPage';
 import Test from '../test/Test';
 import invariant from '../invariant';
@@ -36,6 +36,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
 		basicRendererPlugin(),
 		basicUIPlugin({
 			theme: 'cupertino',
+			dimBackgroundColor: '#fff'
 		}),
 	],
 });

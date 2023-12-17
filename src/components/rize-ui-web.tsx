@@ -173,14 +173,14 @@ const Button: <T extends React.ElementType = 'button'>(
 			ref={actualRef}
 			{...props}
 			className={
-				`btn ${variant === 'primary' ? 'btn-primary' : 'btn-ghost'} ${size === 'base' ? 'btn-base' : 'btn-sm'} ${circle === 'circle' ? 'btn-circle' : ''} relative ` + className ??
-        ''
+				`btn ${variant === 'primary' ? 'btn-primary' : 'btn-ghost'} ${size === 'base' ? 'btn-base' : 'btn-sm'} ${circle === 'circle' ? 'btn-circle' : ''} relative ` + (className ??
+					'')
 			}
 		>
 			{children}
 		</Element>
 	);
-});
+}) as any;
 
 const FloatingArea = ({
 	children,

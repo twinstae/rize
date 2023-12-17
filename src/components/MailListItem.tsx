@@ -58,7 +58,7 @@ function MailListItem({ mail, style, index }: MailListItemProps) {
 	const date = new Date(mail.time.replaceAll('/', '-').replace(' ', 'T'));
 	return (
 		<li
-			className="p-1 border-b-1 border-base-200 relative focus-within:ring-2"
+			className="p-1 border-b-1 relative focus-within:ring-2"
 			style={style}
 			aria-labelledby={labelId}
 		>

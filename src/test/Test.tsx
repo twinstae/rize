@@ -69,13 +69,13 @@ const testSuites: Suite<DependenciesT>[] = [
 
 const colorMap = {
 	idle: 'gray',
-	loading: 'gray',
+	pending: 'gray',
 	success: 'green',
 	error: 'red',
 };
 const resultMap = {
 	idle: '? 대기 중',
-	loading: '? 실행 중',
+	pending: '? 실행 중',
 	success: '✔️ 통과',
 	error: '❌ 실패',
 };

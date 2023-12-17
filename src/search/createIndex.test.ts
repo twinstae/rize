@@ -1,5 +1,4 @@
 import { YURI_MAIL_M25752, TEST_MAIL_2 } from '../test/fixtures';
-import createFlexSearchIndex from './createFlexSearchIndex';
 import createRegexSearchIndex from './createRegexSearchIndex';
 import type { CreateIndex } from './types';
 
@@ -32,5 +31,4 @@ function testSearchIndex(createSearchIndex: CreateIndex) {
 	});
 }
 
-testSearchIndex(createFlexSearchIndex);
 testSearchIndex(createRegexSearchIndex);

@@ -52,6 +52,6 @@ const IconButtonWithTooltip: <T extends React.ElementType = 'button'>(
 			</Tooltip>
 		);
 	}
-);
+) as any;
 
 export default IconButtonWithTooltip;

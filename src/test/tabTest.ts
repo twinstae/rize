@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '../components/testUtil';
 import invariant from '../invariant';
+import { test, expect } from 'vitest';
 import type { Screen } from '@testing-library/react';
 type Matcher = | RegExp
 | string

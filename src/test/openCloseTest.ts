@@ -2,6 +2,7 @@ import type { ByRoleMatcher } from '@testing-library/dom';
 import type { Screen } from '@testing-library/dom/types/screen';
 import React from 'react';
 import { render } from '../components/testUtil';
+import { test, expect } from 'vitest';
 import type { Matcher } from '../global';
 
 function toggleTest(

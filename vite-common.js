@@ -1,9 +1,10 @@
 import react from '@vitejs/plugin-react';
-import Unocss from 'unocss/vite';
+import unocss from 'unocss/vite';
 import {presetUno, transformerDirectives} from 'unocss';
 import { defineConfig } from 'vite';
-import presetDaisy from './presetDaisy.js';
+import {presetDaisy} from 'unocss-preset-daisy'
 import istanbul from 'babel-plugin-istanbul';
+
 // eslint-disable-next-line no-undef
 const env = process.env;
 export default defineConfig({
@@ -14,7 +15,7 @@ export default defineConfig({
 				plugins: [[istanbul]]
 			}
 		}),
-		Unocss({
+		unocss({
 			shortcuts: {
 				'tab-active': 'border-red-300',
 			},

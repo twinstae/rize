@@ -8,7 +8,7 @@
     "**/*.{test,spec}.{js,jsx,ts,tsx}",
     "src/constants.ts",
     "src/config/localStorageRepo.ts",
-    "src/setupTests.js",
+    "src/setupTests.ts",
     "src/web/**/*",
     "src/tauri/serverMailRepository.ts",
     "node_modules/**/*",

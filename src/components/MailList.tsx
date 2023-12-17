@@ -17,7 +17,8 @@ interface Props {
 const height = window.innerHeight - rem(6);
 
 function MailList({ index }: Props) {
-	const result = useMailList().mailList(modes[index]);
+	const {mailList} = useMailList()
+	const result = mailList(modes[index]);
 	const { isReverse } = useOrder();
 
 	return (
