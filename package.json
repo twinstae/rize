@@ -97,7 +97,14 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.1.5",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "storybook": "^10.5.2",
+    "@storybook/react-vite": "^10.5.2",
+    "@chromatic-com/storybook": "^5.2.1",
+    "@storybook/addon-vitest": "^10.5.2",
+    "@storybook/addon-a11y": "^10.5.2",
+    "@storybook/addon-docs": "^10.5.2",
+    "@storybook/addon-mcp": "^0.7.0"
   },
   "scripts": {
     "build:tauri": "vite build --config=vite.config.tauri.ts",
@@ -122,7 +129,9 @@
     "ionic:build": "pnpm build:cap",
     "ionic:android": "npx cap run android --livereload --external",
     "tauri:android:dev": "cargo tauri android dev",
-    "tauri:android:build": "cargo tauri android build"
+    "tauri:android:build": "cargo tauri android build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "browserslist": {
     "production": [
