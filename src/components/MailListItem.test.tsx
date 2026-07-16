@@ -11,7 +11,7 @@ describe('MailListItem', () => {
 		await runSiheom(
 			given.render(<MailListItem mail={YURI_MAIL_M25752} index={1} />),
 			assertions.visible(query.heading(YURI_MAIL_M25752.subject), true),
-			assertions.visible(query.link(new RegExp(YURI_MAIL_M25752.member)), true),
+			assertions.visible(query.img(YURI_MAIL_M25752.member), true),
 		);
 	});
 
