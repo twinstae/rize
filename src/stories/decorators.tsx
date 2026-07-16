@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils';
 import { queryClientAtom } from 'jotai-tanstack-query';
+import { TooltipProvider } from '../components/Tooltip';
 import { DependenciesContext, createFakeDependencies } from '../hooks/Dependencies';
 import { useFakeNavigation } from '../router/useFakeNavigation';
 
@@ -31,11 +32,13 @@ function RizeProviders({ children }: PropsWithChildren) {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Provider>
-				<HydrateAtoms initialValues={[[queryClientAtom, queryClient]]}>
-					<Suspense fallback={<div>loading...</div>}>
-						<DependenciesContext.Provider value={fakeDependencies}>{children}</DependenciesContext.Provider>
-					</Suspense>
-				</HydrateAtoms>
+				<TooltipProvider>
+					<HydrateAtoms initialValues={[[queryClientAtom, queryClient]]}>
+						<Suspense fallback={<div>loading...</div>}>
+							<DependenciesContext.Provider value={fakeDependencies}>{children}</DependenciesContext.Provider>
+						</Suspense>
+					</HydrateAtoms>
+				</TooltipProvider>
 			</Provider>
 		</QueryClientProvider>
 	);

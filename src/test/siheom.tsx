@@ -14,6 +14,7 @@ import {
 	type Locator,
 } from '@siheom/core';
 import { DependenciesContext, createFakeDependencies } from '../hooks/Dependencies';
+import { TooltipProvider } from '../components/Tooltip';
 
 const ASSERTION_TIMEOUT = 5000;
 
@@ -55,11 +56,13 @@ const renderGiven = async (element: ReactElement) => {
 		return (
 			<QueryClientProvider client={queryClient}>
 				<Provider>
-					<HydrateAtoms initialValues={[[queryClientAtom, queryClient]]}>
-						<Suspense fallback={<div>loading...</div>}>
-							<DependenciesContext.Provider value={fakeDependencies}>{children}</DependenciesContext.Provider>
-						</Suspense>
-					</HydrateAtoms>
+					<TooltipProvider>
+						<HydrateAtoms initialValues={[[queryClientAtom, queryClient]]}>
+							<Suspense fallback={<div>loading...</div>}>
+								<DependenciesContext.Provider value={fakeDependencies}>{children}</DependenciesContext.Provider>
+							</Suspense>
+						</HydrateAtoms>
+					</TooltipProvider>
 				</Provider>
 			</QueryClientProvider>
 		);

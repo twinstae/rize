@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip } from './Tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
 import { Button, type ButtonProps } from './rize-ui-web';
 import type { PolymorphicComponentPropsWithRef } from '../global';
 
@@ -35,31 +35,36 @@ const IconButtonWithTooltip = React.forwardRef(function IconButtonWithTooltip(
 	const sizedIcon = React.isValidElement(icon)
 		? React.cloneElement(icon as React.ReactElement<{ className?: string }>, {
 				className: `${ICON_SIZES[size]} ${(icon as React.ReactElement<{ className?: string }>).props.className ?? ''}`.trim(),
-				'aria-hidden': true,
 			})
 		: icon;
 
 	return (
-		<Tooltip tip={ariaLabel} className={`tooltip-${direction} ${className ?? ''}`}>
-			<Button
-				as={(as || 'button') as 'button'}
-				type="button"
-				ref={ref}
-				variant={variant}
-				circle={circle}
-				size={size}
-				onKeyUp={(e: React.KeyboardEvent<HTMLElement>) => {
-					if (e.key === 'Space') {
-						props.onClick?.(e as unknown as React.MouseEvent<HTMLElement>);
-						onKeyUp?.(e);
-					}
-				}}
-				aria-label={ariaLabel}
-				{...props}
-				className="shrink-0"
+		<Tooltip>
+			<TooltipTrigger
+				closeOnClick={false}
+				render={<span className={`inline-flex ${className ?? ''}`.trim()} />}
 			>
-				{sizedIcon}
-			</Button>
+				<Button
+					as={(as || 'button') as 'button'}
+					type="button"
+					ref={ref}
+					variant={variant}
+					circle={circle}
+					size={size}
+					onKeyUp={(e: React.KeyboardEvent<HTMLElement>) => {
+						if (e.key === 'Space') {
+							props.onClick?.(e as unknown as React.MouseEvent<HTMLElement>);
+							onKeyUp?.(e);
+						}
+					}}
+					aria-label={ariaLabel}
+					{...props}
+					className="shrink-0"
+				>
+					{sizedIcon}
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent side={direction}>{ariaLabel}</TooltipContent>
 		</Tooltip>
 	);
 }) as <T extends React.ElementType = 'button'>(

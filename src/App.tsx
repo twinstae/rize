@@ -1,13 +1,5 @@
 import './i18n/i18n';
 import '@ionic/react/css/core.css';
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
 import '@stackflow/plugin-basic-ui/index.css';
 import './index.css';
 
@@ -16,6 +8,7 @@ import { setupIonicReact } from '@ionic/react';
 import { Stack } from './router/useStatckNavigation';
 import QueryWrapper, { JotaiQueryWrapper } from './hooks/QueryWrapper';
 import ErrorBoundary from './components/ErrorBoundary';
+import { TooltipProvider } from './components/Tooltip';
 import { Provider, getDefaultStore } from 'jotai';
 import { Button } from './components/rize-ui-web';
 
@@ -54,13 +47,15 @@ function ErrorFallback({ error }: { error: Error }) {
 function App() {
 	return (
 		<Provider store={appStore}>
-			<QueryWrapper>
-				<JotaiQueryWrapper>
-					<ErrorBoundary fallback={ErrorFallback}>
-						<Stack />
-					</ErrorBoundary>
-				</JotaiQueryWrapper>
-			</QueryWrapper>
+			<TooltipProvider>
+				<QueryWrapper>
+					<JotaiQueryWrapper>
+						<ErrorBoundary fallback={ErrorFallback}>
+							<Stack />
+						</ErrorBoundary>
+					</JotaiQueryWrapper>
+				</QueryWrapper>
+			</TooltipProvider>
 		</Provider>
 	);
 }

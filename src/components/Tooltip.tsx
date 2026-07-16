@@ -1,28 +1,65 @@
-import React from 'react';
+import { Tooltip as TooltipPrimitive } from '@base-ui/react/tooltip';
 
-interface TooltipProps {
-	tip: string;
-	className?: string;
-	children: React.ReactNode;
+import { cn } from '../utils/cn';
+
+function TooltipProvider({ delay = 0, timeout = 0, ...props }: TooltipPrimitive.Provider.Props) {
+	return <TooltipPrimitive.Provider data-slot="tooltip-provider" delay={delay} timeout={timeout} {...props} />;
 }
 
-export function Tooltip(props: TooltipProps) {
-	const direction = props.className?.includes('tooltip-left')
-		? 'right-full top-1/2 mr-2 -translate-y-1/2'
-		: props.className?.includes('tooltip-top')
-			? 'bottom-full left-1/2 mb-2 -translate-x-1/2'
-			: 'left-1/2 top-full mt-2 -translate-x-1/2';
-	const position = props.className?.includes('absolute') ? '' : 'relative';
+function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
+	return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
+}
 
+function TooltipTrigger({ onFocus, ...props }: TooltipPrimitive.Trigger.Props) {
 	return (
-		<span className={`group ${position} z-10 inline-flex ${props.className ?? ''}`}>
-			{props.children}
-			<span
-				role="tooltip"
-				className={`pointer-events-none absolute ${direction} whitespace-nowrap rounded-lg bg-slate-900 px-2 py-1 text-[11px] font-medium text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100`}
-			>
-				{props.tip}
-			</span>
-		</span>
+		<TooltipPrimitive.Trigger
+			data-slot="tooltip-trigger"
+			onFocus={(event) => {
+				event.preventBaseUIHandler();
+				onFocus?.(event);
+			}}
+			{...props}
+		/>
 	);
 }
+
+function TooltipContent({
+	className,
+	side = 'top',
+	sideOffset = 4,
+	align = 'center',
+	alignOffset = 0,
+	children,
+	...props
+}: TooltipPrimitive.Popup.Props &
+	Pick<TooltipPrimitive.Positioner.Props, 'align' | 'alignOffset' | 'side' | 'sideOffset'>) {
+	const contentClassName =
+		'z-50 w-fit max-w-xs origin-(--transform-origin) rounded-lg bg-slate-900 px-2 py-1 text-[11px] font-medium whitespace-nowrap text-white shadow-lg';
+
+	return (
+		<TooltipPrimitive.Portal>
+			<TooltipPrimitive.Positioner
+				align={align}
+				alignOffset={alignOffset}
+				side={side}
+				sideOffset={sideOffset}
+				className="isolate z-50"
+			>
+				<TooltipPrimitive.Popup
+					data-slot="tooltip-content"
+					className={
+						typeof className === 'function'
+							? (state) => cn(contentClassName, className(state))
+							: cn(contentClassName, className)
+					}
+					{...props}
+				>
+					{children}
+					<TooltipPrimitive.Arrow className="z-50 fill-slate-900 data-[side=bottom]:top-1 data-[side=left]:top-1/2! data-[side=left]:-right-1 data-[side=left]:-translate-y-1/2 data-[side=right]:top-1/2! data-[side=right]:-left-1 data-[side=right]:-translate-y-1/2 data-[side=top]:-bottom-2.5" />
+				</TooltipPrimitive.Popup>
+			</TooltipPrimitive.Positioner>
+		</TooltipPrimitive.Portal>
+	);
+}
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
