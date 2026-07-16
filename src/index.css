@@ -170,3 +170,8 @@ body {
 		opacity: 0;
 	}
 }
+
+.mail-fab {
+	margin-bottom: calc(1.5rem + var(--ion-safe-area-bottom, 0));
+	margin-right: 1rem;
+}

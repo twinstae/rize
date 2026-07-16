@@ -13,8 +13,8 @@ import BackButton from '../components/BackButton';
 import FavoriteStar from '../components/FavoriteStar';
 import MailBody from '../components/MailBody';
 import ProfileImage from '../components/ProfileImage';
-import IconButtonWithTooltip from '../components/IconButtonWithTooltip';
-import { Button, VStack } from '../components/rize-ui-web';
+import { Button } from '../components/rize-ui-web';
+import { Fab, FabButton, FabList, FabToggleButton } from '../components/Fab';
 import RandomMailButton from '../components/RandomMailButton';
 
 function MailDetailPage() {
@@ -79,29 +79,30 @@ function MailDetailPage() {
 					</div>
 				)}
 			</div>
-			<VStack className="fixed bottom-6 right-4 gap-3">
-				<RandomMailButton />
-				<IconButtonWithTooltip
-					ariaLabel={t(strs.파파고_번역하기)}
-					as="a"
-					variant="primary"
-					circle="circle"
-					size="base"
-					direction="left"
-					href={encodeURI(
-						`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`,
-					)}
-					target="_blank"
-					icon={
-						<img
-							src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png"
-							alt=""
-							className="h-6 w-6 rounded-full"
-						/>
-					}
-				/>
-				<BackButton direction="left" variant="primary" circle="circle" size="base" />
-			</VStack>
+			<Fab>
+				<FabToggleButton ariaLabel={t(strs.메뉴)} />
+				<FabList side="top">
+					<RandomMailButton fab direction="top" />
+					<FabButton
+						direction="top"
+						size="base"
+						ariaLabel={t(strs.파파고_번역하기)}
+						href={encodeURI(
+							`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`,
+						)}
+						target="_blank"
+						rel="noreferrer"
+						icon={
+							<img
+								src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png"
+								alt=""
+								className="h-6 w-6 rounded-full"
+							/>
+						}
+					/>
+					<BackButton fab direction="top" size="base" />
+				</FabList>
+			</Fab>
 		</div>
 	);
 }

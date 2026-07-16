@@ -4,7 +4,9 @@ import { rem } from '../theme/rem';
 import MailListItem from './MailListItem';
 import { useMailList } from '../hooks/Dependencies';
 import { modes } from '../mailList/mailListModel';
-import { FloatingArea, VirtualList, Text, VStack } from './rize-ui-web';
+import { VirtualList, Text, VStack } from './rize-ui-web';
+import { Fab, FabList, FabToggleButton } from './Fab';
+import { strs, useTranslation } from '../i18n/i18n';
 import useOrder from '../config/useOrder';
 import OrderToggleButton from './OrderToggleButton';
 import { getItem } from '../utils';
@@ -17,6 +19,7 @@ interface Props {
 const height = window.innerHeight - rem(8.25);
 
 function MailList({ index }: Props) {
+	const { t } = useTranslation();
 	const { mailList } = useMailList();
 	const result = mailList(modes[index]);
 	const { isReverse } = useOrder();
@@ -43,10 +46,13 @@ function MailList({ index }: Props) {
 					</div>
 				}
 			/>
-			<FloatingArea>
-				<RandomMailButton />
-				<OrderToggleButton />
-			</FloatingArea>
+			<Fab>
+				<FabToggleButton ariaLabel={t(strs.메뉴)} />
+				<FabList side="start">
+					<RandomMailButton fab />
+					<OrderToggleButton fab />
+				</FabList>
+			</Fab>
 		</VStack>
 	);
 }

@@ -165,11 +165,11 @@ const Button = React.forwardRef(function Button(
 			variant === 'primary'
 				? 'bg-pink-500 text-white shadow-sm hover:bg-pink-600'
 				: 'bg-transparent text-[var(--rize-text)] hover:bg-[var(--rize-surface)]';
-		const sizeClass = size === 'sm' ? 'min-h-11 px-3 text-sm' : 'min-h-12 px-4';
+		const sizeClass = size === 'sm' ? 'p-0 text-sm' : 'p-3';
 		const shapeClass =
 			circle === 'circle'
 				? size === 'sm'
-					? 'h-11 w-11 shrink-0 rounded-full p-0'
+					? 'h-8 w-8 shrink-0 rounded-full p-0'
 					: 'h-12 w-12 shrink-0 rounded-full p-0'
 				: 'rounded-xl';
 		return (
@@ -203,16 +203,6 @@ const Button = React.forwardRef(function Button(
 	props: PolymorphicComponentPropsWithRef<T, ButtonProps>,
 ) => React.ReactElement | null;
 
-const FloatingArea = ({
-	children,
-}: {
-	children: React.ReactNode | React.ReactNode[];
-}) => (
-	<div className="absolute bottom-6 right-4 flex items-center gap-3 rounded-full bg-base-100/95 p-2 shadow-[var(--rize-shadow)] ring-1 ring-[var(--rize-border)] backdrop-blur-sm">
-		{children}
-	</div>
-);
-
 export {
 	Button,
 	TextInput,
@@ -223,6 +213,5 @@ export {
 	VirtualList,
 	KBD,
 	Text,
-	FloatingArea,
 	Checkbox,
 };

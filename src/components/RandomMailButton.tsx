@@ -3,12 +3,21 @@ import { useHotkeys } from 'react-hotkeys-hook';
 
 import { choice } from '../utils';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
+import { FabButton } from './Fab';
 import ShuffleIcon from './icons/ShuffleIcon';
 import { toMailDetail } from '../router/paths';
 import useNavigation from '../router/useNavigation';
 import { useMailList } from '../hooks/Dependencies';
 
-function RandomMailButton({ isRedirect=false }: { isRedirect?: boolean }) {
+function RandomMailButton({
+	isRedirect = false,
+	fab = false,
+	direction = 'left',
+}: {
+	isRedirect?: boolean;
+	fab?: boolean;
+	direction?: 'left' | 'top' | 'bottom';
+}) {
 	const { Link, redirect, navigate } = useNavigation();
 	const result = useMailList().useCurrentMailList();
 
@@ -21,6 +30,24 @@ function RandomMailButton({ isRedirect=false }: { isRedirect?: boolean }) {
 			navigate(to);
 		}
 	});
+	if (fab) {
+		return (
+			<FabButton
+				direction={direction}
+				size="base"
+				ariaLabel="무작위 메일 보기"
+				icon={<ShuffleIcon />}
+				onClick={() => {
+					if (isRedirect) {
+						redirect(to);
+					} else {
+						navigate(to);
+					}
+				}}
+			/>
+		);
+	}
+
 	return (
 		<IconButtonWithTooltip
 			as={Link}
@@ -29,7 +56,7 @@ function RandomMailButton({ isRedirect=false }: { isRedirect?: boolean }) {
 			variant="primary"
 			circle="circle"
 			size="base"
-			direction="left"
+			direction={direction}
 			ariaLabel="무작위 메일 보기"
 			icon={<ShuffleIcon />}
 		/>
