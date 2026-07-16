@@ -25,7 +25,7 @@ const Config = () => {
 					</div>
 				</IonToolbar>
 			</IonHeader>
-			<VStack className="gap-4 bg-[var(--rize-base-200)] p-4">
+			<VStack className="gap-4 bg-[var(--rize-base-200)] p-4 h-[calc(100dvh-8rem)] overflow-y-auto">
 				<LangConfig />
 				<NickNameConfig />
 				<ShortcutConfig />

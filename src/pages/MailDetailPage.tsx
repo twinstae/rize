@@ -71,7 +71,7 @@ function MailDetailPage() {
 				</IonToolbar>
 			</IonHeader>
 			<div className="relative w-full bg-base-100">
-				<div className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto pb-28">
+				<div className="max-h-[calc(100dvh-10rem)] min-h-[calc(100dvh-10rem)] overflow-y-auto pb-28">
 					<div className="px-5 py-4">
 						<MailBody mailBody={mail} />
 					</div>
