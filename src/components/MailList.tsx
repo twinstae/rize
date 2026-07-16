@@ -14,20 +14,20 @@ interface Props {
 	index: number;
 }
 
-const height = window.innerHeight - rem(6);
+const height = window.innerHeight - rem(8.75);
 
 function MailList({ index }: Props) {
-	const {mailList} = useMailList()
+	const { mailList } = useMailList();
 	const result = mailList(modes[index]);
 	const { isReverse } = useOrder();
 
 	return (
-		<VStack className="relative">
+		<VStack className="relative bg-base-100">
 			<VirtualList
 				result={result}
 				width={window.innerWidth}
 				height={height}
-				estimateSize={() => rem(5)}
+				estimateSize={() => rem(4.25)}
 				VirtualRowItem={({ virtualItem, style }) => (
 					<MailListItem
 						key={virtualItem.key}
@@ -37,9 +37,10 @@ function MailList({ index }: Props) {
 					/>
 				)}
 				fallback={
-					<Text className="justify-center align-center text-2xl bg-base-100" role="alert">
-						검색결과가 없습니다
-					</Text>
+					<div className="flex h-64 flex-col items-center justify-center gap-2 text-center" role="alert">
+						<span className="text-3xl">✉️</span>
+						<Text className="text-sm font-medium text-[var(--rize-muted)]">검색결과가 없습니다</Text>
+					</div>
 				}
 			/>
 			<FloatingArea>

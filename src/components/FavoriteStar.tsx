@@ -23,7 +23,7 @@ function FavoriteStar({ mailId }: FavoriteStarProps) {
 
 	return (
 		<IconButtonWithTooltip
-			className="top-0 right-0 absolute"
+			className="absolute right-2 top-1/2 -translate-y-1/2 opacity-70 transition-opacity group-hover:opacity-100 sm:right-3"
 			onClick={(e: React.MouseEvent) => {
 				e.preventDefault();
 				e.stopPropagation();
