@@ -33,7 +33,7 @@ const ProfileImage: React.FC<Props> = ({ member, size, theme, className }) => {
 	return (
 		<Image
 			path={getPath(member, theme)}
-			alt={member}
+			alt={member || undefined}
 			className={`${className} float-left rounded-full aspect-square`}
 			width={sizes[size]}
 		/>

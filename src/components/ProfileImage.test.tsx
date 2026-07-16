@@ -13,7 +13,7 @@ describe('ProfileImage', () => {
 	it('md size', async () => {
 		await runSiheom(
 			given.render(<ProfileImage member="운영팀" size="md" theme="la-vie-en-rose" />),
-			assertions.visible(query.img(/izone-logo/), true),
+			assertions.visible(query.img('운영팀'), true),
 		);
 	});
 

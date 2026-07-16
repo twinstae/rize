@@ -8,14 +8,14 @@ import { createUseMailList } from '../mailList/useMailList';
 import { useStackNavigation } from '../router/useStatckNavigation';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import fakeMailRepository, { fakeFsJSON, fakeMailDefaults } from '../mailList/fakeMailRepository';
-import { MockImage } from '../components/MockImage';
+import WebImage from './WebImage';
 import { splashEnd } from '../hooks/splashEndAtom';
 import useProfileList from './useProfileList';
 import { useColorMode } from '../theme/useColorMode';
 
 const storageRepo = fakeStorageRepo;
 const useMailList = createUseMailList(fakeMailRepository, fakeMailDefaults);
-const Image = MockImage;
+const Image = WebImage;
 
 splashEnd();
 

@@ -32,7 +32,7 @@ function ItemBody({
 			<div className="flex min-w-0 items-baseline gap-2">
 				<h3
 					id={labelId}
-					className="min-w-0 flex-1 truncate text-sm font-semibold leading-5 text-[var(--rize-text)]"
+					className="m-0 min-w-0 flex-1 truncate text-[13px] leading-4 font-semibold text-[var(--rize-text)]"
 					// rome-ignore lint/security/noDangerouslySetInnerHtml: <for marked highlighed>
 					dangerouslySetInnerHTML={{
 						__html: highlight(subject, keyword),
