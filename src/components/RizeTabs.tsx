@@ -23,21 +23,24 @@ export function RizeTabs<T>({ data, value, Label, Content, onChange }: RizeTabsP
 		<div {...api.getRootProps()} className="bg-base-100">
 			<div
 				{...api.getListProps()}
-				className="mx-4 mb-2 flex rounded-2xl bg-[var(--rize-surface)] p-1 sm:mx-6"
+				className="mx-4 mb-3 flex gap-1 rounded-2xl bg-[var(--rize-surface)] p-1.5 sm:mx-5"
 			>
-				{data.map((item, index) => (
-					<button
-						{...api.getTriggerProps({ value: value(item) })}
-						key={value(item)}
-						className={`min-h-10 flex-1 rounded-xl px-3 py-2 text-sm font-semibold transition-all ${
-							value(item) === api.value
-								? 'bg-base-100 text-[var(--rize-text)] shadow-sm'
-								: 'text-[var(--rize-muted)] hover:text-[var(--rize-text)]'
-						}`}
-					>
-						<Label index={index} />
-					</button>
-				))}
+				{data.map((item, index) => {
+					const isActive = value(item) === api.value;
+					return (
+						<button
+							{...api.getTriggerProps({ value: value(item) })}
+							key={value(item)}
+							className={`min-h-11 flex-1 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200 ${
+								isActive
+									? 'bg-base-100 text-[var(--rize-text)] shadow-[var(--rize-shadow-sm)]'
+									: 'text-[var(--rize-muted)] hover:text-[var(--rize-text)]'
+							}`}
+						>
+							<Label index={index} />
+						</button>
+					);
+				})}
 			</div>
 			{data.map((item, index) => (
 				<div {...api.getContentProps({ value: value(item) })} key={value(item)}>

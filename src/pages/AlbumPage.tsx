@@ -8,7 +8,7 @@ import { rem } from '../theme/rem';
 import AppBar from '../components/AppBar';
 import LeftDrawler from '../components/LeftDrawer';
 
-const height = window.innerHeight - rem(0.1);
+const height = window.innerHeight - rem(7.5);
 
 function chunk<T>(arr: Array<T>, count: number): Array<Array<T>> {
 	const result = [];
@@ -29,6 +29,8 @@ function AlbumPage() {
 		4,
 	);
 
+	const cellSize = (window.innerWidth - 40) / 4;
+
 	return (
 		<LeftDrawler>
 			<AppBar />
@@ -36,35 +38,42 @@ function AlbumPage() {
 				result={result}
 				width={window.innerWidth}
 				height={height}
-				estimateSize={() => window.innerWidth / 4}
+				estimateSize={() => cellSize + 8}
 				VirtualRowItem={({ virtualItem, style }) => (
-					<HStack
-						key={virtualItem.key}
-						className="gap-1 p-0.5"
-						style={style}
-					>
-						<Text className="absolute bottom-0 left-0 text-xs bg-base-100 rounded p-0.5 z-10">
-							{result[virtualItem.index][0].time.slice(2, 10)}
-						</Text>
-						{result[virtualItem.index].map(({ image, mailId }, i) => (
+					<HStack key={virtualItem.key} className="gap-2 px-3 py-1" style={style}>
+						{result[virtualItem.index].map(({ image, mailId, time }, i) => (
 							<Link
 								key={`${mailId}-${i}`}
 								to={toMailDetail(mailId)}
 								aria-label={`${mailId} 메일로 이동`}
-								className="focus:ring-3 w-1/4"
+								className="relative w-1/4 overflow-hidden rounded-2xl focus:ring-2 focus:ring-pink-400"
 							>
 								<Image
-									style={{ borderRadius: '1rem', objectFit: 'cover', aspectRatio: '1/1' }}
-									width={window.innerWidth / 4}
+									style={{ objectFit: 'cover', aspectRatio: '1/1', width: '100%' }}
+									width={cellSize}
 									path={image.replace(/\..+/, '_tmb.jpg')}
 								/>
+								<span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-1.5 pb-1.5 pt-6 text-[10px] font-medium tabular-nums text-white">
+									{time.slice(2, 10)}
+								</span>
 							</Link>
 						))}
 					</HStack>
 				)}
-				fallback={<Text>이미지가 없습니다</Text>}
+				fallback={
+					<div className="flex h-64 flex-col items-center justify-center gap-2 text-center">
+						<span className="text-3xl">🖼️</span>
+						<Text className="text-sm font-medium text-[var(--rize-muted)]">이미지가 없습니다</Text>
+					</div>
+				}
 			/>
-			<BackButton direction="top" variant="primary" circle="circle" size="base" className="absolute bottom-2 right-4" />
+			<BackButton
+				direction="top"
+				variant="primary"
+				circle="circle"
+				size="base"
+				className="absolute bottom-6 right-4"
+			/>
 		</LeftDrawler>
 	);
 }

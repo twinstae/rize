@@ -28,12 +28,14 @@ function MailBody({ mailBody }: Props) {
 			{parts.map((part, i) => (
 				<div key={part + i}>
 					<div
-						className="p-4 leading-6"
+						className="leading-7 text-[15px] text-[var(--rize-text)] [&_img]:my-4 [&_img]:w-full [&_img]:rounded-2xl"
 						dangerouslySetInnerHTML={{
 							__html: part,
 						}}
 					></div>
-					{i < images.length && <Image path={getPath(i)} className="w-full rounded-lg" width={416} />}
+					{i < images.length && (
+						<Image path={getPath(i)} className="my-4 w-full rounded-2xl" width={416} />
+					)}
 				</div>
 			))}
 		</>

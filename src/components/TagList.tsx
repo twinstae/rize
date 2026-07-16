@@ -17,7 +17,7 @@ function TagList({ mailId }: TagListProps) {
 				.map((content) => (
 					<li
 						key={content}
-						className="max-w-20 truncate rounded-full bg-pink-50 px-1.5 py-0.5 text-[10px] font-semibold text-pink-600"
+						className="max-w-20 truncate rounded-full bg-[var(--rize-primary-soft)] px-2 py-0.5 text-[10px] font-semibold text-pink-600"
 						aria-label={content}
 					>
 						{content}

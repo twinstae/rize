@@ -28,6 +28,7 @@ function RandomMailButton({ isRedirect=false }: { isRedirect?: boolean }) {
 			isRedirect={isRedirect}
 			variant="primary"
 			circle="circle"
+			size="base"
 			direction="left"
 			ariaLabel="무작위 메일 보기"
 			icon={<ShuffleIcon />}

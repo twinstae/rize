@@ -9,9 +9,10 @@ import { strs, useTranslation } from '../i18n/i18n';
 
 interface FavoriteStarProps {
 	mailId: string;
+	inline?: boolean;
 }
 
-function FavoriteStar({ mailId }: FavoriteStarProps) {
+function FavoriteStar({ mailId, inline = false }: FavoriteStarProps) {
 	const { t } = useTranslation();
 	const { useToggleTagToMail, useIsFavorited } = useTags();
 	const toggleTagToMail = useToggleTagToMail();
@@ -23,7 +24,11 @@ function FavoriteStar({ mailId }: FavoriteStarProps) {
 
 	return (
 		<IconButtonWithTooltip
-			className="absolute right-2 top-1/2 -translate-y-1/2 opacity-70 transition-opacity group-hover:opacity-100 sm:right-3"
+			className={
+				inline
+					? ''
+					: 'absolute right-3 top-1/2 -translate-y-1/2 opacity-80 transition-opacity group-hover:opacity-100'
+			}
 			onClick={(e: React.MouseEvent) => {
 				e.preventDefault();
 				e.stopPropagation();
@@ -32,7 +37,14 @@ function FavoriteStar({ mailId }: FavoriteStarProps) {
 			direction="left"
 			circle="circle"
 			size="sm"
-			icon={mailIsFavorited ? <StarIcon className="text-yellow-400" /> : <EmptyStarIcon className="text-slate-400" />}
+			variant="ghost"
+			icon={
+				mailIsFavorited ? (
+					<StarIcon className="text-amber-400" />
+				) : (
+					<EmptyStarIcon className="text-[var(--rize-muted)]" />
+				)
+			}
 			ariaLabel={mailIsFavorited ? t(strs.중요_취소) : t(strs.중요_표시)}
 		/>
 	);

@@ -29,30 +29,57 @@ function MailDetailPage() {
 	const { nextMail, goNext, goPrev } = useNextPrevMail(mailId);
 	useHotkeys('j', () => goNext());
 	useHotkeys('k', () => goPrev());
-	
+
 	const date = new Date(mail.time.replaceAll('/', '-').replace(' ', 'T'));
+	const formattedDate = new Intl.DateTimeFormat(lang, {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+	}).format(date);
+
 	return (
-		<div className="w-full h-screen relative bg-base-100">
-			<div className="p-1 h-full overflow-y-auto">
-				<header className="p-4 relative">
-					<FavoriteStar mailId={mail.id} />
-					<ProfileImage member={mail.member} size="base" className="mr-2" />
-					<strong>{toOriginalName(mail.member)} </strong>
-					<time className="text-gray-500 w-fit" dateTime={date.toISOString()}>
-						<abbr aria-label={new Intl.DateTimeFormat(lang, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(date)}>
-							{mail.time}
-						</abbr>
-					</time>
-					<h3 className="p-0 m-0 overflow-hidden text-ellipsis font-bold">{mail.subject}</h3>
+		<div className="relative h-screen w-full bg-base-100">
+			<div className="h-full overflow-y-auto pb-28">
+				<header className="border-b border-[var(--rize-border)] px-5 pb-4 pt-5">
+					<div className="flex items-start gap-3">
+						<ProfileImage
+							member={mail.member}
+							size="base"
+							className="h-12 w-12 shrink-0 border-2 border-white object-cover shadow-sm"
+						/>
+						<div className="min-w-0 flex-1">
+							<div className="flex items-start justify-between gap-3">
+								<div className="min-w-0">
+									<p className="text-base font-bold text-[var(--rize-text)]">
+										{toOriginalName(mail.member)}
+									</p>
+									<time
+										className="mt-0.5 block text-xs text-[var(--rize-muted)]"
+										dateTime={date.toISOString()}
+									>
+										<abbr aria-label={formattedDate}>{mail.time}</abbr>
+									</time>
+								</div>
+								<FavoriteStar mailId={mail.id} inline />
+							</div>
+							<h1 className="mail-subject mt-3 text-[var(--rize-text)]">{mail.subject}</h1>
+						</div>
+					</div>
 				</header>
-				<MailBody mailBody={mail} />
+				<div className="px-5 py-4">
+					<MailBody mailBody={mail} />
+				</div>
 				{nextMail && (
-					<Button as={Link} to={toMailDetail(nextMail.id)}>
-						{t(strs.다음_메일_보기)}
-					</Button>
+					<div className="px-5 pb-6">
+						<Button as={Link} to={toMailDetail(nextMail.id)} className="w-full">
+							{t(strs.다음_메일_보기)}
+						</Button>
+					</div>
 				)}
 			</div>
-			<VStack className="fixed bottom-2 right-2 gap-2">
+			<VStack className="fixed bottom-6 right-4 gap-3">
 				<RandomMailButton />
 				<IconButtonWithTooltip
 					ariaLabel={t(strs.파파고_번역하기)}
@@ -61,9 +88,17 @@ function MailDetailPage() {
 					circle="circle"
 					size="base"
 					direction="left"
-					href={encodeURI(`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`)}
+					href={encodeURI(
+						`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`,
+					)}
 					target="_blank"
-					icon={<img src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png" />}
+					icon={
+						<img
+							src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png"
+							alt=""
+							className="h-6 w-6 rounded-full"
+						/>
+					}
 				/>
 				<BackButton direction="left" variant="primary" circle="circle" size="base" />
 			</VStack>

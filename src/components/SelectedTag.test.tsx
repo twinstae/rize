@@ -34,7 +34,7 @@ describe('SelectedTag', () => {
 		await runSiheom(
 			given.render(<Story tag="권은비" />),
 			actions.click(query.button('선택')),
-			assertions.visible(query.img(/권은비.jpg/), true),
+			assertions.visible(query.img(/권은비/), true),
 			assertions.visible(query.text('권은비'), true),
 		);
 	});

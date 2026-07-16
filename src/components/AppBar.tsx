@@ -41,7 +41,7 @@ function AppBar() {
 		},
 		{
 			enableOnFormTags: true,
-		}
+		},
 	);
 
 	useHotkeys('/', (e) => {
@@ -52,7 +52,7 @@ function AppBar() {
 	return isOpen ? (
 		<IonHeader className="ion-no-border">
 			<IonToolbar className="mail-toolbar">
-				<div className="flex h-20 items-center gap-2 px-3">
+				<div className="flex h-[4.5rem] items-center gap-2 px-4">
 					<IonSearchbar
 						aria-label={t(strs.검색)}
 						className="mail-searchbar"
@@ -75,14 +75,16 @@ function AppBar() {
 	) : (
 		<IonHeader className="ion-no-border">
 			<IonToolbar className="mail-toolbar">
-				<div className="flex h-20 items-center gap-2 px-3 sm:px-5">
+				<div className="flex h-[4.5rem] items-center gap-1 px-3 sm:px-4">
 					<MenuButton />
-					<div className="min-w-0 flex-1 px-1">
-						<p className="mb-0.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--rize-muted)]">
+					<div className="min-w-0 flex-1 px-2">
+						<p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--rize-muted)]">
 							Rize mail
 						</p>
-						<div className="flex items-center gap-2">
-							<h1 className="text-xl font-extrabold tracking-tight text-[var(--rize-text)]">Messages</h1>
+						<div className="mt-0.5 flex items-center gap-2">
+							<h1 className="text-lg font-extrabold tracking-tight text-[var(--rize-text)] sm:text-xl">
+								Messages
+							</h1>
 							<SelectedTag />
 						</div>
 					</div>

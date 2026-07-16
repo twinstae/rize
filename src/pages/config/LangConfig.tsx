@@ -10,11 +10,11 @@ function LangConfig() {
 	const { t } = useTranslation();
 	return (
 		<ConfigCard title={`${t(strs.언어_선택하기)} : ${lang}`}>
-			<label>
-				{t(strs.언어)}{' '}
+			<label className="flex flex-col gap-2 text-sm text-[var(--rize-text-secondary)]">
+				<span className="font-medium text-[var(--rize-text)]">{t(strs.언어)}</span>
 				{lang && (
 					<select
-						className="select select-bordered select-sm"
+						className="rize-input input-sm w-full max-w-xs"
 						defaultValue={lang}
 						onChange={(e) => {
 							setLang(e.currentTarget.value);

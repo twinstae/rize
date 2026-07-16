@@ -18,6 +18,7 @@ function OrderToggleButton() {
 		<IconButtonWithTooltip
 			variant="primary"
 			circle="circle"
+			size="base"
 			onClick={() => {
 				toggle();
 			}}

@@ -11,7 +11,7 @@ function SelectedTag() {
 	return (
 		<span
 			data-testid="selected-tag"
-			className="inline-flex max-w-32 items-center gap-1.5 truncate rounded-full bg-pink-50 px-2.5 py-1 text-xs font-semibold text-pink-600"
+			className="inline-flex max-w-36 items-center gap-1.5 truncate rounded-full bg-[var(--rize-primary-soft)] px-2.5 py-1 text-xs font-semibold text-pink-600"
 		>
 			{MEMBER_LIST.includes(tag as IZONE) && (
 				<ProfileImage member={tag} size="sm" className="h-4 w-4 object-cover" />

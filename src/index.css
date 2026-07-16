@@ -12,12 +12,17 @@
 :root {
 	--rize-primary: #ef539d;
 	--rize-primary-dark: #d9468b;
+	--rize-primary-soft: #fff0f6;
 	--rize-base-100: #ffffff;
 	--rize-base-200: #f5f6fa;
 	--rize-text: #172033;
+	--rize-text-secondary: rgb(23 32 51 / 72%);
 	--rize-muted: #8b94a7;
-	--rize-surface: #f5f6fa;
+	--rize-surface: #f0f2f7;
 	--rize-hover: #fff7fa;
+	--rize-border: #e7e9f0;
+	--rize-shadow: 0 4px 24px rgb(23 32 51 / 8%);
+	--rize-shadow-sm: 0 2px 8px rgb(23 32 51 / 6%);
 	--ion-color-primary: #ef539d;
 	--ion-color-primary-rgb: 239, 83, 157;
 	--ion-color-primary-contrast: #ffffff;
@@ -30,9 +35,14 @@ html[data-theme='dark'] {
 	--rize-base-100: #151b26;
 	--rize-base-200: #202938;
 	--rize-text: #f8fafc;
+	--rize-text-secondary: rgb(248 250 252 / 72%);
 	--rize-muted: #9ca3af;
-	--rize-surface: #202938;
-	--rize-hover: #252e3e;
+	--rize-surface: #252e3e;
+	--rize-hover: #2a3448;
+	--rize-border: #354052;
+	--rize-primary-soft: rgb(239 83 157 / 12%);
+	--rize-shadow: 0 4px 24px rgb(0 0 0 / 32%);
+	--rize-shadow-sm: 0 2px 8px rgb(0 0 0 / 24%);
 	--color-base-100: #151b26;
 	--color-base-200: #202938;
 	--color-base-300: #354052;
@@ -47,12 +57,14 @@ body {
 body {
 	margin: 0;
 	font-family:
-		'Pretendard',
+		'Pretendard Variable',
+		Pretendard,
 		-apple-system,
 		BlinkMacSystemFont,
 		'Segoe UI',
 		sans-serif;
 	font-size: 16px;
+	-webkit-font-smoothing: antialiased;
 }
 
 ::-webkit-scrollbar {
@@ -62,7 +74,7 @@ body {
 .mail-toolbar {
 	--background: var(--rize-base-100);
 	--border-width: 0;
-	--min-height: 5rem;
+	--min-height: 4.5rem;
 }
 
 .mail-searchbar {
@@ -77,8 +89,58 @@ body {
 
 .mail-subject {
 	margin: 0;
-	font-size: 15px;
-	line-height: 1.25rem;
+	font-size: 1.125rem;
+	line-height: 1.5rem;
+	font-weight: 700;
+}
+
+.rize-card {
+	border-radius: 1rem;
+	background: var(--rize-base-100);
+	border: 1px solid var(--rize-border);
+	box-shadow: var(--rize-shadow-sm);
+}
+
+.rize-input {
+	display: block;
+	width: 100%;
+	border-radius: 0.75rem;
+	border: 1px solid var(--rize-border);
+	background: var(--rize-base-100);
+	padding: 0.625rem 0.875rem;
+	font-size: 0.875rem;
+	color: var(--rize-text);
+	outline: none;
+	transition: border-color 150ms;
+}
+
+.rize-input:focus {
+	border-color: var(--rize-primary);
+	box-shadow: 0 0 0 3px rgb(239 83 157 / 12%);
+}
+
+.rize-input.input-sm {
+	padding: 0.5rem 0.75rem;
+	font-size: 0.875rem;
+}
+
+.rize-checkbox,
+.radio {
+	accent-color: var(--rize-primary);
+}
+
+.kbd {
+	display: inline-flex;
+	min-width: 1.5rem;
+	align-items: center;
+	justify-content: center;
+	border-radius: 0.375rem;
+	border: 1px solid var(--rize-border);
+	background: var(--rize-surface);
+	padding: 0.125rem 0.375rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--rize-muted);
 }
 
 .k-touch-ripple-wave {
