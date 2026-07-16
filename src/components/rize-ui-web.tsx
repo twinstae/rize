@@ -144,11 +144,7 @@ export type ButtonProps = {
   className?: string;
 };
 
-const Button: <T extends React.ElementType = 'button'>(
-  props: PolymorphicComponentPropsWithRef<T, ButtonProps>
-) => React.ReactElement | null = React.forwardRef(function Button<
-  T extends React.ElementType = 'button'
->(
+const Button = React.forwardRef(function Button(
 	{
 		as,
 		className,
@@ -157,20 +153,20 @@ const Button: <T extends React.ElementType = 'button'>(
 		circle = '',
 		children,
 		...props
-	}: PolymorphicComponentProps<T, ButtonProps>,
-	ref?: PolymorphicRef<T>
+	}: PolymorphicComponentProps<'button', ButtonProps>,
+	ref: PolymorphicRef<'button'>,
 ) {
 	const Element = as || 'button';
 
-	const defaultRef: PolymorphicRef<T> = useRef<HTMLElement>(null);
-	const actualRef = ref ?? defaultRef;
+	const defaultRef = useRef<HTMLButtonElement>(null);
+	const actualRef = (ref ?? defaultRef) as React.RefObject<HTMLButtonElement>;
 	
 	const { platform } = useDependencies().usePlatform();
-	useTouchRipple(actualRef, platform !== 'darwin' && platform !== 'ios');
+	useTouchRipple(actualRef as React.RefObject<HTMLElement>, platform !== 'darwin' && platform !== 'ios');
 
 	return (
 		<Element
-			ref={actualRef}
+			ref={actualRef as React.RefObject<HTMLButtonElement>}
 			{...props}
 			className={
 				`btn ${variant === 'primary' ? 'btn-primary' : 'btn-ghost'} ${size === 'base' ? 'btn-base' : 'btn-sm'} ${circle === 'circle' ? 'btn-circle' : ''} relative ` + (className ??
@@ -180,7 +176,9 @@ const Button: <T extends React.ElementType = 'button'>(
 			{children}
 		</Element>
 	);
-}) as any;
+}) as <T extends React.ElementType = 'button'>(
+	props: PolymorphicComponentPropsWithRef<T, ButtonProps>,
+) => React.ReactElement | null;
 
 const FloatingArea = ({
 	children,

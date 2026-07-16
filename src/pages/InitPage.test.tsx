@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 
 import { updateFakeStatus } from '../mailList/fakeMailRepository';
-import TEST_MAIL_LIST from '../public/pm_list.json';
+import TEST_MAIL_LIST from '../test/pm_list.json';
 import InitPage from './InitPage';
 import { render } from '../components/testUtil';
 import { useMailList } from '../hooks/Dependencies';

@@ -39,7 +39,7 @@ const capacitorCacheRepo = {
 			path: 'output/image_cache_src_dict.json',
 			directory: Directory.Cache,
 			encoding: Encoding.UTF8,
-		}).then(result => JSON.parse(result.data))
+		}).then(result => JSON.parse(typeof result.data === 'string' ? result.data : String(result.data)))
 			.catch(() => null);
 	},
 	async makeDir(path: string){
@@ -172,7 +172,7 @@ export function createUseCacheSrc(repo: CacheRepo){
 		const candidates = new Set(results.filter(file => file.type && file.path).map(({path}) => path));
 		while(candidates.size > 0){
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			const { value: path }  = candidates.keys().next()!;
+			const path = candidates.keys().next().value!;
 			const segments = await repo.readDir(path)
 				.catch(() => null);
 			if (segments){

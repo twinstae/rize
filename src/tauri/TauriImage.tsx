@@ -1,10 +1,8 @@
+import { convertFileSrc } from '@tauri-apps/api/primitives';
 import { downloadDir, join } from '@tauri-apps/api/path';
-import { primitive } from '@tauri-apps/api';
 import React, { Suspense } from 'react';
 import { suspend } from 'suspend-react';
 import { ImageProps } from '../components/MockImage';
-
-const convertFileSrc = primitive.conventFileSrc
 
 let dir: string | null = null;
 

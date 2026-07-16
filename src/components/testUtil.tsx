@@ -8,7 +8,7 @@ import {
 	waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { UserEvent } from '@testing-library/user-event/setup/setup';
+import type { UserEvent } from '@testing-library/user-event';
 import React, { PropsWithChildren, Suspense } from 'react';
 import { DependenciesContext, createFakeDependencies } from '../hooks/Dependencies';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

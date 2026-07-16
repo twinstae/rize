@@ -11,47 +11,44 @@ type IconButtonWithTooltipComponentProps = ButtonProps & {
   direction?: 'left' | 'top' | 'bottom';
 };
 
-const IconButtonWithTooltip: <T extends React.ElementType = 'button'>(
-  props: PolymorphicComponentPropsWithRef<T, IconButtonWithTooltipComponentProps>
-) => React.ReactElement | null = React.forwardRef(
-	function IconButtonWithTooltip<T extends React.ElementType = 'button'>(
-		{
-			as,
-			variant = 'ghost',
-			direction = 'bottom',
-			circle = 'circle',
-			className,
-			onKeyUp,
-			ariaLabel,
-			icon,
-			...props
-		}: PolymorphicComponentProps<T, IconButtonWithTooltipComponentProps>,
-		ref?: PolymorphicRef<T>
-	) {
-		const As = (as || 'button') as 'button';
-		return (
-			<Tooltip tip={ariaLabel} className={className + ` tooltip-${direction}`}>
-				<Button
-					as={As}
-					type="button"
-					ref={ref}
-					variant={variant}
-					circle={circle}
-					onKeyUp={(e: React.KeyboardEvent<HTMLElement>) => {
-						if (e.key === 'Space') {
-							props.onClick?.(e);
-							onKeyUp?.(e);
-						}
-					}}
-					aria-label={ariaLabel}
-					{...props}
-					className="focus:border-2 p-1"
-				>
-					{icon}
-				</Button>
-			</Tooltip>
-		);
-	}
-) as any;
+const IconButtonWithTooltip = React.forwardRef(function IconButtonWithTooltip(
+	{
+		as,
+		variant = 'ghost',
+		direction = 'bottom',
+		circle = 'circle',
+		className,
+		onKeyUp,
+		ariaLabel,
+		icon,
+		...props
+	}: PolymorphicComponentProps<'button', IconButtonWithTooltipComponentProps>,
+	ref: PolymorphicRef<'button'>,
+) {
+	return (
+		<Tooltip tip={ariaLabel} className={className + ` tooltip-${direction}`}>
+			<Button
+				as={(as || 'button') as 'button'}
+				type="button"
+				ref={ref}
+				variant={variant}
+				circle={circle}
+				onKeyUp={(e: React.KeyboardEvent<HTMLElement>) => {
+					if (e.key === 'Space') {
+						props.onClick?.(e as unknown as React.MouseEvent<HTMLElement>);
+						onKeyUp?.(e);
+					}
+				}}
+				aria-label={ariaLabel}
+				{...props}
+				className="focus:border-2 p-1"
+			>
+				{icon}
+			</Button>
+		</Tooltip>
+	);
+}) as <T extends React.ElementType = 'button'>(
+	props: PolymorphicComponentPropsWithRef<T, IconButtonWithTooltipComponentProps>,
+) => React.ReactElement | null;
 
 export default IconButtonWithTooltip;

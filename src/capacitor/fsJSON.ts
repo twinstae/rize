@@ -7,7 +7,7 @@ const readJSONfile = (path: string) =>
 		path: 'output/' + path,
 		directory,
 		encoding: Encoding.UTF8,
-	}).then((result) => JSON.parse(result.data));
+	}).then((result) => JSON.parse(typeof result.data === 'string' ? result.data : String(result.data)));
 
 const writeJSONfile = (path: string) => async (dict: JsonValue): Promise<void> => {
 	console.log(dict);
