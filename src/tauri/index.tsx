@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAtom } from 'jotai';
 import { suspend } from 'suspend-react';
 import { platform as getPlatform } from '@tauri-apps/plugin-os';
 
@@ -14,7 +13,6 @@ import mailRepository from './fsMailRepository';
 import storageRepo from './fsStorageRepo';
 import Image from './TauriImage';
 import useProfileList from './useFsProfileList';
-import { isSplashEndAtom } from '../hooks/splashEndAtom';
 import { useColorMode } from '../theme/useColorMode';
 
 // import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
@@ -33,7 +31,6 @@ storageRepo.getItem('lang').then((lang) => {
 
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => {
-		useAtom(isSplashEndAtom);
 		const platform = suspend(
 			async () => getPlatform(),
 			['platform']

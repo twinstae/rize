@@ -5,7 +5,7 @@ import invariant from '../invariant';
 const atomWithAsyncInit = <T>(initialValue: T, load: () => Promise<T>, save: (item: T) => Promise<void>) => {
 	const baseAtom = atom(initialValue);
 	baseAtom.onMount = (setValue) => {
-		load()
+		void load()
 			.catch(withDefault(initialValue))
 			.then((item) => setValue(item));
 	};
@@ -18,7 +18,7 @@ const atomWithAsyncInit = <T>(initialValue: T, load: () => Promise<T>, save: (it
 			set(baseAtom, nextValue);
 			clearTimeout(id);
 			id = setTimeout(() => {
-				save(nextValue);
+				void save(nextValue);
 			}, 1000);
 		},
 	);

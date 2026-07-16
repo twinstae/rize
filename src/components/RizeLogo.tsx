@@ -28,7 +28,7 @@ function RizeLogo({ onAnimationEnd }: { onAnimationEnd?: () => void }) {
 
 	useEffect(() => {
 		control.start('visible').then(onAnimationEnd);
-	}, []);
+	}, [control, onAnimationEnd]);
 	return (
 		<motion.svg width='200' height='100' viewBox='0 0 200 100' initial='hidden' animate='visible'>
 			<motion.path

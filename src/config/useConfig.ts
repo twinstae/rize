@@ -7,8 +7,12 @@ import { atomWithStorage, createJSONStorage, type RESET } from 'jotai/utils';
 
 type SetStateActionWithReset<Value> = Value | typeof RESET | ((prev: Value) => Value | typeof RESET);
 
+type SyncStorageRepo = {
+	_storage?: Record<string, string>;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const atomDict: Record<string, WritableAtom<Promise<any>, SetStateActionWithReset<any>, Promise<void>>> = {};
+const atomDict: Record<string, WritableAtom<any, SetStateActionWithReset<any>, any>> = {};
 
 const useConfigAtom = <JsonValue>(key: string, initialValue: JsonValue) => {
 	const { storageRepo } = useDependencies();
@@ -17,14 +21,18 @@ const useConfigAtom = <JsonValue>(key: string, initialValue: JsonValue) => {
 			key,
 			initialValue,
 			createJSONStorage(() => ({
-				async getItem(key) {
-					return storageRepo.getItem(key).then((v) => v ?? null);
+				getItem(storageKey) {
+					const syncStorage = storageRepo as SyncStorageRepo;
+					if (syncStorage._storage) {
+						return syncStorage._storage[storageKey] ?? null;
+					}
+					return storageRepo.getItem(storageKey).then((value) => value ?? null) as unknown as string | null;
 				},
-				async setItem(key, newValue) {
-					return storageRepo.setItem(key, newValue);
+				setItem(storageKey, newValue) {
+					return storageRepo.setItem(storageKey, newValue);
 				},
-				async removeItem(key) {
-					return storageRepo.removeItem(key);
+				removeItem(storageKey) {
+					return storageRepo.removeItem(storageKey);
 				},
 			})),
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any

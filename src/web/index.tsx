@@ -7,26 +7,24 @@ import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
 import { useStackNavigation } from '../router/useStatckNavigation';
 import fakeStorageRepo from '../config/fakeStorageRepo';
-import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
+import fakeMailRepository, { fakeFsJSON, fakeMailDefaults } from '../mailList/fakeMailRepository';
 import { MockImage } from '../components/MockImage';
-import { useAtom } from 'jotai';
-import { isSplashEndAtom } from '../hooks/splashEndAtom';
+import { splashEnd } from '../hooks/splashEndAtom';
 import useProfileList from './useProfileList';
 import { useColorMode } from '../theme/useColorMode';
 
 const storageRepo = fakeStorageRepo;
-const useMailList = createUseMailList(fakeMailRepository);
+const useMailList = createUseMailList(fakeMailRepository, fakeMailDefaults);
 const Image = MockImage;
+
+splashEnd();
 
 storageRepo.getItem('lang').then((lang) => {
 	i18n.changeLanguage(lang);
 });
 
 const Wrapper = DependenciesWrapper({
-	usePlatform: () => {
-		useAtom(isSplashEndAtom);
-		return { platform: 'web' };
-	},
+	usePlatform: () => ({ platform: 'web' }),
 	storageRepo,
 	useNavigationImpl: useStackNavigation,
 	Image,

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useAtom } from 'jotai';
 import { Device } from '@capacitor/device';
 import { App } from '@capacitor/app';
 import { suspend } from 'suspend-react';
@@ -12,8 +13,6 @@ import storageRepo from './storageRepo';
 import useFsProfileList from './useFsProfileList';
 import useNavigation from '../router/useNavigation';
 import { useStackNavigation } from '../router/useStatckNavigation';
-import { useAtom } from 'jotai';
-import { isSplashEndAtom } from '../hooks/splashEndAtom';
 import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
 import S3Image from './S3Image';
@@ -30,7 +29,6 @@ let initiated = false;
 
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => {
-		useAtom(isSplashEndAtom);
 		useAtom(useCacheSrcAtom);
 		const navigation = useNavigation();
 		useEffect(() => {

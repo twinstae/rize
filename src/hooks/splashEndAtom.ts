@@ -1,19 +1,19 @@
-import { atom } from 'jotai';
+import { atom, getDefaultStore } from 'jotai';
 
 export function createSuspender() {
 	let _resolve = () => undefined;
 	_resolve();
-	const suspender = new Promise((resolve) => {
+	const suspender = new Promise<void>((resolve) => {
 		_resolve = () => {
-			resolve(null);
+			resolve();
 			return undefined;
 		};
 	});
 	return [suspender, _resolve] as const;
 }
 
-const [suspender, resolve] = createSuspender();
+export const isSplashEndAtom = atom(false);
 
-export const splashEnd = resolve;
-
-export const isSplashEndAtom = atom(async () => suspender);
+export const splashEnd = () => {
+	getDefaultStore().set(isSplashEndAtom, true);
+};

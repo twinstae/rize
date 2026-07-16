@@ -5,7 +5,7 @@ import { createUseMailList, MailListResult } from '../mailList/useMailList';
 import { ImageProps, MockImage } from '../components/MockImage';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import type { StorageRepository } from '../global';
-import fakeMailRepository, { fakeFsJSON } from '../mailList/fakeMailRepository';
+import fakeMailRepository, { fakeFsJSON, fakeMailDefaults } from '../mailList/fakeMailRepository';
 import type { FsJSON, MailRepository } from '../mailList/types';
 import { createWrapper } from './util';
 import { Navigation } from '../router/useNavigation';
@@ -46,7 +46,7 @@ export const createFakeDependencies: () => DependencyT = () => ({
 	storageRepo: fakeStorageRepo,
 	Image: MockImage,
 	fsJSON: fakeFsJSON,
-	useMailList: createUseMailList(fakeMailRepository),
+	useMailList: createUseMailList(fakeMailRepository, fakeMailDefaults),
 	mailRepository: fakeMailRepository,
 	useProfileList: () => ['la-vie-en-rose', 'violeta'],
 	useColorMode,
