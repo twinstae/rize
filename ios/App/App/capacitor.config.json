@@ -7,5 +7,14 @@
 		"CapacitorHttp": {
 			"enabled": true
 		}
-	}
+	},
+	"packageClassList": [
+		"HttpPlugin",
+		"AppPlugin",
+		"CAPBrowserPlugin",
+		"DevicePlugin",
+		"DialogPlugin",
+		"FilesystemPlugin",
+		"PreferencesPlugin"
+	]
 }

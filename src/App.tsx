@@ -1,17 +1,26 @@
 import './i18n/i18n';
 import './index.css';
-// daisyUI assumes Tailwind CSS's Preflight
-import '@unocss/reset/tailwind.css';;
-import 'uno.css';
+import '@ionic/react/css/core.css';
+import '@ionic/react/css/normalize.css';
+import '@ionic/react/css/structure.css';
+import '@ionic/react/css/typography.css';
+import '@ionic/react/css/padding.css';
+import '@ionic/react/css/float-elements.css';
+import '@ionic/react/css/text-alignment.css';
+import '@ionic/react/css/text-transformation.css';
+import '@ionic/react/css/flex-utils.css';
+import '@ionic/react/css/display.css';
 import '@stackflow/plugin-basic-ui/index.css';
 
 import React from 'react';
+import { setupIonicReact } from '@ionic/react';
 import { Stack } from './router/useStatckNavigation';
 import QueryWrapper, { JotaiQueryWrapper } from './hooks/QueryWrapper';
 import ErrorBoundary from './components/ErrorBoundary';
 import { Provider } from 'jotai';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { DevTools } from 'jotai-devtools';
+import { Button } from './components/rize-ui-web';
+
+setupIonicReact();
 
 function ErrorFallback({ error }: { error: Error }) {
 	return (
@@ -27,14 +36,16 @@ function ErrorFallback({ error }: { error: Error }) {
 				AS 오픈카톡방
 			</a>
 			을 찾아주세요.
-			<button
-				className="btn btn-ghost btn-primary btn-circle tooltip-top"
+			<Button
+				variant="ghost"
+				circle="circle"
+				className="tooltip-top"
 				onClick={() => {
 					location.reload();
 				}}
 			>
 				앱 다시 시작하기
-			</button>
+			</Button>
 		</div>
 	);
 }
@@ -42,16 +53,13 @@ function ErrorFallback({ error }: { error: Error }) {
 function App() {
 	return (
 		<Provider>
-		<QueryWrapper>
-			<JotaiQueryWrapper>
-			
-				<ErrorBoundary fallback={ErrorFallback}>
-					<Stack />
-					{/* <DevTools />
-     				 <ReactQueryDevtools initialIsOpen={false} /> */}
-				</ErrorBoundary>
-			</JotaiQueryWrapper>
-		</QueryWrapper>
+			<QueryWrapper>
+				<JotaiQueryWrapper>
+					<ErrorBoundary fallback={ErrorFallback}>
+						<Stack />
+					</ErrorBoundary>
+				</JotaiQueryWrapper>
+			</QueryWrapper>
 		</Provider>
 	);
 }

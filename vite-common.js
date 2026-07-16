@@ -1,21 +1,11 @@
 import react from '@vitejs/plugin-react';
-import unocss from 'unocss/vite';
-import { presetUno, transformerDirectives } from 'unocss';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 const env = process.env;
 export default defineConfig({
 	root: './',
-	plugins: [
-		react(),
-		unocss({
-			shortcuts: {
-				'tab-active': 'border-red-300',
-			},
-			transformers: [transformerDirectives()],
-			presets: [presetUno()],
-		}),
-	],
+	plugins: [react(), tailwindcss()],
 	publicDir: './src/public',
 	clearScreen: false,
 	server: {
@@ -23,7 +13,12 @@ export default defineConfig({
 	},
 	envPrefix: ['VITE_', 'TAURI_'],
 	build: {
-		target: env.TAURI_PLATFORM == 'windows' ? 'chrome105' : 'safari13',
+		target:
+			env.TAURI_PLATFORM === 'windows'
+				? 'chrome105'
+				: env.TAURI_PLATFORM === 'darwin' || env.TAURI_PLATFORM === 'ios'
+					? 'safari13'
+					: 'es2022',
 		minify: !env.TAURI_DEBUG ? 'esbuild' : false,
 		sourcemap: true,
 	},

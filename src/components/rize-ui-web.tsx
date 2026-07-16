@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { IonButton } from '@ionic/react';
 import VirtualList from './VirtualStack';
 import type {
 	PolymorphicComponentProps,
@@ -25,8 +26,8 @@ function Text({
 	children,
 	...props
 }: {
-  children: React.ReactNode;
-  className?: string;
+	children: React.ReactNode;
+	className?: string;
 } & React.ComponentProps<'span'>) {
 	return (
 		<span {...props} className={className}>
@@ -40,8 +41,8 @@ function KBD({
 	children,
 	...props
 }: {
-  children: React.ReactNode;
-  className?: string;
+	children: React.ReactNode;
+	className?: string;
 }) {
 	return (
 		<kbd {...props} className={'kbd text-sm ' + className}>
@@ -50,25 +51,29 @@ function KBD({
 	);
 }
 
-const TextInput = React.forwardRef(function TextInput({
-	className,
-	type = 'text',
-	size = 'base',
-	width = 'base',
-	autofocus,
-	value,
-	onChange,
-	...props
-}: {
-	type?: 'text' | 'password' | 'search',
-	autofocus?: boolean
-	name: string,
-  value: string;
-  className?: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  size?: 'sm' | 'base';
-	width?: 'base' | 'full';
-}, ref) {
+const TextInput = React.forwardRef(function TextInput(
+	{
+		className,
+		type = 'text',
+		size = 'base',
+		width = 'full',
+		autofocus,
+		value,
+		onChange,
+		name,
+		...props
+	}: {
+		type?: 'text' | 'password' | 'search';
+		autofocus?: boolean;
+		name: string;
+		value: string;
+		className?: string;
+		onChange: React.ChangeEventHandler<HTMLInputElement>;
+		size?: 'sm' | 'base';
+		width?: 'base' | 'full';
+	},
+	ref,
+) {
 	const isComposingRef = useRef(false);
 	return (
 		<input
@@ -76,7 +81,7 @@ const TextInput = React.forwardRef(function TextInput({
 			ref={ref as React.Ref<HTMLInputElement>}
 			type={type}
 			autoFocus={autofocus}
-			className={`input input-bordered ${size === 'base' ? 'input-base' : 'input-sm'} ${width === 'full' ? 'w-full' : ''} ` + className}
+			className={`rize-input ${size === 'base' ? 'input-base' : 'input-sm'} ${width === 'full' ? 'w-full' : ''} ${className ?? ''}`}
 			onCompositionStart={() => {
 				isComposingRef.current = true;
 			}}
@@ -87,11 +92,11 @@ const TextInput = React.forwardRef(function TextInput({
 			onChange={(e) => {
 				if (
 					isComposingRef.current ||
-          e.currentTarget.value.length < value.length ||
-          e.currentTarget.value.at(-1) !== e.currentTarget.value.at(-2) ||
-          /[가-힇ㄱ-ㅎㅏ-ㅣぁ-ゔァ-ヴー々〆〤一-龥]/.test(e.currentTarget.value.at(-1) ?? '') === false
+					e.currentTarget.value.length < value.length ||
+					e.currentTarget.value.at(-1) !== e.currentTarget.value.at(-2) ||
+					/[가-힇ㄱ-ㅎㅏ-ㅣぁ-ゔァ-ヴー々〆〤一-龥]/.test(e.currentTarget.value.at(-1) ?? '') === false
 				) {
-					onChange && onChange(e);
+					onChange?.(e);
 				}
 			}}
 		/>
@@ -99,13 +104,7 @@ const TextInput = React.forwardRef(function TextInput({
 });
 
 function Checkbox({ className, ...props }: React.ComponentProps<'input'>) {
-	return (
-		<input
-			{...props}
-			type="checkbox"
-			className={'input input-bordered ' + className}
-		/>
-	);
+	return <input {...props} type="checkbox" className={'rize-checkbox ' + className} />;
 }
 
 function Radio({ className, ...props }: React.ComponentProps<'input'>) {
@@ -125,8 +124,8 @@ function VStack({
 }
 
 const HStack = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<'div'> & { children: React.ReactNode }
+	HTMLDivElement,
+	React.ComponentProps<'div'> & { children: React.ReactNode }
 >(function HStack({ className, children, ...props }, ref) {
 	return (
 		<div {...props} className={'flex flex-row ' + className} ref={ref}>
@@ -135,13 +134,12 @@ const HStack = React.forwardRef<
 	);
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ButtonProps = {
-  variant?: 'primary' | 'ghost';
-  size?: 'sm' | 'base';
-  circle?: '' | 'circle';
-  children?: React.ReactNode;
-  className?: string;
+	variant?: 'primary' | 'ghost';
+	size?: 'sm' | 'base';
+	circle?: '' | 'circle';
+	children?: React.ReactNode;
+	className?: string;
 };
 
 const Button = React.forwardRef(function Button(
@@ -156,25 +154,39 @@ const Button = React.forwardRef(function Button(
 	}: PolymorphicComponentProps<'button', ButtonProps>,
 	ref: PolymorphicRef<'button'>,
 ) {
-	const Element = as || 'button';
-
 	const defaultRef = useRef<HTMLButtonElement>(null);
 	const actualRef = (ref ?? defaultRef) as React.RefObject<HTMLButtonElement>;
-	
 	const { platform } = useDependencies().usePlatform();
 	useTouchRipple(actualRef as React.RefObject<HTMLElement>, platform !== 'darwin' && platform !== 'ios');
 
+	if (as) {
+		const Element = as;
+		return (
+			<Element
+				ref={actualRef as React.RefObject<HTMLButtonElement>}
+				{...props}
+				className={
+					`rize-btn ${variant === 'primary' ? 'rize-btn-primary' : 'rize-btn-ghost'} ${size === 'base' ? 'rize-btn-base' : 'rize-btn-sm'} ${circle === 'circle' ? 'rize-btn-circle' : ''} relative ` +
+					(className ?? '')
+				}
+			>
+				{children}
+			</Element>
+		);
+	}
+
 	return (
-		<Element
-			ref={actualRef as React.RefObject<HTMLButtonElement>}
+		<IonButton
+			ref={actualRef as unknown as React.RefObject<HTMLIonButtonElement>}
 			{...props}
-			className={
-				`btn ${variant === 'primary' ? 'btn-primary' : 'btn-ghost'} ${size === 'base' ? 'btn-base' : 'btn-sm'} ${circle === 'circle' ? 'btn-circle' : ''} relative ` + (className ??
-					'')
-			}
+			fill={variant === 'ghost' ? 'clear' : 'solid'}
+			color={variant === 'primary' ? 'primary' : undefined}
+			size={size === 'sm' ? 'small' : 'default'}
+			shape={circle === 'circle' ? 'round' : undefined}
+			className={'relative ' + (className ?? '')}
 		>
 			{children}
-		</Element>
+		</IonButton>
 	);
 }) as <T extends React.ElementType = 'button'>(
 	props: PolymorphicComponentPropsWithRef<T, ButtonProps>,
@@ -183,7 +195,7 @@ const Button = React.forwardRef(function Button(
 const FloatingArea = ({
 	children,
 }: {
-  children: React.ReactNode | React.ReactNode[];
+	children: React.ReactNode | React.ReactNode[];
 }) => <VStack className="absolute bottom-2 right-2 gap-2">{children}</VStack>;
 
 export {

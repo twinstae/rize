@@ -1,0 +1,11 @@
+{
+  "appId": "com.lec.rize",
+  "appName": "rize",
+  "webDir": "src/capacitor/dist",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}

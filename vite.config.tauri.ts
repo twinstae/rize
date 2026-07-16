@@ -1,6 +1,5 @@
 import react from '@vitejs/plugin-react';
-import Unocss from 'unocss/vite';
-import { presetUno, transformerDirectives } from 'unocss';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -9,16 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
 	root: './',
-	plugins: [
-		react(),
-		Unocss({
-			shortcuts: {
-				'tab-active': 'border-red-300',
-			},
-			transformers: [transformerDirectives()],
-			presets: [presetUno()],
-		}),
-	],
+	plugins: [react(), tailwindcss()],
 	publicDir: path.resolve(__dirname, './src/public'),
 	resolve: {
 		alias: {
@@ -41,7 +31,13 @@ export default defineConfig({
 		'TAURI_DEBUG',
 	],
 	build: {
-		target: process.env.TAURI_PLATFORM == 'windows' ? 'chrome105' : 'safari13',
+		outDir: path.resolve(__dirname, './src/tauri/dist'),
+		target:
+			process.env.TAURI_PLATFORM === 'windows'
+				? 'chrome105'
+				: process.env.TAURI_PLATFORM === 'darwin' || process.env.TAURI_PLATFORM === 'ios'
+					? 'safari13'
+					: 'es2022',
 		minify: !process.env.TAURI_DEBUG ? 'esbuild' : false,
 		sourcemap: !!process.env.TAURI_DEBUG,
 	},
