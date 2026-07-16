@@ -11,12 +11,17 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { TooltipProvider } from './components/Tooltip';
 import { Provider, getDefaultStore } from 'jotai';
 import { Button } from './components/rize-ui-web';
+import { useOpenBrowser } from './hooks/Dependencies';
+
+const KAKAO_OPEN_CHAT_URL = 'https://open.kakao.com/o/gPbArZ4c';
 
 const appStore = getDefaultStore();
 
 setupIonicReact();
 
 function ErrorFallback({ error }: { error: Error }) {
+	const openBrowser = useOpenBrowser();
+
 	return (
 		<div className="p-4 ring-1 ring-error w-screen">
 			<h2 className="text-xl">
@@ -26,9 +31,13 @@ function ErrorFallback({ error }: { error: Error }) {
 				{error.stack}
 			</p>
 			문제가 있다면{' '}
-			<a href="https://open.kakao.com/o/gPbArZ4c" target="_blank" rel="noreferrer" className="link text-pink-500">
+			<button
+				type="button"
+				className="link text-pink-500"
+				onClick={() => openBrowser(KAKAO_OPEN_CHAT_URL)}
+			>
 				AS 오픈카톡방
-			</a>
+			</button>
 			을 찾아주세요.
 			<Button
 				variant="ghost"

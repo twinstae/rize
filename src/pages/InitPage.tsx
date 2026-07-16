@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import { useDependencies, useMailList } from '../hooks/Dependencies';
+import { useDependencies, useMailList, useOpenBrowser } from '../hooks/Dependencies';
 import { fileList } from '../mailList/fakeMailRepository';
 import { useQueryClient } from '@tanstack/react-query';
 import { splashEnd } from '../hooks/splashEndAtom';
@@ -9,8 +9,11 @@ import * as v from 'valibot';
 import { rawMailSchema } from '../mailList/schema';
 import { rizeAlert } from '@rize/alert';
 
+const KAKAO_OPEN_CHAT_URL = 'https://open.kakao.com/o/gPbArZ4c';
+
 const InitPage = () => {
 	const { fsJSON, RizeLogo } = useDependencies();
+	const openBrowser = useOpenBrowser();
 	const status = useMailList().useStatus();
 	const client = useQueryClient();
 
@@ -71,9 +74,13 @@ const InitPage = () => {
 					<p className="rounded-lg bg-red-100 p-2">
 						Downloads 폴더에 백업한 output 폴더를 넣어주세요. <br />
 						문제가 있다면{' '}
-						<a href="https://open.kakao.com/o/gPbArZ4c" target="_blank" rel="noreferrer" className="link text-pink-500">
+						<button
+							type="button"
+							className="link text-pink-500"
+							onClick={() => openBrowser(KAKAO_OPEN_CHAT_URL)}
+						>
 							AS 오픈카톡방
-						</a>
+						</button>
 						을 찾아주세요.
 					</p>
 					<ul>
