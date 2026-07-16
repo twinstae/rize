@@ -3,7 +3,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import invariant from '../invariant';
 
 import useNavigation, { useSearchParam } from '../router/useNavigation';
-import { useMailList } from '../hooks/Dependencies';
+import { useMailList, useOpenBrowser } from '../hooks/Dependencies';
 import { strs, useTranslation } from '../i18n/i18n';
 import { toMailDetail } from '../router/paths';
 import useLang from '../config/useLang';
@@ -26,6 +26,7 @@ function MailDetailPage() {
 	const mail = useMailList().useMailById(mailId);
 	invariant(mail);
 	const { lang } = useLang();
+	const openBrowser = useOpenBrowser();
 	const { nextMail, goNext, goPrev } = useNextPrevMail(mailId);
 	useHotkeys('j', () => goNext());
 	useHotkeys('k', () => goPrev());
@@ -80,18 +81,18 @@ function MailDetailPage() {
 				)}
 			</div>
 			<Fab>
-				<FabToggleButton ariaLabel={t(strs.메뉴)} />
-				<FabList side="top">
-					<RandomMailButton fab direction="top" />
+			<RandomMailButton fab direction="top" />
 					<FabButton
 						direction="top"
 						size="base"
 						ariaLabel={t(strs.파파고_번역하기)}
-						href={encodeURI(
-							`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`,
-						)}
-						target="_blank"
-						rel="noreferrer"
+						onClick={() =>
+							openBrowser(
+								encodeURI(
+									`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`,
+								),
+							)
+						}
 						icon={
 							<img
 								src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png"
@@ -101,7 +102,6 @@ function MailDetailPage() {
 						}
 					/>
 					<BackButton fab direction="top" size="base" />
-				</FabList>
 			</Fab>
 		</div>
 	);

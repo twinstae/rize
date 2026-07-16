@@ -9,6 +9,7 @@ import { useStackNavigation } from '../router/useStatckNavigation';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import fakeMailRepository, { fakeFsJSON, fakeMailDefaults } from '../mailList/fakeMailRepository';
 import WebImage from './WebImage';
+import { openBrowser } from './openBrowser';
 import { splashEnd } from '../hooks/splashEndAtom';
 import useProfileList from './useProfileList';
 import { useColorMode } from '../theme/useColorMode';
@@ -34,6 +35,7 @@ const Wrapper = DependenciesWrapper({
 	useMailList,
 	useProfileList,
 	RizeLogo,
+	openBrowser,
 });
 
 const WebApp = (

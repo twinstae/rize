@@ -16,6 +16,7 @@ import { useStackNavigation } from '../router/useStatckNavigation';
 import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
 import S3Image from './S3Image';
+import { openBrowser } from './openBrowser';
 import useCacheSrcAtom from './useCacheSrc';
 import { useColorMode } from '../theme/useColorMode';
 // import mailRepository, { fakeFsJSON as fsJSON, updateFakeStatus } from '../mailList/fakeMailRepository';
@@ -51,6 +52,7 @@ const Wrapper = DependenciesWrapper({
 	mailRepository,
 	useProfileList: useFsProfileList,
 	RizeLogo,
+	openBrowser,
 });
 
 const CapacitorApp = (

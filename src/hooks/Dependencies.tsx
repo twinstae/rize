@@ -25,6 +25,7 @@ type DependencyT = {
 	mailRepository?: MailRepository;
 	useProfileList: () => string[];
 	RizeLogo?: (props: { onAnimationEnd?: () => void }) => React.ReactElement;
+	openBrowser: (url: string) => void | Promise<void>;
 };
 
 function useColorMode() {
@@ -56,6 +57,7 @@ export const createFakeDependencies: () => DependencyT = () => ({
 		});
 		return <h1> RIZ*E </h1>;
 	},
+	openBrowser: () => {},
 });
 
 const fakeDependencies = createFakeDependencies();
@@ -74,4 +76,8 @@ export function useMailList() {
 
 export function useTags() {
 	return useDependencies().useMailList().useTags();
+}
+
+export function useOpenBrowser() {
+	return useDependencies().openBrowser;
 }

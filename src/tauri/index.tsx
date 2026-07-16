@@ -12,6 +12,7 @@ import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
 import storageRepo from './fsStorageRepo';
 import Image from './TauriImage';
+import { openBrowser } from './openBrowser';
 import useProfileList from './useFsProfileList';
 import { useColorMode } from '../theme/useColorMode';
 
@@ -46,6 +47,7 @@ const Wrapper = DependenciesWrapper({
 	useMailList,
 	useProfileList,
 	RizeLogo,
+	openBrowser,
 });
 
 const TauriApp = (
