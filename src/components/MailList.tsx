@@ -47,11 +47,8 @@ function MailList({ index }: Props) {
 				}
 			/>
 			<Fab>
-				<FabToggleButton ariaLabel={t(strs.메뉴)} />
-				<FabList side="start">
 					<RandomMailButton fab />
 					<OrderToggleButton fab />
-				</FabList>
 			</Fab>
 		</VStack>
 	);

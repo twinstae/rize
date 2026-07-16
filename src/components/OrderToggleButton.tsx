@@ -27,7 +27,6 @@ function OrderToggleButton({
 		return (
 			<FabButton
 				direction={direction}
-				size="base"
 				onClick={() => {
 					toggle();
 				}}

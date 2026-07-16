@@ -62,7 +62,7 @@ function SelectTrigger({
 			data-size={size}
 			className={(state) =>
 				mergeClassName(
-					'flex w-full items-center justify-between gap-2 rounded-xl border border-[var(--rize-border)] bg-[var(--rize-base-100)] px-3 py-2 text-sm text-[var(--rize-text)] shadow-sm transition-colors outline-none select-none focus-visible:border-[var(--rize-primary)] focus-visible:ring-[3px] focus-visible:ring-[rgb(239_83_157/12%)] disabled:cursor-not-allowed disabled:opacity-50 data-placeholder:text-[var(--rize-muted)] data-[size=default]:h-12 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1',
+					'flex w-full items-center justify-between gap-2 rounded-xl border border-[var(--rize-border)] bg-[var(--rize-base-100)] px-3 py-2 text-sm text-[var(--rize-text)] transition-colors outline-none select-none focus-visible:border-[var(--rize-primary)] focus-visible:ring-[3px] focus-visible:ring-[rgb(239_83_157/12%)] disabled:cursor-not-allowed disabled:opacity-50 data-placeholder:text-[var(--rize-muted)] data-[size=default]:h-11 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1',
 					className,
 					state,
 				)

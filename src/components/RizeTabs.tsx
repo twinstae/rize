@@ -31,7 +31,7 @@ export function RizeTabs<T>({ data, value, Label, Content, onChange }: RizeTabsP
 						<button
 							{...api.getTriggerProps({ value: value(item) })}
 							key={value(item)}
-							className={`min-h-11 flex-1 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200 ${
+							className={`flex-1 rounded-xl px-2 py-1 text-sm font-semibold transition-all duration-200 ${
 								isActive
 									? 'bg-base-100 text-[var(--rize-text)] shadow-[var(--rize-shadow-sm)]'
 									: 'text-[var(--rize-muted)] hover:text-[var(--rize-text)]'

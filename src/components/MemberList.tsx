@@ -53,7 +53,7 @@ function MemberListItem({ name, text, isAll = false }: MemberListItemProps) {
 			/>
 			<label
 				htmlFor={id}
-				className={`mb-1.5 flex cursor-pointer items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-semibold transition ${
+				className={`mb-1.5 flex cursor-pointer items-center gap-3 rounded-2xl px-1 py-1 text-sm font-semibold transition ${
 					isAll
 						? 'bg-[var(--rize-primary-soft)] text-pink-600'
 						: 'text-[var(--rize-text)] hover:bg-[var(--rize-surface)]'
@@ -67,7 +67,7 @@ function MemberListItem({ name, text, isAll = false }: MemberListItemProps) {
 					}`}
 				/>
 				<span className="truncate">{text}</span>
-				{checked && <span className="ml-auto h-2 w-2 shrink-0 rounded-full bg-pink-500" />}
+				{checked && <span className="ml-auto h-2 w-2 shrink-0 rounded-full bg-pink-500 mr-3" />}
 			</label>
 		</div>
 	);

@@ -3,14 +3,14 @@ import { IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/react';
 import { add } from 'ionicons/icons';
 
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
-import { cn } from '../lib/utils';
+import { cn } from '../utils/cn';
 
 type FabProps = React.ComponentProps<typeof IonFab>;
 
 function Fab({ className, vertical = 'bottom', horizontal = 'end', ...props }: FabProps) {
 	return (
 		<IonFab
-			className={cn('mail-fab', className)}
+			className={cn('mail-fab flex flex-col gap-2', className)}
 			vertical={vertical}
 			horizontal={horizontal}
 			{...props}
@@ -72,7 +72,7 @@ function FabButton({
 					<IonFabButton
 						color="primary"
 						aria-label={ariaLabel}
-						className={className}
+						className={className + " w-12 h-12"}
 						onClick={onClick}
 						onKeyUp={(e) => {
 							if (e.key === 'Space') {
