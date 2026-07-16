@@ -1,4 +1,4 @@
-import { convertFileSrc } from '@tauri-apps/api/primitives';
+import { convertFileSrc } from '@tauri-apps/api/core';
 import { downloadDir, join } from '@tauri-apps/api/path';
 import React, { Suspense } from 'react';
 import { suspend } from 'suspend-react';

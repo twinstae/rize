@@ -23,7 +23,7 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const drawerSideRef = useRef<HTMLDivElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
-	const lastFocusedRef = useRef<HTMLElement>();
+	const lastFocusedRef = useRef<HTMLElement | null>(null);
 	const drawlerId = useId();
 	function handleClose() {
 		setIsOpen(false);

@@ -22,8 +22,8 @@ const IconButtonWithTooltip = React.forwardRef(function IconButtonWithTooltip(
 		ariaLabel,
 		icon,
 		...props
-	}: PolymorphicComponentProps<'button', IconButtonWithTooltipComponentProps>,
-	ref: PolymorphicRef<'button'>,
+	}: any,
+	ref: any,
 ) {
 	return (
 		<Tooltip tip={ariaLabel} className={className + ` tooltip-${direction}`}>

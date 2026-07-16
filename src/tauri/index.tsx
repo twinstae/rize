@@ -34,7 +34,10 @@ storageRepo.getItem('lang').then((lang) => {
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => {
 		useAtom(isSplashEndAtom);
-		const platform = suspend(() => getPlatform(), ['platform']);
+		const platform = suspend(
+			async () => getPlatform(),
+			['platform']
+		) as string;
 		return { platform };
 	},
 	storageRepo,

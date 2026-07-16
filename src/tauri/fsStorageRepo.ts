@@ -10,7 +10,7 @@ const storageAtom = atom({} as Record<string, string>);
 
 onMount(storageAtom, () => {
 	readTextFile(path, {
-		dir: BaseDirectory.Download,
+		baseDir: BaseDirectory.Download,
 	})
 		.catch(withDefault('{}'))
 		.then((jsonText) => {
@@ -23,12 +23,10 @@ onMount(storageAtom, () => {
 
 storageAtom.subscribe((value) => {
 	writeTextFile(
+		path,
+		JSON.stringify(value),
 		{
-			path: path,
-			contents: JSON.stringify(value),
-		},
-		{
-			dir: BaseDirectory.Download,
+			baseDir: BaseDirectory.Download,
 		},
 	);
 });

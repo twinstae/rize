@@ -4,10 +4,10 @@ import filterTruthy from '../filterTruthy';
 
 async function getProfileList() {
 	return readDir('output/img/profile', {
-		dir: BaseDirectory.Download,
+		baseDir: BaseDirectory.Download,
 	})
 		.then((entries) =>
-			filterTruthy(entries.filter((entry) => entry.children !== undefined).map((entry) => entry.name)),
+			filterTruthy(entries.filter((entry) => entry.isDirectory).map((entry) => entry.name)),
 		);
 }
 

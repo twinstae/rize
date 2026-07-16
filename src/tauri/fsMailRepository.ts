@@ -14,8 +14,7 @@ const fsMailRepository: MailRepository = {
 	saveTagToMailDict: writeJSONfile('tag_to_mail_dict.json'),
 	status: async () =>
 		readDir('output', {
-			dir: BaseDirectory.Download,
-			recursive: false,
+			baseDir: BaseDirectory.Download,
 		})
 			.then((result) => {
 				const nameList = result.map((entry) => entry.name);

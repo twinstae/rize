@@ -9,7 +9,7 @@ const readJSONfile = async (path: string) => {
 		return cache.get(path);
 	}
 	return readTextFile('output/' + path, {
-		dir: BaseDirectory.Download,
+		baseDir: BaseDirectory.Download,
 	})
 		.then(JSON.parse)
 		.then((data) => {
@@ -21,12 +21,10 @@ const readJSONfile = async (path: string) => {
 
 const writeJSONfile = (path: string) => async (dict: JsonValue): Promise<void> => {
 	return writeTextFile(
+		'output/' + path,
+		JSON.stringify(dict),
 		{
-			path: 'output/' + path,
-			contents: JSON.stringify(dict),
-		},
-		{
-			dir: BaseDirectory.Download,
+			baseDir: BaseDirectory.Download,
 		},
 	)
 		.then(() => {

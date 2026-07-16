@@ -73,7 +73,7 @@ const TextInput = React.forwardRef(function TextInput({
 	return (
 		<input
 			{...props}
-			ref={() => ref}
+			ref={ref as React.Ref<HTMLInputElement>}
 			type={type}
 			autoFocus={autofocus}
 			className={`input input-bordered ${size === 'base' ? 'input-base' : 'input-sm'} ${width === 'full' ? 'w-full' : ''} ` + className}
