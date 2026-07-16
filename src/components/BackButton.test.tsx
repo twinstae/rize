@@ -8,6 +8,7 @@ import linkTest from 'src/router/linkTest';
 describe('BackButton', () => {
 	linkTest(<BackButton />, {
 		name: ko.돌아가기,
+		role: 'label',
 		given: paths.CONFIG,
 		expected: paths.ROOT,
 		key: '{Backspace}'

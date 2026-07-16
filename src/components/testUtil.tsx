@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
 	Queries,
+	cleanup,
 	render as originalRender,
 	RenderOptions,
 	RenderResult,
@@ -43,6 +44,7 @@ export async function render(ui: any, options?: any): Promise<any> {
 	}
 
 	const fakeDepencies = createFakeDependencies();
+	cleanup();
 	const result = originalRender(
 		<QueryClientProvider client={queryClient}>
 			<Provider>

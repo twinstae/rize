@@ -76,10 +76,6 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/istanbul-lib-coverage": "^2.0.6",
-    "@types/istanbul-lib-report": "^3.0.3",
-    "@types/istanbul-reports": "^3.0.4",
-    "@types/jsdom": "^28.0.3",
     "@types/node": "^26.1.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
@@ -90,16 +86,9 @@
     "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.1.10",
     "autoprefixer": "^10.5.4",
-    "babel-plugin-istanbul": "^8.0.0",
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0",
     "internal-ip": "^9.0.0",
-    "istanbul-lib-coverage": "^3.2.2",
-    "istanbul-lib-report": "^3.0.1",
-    "istanbul-reports": "^3.2.0",
-    "jest-preview": "^0.3.3",
-    "jsdom": "^29.1.1",
-    "nyc": "^18.0.0",
     "oxfmt": "^0.59.0",
     "oxlint": "^1.74.0",
     "playwright": "^1.61.1",
@@ -117,11 +106,11 @@
     "build": "tsc && concurrently \"pnpm build:tauri\" \"pnpm build:cap\"",
     "dev:web": "vite --config=vite.config.web.js",
     "dev:web:cov": "pnpm dev:web",
-    "serve:tauri": "nyc --silent vite --config=vite.config.tauri.ts",
+    "serve:tauri": "vite --config=vite.config.tauri.ts",
     "dev:tauri": "tauri dev",
     "test": "vitest --config=vitest.config.js run",
     "test:watch": "vitest --config=vitest.config.js",
-    "test:cov": "nyc --silent vitest --config=vitest.config.js run",
+    "test:cov": "vitest --config=vitest.config.js run --coverage",
     "stryker": "stryker run --fileLogLevel trace --logLevel debug",
     "tauri": "tauri",
     "tauri:build": "tauri build --debug",
@@ -129,14 +118,11 @@
     "fmt": "oxfmt .",
     "fmt:check": "oxfmt --check .",
     "typecheck": "tsc --noEmit",
-    "ionic:serve": "nyc --silent vite serve --config=vite.config.capacitor.js",
+    "ionic:serve": "vite serve --config=vite.config.capacitor.js",
     "ionic:build": "pnpm build:cap",
     "ionic:android": "npx cap run android --livereload --external",
     "tauri:android:dev": "cargo tauri android dev",
-    "tauri:android:build": "cargo tauri android build",
-    "cov:report": "nyc report --reporter=html --reporter=text",
-    "cov:tauri": "node ./src/test/renderTestResult.js",
-    "cov": "pnpm test:cov && pnpm cov:tauri && pnpm cov:report"
+    "tauri:android:build": "cargo tauri android build"
   },
   "browserslist": {
     "production": [
@@ -149,10 +135,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "nyc": {
-    "sourceMap": false,
-    "instrument": false
   },
   "pnpm": {
     "overrides": {

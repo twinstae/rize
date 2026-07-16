@@ -1,32 +1,26 @@
 import React from 'react';
-import { render } from './testUtil';
+import { runSiheom, given, actions, assertions, query } from '../test/siheom';
 import { RizeTabs } from './RizeTabs';
-import { waitFor } from '@testing-library/react';
+
 describe('RizeTabs', () => {
 	it('RizeTabs를 클릭하면 전환할 수 있다', async () => {
 		const MODES = ['all', 'filter'];
-		const { user, screen } = await render(
-			<RizeTabs
-				data={MODES}
-				value={(item) => item}
-				Label={({ index }) => <span>{MODES[index]} 탭</span>}
-				Content={({ index }) => <span>{MODES[index]} 내용</span>}
-			/>,
+		await runSiheom(
+			given.render(
+				<RizeTabs
+					data={MODES}
+					value={(item) => item}
+					Label={({ index }) => <span>{MODES[index]} 탭</span>}
+					Content={({ index }) => <span>{MODES[index]} 내용</span>}
+				/>,
+			),
+			assertions.selected(query.tab(/all 탭/), true),
+			actions.click(query.tab(/filter 탭/)),
+			assertions.selected(query.tab(/filter 탭/), true),
+			assertions.selected(query.tab(/all 탭/), false),
+			actions.keyboard(query.tab(/filter 탭/), '{ArrowLeft}'),
+			assertions.selected(query.tab(/all 탭/), true),
+			assertions.selected(query.tab(/filter 탭/), false),
 		);
-
-		const allTab = screen.getByRole('tab', { name: 'all 탭' });
-		expect(allTab).toHaveAttribute('aria-selected', 'true');
-
-		const filterTab = screen.getByRole('tab', { name: 'filter 탭' });
-		await user.click(filterTab);
-
-		expect(filterTab).toHaveAttribute('aria-selected', 'true');
-		expect(allTab).not.toHaveAttribute('aria-selected', 'true');
-
-		await user.keyboard('{ArrowLeft}');
-		await waitFor(() => {
-			expect(filterTab).not.toHaveAttribute('aria-selected', 'true');
-			expect(allTab).toHaveAttribute('aria-selected', 'true');
-		});
 	});
 });

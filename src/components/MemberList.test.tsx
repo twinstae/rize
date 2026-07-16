@@ -14,8 +14,9 @@ describe('MemberList x SelectedTag', () => {
 		{
 			names: ['전체'].concat(MEMBER_LIST),
 			init: '전체',
-			expectChecked({ name, screen }) {
-				expect(screen.getByTestId('selected-tag')).toHaveTextContent(name);
+			expectChecked: async ({ name }) => {
+				const selectedTag = document.querySelector('[data-testid="selected-tag"]');
+				expect(selectedTag?.textContent).toContain(name as string);
 			},
 		}
 	);

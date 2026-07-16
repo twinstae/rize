@@ -2,6 +2,7 @@ import React from 'react';
 import AppBar from './AppBar';
 import { ko } from '../i18n/i18n';
 import openCloseTest from '../test/openCloseTest';
+
 describe('AppBar', () => {
 	openCloseTest(<AppBar />,
 		{

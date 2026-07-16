@@ -2,8 +2,7 @@ import React from 'react';
 
 import useTag from '../mailList/useTag';
 import SelectedTag from './SelectedTag';
-import { render } from './testUtil';
-import { waitFor } from '@testing-library/react';
+import { runSiheom, given, actions, assertions, query } from '../test/siheom';
 
 describe('SelectedTag', () => {
 	const Story = ({ tag }: { tag: string }) => {
@@ -16,26 +15,27 @@ describe('SelectedTag', () => {
 	};
 
 	it('선택된 태그가 없으면 전체가 나온다', async () => {
-		const { user, screen } = await render(<Story tag="" />);
-		await user.click(screen.getByText('선택'));
-
-		expect(screen.getByText('전체')).toBeInTheDocument();
+		await runSiheom(
+			given.render(<Story tag="" />),
+			actions.click(query.button('선택')),
+			assertions.visible(query.text('전체'), true),
+		);
 	});
-	it('일반 태그는 프로필이 없다', async () => {
-		const { user, screen } = await render(<Story tag="놀이동산" />);
-		await user.click(screen.getByText('선택'));
 
-		expect(screen.getByText('놀이동산')).toBeInTheDocument();
+	it('일반 태그는 프로필이 없다', async () => {
+		await runSiheom(
+			given.render(<Story tag="놀이동산" />),
+			actions.click(query.button('선택')),
+			assertions.visible(query.text('놀이동산'), true),
+		);
 	});
 
 	it('멤버 태그는 프로필이 있다', async () => {
-		const { user, screen } = await render(<Story tag="권은비" />);
-		await user.click(screen.getByText('선택'));
-
-		await waitFor(() => {
-			expect(screen.queryByText('loading...')).toBe(null);
-		});
-		expect(screen.getByRole('img').getAttribute('src')).toContain('권은비.jpg');
-		expect(screen.getByText('권은비')).toBeInTheDocument();
+		await runSiheom(
+			given.render(<Story tag="권은비" />),
+			actions.click(query.button('선택')),
+			assertions.visible(query.img(/권은비.jpg/), true),
+			assertions.visible(query.text('권은비'), true),
+		);
 	});
 });

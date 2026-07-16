@@ -4,6 +4,9 @@ import { act } from 'react-dom/test-utils';
 import { render } from './testUtil';
 import { FormLabel, TextInput, Text } from './rize-ui-web';
 
+// NOTE: This test uses fireEvent and act() for IME composition handling
+// which requires direct control over React's batching. Keeping with testUtil.tsx
+// rather than migrating to @siheom/react for now.
 describe('TextInput', () => {
 	function Story(){
 		const [state, setState] = useState('');

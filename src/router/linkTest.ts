@@ -1,39 +1,59 @@
-import { render } from '../components/testUtil';
+import { test, expect } from 'vitest';
+import { runSiheom, given, actions, query } from '../test/siheom';
+import type { Locator } from '@siheom/core';
 import { useFakeNavigation } from './useFakeNavigation';
+import React from 'react';
+
+function linkTarget(name: string | RegExp, role: 'link' | 'button' | 'label'): Locator {
+	if (role === 'label') {
+		return query.label(name);
+	}
+	return role === 'link' ? query.link(name) : query.button(name);
+}
 
 function linkTest(
 	element: React.ReactElement,
-	{ setup, name, given, expected, key, teardown }: {
-		setup?: () => Promise<void>,
-		name: string | RegExp,
-		given: string,
-		expected: string,
-		key: string,
-		teardown?: () => Promise<void>,
+	{
+		setup,
+		name,
+		role = 'link',
+		given: givenPath,
+		expected,
+		key,
+		teardown,
+	}: {
+		setup?: () => Promise<void>;
+		name: string | RegExp;
+		role?: 'link' | 'button' | 'label';
+		given: string;
+		expected: string;
+		key: string;
+		teardown?: () => Promise<void>;
 	},
 ) {
-	test(`${given}에서 ${name} link 클릭하면 ${expected}로 이동한다`, async () => {
-		setup && await setup();
+	const target = linkTarget(name, role);
+
+	test(`${givenPath}에서 ${name} ${role} 클릭하면 ${expected}로 이동한다`, async () => {
+		setup && (await setup());
 		const navigation = useFakeNavigation();
-		navigation.navigate(given);
-		expect(navigation.current()).toBe(given);
+		navigation.clear();
+		navigation.navigate(givenPath);
+		expect(navigation.current()).toBe(givenPath);
 
-		const { user, screen } = await render(element);
+		await runSiheom(given.render(element), actions.click(target));
 
-		// tip: link가 맞는지, 접근 가능한 이름이 있는지 확인합니다.
-		await user.click(screen.getByRole('link', { name: name }));
-		// tip: 링크 컴포넌트가 올바른지 확인합니다.
-		expect(navigation.current()).toBe(expected);
-		
-		navigation.navigate(given);
-
-		const link = screen.getByRole('link', { name: name });
-		expect(link).toHaveFocus();
-		await user.keyboard(key);
-		// tip: keyboard로 이동할 수 있는지 확인합니다.
 		expect(navigation.current()).toBe(expected);
 
-		teardown && await teardown();
+		navigation.navigate(givenPath);
+
+		await runSiheom(
+			actions.click(target),
+			actions.keyboard(target, key),
+		);
+
+		expect(navigation.current()).toBe(expected);
+
+		teardown && (await teardown());
 	});
 }
 
