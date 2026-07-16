@@ -31,6 +31,12 @@
 	--ion-color-primary-tint: #f164a7;
 }
 
+input[type='search']::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+	appearance: none;
+	display: none;
+}
+
 html[data-theme='dark'] {
 	--rize-base-100: #151b26;
 	--rize-base-200: #202938;

@@ -38,10 +38,13 @@ export async function render(ui: any, options?: any): Promise<any> {
 		},
 	});
 
-	const HydrateAtoms = ({ initialValues, children }: PropsWithChildren<{ initialValues: [PrimitiveAtom<QueryClient> & { init: QueryClient; }, QueryClient][] }>) => {
-		useHydrateAtoms(initialValues)
-		return children
-	}
+	const HydrateAtoms = ({
+		initialValues,
+		children,
+	}: PropsWithChildren<{ initialValues: [PrimitiveAtom<QueryClient> & { init: QueryClient }, QueryClient][] }>) => {
+		useHydrateAtoms(initialValues);
+		return children;
+	};
 
 	const fakeDepencies = createFakeDependencies();
 	cleanup();

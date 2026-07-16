@@ -26,7 +26,7 @@ function MenuButton() {
 			direction="bottom"
 			className="drawer-button"
 			size="sm"
-			ariaLabel={t(strs.메뉴)+'(m)'}
+			ariaLabel={t(strs.메뉴) + '(m)'}
 		/>
 	);
 }

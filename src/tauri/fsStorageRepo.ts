@@ -22,13 +22,9 @@ onMount(storageAtom, () => {
 });
 
 storageAtom.subscribe((value) => {
-	writeTextFile(
-		path,
-		JSON.stringify(value),
-		{
-			baseDir: BaseDirectory.Download,
-		},
-	);
+	writeTextFile(path, JSON.stringify(value), {
+		baseDir: BaseDirectory.Download,
+	});
 });
 
 export const createFsStorageRepository = (): StorageRepository<string> => {

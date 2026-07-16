@@ -25,8 +25,8 @@
 		"ionic:serve": "vite serve --config=vite.config.capacitor.js",
 		"ionic:build": "pnpm build:cap",
 		"ionic:android": "npx cap run android --livereload --external",
-		"tauri:android:dev": "cargo tauri android dev",
-		"tauri:android:build": "cargo tauri android build",
+		"tauri:android:dev": "pnpm tauri android dev",
+		"tauri:android:build": "pnpm tauri android build",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"
 	},

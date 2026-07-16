@@ -1,19 +1,11 @@
 import React, { useRef } from 'react';
 import { IonButton } from '@ionic/react';
 import VirtualList from './VirtualStack';
-import type {
-	PolymorphicComponentProps,
-	PolymorphicComponentPropsWithRef,
-	PolymorphicRef,
-} from '../global';
+import type { PolymorphicComponentProps, PolymorphicComponentPropsWithRef, PolymorphicRef } from '../global';
 import { useTouchRipple } from './useTouchRipple';
 import { useDependencies } from '../hooks/Dependencies';
 
-function FormLabel({
-	className,
-	children,
-	...props
-}: React.ComponentProps<'label'>) {
+function FormLabel({ className, children, ...props }: React.ComponentProps<'label'>) {
 	return (
 		<label {...props} className={'label ' + className}>
 			{children}
@@ -36,14 +28,7 @@ function Text({
 	);
 }
 
-function KBD({
-	className,
-	children,
-	...props
-}: {
-	children: React.ReactNode;
-	className?: string;
-}) {
+function KBD({ className, children, ...props }: { children: React.ReactNode; className?: string }) {
 	return (
 		<kbd {...props} className={'kbd text-sm ' + className}>
 			{children}
@@ -111,11 +96,7 @@ function Radio({ className, ...props }: React.ComponentProps<'input'>) {
 	return <input {...props} type="radio" className={'radio ' + className} />;
 }
 
-function VStack({
-	className,
-	children,
-	...props
-}: React.ComponentProps<'div'>) {
+function VStack({ className, children, ...props }: React.ComponentProps<'div'>) {
 	return (
 		<div {...props} className={'flex flex-col ' + className}>
 			{children}
@@ -123,16 +104,15 @@ function VStack({
 	);
 }
 
-const HStack = React.forwardRef<
-	HTMLDivElement,
-	React.ComponentProps<'div'> & { children: React.ReactNode }
->(function HStack({ className, children, ...props }, ref) {
-	return (
-		<div {...props} className={'flex flex-row ' + className} ref={ref}>
-			{children}
-		</div>
-	);
-});
+const HStack = React.forwardRef<HTMLDivElement, React.ComponentProps<'div'> & { children: React.ReactNode }>(
+	function HStack({ className, children, ...props }, ref) {
+		return (
+			<div {...props} className={'flex flex-row ' + className} ref={ref}>
+				{children}
+			</div>
+		);
+	},
+);
 
 export type ButtonProps = {
 	variant?: 'primary' | 'ghost';
@@ -203,15 +183,4 @@ const Button = React.forwardRef(function Button(
 	props: PolymorphicComponentPropsWithRef<T, ButtonProps>,
 ) => React.ReactElement | null;
 
-export {
-	Button,
-	TextInput,
-	FormLabel,
-	Radio,
-	VStack,
-	HStack,
-	VirtualList,
-	KBD,
-	Text,
-	Checkbox,
-};
+export { Button, TextInput, FormLabel, Radio, VStack, HStack, VirtualList, KBD, Text, Checkbox };

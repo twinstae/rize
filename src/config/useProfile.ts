@@ -8,7 +8,7 @@ function useProfile() {
 	return {
 		profileList,
 		profile: profile as string,
-		setProfile: (value: typeof profileList[number]) => {
+		setProfile: (value: (typeof profileList)[number]) => {
 			setProfile(value);
 		},
 	};

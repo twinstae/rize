@@ -8,7 +8,7 @@ import { FormLabel, TextInput, Text } from './rize-ui-web';
 // which requires direct control over React's batching. Keeping with testUtil.tsx
 // rather than migrating to @siheom/react for now.
 describe('TextInput', () => {
-	function Story(){
+	function Story() {
 		const [state, setState] = useState('');
 		return (
 			<FormLabel>
@@ -29,7 +29,7 @@ describe('TextInput', () => {
 	}
 	it('한글 입력 엣지 케이스 테스트', async () => {
 		const { user, screen } = await render(<Story />);
-		
+
 		const $input = screen.getByRole('searchbox', { name: '테스트' });
 		fireEvent.compositionStart($input);
 		// 한글 입력을 할 수 있다. 물론 두 번도 된다.
@@ -37,7 +37,7 @@ describe('TextInput', () => {
 		expect($input).toHaveValue('아이즈원ありがとう마라탕');
 
 		fireEvent.compositionEnd($input);
-		
+
 		// 하지만 컴포지션이 끝나고 마라탕탕으로 바꾸면
 		fireEvent.change($input, { currentTarget: { value: '아이즈원ありがとう마라탕탕' } });
 
@@ -46,9 +46,9 @@ describe('TextInput', () => {
 
 		// 지울 수는 있다
 		await user.type($input, '{Backspace}'.repeat(8));
-		
+
 		expect($input).toHaveValue('아이즈원');
-		
+
 		// 중간에 공백을 넣는 건 가능하다.
 		act(() => {
 			fireEvent.change($input, { target: { value: '아이즈 원' } });

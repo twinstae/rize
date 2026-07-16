@@ -15,7 +15,11 @@ const colors = [
 ] as const;
 
 function avatarSource(path: string) {
-	const name = path.split('/').at(-1)?.replace(/\.[^.]+$/, '') ?? 'RIZE';
+	const name =
+		path
+			.split('/')
+			.at(-1)
+			?.replace(/\.[^.]+$/, '') ?? 'RIZE';
 	const initials = name
 		.split(/[_-]/)
 		.map((part) => part[0])

@@ -67,13 +67,7 @@ function AlbumPage() {
 					</div>
 				}
 			/>
-			<BackButton
-				direction="top"
-				variant="primary"
-				circle="circle"
-				size="base"
-				className="absolute bottom-6 right-4"
-			/>
+			<BackButton direction="top" variant="primary" circle="circle" size="base" className="absolute bottom-6 right-4" />
 		</LeftDrawler>
 	);
 }

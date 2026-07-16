@@ -17,9 +17,7 @@ export const Default: Story = {
 			data={TAB_DATA}
 			value={(item) => item}
 			Label={({ index }) => <span>{TAB_DATA[index]}</span>}
-			Content={({ index }) => (
-				<Text className="p-4">{TAB_DATA[index]} 탭 내용</Text>
-			)}
+			Content={({ index }) => <Text className="p-4">{TAB_DATA[index]} 탭 내용</Text>}
 		/>
 	),
 };

@@ -46,10 +46,7 @@ function linkTest(
 
 		navigation.navigate(givenPath);
 
-		await runSiheom(
-			actions.click(target),
-			actions.keyboard(target, key),
-		);
+		await runSiheom(actions.click(target), actions.keyboard(target, key));
 
 		expect(navigation.current()).toBe(expected);
 

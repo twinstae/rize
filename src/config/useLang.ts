@@ -16,7 +16,7 @@ function useLang() {
 	const { i18n } = useTranslation();
 
 	useEffect(() => {
-		if(i18n.language !== lang){
+		if (i18n.language !== lang) {
 			i18n.changeLanguage(lang);
 		}
 	}, [lang]);

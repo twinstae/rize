@@ -3,11 +3,7 @@ import { Select as SelectPrimitive } from '@base-ui/react/select';
 
 import { cn } from '../../utils/cn';
 
-function mergeClassName<T>(
-	base: string,
-	className?: string | ((state: T) => string | undefined),
-	state?: T,
-) {
+function mergeClassName<T>(base: string, className?: string | ((state: T) => string | undefined), state?: T) {
 	if (typeof className === 'function' && state) {
 		return cn(base, className(state));
 	}
@@ -30,9 +26,7 @@ function SelectLabel({ className, ...props }: SelectPrimitive.Label.Props) {
 	return (
 		<SelectPrimitive.Label
 			data-slot="select-label"
-			className={(state) =>
-				mergeClassName('text-sm font-medium text-[var(--rize-text)]', className, state)
-			}
+			className={(state) => mergeClassName('text-sm font-medium text-[var(--rize-text)]', className, state)}
 			{...props}
 		/>
 	);
@@ -71,9 +65,7 @@ function SelectTrigger({
 		>
 			{children}
 			<SelectPrimitive.Icon
-				render={
-					<ChevronDownIcon className="pointer-events-none size-4 shrink-0 text-[var(--rize-muted)]" />
-				}
+				render={<ChevronDownIcon className="pointer-events-none size-4 shrink-0 text-[var(--rize-muted)]" />}
 			/>
 		</SelectPrimitive.Trigger>
 	);
@@ -89,10 +81,7 @@ function SelectContent({
 	alignItemWithTrigger = true,
 	...props
 }: SelectPrimitive.Popup.Props &
-	Pick<
-		SelectPrimitive.Positioner.Props,
-		'align' | 'alignOffset' | 'side' | 'sideOffset' | 'alignItemWithTrigger'
-	>) {
+	Pick<SelectPrimitive.Positioner.Props, 'align' | 'alignOffset' | 'side' | 'sideOffset' | 'alignItemWithTrigger'>) {
 	return (
 		<SelectPrimitive.Portal>
 			<SelectPrimitive.Positioner
@@ -126,9 +115,7 @@ function SelectGroupLabel({ className, ...props }: SelectPrimitive.GroupLabel.Pr
 	return (
 		<SelectPrimitive.GroupLabel
 			data-slot="select-group-label"
-			className={(state) =>
-				mergeClassName('px-2 py-1.5 text-xs text-[var(--rize-muted)]', className, state)
-			}
+			className={(state) => mergeClassName('px-2 py-1.5 text-xs text-[var(--rize-muted)]', className, state)}
 			{...props}
 		/>
 	);
@@ -147,9 +134,7 @@ function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Prop
 			}
 			{...props}
 		>
-			<SelectPrimitive.ItemText className="flex flex-1 shrink-0 whitespace-nowrap">
-				{children}
-			</SelectPrimitive.ItemText>
+			<SelectPrimitive.ItemText className="flex flex-1 shrink-0 whitespace-nowrap">{children}</SelectPrimitive.ItemText>
 			<SelectPrimitive.ItemIndicator className="absolute right-2 flex size-4 items-center justify-center text-[var(--rize-primary)]">
 				<CheckIcon />
 			</SelectPrimitive.ItemIndicator>

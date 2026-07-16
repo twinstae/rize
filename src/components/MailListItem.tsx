@@ -11,15 +11,7 @@ import { useMailList, useTags } from '../hooks/Dependencies';
 import highlight from '../search/highlight';
 import useLang from '../config/useLang';
 
-function ItemBody({
-	subject,
-	bodyText,
-	labelId,
-}: {
-	labelId: string;
-	subject: string;
-	bodyText: string;
-}) {
+function ItemBody({ subject, bodyText, labelId }: { labelId: string; subject: string; bodyText: string }) {
 	const { replaceUsername } = useUsername();
 	const [keyword] = useMailList().useSearch();
 
@@ -91,10 +83,7 @@ function MailListItem({ mail, style, index }: MailListItemProps) {
 				<ItemProfileImage member={mail.member} mailId={mail.id} />
 				<ItemBody labelId={labelId} subject={mail.subject} bodyText={mail.bodyText} />
 				<div className="flex shrink-0 flex-col items-end gap-2 self-stretch py-0.5">
-					<time
-						className="text-xs font-medium tabular-nums text-[var(--rize-muted)]"
-						dateTime={date.toISOString()}
-					>
+					<time className="text-xs font-medium tabular-nums text-[var(--rize-muted)]" dateTime={date.toISOString()}>
 						<abbr
 							className="no-underline"
 							aria-label={new Intl.DateTimeFormat(lang, {

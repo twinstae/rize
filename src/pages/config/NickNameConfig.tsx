@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { FormLabel, TextInput, VStack } from '../../components/rize-ui-web';
 import { useTranslation, strs } from '../../i18n/i18n';

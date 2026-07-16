@@ -18,6 +18,6 @@ describe('MemberList x SelectedTag', () => {
 				const selectedTag = document.querySelector('[data-testid="selected-tag"]');
 				expect(selectedTag?.textContent).toContain(name as string);
 			},
-		}
+		},
 	);
 });

@@ -1,44 +1,38 @@
 {
-  "$schema": "https://schema.tauri.app/config/2",
-  "productName": "rize",
-  "version": "0.1.0",
-  "identifier": "com.lec.rize",
-  "build": {
-    "beforeDevCommand": "pnpm serve:tauri",
-    "devUrl": "http://localhost:5173",
-    "beforeBuildCommand": "pnpm build:tauri",
-    "frontendDist": "../src/tauri/dist"
-  },
-  "app": {
-    "windows": [
-      {
-        "label": "main",
-        "title": "rize",
-        "width": 512,
-        "height": 1024,
-        "resizable": true,
-        "fullscreen": false
-      }
-    ],
-    "security": {
-      "csp": "default-src 'self'; img-src 'self' https://via.placeholder.com/ asset: https://asset.localhost; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com/;",
-      "assetProtocol": {
-        "enable": true,
-        "scope": ["$DOWNLOAD/output/**/*"]
-      },
-      "freezePrototype": false
-    }
-  },
-  "bundle": {
-    "active": true,
-    "targets": "all",
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ],
-    "category": "DeveloperTool"
-  }
+	"$schema": "https://schema.tauri.app/config/2",
+	"productName": "rize",
+	"version": "0.1.0",
+	"identifier": "com.lec.rize",
+	"build": {
+		"beforeDevCommand": "pnpm serve:tauri",
+		"devUrl": "http://localhost:5173",
+		"beforeBuildCommand": "pnpm build:tauri",
+		"frontendDist": "../src/tauri/dist"
+	},
+	"app": {
+		"windows": [
+			{
+				"label": "main",
+				"title": "rize",
+				"width": 512,
+				"height": 1024,
+				"resizable": true,
+				"fullscreen": false
+			}
+		],
+		"security": {
+			"csp": "default-src 'self'; img-src 'self' https://via.placeholder.com/ asset: https://asset.localhost; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com/;",
+			"assetProtocol": {
+				"enable": true,
+				"scope": ["$DOWNLOAD/output/**/*"]
+			},
+			"freezePrototype": false
+		}
+	},
+	"bundle": {
+		"active": true,
+		"targets": "all",
+		"icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+		"category": "DeveloperTool"
+	}
 }

@@ -31,9 +31,14 @@ function BackButton({
 		event?.preventDefault();
 		navigation.goBack();
 	}
-	useHotkeys('backspace', backHandler, {
-		enableOnFormTags: false
-	}, [navigation]);
+	useHotkeys(
+		'backspace',
+		backHandler,
+		{
+			enableOnFormTags: false,
+		},
+		[navigation],
+	);
 	if (fab) {
 		return (
 			<FabButton

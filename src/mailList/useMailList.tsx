@@ -46,7 +46,7 @@ export interface MailListResult {
 		useToggleTagToMail: () => (tag: string, mail: string) => void;
 	};
 	useSearch: () => [string, (keyword: string) => void];
-};
+}
 
 const emptyTagToMailDict = {
 	[UNREAD]: [],
@@ -107,13 +107,28 @@ export function createUseMailList(mailRepository: MailRepository, defaults?: Par
 				return useAtomValue(tagToMailDictAtom);
 			},
 			useIsFavorited(mailId: string) {
-				return useAtomValue(selectAtom(favoriteAtom, useCallback((favoriteSet) => favoriteSet.has(mailId), [mailId])));
+				return useAtomValue(
+					selectAtom(
+						favoriteAtom,
+						useCallback((favoriteSet) => favoriteSet.has(mailId), [mailId]),
+					),
+				);
 			},
 			useIsUnread(mailId: string) {
-				return useAtomValue(selectAtom(unreadAtom, useCallback((unreadSet) => unreadSet.has(mailId), [mailId])));
+				return useAtomValue(
+					selectAtom(
+						unreadAtom,
+						useCallback((unreadSet) => unreadSet.has(mailId), [mailId]),
+					),
+				);
 			},
 			useMailTags(mailId: string) {
-				return useAtomValue(selectAtom(mailToTagDictAtom, useCallback((dict) => dict.get(mailId) ?? [], [mailId])));
+				return useAtomValue(
+					selectAtom(
+						mailToTagDictAtom,
+						useCallback((dict) => dict.get(mailId) ?? [], [mailId]),
+					),
+				);
 			},
 			useToggleTagToMail() {
 				const setTagToMailDict = useSetAtom(tagToMailDictAtom);

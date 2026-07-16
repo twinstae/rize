@@ -32,10 +32,7 @@ storageRepo.getItem('lang').then((lang) => {
 
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => {
-		const platform = suspend(
-			async () => getPlatform(),
-			['platform']
-		) as string;
+		const platform = suspend(async () => getPlatform(), ['platform']) as string;
 		return { platform };
 	},
 	storageRepo,

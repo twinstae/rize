@@ -23,24 +23,13 @@ function ErrorFallback({ error }: { error: Error }) {
 	const openBrowser = useOpenBrowser();
 
 	return (
-		<div className="p-4 ring-1 ring-error w-screen">
-			<h2 className="text-xl">
-				{error.name}: {error.message}
-			</h2>
-			<p className="text-xs" style={{ wordWrap: 'break-word' }}>
-				{error.stack}
-			</p>
+		<div className="pt-32 p-4 ring-1 ring-error w-screen">
 			문제가 있다면{' '}
-			<button
-				type="button"
-				className="link text-pink-500"
-				onClick={() => openBrowser(KAKAO_OPEN_CHAT_URL)}
-			>
+			<button type="button" className="link text-pink-500" onClick={() => openBrowser(KAKAO_OPEN_CHAT_URL)}>
 				AS 오픈카톡방
 			</button>
 			을 찾아주세요.
 			<Button
-				variant="ghost"
 				circle="circle"
 				className="tooltip-top"
 				onClick={() => {
@@ -49,6 +38,7 @@ function ErrorFallback({ error }: { error: Error }) {
 			>
 				앱 다시 시작하기
 			</Button>
+			<p className="break-words whitespace-pre-wrap">{JSON.stringify(error)}</p>
 		</div>
 	);
 }

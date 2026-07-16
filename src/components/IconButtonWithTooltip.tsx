@@ -34,16 +34,14 @@ const IconButtonWithTooltip = React.forwardRef(function IconButtonWithTooltip(
 ) {
 	const sizedIcon = React.isValidElement(icon)
 		? React.cloneElement(icon as React.ReactElement<{ className?: string }>, {
-				className: `${ICON_SIZES[size]} ${(icon as React.ReactElement<{ className?: string }>).props.className ?? ''}`.trim(),
+				className:
+					`${ICON_SIZES[size]} ${(icon as React.ReactElement<{ className?: string }>).props.className ?? ''}`.trim(),
 			})
 		: icon;
 
 	return (
 		<Tooltip>
-			<TooltipTrigger
-				closeOnClick={false}
-				render={<span className={`inline-flex ${className ?? ''}`.trim()} />}
-			>
+			<TooltipTrigger closeOnClick={false} render={<span className={`inline-flex ${className ?? ''}`.trim()} />}>
 				<Button
 					as={(as || 'button') as 'button'}
 					type="button"

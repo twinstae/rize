@@ -19,18 +19,15 @@ const readJSONfile = async (path: string) => {
 		.finally(() => console.log('loaded', path));
 };
 
-const writeJSONfile = (path: string) => async (dict: JsonValue): Promise<void> => {
-	return writeTextFile(
-		'output/' + path,
-		JSON.stringify(dict),
-		{
+const writeJSONfile =
+	(path: string) =>
+	async (dict: JsonValue): Promise<void> => {
+		return writeTextFile('output/' + path, JSON.stringify(dict), {
 			baseDir: BaseDirectory.Download,
-		},
-	)
-		.then(() => {
+		}).then(() => {
 			cache.set(path, dict);
 		});
-};
+	};
 
 const fsJSON = {
 	readJSONfile,

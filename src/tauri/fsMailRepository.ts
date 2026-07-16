@@ -15,11 +15,10 @@ const fsMailRepository: MailRepository = {
 	status: async () =>
 		readDir('output', {
 			baseDir: BaseDirectory.Download,
-		})
-			.then((result) => {
-				const nameList = result.map((entry) => entry.name);
-				return Object.fromEntries(fileList.map((name) => [name, nameList.includes(name)]));
-			}),
+		}).then((result) => {
+			const nameList = result.map((entry) => entry.name);
+			return Object.fromEntries(fileList.map((name) => [name, nameList.includes(name)]));
+		}),
 };
 
 export default fsMailRepository;

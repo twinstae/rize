@@ -78,13 +78,9 @@ function AppBar() {
 				<div className="flex h-[4.5rem] items-center gap-1 px-3 sm:px-4">
 					<MenuButton />
 					<div className="min-w-0 flex-1 px-2">
-						<p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--rize-muted)]">
-							Rize mail
-						</p>
+						<p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--rize-muted)]">Rize mail</p>
 						<div className="mt-0.5 flex items-center gap-2">
-							<h1 className="text-lg font-extrabold tracking-tight text-[var(--rize-text)] sm:text-xl">
-								Messages
-							</h1>
+							<h1 className="text-lg font-extrabold tracking-tight text-[var(--rize-text)] sm:text-xl">Messages</h1>
 							<SelectedTag />
 						</div>
 					</div>

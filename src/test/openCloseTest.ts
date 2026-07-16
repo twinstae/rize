@@ -41,16 +41,10 @@ function openCloseTest(
 		);
 		expectClose && (await expectClose());
 
-		await runSiheom(
-			actions.click(query.button(closeName)),
-			assertions.visible(query.button(openName), true),
-		);
+		await runSiheom(actions.click(query.button(closeName)), assertions.visible(query.button(openName), true));
 		expectOpen && (await expectOpen());
 
-		await runSiheom(
-			actions.click(query.button(openName)),
-			assertions.visible(query.button(closeName), true),
-		);
+		await runSiheom(actions.click(query.button(openName)), assertions.visible(query.button(closeName), true));
 		expectClose && (await expectClose());
 
 		teardown && (await teardown());

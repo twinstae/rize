@@ -5,14 +5,28 @@ import { HStack, Button } from '../components/rize-ui-web';
 function TauriConfig() {
 	return (
 		<HStack className="gap-2">
-			<Button onClick={() => {
-				getCurrentWindow().setSize(new LogicalSize(512, 1024))
-					.then(() => { location.reload(); });
-			}}>512 x 1024</Button>
-			<Button onClick={() => {
-				getCurrentWindow().setSize(new LogicalSize(414, 896))
-					.then(() => { location.reload(); });
-			}}>414 x 896</Button>
+			<Button
+				onClick={() => {
+					getCurrentWindow()
+						.setSize(new LogicalSize(512, 1024))
+						.then(() => {
+							location.reload();
+						});
+				}}
+			>
+				512 x 1024
+			</Button>
+			<Button
+				onClick={() => {
+					getCurrentWindow()
+						.setSize(new LogicalSize(414, 896))
+						.then(() => {
+							location.reload();
+						});
+				}}
+			>
+				414 x 896
+			</Button>
 		</HStack>
 	);
 }

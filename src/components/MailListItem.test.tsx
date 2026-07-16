@@ -19,6 +19,6 @@ describe('MailListItem', () => {
 		name: new RegExp(YURI_MAIL_M25752.subject),
 		given: paths.ROOT,
 		expected: toMailDetail(YURI_MAIL_M25752.id),
-		key: '{Enter}'
+		key: '{Enter}',
 	});
 });

@@ -2,8 +2,7 @@ import { fetch } from '@tauri-apps/plugin-http';
 
 import { MailBodyT, MailRepository, RawMailT } from '../mailList/types';
 const HOST = 'http://localhost:5173';
-const readJSONfile: (path: string) => Promise<unknown> = (path) =>
-	fetch(HOST + '/' + path).then((res) => res.json());
+const readJSONfile: (path: string) => Promise<unknown> = (path) => fetch(HOST + '/' + path).then((res) => res.json());
 
 const writeJSONfile = (path: string) => async (dict: Record<string, string[]>) => {
 	await fetch(HOST + '/' + path, {

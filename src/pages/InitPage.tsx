@@ -58,27 +58,27 @@ const InitPage = () => {
 									};
 								}),
 						);
-						await Promise.all(files.map((file) => fsJSON.writeJSONfile(file.name)(file.data))).then(() => {
-							return Promise.all(files.map((file) => {
-								client.invalidateQueries({
-									queryKey: [file.name],
+						await Promise.all(files.map((file) => fsJSON.writeJSONfile(file.name)(file.data)))
+							.then(() => {
+								return Promise.all(
+									files.map((file) => {
+										client.invalidateQueries({
+											queryKey: [file.name],
+										});
+									}),
+								);
+							})
+							.then(() => {
+								return client.invalidateQueries({
+									queryKey: ['status'],
 								});
-							}));
-						}).then(() => {
-							return client.invalidateQueries({
-								queryKey: ['status'],
 							});
-						});
 					}}
 				>
 					<p className="rounded-lg bg-red-100 p-2">
 						Downloads 폴더에 백업한 output 폴더를 넣어주세요. <br />
 						문제가 있다면{' '}
-						<button
-							type="button"
-							className="link text-pink-500"
-							onClick={() => openBrowser(KAKAO_OPEN_CHAT_URL)}
-						>
+						<button type="button" className="link text-pink-500" onClick={() => openBrowser(KAKAO_OPEN_CHAT_URL)}>
 							AS 오픈카톡방
 						</button>
 						을 찾아주세요.

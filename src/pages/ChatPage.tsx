@@ -54,7 +54,7 @@ function ChatGroup({
 		<VStack className="gap-1">
 			{messages.map((message, i) => (
 				<Chat
-					key={message+i}
+					key={message + i}
 					name={name}
 					image={image}
 					time={time}

@@ -15,7 +15,10 @@ const rawYuriBody = {
 };
 
 export const YURI_MAIL_M25752 = {
-	bodyText: rawYuriBody.body.replace(/<[^>]+>/g, ' ').replaceAll('&nbsp;', ' ').replaceAll('{이미지}', ''),
+	bodyText: rawYuriBody.body
+		.replace(/<[^>]+>/g, ' ')
+		.replaceAll('&nbsp;', ' ')
+		.replaceAll('{이미지}', ''),
 	...rawYuriBody,
 	...rawYuri,
 } as MailT;

@@ -30,7 +30,7 @@ function MailList({ index }: Props) {
 				result={result}
 				width={window.innerWidth}
 				height={height}
-				estimateSize={() => rem(4.75)}
+				estimateSize={() => rem(4)}
 				VirtualRowItem={({ virtualItem, style }) => (
 					<MailListItem
 						key={virtualItem.key}
@@ -47,8 +47,8 @@ function MailList({ index }: Props) {
 				}
 			/>
 			<Fab>
-					<RandomMailButton fab />
-					<OrderToggleButton fab />
+				<RandomMailButton fab />
+				<OrderToggleButton fab />
 			</Fab>
 		</VStack>
 	);

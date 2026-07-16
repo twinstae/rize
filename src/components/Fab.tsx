@@ -60,7 +60,8 @@ function FabButton({
 }: FabButtonProps) {
 	const sizedIcon = React.isValidElement(icon)
 		? React.cloneElement(icon as React.ReactElement<{ className?: string }>, {
-				className: `${ICON_SIZES[size]} ${(icon as React.ReactElement<{ className?: string }>).props.className ?? ''}`.trim(),
+				className:
+					`${ICON_SIZES[size]} ${(icon as React.ReactElement<{ className?: string }>).props.className ?? ''}`.trim(),
 			})
 		: icon;
 
@@ -72,7 +73,7 @@ function FabButton({
 					<IonFabButton
 						color="primary"
 						aria-label={ariaLabel}
-						className={className + " w-12 h-12"}
+						className={className + ' w-12 h-12'}
 						onClick={onClick}
 						onKeyUp={(e) => {
 							if (e.key === 'Space') {

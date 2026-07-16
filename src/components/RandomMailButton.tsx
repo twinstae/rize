@@ -24,7 +24,7 @@ function RandomMailButton({
 	const to = toMailDetail(choice(result)?.id);
 
 	useHotkeys('r', () => {
-		if (isRedirect){
+		if (isRedirect) {
 			redirect(to);
 		} else {
 			navigate(to);

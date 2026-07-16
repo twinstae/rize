@@ -32,10 +32,7 @@ function radioTest(
 
 		for (const name of names) {
 			const radioName = toRadioName(name);
-			await runSiheom(
-				actions.click(query.radio(radioName)),
-				assertions.checked(query.radio(radioName), true),
-			);
+			await runSiheom(actions.click(query.radio(radioName)), assertions.checked(query.radio(radioName), true));
 			expectChecked && (await expectChecked({ name }));
 		}
 

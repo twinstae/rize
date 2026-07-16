@@ -13,9 +13,7 @@ function SelectedTag() {
 			data-testid="selected-tag"
 			className="inline-flex max-w-36 items-center gap-1.5 truncate rounded-full bg-[var(--rize-primary-soft)] px-2.5 py-1 text-xs font-semibold text-pink-600"
 		>
-			{MEMBER_LIST.includes(tag as IZONE) && (
-				<ProfileImage member={tag} size="sm" className="h-4 w-4 object-cover" />
-			)}
+			{MEMBER_LIST.includes(tag as IZONE) && <ProfileImage member={tag} size="sm" className="h-4 w-4 object-cover" />}
 			{tag || t(strs.전체)}
 		</span>
 	);

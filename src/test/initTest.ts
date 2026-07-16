@@ -6,7 +6,6 @@ import { atom } from 'nanostores';
 import scopedUser from './scopedUser';
 import { ko } from '../i18n/i18n';
 
-
 const oldError = console.error;
 type RunT = (dep: { navigation: Navigation }) => Promise<void>;
 type SuiteT = [string, RunT];
@@ -15,12 +14,12 @@ export type ResultT =
 	| {
 			pass: true;
 			message: string;
-		}
+	  }
 	| {
 			pass: false;
 			message: string;
 			stack: string;
-		};
+	  };
 
 async function wait(delay: number) {
 	return new Promise((resolve) => setTimeout(resolve, delay));
@@ -79,8 +78,12 @@ rize.test('테마를 바꿀 수 있다', async () => {
 
 rize.test('메일을 좋아요 할 수 있다.', async () => {
 	const page = getPageByPath(paths.MAIL_LIST);
-	await page('listitem', /사랑하는 위즈원에게/).to('button', '중요 표시').click();
-	await page('listitem', /사랑하는 위즈원에게/).to('button', '중요 취소').click();
+	await page('listitem', /사랑하는 위즈원에게/)
+		.to('button', '중요 표시')
+		.click();
+	await page('listitem', /사랑하는 위즈원에게/)
+		.to('button', '중요 취소')
+		.click();
 });
 
 rize.test('메일을 볼 수 있다', async () => {
@@ -121,7 +124,6 @@ rize.test('메일을 검색할 수 있다.', async () => {
 	await $searchInput.type('원');
 	await $searchInput.clear();
 	await page('button', ko.검색창_닫기).click();
-	
 });
 
 export const testResultAtom = atom<ResultT[]>([]);

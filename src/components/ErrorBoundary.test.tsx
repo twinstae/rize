@@ -22,7 +22,13 @@ describe('ErrorBoundary', () => {
 	it('error가 발생하면 fallback을 보여준다', async () => {
 		await runSiheom(
 			given.render(
-				<ErrorBoundary fallback={({ error }) => <div role="alert" aria-label={error.message}>{error.message}</div>}>
+				<ErrorBoundary
+					fallback={({ error }) => (
+						<div role="alert" aria-label={error.message}>
+							{error.message}
+						</div>
+					)}
+				>
 					<Villain />
 				</ErrorBoundary>,
 			),

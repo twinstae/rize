@@ -21,10 +21,7 @@ export function RizeTabs<T>({ data, value, Label, Content, onChange }: RizeTabsP
 
 	return (
 		<div {...api.getRootProps()} className="bg-base-100">
-			<div
-				{...api.getListProps()}
-				className="mx-4 mb-3 flex gap-1 rounded-2xl bg-[var(--rize-surface)] p-1.5 sm:mx-5"
-			>
+			<div {...api.getListProps()} className="mx-4 mb-3 flex gap-1 rounded-2xl bg-[var(--rize-surface)] p-1.5 sm:mx-5">
 				{data.map((item, index) => {
 					const isActive = value(item) === api.value;
 					return (

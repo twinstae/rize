@@ -1,5 +1,5 @@
 const getItem = <T>(isReverse: boolean, result: T[], index: number) => {
-	if (isReverse){
+	if (isReverse) {
 		return result[result.length - index - 1];
 	}
 

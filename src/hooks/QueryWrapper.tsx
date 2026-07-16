@@ -23,9 +23,9 @@ const QueryWrapper = createWrapper(QueryClientProvider, {
 });
 
 export const JotaiQueryWrapper = ({ children }: PropsWithChildren) => {
-	useHydrateAtoms([[queryClientAtom, queryClient]])
-	return children
-  }
+	useHydrateAtoms([[queryClientAtom, queryClient]]);
+	return children;
+};
 
 const testQueryClient = new QueryClient({
 	defaultOptions: {

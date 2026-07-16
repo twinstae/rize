@@ -11,21 +11,8 @@ function PapagoIcon({ className, ...props }: React.ComponentProps<'svg'>) {
 			className={'h-6 w-6 ' + (className ?? '')}
 			{...props}
 		>
-			<mask
-				id={maskId}
-				style={{ maskType: 'luminance' }}
-				maskUnits="userSpaceOnUse"
-				x="0"
-				y="0"
-				width="21"
-				height="32"
-			>
-				<path
-					fillRule="evenodd"
-					clipRule="evenodd"
-					d="M0 0.0531635H20.8833V31.9468H0V0.0531635Z"
-					fill="white"
-				/>
+			<mask id={maskId} style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="32">
+				<path fillRule="evenodd" clipRule="evenodd" d="M0 0.0531635H20.8833V31.9468H0V0.0531635Z" fill="white" />
 			</mask>
 			<g mask={`url(#${maskId})`}>
 				<path

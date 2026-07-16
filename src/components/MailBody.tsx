@@ -33,9 +33,7 @@ function MailBody({ mailBody }: Props) {
 							__html: part,
 						}}
 					></div>
-					{i < images.length && (
-						<Image path={getPath(i)} className="my-4 w-full rounded-2xl" width={416} />
-					)}
+					{i < images.length && <Image path={getPath(i)} className="my-4 w-full rounded-2xl" width={416} />}
 				</div>
 			))}
 		</>

@@ -7,7 +7,7 @@ export const UNREAD = '읽지 않음';
 export const FAVORITE = '💖';
 
 export const modes = ['all', 'unread', 'favorite'] as const;
-export type TabMode = typeof modes[number];
+export type TabMode = (typeof modes)[number];
 
 const jsonClone: <T>(old: T) => T = (old) => JSON.parse(JSON.stringify(old));
 

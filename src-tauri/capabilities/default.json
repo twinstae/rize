@@ -1,17 +1,17 @@
 {
-  "$schema": "../gen/schemas/desktop-schema.json",
-  "identifier": "default",
-  "description": "Default capability for the main window",
-  "windows": ["main"],
-  "permissions": [
-    "core:default",
-    "dialog:default",
-    "fs:default",
-    "fs:allow-download-read-recursive",
-    "fs:allow-download-write-recursive",
-    "http:default",
-    "os:default",
-    "shell:default",
-    "store:default"
-  ]
+	"$schema": "../gen/schemas/desktop-schema.json",
+	"identifier": "default",
+	"description": "Default capability for the main window",
+	"windows": ["main"],
+	"permissions": [
+		"core:default",
+		"dialog:default",
+		"fs:default",
+		"fs:allow-download-read-recursive",
+		"fs:allow-download-write-recursive",
+		"http:default",
+		"os:default",
+		"shell:default",
+		"store:default"
+	]
 }

@@ -1,16 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import {
-	Button,
-	Checkbox,
-	FormLabel,
-	HStack,
-	KBD,
-	Radio,
-	Text,
-	TextInput,
-	VStack,
-} from './rize-ui-web';
+import { Button, Checkbox, FormLabel, HStack, KBD, Radio, Text, TextInput, VStack } from './rize-ui-web';
 
 const meta = {
 	title: 'Components/rize-ui-web',

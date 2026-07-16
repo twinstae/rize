@@ -31,7 +31,7 @@ export const strs = Object.fromEntries(Object.keys(ko).map((key) => [key, key]))
 
 export const useTranslation = useNextTranslation as () => {
 	i18n: typeof i18n;
-	t: <K extends keyof typeof strs>(key: K) => typeof strs[K];
+	t: <K extends keyof typeof strs>(key: K) => (typeof strs)[K];
 };
 
 export default i18n;

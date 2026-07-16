@@ -51,9 +51,9 @@ declare global {
 	}
 
 	interface CustomMatchers<R = unknown> {
-		toBeSelected(): R
+		toBeSelected(): R;
 	}
-	
+
 	namespace Vi {
 		// eslint-disable-next-line @typescript-eslint/no-empty-interface
 		interface Assertion extends CustomMatchers {}
@@ -62,6 +62,4 @@ declare global {
 	}
 }
 
-export type Matcher = | RegExp
-| string
-| ((accessibleName: string, element: Element) => boolean);
+export type Matcher = RegExp | string | ((accessibleName: string, element: Element) => boolean);

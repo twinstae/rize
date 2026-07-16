@@ -13,7 +13,7 @@ export const MEMBER_LIST = [
 	'장원영',
 ] as const;
 
-export type IZONE = typeof MEMBER_LIST[number];
+export type IZONE = (typeof MEMBER_LIST)[number];
 
 export const memberNameDict: Record<number, IZONE | '운영팀'> = {
 	0: '장원영',

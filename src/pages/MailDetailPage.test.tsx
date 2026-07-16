@@ -12,20 +12,14 @@ describe('MailDetailPage', () => {
 		navigation.clear();
 		navigation.navigate(toMailDetail('m25669'));
 
-		await runSiheom(
-			given.render(<MailDetailPage />),
-			assertions.visible(query.label(ko.돌아가기), true),
-		);
+		await runSiheom(given.render(<MailDetailPage />), assertions.visible(query.label(ko.돌아가기), true));
 	});
 
 	it('다음 메일이 있으면 다음 메일보기를 눌러서 다음 메일로 replace할 수 있다', async () => {
 		const { navigate, useSearchParams } = useFakeNavigation();
 		navigate(toMailDetail('m25700'));
 
-		await runSiheom(
-			given.render(<MailDetailPage />),
-			actions.click(query.link('다음 메일 보기')),
-		);
+		await runSiheom(given.render(<MailDetailPage />), actions.click(query.link('다음 메일 보기')));
 
 		const [searchParams] = useSearchParams();
 		const NEXT_ID = 'm25672';

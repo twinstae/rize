@@ -25,9 +25,7 @@ function FavoriteStar({ mailId, inline = false }: FavoriteStarProps) {
 	return (
 		<IconButtonWithTooltip
 			className={
-				inline
-					? ''
-					: 'absolute right-3 top-1/2 -translate-y-1/2 opacity-80 transition-opacity group-hover:opacity-100'
+				inline ? '' : 'absolute right-3 top-1/2 -translate-y-1/2 opacity-80 transition-opacity group-hover:opacity-100'
 			}
 			onClick={(e: React.MouseEvent) => {
 				e.preventDefault();

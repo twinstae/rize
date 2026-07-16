@@ -1,7 +1,11 @@
 import { useRef, useEffect } from 'react';
 import invariant from '../invariant';
 
-export const useTouchRipple = (elRef: { current: HTMLElement | null }, needsTouchRipple: boolean, eventsElRef?: { current: HTMLElement | null }) => {
+export const useTouchRipple = (
+	elRef: { current: HTMLElement | null },
+	needsTouchRipple: boolean,
+	eventsElRef?: { current: HTMLElement | null },
+) => {
 	if (!eventsElRef) eventsElRef = elRef;
 	invariant(eventsElRef);
 	const ripple = useRef<TouchRipple | null>(null);
@@ -81,14 +85,11 @@ class TouchRipple {
 
 		/* eslint-disable no-restricted-globals */
 		const isOverflowHidden =
-			typeof window !== 'undefined' &&
-			window.getComputedStyle(el, null).getPropertyValue('overflow') ===
-			'hidden';
+			typeof window !== 'undefined' && window.getComputedStyle(el, null).getPropertyValue('overflow') === 'hidden';
 
 		/* eslint-enable no-restricted-globals */
 		if (!isInset && isOverflowHidden) {
-			const distanceFromCenter =
-				((center.x - width / 2) ** 2 + (center.y - height / 2) ** 2) ** 0.5;
+			const distanceFromCenter = ((center.x - width / 2) ** 2 + (center.y - height / 2) ** 2) ** 0.5;
 			const scale = (diameter / 2 + distanceFromCenter) / (diameter / 2);
 			this.rippleTransform = `translate3d(0px, 0px, 0) scale(${scale})`;
 		} else {
@@ -108,7 +109,7 @@ class TouchRipple {
       margin-top:-${diameter / 2}px;
       margin-left:-${diameter / 2}px;
       left:${center.x}px;
-      top:${center.y}px; --k-ripple-transform: ${this.rippleTransform}`
+      top:${center.y}px; --k-ripple-transform: ${this.rippleTransform}`,
 		});
 		el.insertAdjacentElement('afterbegin', this.rippleWaveEl);
 
@@ -117,8 +118,7 @@ class TouchRipple {
 		const animationEnd = () => {
 			this.rippleWaveEl.removeEventListener('animationend', animationEnd);
 			if (!this.rippleWaveEl) return;
-			if (this.rippleWaveEl.classList.contains('k-touch-ripple-wave-out'))
-				return;
+			if (this.rippleWaveEl.classList.contains('k-touch-ripple-wave-out')) return;
 			this.rippleWaveEl.classList.add('k-touch-ripple-wave-in');
 			if (this.shouldBeRemoved) {
 				this.out();

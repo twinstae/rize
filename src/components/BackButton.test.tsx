@@ -11,6 +11,6 @@ describe('BackButton', () => {
 		role: 'label',
 		given: paths.CONFIG,
 		expected: paths.ROOT,
-		key: '{Backspace}'
+		key: '{Backspace}',
 	});
 });

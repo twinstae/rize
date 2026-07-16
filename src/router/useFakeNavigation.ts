@@ -68,7 +68,8 @@ const fakeNavigation = {
 				...props,
 			},
 			props.children,
-		)),
+		),
+	),
 } satisfies Navigation & { clear: () => void };
 export const useFakeNavigation = () => {
 	return fakeNavigation;

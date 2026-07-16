@@ -7,12 +7,7 @@ import { act, cleanup, render } from '@testing-library/react';
 import { screen, waitFor } from '@testing-library/dom';
 import { expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import {
-	defaultActions,
-	defaultAssertions,
-	overrideSiheom,
-	type Locator,
-} from '@siheom/core';
+import { defaultActions, defaultAssertions, overrideSiheom, type Locator } from '@siheom/core';
 import { DependenciesContext, createFakeDependencies } from '../hooks/Dependencies';
 import { TooltipProvider } from '../components/Tooltip';
 

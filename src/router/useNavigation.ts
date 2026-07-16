@@ -1,7 +1,12 @@
 import React, { type ForwardRefExoticComponent, type RefAttributes } from 'react';
 import { useDependencies } from '../hooks/Dependencies';
 
-export type LinkProps = React.ComponentProps<'a'> & { to: string; isRedirect?: boolean; children: React.ReactNode; className?: string };
+export type LinkProps = React.ComponentProps<'a'> & {
+	to: string;
+	isRedirect?: boolean;
+	children: React.ReactNode;
+	className?: string;
+};
 
 export interface Navigation {
 	params: () => Readonly<{ [key: string]: string | undefined }>;
@@ -13,7 +18,7 @@ export interface Navigation {
 				| {
 						replace?: boolean | undefined;
 						state?: unknown;
-					}
+				  }
 				| undefined,
 		) => void,
 	];

@@ -57,10 +57,7 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 			<div className="min-w-0 overflow-x-hidden">
 				<drawlerContext.Provider value={{ handleOpen }}>{children}</drawlerContext.Provider>
 			</div>
-			<div
-				className={`fixed inset-0 z-50 ${isOpen ? 'visible' : 'invisible'}`}
-				aria-hidden={!isOpen}
-			>
+			<div className={`fixed inset-0 z-50 ${isOpen ? 'visible' : 'invisible'}`} aria-hidden={!isOpen}>
 				<button
 					type="button"
 					aria-label="close drawer"
@@ -82,9 +79,7 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 								<p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--rize-muted)]">
 									Rize mail
 								</p>
-								<h2 className="mt-0.5 text-xl font-extrabold text-[var(--rize-text)]">
-									{t(strs.메뉴)}
-								</h2>
+								<h2 className="mt-0.5 text-xl font-extrabold text-[var(--rize-text)]">{t(strs.메뉴)}</h2>
 							</div>
 							<IconButtonWithTooltip
 								ref={closeButtonRef}

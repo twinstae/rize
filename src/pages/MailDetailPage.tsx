@@ -9,7 +9,7 @@ import { toMailDetail } from '../router/paths';
 import useLang from '../config/useLang';
 import useNextPrevMail from '../mailList/useNextPrevMail';
 
-import AppBar from '../components/AppBar';
+import { IonHeader, IonToolbar } from '@ionic/react';
 import BackButton from '../components/BackButton';
 import FavoriteStar from '../components/FavoriteStar';
 import LeftDrawler from '../components/LeftDrawer';
@@ -45,9 +45,8 @@ function MailDetailPage() {
 
 	return (
 		<LeftDrawler>
-			<AppBar />
-			<div className="relative w-full bg-base-100">
-				<div className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto pb-28">
+			<IonHeader className="ion-no-border">
+				<IonToolbar className="mail-toolbar">
 					<header className="border-b border-[var(--rize-border)] px-5 pb-4 pt-5">
 						<div className="flex items-start gap-3">
 							<ProfileImage
@@ -57,14 +56,9 @@ function MailDetailPage() {
 							/>
 							<div className="min-w-0 flex-1">
 								<div className="flex items-start justify-between gap-3">
-									<div className="min-w-0">
-										<p className="text-base font-bold text-[var(--rize-text)]">
-											{toOriginalName(mail.member)}
-										</p>
-										<time
-											className="mt-0.5 block text-xs text-[var(--rize-muted)]"
-											dateTime={date.toISOString()}
-										>
+									<div className="flex items-center gap-2 min-w-0">
+										<p className="text-base font-bold text-[var(--rize-text)]">{toOriginalName(mail.member)}</p>
+										<time className="mt-0.5 block text-xs text-[var(--rize-muted)]" dateTime={date.toISOString()}>
 											<abbr aria-label={formattedDate}>{mail.time}</abbr>
 										</time>
 									</div>
@@ -74,6 +68,10 @@ function MailDetailPage() {
 							</div>
 						</div>
 					</header>
+				</IonToolbar>
+			</IonHeader>
+			<div className="relative w-full bg-base-100">
+				<div className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto pb-28">
 					<div className="px-5 py-4">
 						<MailBody mailBody={mail} />
 					</div>
@@ -92,11 +90,7 @@ function MailDetailPage() {
 						size="base"
 						ariaLabel={t(strs.파파고_번역하기)}
 						onClick={() =>
-							openBrowser(
-								encodeURI(
-									`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`,
-								),
-							)
+							openBrowser(encodeURI(`https://papago.naver.com/?sk=ja&tk=${lang}&hn=0&st=${mail.bodyText}`))
 						}
 						icon={<PapagoIcon />}
 					/>
