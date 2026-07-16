@@ -153,7 +153,7 @@ function Test() {
 			throw Error('테스트 용 에러');
 		}
 		dispatch(RESET);
-	}, [isError]);
+	}, [dispatch, isError]);
 
 	return (
 		<VStack className="p-2 bg-base-100 min-h-screen">

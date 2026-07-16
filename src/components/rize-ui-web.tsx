@@ -65,6 +65,7 @@ const TextInput = React.forwardRef(function TextInput(
 			{...props}
 			ref={ref as React.Ref<HTMLInputElement>}
 			type={type}
+			name={name}
 			autoFocus={autofocus}
 			className={`rize-input ${size === 'base' ? 'input-base' : 'input-sm'} ${width === 'full' ? 'w-full' : ''} ${className ?? ''}`}
 			onCompositionStart={() => {

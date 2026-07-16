@@ -26,17 +26,17 @@ function radioTest(
 	test(`${names} radio를 각각 클릭하면 하나만 선택된다`, async () => {
 		invariant(names.length >= 3, '테스트할 이름을 3개 이상 넣어주세요.');
 
-		setup && (await setup());
+		if (setup) await setup();
 
 		await runSiheom(given.render(element));
 
 		for (const name of names) {
 			const radioName = toRadioName(name);
 			await runSiheom(actions.click(query.radio(radioName)), assertions.checked(query.radio(radioName), true));
-			expectChecked && (await expectChecked({ name }));
+			if (expectChecked) await expectChecked({ name });
 		}
 
-		teardown && (await teardown());
+		if (teardown) await teardown();
 	});
 }
 

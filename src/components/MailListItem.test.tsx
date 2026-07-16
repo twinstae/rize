@@ -1,5 +1,5 @@
 import React from 'react';
-import { runSiheom, given, actions, assertions, query } from '../test/siheom';
+import { runSiheom, given, assertions, query } from '../test/siheom';
 import { YURI_MAIL_M25752 } from '../test/fixtures';
 
 import paths, { toMailDetail } from '../router/paths';

@@ -26,28 +26,28 @@ function openCloseTest(
 	},
 ) {
 	test(`${closeName}을 클릭하면 열리고, ${closeKey}을 누르면 닫히고, ${openKey}을 누르면 열리고 ${openName}을 클릭하면 닫힌다`, async () => {
-		setup && (await setup());
+		if (setup) await setup();
 
 		await runSiheom(
 			given.render(element),
 			actions.click(query.button(closeName)),
 			assertions.visible(query.button(openName), true),
 		);
-		expectOpen && (await expectOpen());
+		if (expectOpen) await expectOpen();
 
 		await runSiheom(
 			actions.keyboard(query.button(openName), closeKey),
 			assertions.visible(query.button(closeName), true),
 		);
-		expectClose && (await expectClose());
+		if (expectClose) await expectClose();
 
 		await runSiheom(actions.click(query.button(closeName)), assertions.visible(query.button(openName), true));
-		expectOpen && (await expectOpen());
+		if (expectOpen) await expectOpen();
 
 		await runSiheom(actions.click(query.button(openName)), assertions.visible(query.button(closeName), true));
-		expectClose && (await expectClose());
+		if (expectClose) await expectClose();
 
-		teardown && (await teardown());
+		if (teardown) await teardown();
 	});
 }
 

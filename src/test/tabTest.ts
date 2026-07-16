@@ -22,7 +22,7 @@ function tabTest(
 	test(`${names} tab을 각각 클릭하면 tabContent가 보인다`, async () => {
 		invariant(names.length >= 3, '테스트할 이름을 3개 이상 넣어주세요.');
 
-		setup && (await setup());
+		if (setup) await setup();
 
 		for (const name of names) {
 			await runSiheom(
@@ -31,7 +31,7 @@ function tabTest(
 				actions.click(query.tab(name)),
 				assertions.selected(query.tab(name), true),
 			);
-			expectChecked && (await expectChecked({ name }));
+			if (expectChecked) await expectChecked({ name });
 		}
 
 		const prevTab = names.at(-2)!;
@@ -51,7 +51,7 @@ function tabTest(
 			assertions.selected(query.tab(lastTab), true),
 		);
 
-		teardown && (await teardown());
+		if (teardown) await teardown();
 	});
 }
 

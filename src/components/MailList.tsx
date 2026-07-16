@@ -5,8 +5,7 @@ import MailListItem from './MailListItem';
 import { useMailList } from '../hooks/Dependencies';
 import { modes } from '../mailList/mailListModel';
 import { VirtualList, Text, VStack } from './rize-ui-web';
-import { Fab, FabList, FabToggleButton } from './Fab';
-import { strs, useTranslation } from '../i18n/i18n';
+import { Fab } from './Fab';
 import useOrder from '../config/useOrder';
 import OrderToggleButton from './OrderToggleButton';
 import { getItem } from '../utils';
@@ -19,7 +18,6 @@ interface Props {
 const height = window.innerHeight - rem(8.25);
 
 function MailList({ index }: Props) {
-	const { t } = useTranslation();
 	const { mailList } = useMailList();
 	const result = mailList(modes[index]);
 	const { isReverse } = useOrder();

@@ -34,7 +34,7 @@ function linkTest(
 	const target = linkTarget(name, role);
 
 	test(`${givenPath}에서 ${name} ${role} 클릭하면 ${expected}로 이동한다`, async () => {
-		setup && (await setup());
+		if (setup) await setup();
 		const navigation = useFakeNavigation();
 		navigation.clear();
 		navigation.navigate(givenPath);
@@ -50,7 +50,7 @@ function linkTest(
 
 		expect(navigation.current()).toBe(expected);
 
-		teardown && (await teardown());
+		if (teardown) await teardown();
 	});
 }
 

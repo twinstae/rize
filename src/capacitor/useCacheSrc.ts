@@ -115,7 +115,7 @@ export function createUseCacheSrc(repo: CacheRepo) {
 					if (timeoutId === undefined) {
 						timeoutId = setTimeout(() => {
 							void repo.saveCache(cache);
-							timeoutId === undefined;
+							timeoutId = undefined;
 						}, 1000);
 					}
 				})

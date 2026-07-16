@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { createWrapper } from './util';
-import { Provider } from 'jotai';
 import { queryClientAtom } from 'jotai-tanstack-query';
 import { PropsWithChildren } from 'react';
 import { useHydrateAtoms } from 'jotai/utils';
