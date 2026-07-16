@@ -1,11 +1,13 @@
 import useConfig from '../config/useConfig';
 
 function useOrder() {
-	const [isReverse, setIsReverse]  = useConfig<boolean>('order', false);
+	const [isReverse, setIsReverse] = useConfig<boolean>('order', false);
 
 	return {
 		isReverse,
-		toggle: () => setIsReverse(old => !old),
+		toggle: () => {
+			void setIsReverse(!isReverse);
+		},
 	};
 }
 

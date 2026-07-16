@@ -67,6 +67,8 @@
     "@babel/preset-typescript": "^8.0.1",
     "@capacitor/cli": "^8.4.2",
     "@jest/types": "^30.4.1",
+    "@siheom/core": "file:../siheom-ts/packages/core",
+    "@siheom/react": "file:../siheom-ts/packages/react",
     "@stackflow/config": "^2.0.0",
     "@stryker-mutator/core": "^9.6.1",
     "@stryker-mutator/typescript-checker": "^9.6.1",
@@ -83,6 +85,9 @@
     "@types/react-dom": "^19.2.3",
     "@unocss/preset-wind": "^66.7.5",
     "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/browser": "^4.1.10",
+    "@vitest/browser-playwright": "^4.1.10",
+    "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.1.10",
     "autoprefixer": "^10.5.4",
     "babel-plugin-istanbul": "^8.0.0",
@@ -97,6 +102,7 @@
     "nyc": "^18.0.0",
     "oxfmt": "^0.59.0",
     "oxlint": "^1.74.0",
+    "playwright": "^1.61.1",
     "postcss": "^8.5.19",
     "resize-observer-polyfill": "^1.5.1",
     "tailwindcss": "^4.3.3",
@@ -147,5 +153,10 @@
   "nyc": {
     "sourceMap": false,
     "instrument": false
+  },
+  "pnpm": {
+    "overrides": {
+      "@siheom/core": "file:../siheom-ts/packages/core"
+    }
   }
 }

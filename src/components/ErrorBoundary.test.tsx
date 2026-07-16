@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { render } from './testUtil';
+import { runSiheom, actions, assertions, given, query } from '../test/siheom';
 import ErrorBoundary from './ErrorBoundary';
 
 function Villain() {
@@ -20,13 +20,14 @@ function Villain() {
 
 describe('ErrorBoundary', () => {
 	it('error가 발생하면 fallback을 보여준다', async () => {
-		const { user, screen } = await render(
-			<ErrorBoundary fallback={({ error }) => <span>{error.message}</span>}>
-				<Villain />
-			</ErrorBoundary>,
+		await runSiheom(
+			given.render(
+				<ErrorBoundary fallback={({ error }) => <div role="alert" aria-label={error.message}>{error.message}</div>}>
+					<Villain />
+				</ErrorBoundary>,
+			),
+			actions.click(query.button('hehe')),
+			assertions.visible(query.alert('test error'), true),
 		);
-
-		await user.click(screen.getByRole('button', { name: 'hehe' }));
-		await screen.findByText('test error');
 	});
 });

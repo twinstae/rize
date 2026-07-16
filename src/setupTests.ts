@@ -1,12 +1,7 @@
 import '@testing-library/jest-dom/vitest';
-import { vi, expect, afterEach, afterAll } from 'vitest';
+import { vi, expect, afterEach } from 'vitest';
 import { useFakeNavigation } from './router/useFakeNavigation';
-import libReport from 'istanbul-lib-report';
-import reports from 'istanbul-reports';
-import libCoverage from 'istanbul-lib-coverage';
 
-// import { jestPreviewConfigure } from 'jest-preview';
-// jestPreviewConfigure({ autoPreview: true });
 document.documentElement.setAttribute('data-theme', 'izone');
 
 expect.extend({
@@ -38,21 +33,13 @@ afterEach(() => {
 const oldError = console.error;
 
 console.error = (...args) => {
-	if (args[0].includes('Error: Uncaught')) {
-		return;
+	if (typeof args[0] === 'string') {
+		if (args[0].includes('Error: Uncaught')) return;
+		if (args[0].includes('The above error occurred in the')) return;
+		if (args[0].includes('Warning: ReactDOM.render is no longer supported')) return;
+		if (args[0].includes('should be wrapped into act')) return;
 	}
-	if (args[0].includes('The above error occurred in the')) {
-		return;
-	}
-
-	if (args[0].includes('Warning: ReactDOM.render is no longer supported in React 18')) {
-		return;
-	}
-	if (args[0].includes('should be wrapped into act')) {
-		return;
-	}
-
-	oldError(args[0]);
+	oldError(...args);
 };
 
 if (typeof window.matchMedia !== 'function') {
@@ -64,27 +51,11 @@ if (typeof window.matchMedia !== 'function') {
 			matches: false,
 			media: query,
 			onchange: null,
-			addListener: vi.fn(), // Deprecated
-			removeListener: vi.fn(), // Deprecated
+			addListener: vi.fn(),
+			removeListener: vi.fn(),
 			addEventListener: vi.fn(),
 			removeEventListener: vi.fn(),
 			dispatchEvent: vi.fn(),
 		})),
 	});
 }
-
-afterAll(() => {
-	if (!window.__coverage__) {
-		return;
-	}
-	const context = libReport.createContext({
-		dir: './.nyc_output',
-		coverageMap: libCoverage.createCoverageMap(window.__coverage__ as any),
-	});
-
-	reports
-		.create('json', {
-			file: `${(Math.random() * 100000000).toFixed(0).toString()}-coverage.json`,
-		})
-		.execute(context);
-});
