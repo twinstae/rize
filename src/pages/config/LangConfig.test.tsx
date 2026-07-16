@@ -8,9 +8,11 @@ describe('LangConfig', () => {
 		await runSiheom(
 			given.render(<LangConfig />),
 			assertions.visible(query.combobox(new RegExp(ko.언어)), true),
-			actions.select(query.combobox(new RegExp(ko.언어)), 'en'),
+			actions.click(query.combobox(new RegExp(ko.언어))),
+			actions.click(query.option(new RegExp(ko.en))),
 			assertions.visible(query.combobox(new RegExp(en.언어)), true),
-			actions.select(query.combobox(new RegExp(en.언어)), 'ko'),
+			actions.click(query.combobox(new RegExp(en.언어))),
+			actions.click(query.option(new RegExp(en.ko))),
 			assertions.visible(query.combobox(new RegExp(ko.언어)), true),
 		);
 	});
