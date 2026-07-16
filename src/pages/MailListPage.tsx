@@ -25,8 +25,9 @@ function MailListPage() {
 					const result = useMailList().mailList(modes[index]);
 
 					return (
-						<span className="text-md">
-							{t(tabs[index])} {result.length}
+						<span className="inline-flex items-center justify-center gap-1.5">
+							{t(tabs[index])}
+							<span className="text-xs tabular-nums text-[var(--rize-muted)]">{result.length}</span>
 						</span>
 					);
 				}}

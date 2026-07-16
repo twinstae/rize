@@ -49,7 +49,7 @@ const fakeNavigation = {
 			old[old.length - 1] = path;
 		}),
 	// eslint-disable-next-line react/display-name
-	Link: React.forwardRef(({ to, ...props }: LinkProps, ref) =>
+	Link: React.forwardRef(({ to, isRedirect = false, ...props }: LinkProps, ref) =>
 		React.createElement(
 			'a',
 			{
@@ -58,7 +58,11 @@ const fakeNavigation = {
 				onClick: (e: Event) => {
 					e.preventDefault();
 					mutateHistory((old) => {
-						old.push(to);
+						if (isRedirect) {
+							old[old.length - 1] = to;
+						} else {
+							old.push(to);
+						}
 					});
 				},
 				...props,

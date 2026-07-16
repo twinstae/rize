@@ -4,16 +4,20 @@ import { IZONE, MEMBER_LIST } from '../constants';
 import useTag from '../mailList/useTag';
 import ProfileImage from './ProfileImage';
 import { strs, useTranslation } from '../i18n/i18n';
-import { HStack, Text } from './rize-ui-web';
 
 function SelectedTag() {
 	const { t } = useTranslation();
 	const [tag] = useTag();
 	return (
-		<HStack data-testid="selected-tag" className='text-lg'>
-			{<ProfileImage member={MEMBER_LIST.includes(tag as IZONE) ? tag : ''} size="md" />}
-			<Text className='ml-2'>{tag || t(strs.전체)}</Text>
-		</HStack>
+		<span
+			data-testid="selected-tag"
+			className="inline-flex max-w-32 items-center gap-1.5 truncate rounded-full bg-pink-50 px-2.5 py-1 text-xs font-semibold text-pink-600"
+		>
+			{MEMBER_LIST.includes(tag as IZONE) && (
+				<ProfileImage member={tag} size="sm" className="h-4 w-4 object-cover" />
+			)}
+			{tag || t(strs.전체)}
+		</span>
 	);
 }
 

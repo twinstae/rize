@@ -161,12 +161,18 @@ const Button = React.forwardRef(function Button(
 
 	if (as) {
 		const Element = as;
+		const variantClass =
+			variant === 'primary'
+				? 'bg-pink-500 text-white shadow-sm hover:bg-pink-600'
+				: 'bg-transparent text-[var(--rize-text)] hover:bg-[var(--rize-surface)]';
+		const sizeClass = size === 'sm' ? 'min-h-9 px-3 text-sm' : 'min-h-11 px-4';
+		const shapeClass = circle === 'circle' ? 'h-10 w-10 shrink-0 rounded-full p-0' : 'rounded-xl';
 		return (
 			<Element
 				ref={actualRef as React.RefObject<HTMLButtonElement>}
 				{...props}
 				className={
-					`rize-btn ${variant === 'primary' ? 'rize-btn-primary' : 'rize-btn-ghost'} ${size === 'base' ? 'rize-btn-base' : 'rize-btn-sm'} ${circle === 'circle' ? 'rize-btn-circle' : ''} relative ` +
+					`relative inline-flex items-center justify-center overflow-hidden font-semibold no-underline transition-colors ${variantClass} ${sizeClass} ${shapeClass} ` +
 					(className ?? '')
 				}
 			>
@@ -196,7 +202,11 @@ const FloatingArea = ({
 	children,
 }: {
 	children: React.ReactNode | React.ReactNode[];
-}) => <VStack className="absolute bottom-2 right-2 gap-2">{children}</VStack>;
+}) => (
+	<div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-base-100 p-1 shadow-lg ring-1 ring-slate-200/70">
+		{children}
+	</div>
+);
 
 export {
 	Button,

@@ -71,7 +71,11 @@ export function createUseMailList(mailRepository: MailRepository, defaults?: Par
 		const mailBodyDict = get(mailBodyDictAtom);
 		const nameToNumberDict = get(nameToNumberDictAtom);
 
-		if (rawMailList.length === 0) {
+		if (
+			rawMailList.length === 0 ||
+			Object.keys(mailBodyDict).length === 0 ||
+			Object.keys(nameToNumberDict).length === 0
+		) {
 			return [];
 		}
 
@@ -138,7 +142,7 @@ export function createUseMailList(mailRepository: MailRepository, defaults?: Par
 
 	const keywordAtom = atom('');
 
-	const filtertedMailListAtom = atom((get) => {
+	const filteredMailListAtom = atom((get) => {
 		const mailList = get(mailListAtom);
 		const index = get(indexAtom);
 		const tag = get(currentTagAtom);
@@ -149,7 +153,7 @@ export function createUseMailList(mailRepository: MailRepository, defaults?: Par
 
 	const currentModeAtom = atom<Mode>('all');
 	const currentMailListAtom = atom((get) => {
-		const result = get(filtertedMailListAtom);
+		const result = get(filteredMailListAtom);
 		const currentMode = get(currentModeAtom);
 		return result[currentMode];
 	});
@@ -157,7 +161,7 @@ export function createUseMailList(mailRepository: MailRepository, defaults?: Par
 	return (): MailListResult => {
 		return {
 			waitForAll: () => undefined,
-			mailList: (mode: Mode) => useAtomValue(filtertedMailListAtom)[mode],
+			mailList: (mode: Mode) => useAtomValue(filteredMailListAtom)[mode],
 			useCurrentMode: () => useAtom(currentModeAtom),
 			useCurrentMailList: () => useAtomValue(currentMailListAtom),
 			useMailById: (id) => {

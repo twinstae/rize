@@ -20,13 +20,20 @@ export function RizeTabs<T>({ data, value, Label, Content, onChange }: RizeTabsP
 	const api = tabs.connect(service, normalizeProps);
 
 	return (
-		<div {...api.getRootProps()}>
-			<div {...api.getListProps()} className="tabs flex justify-around">
+		<div {...api.getRootProps()} className="bg-base-100">
+			<div
+				{...api.getListProps()}
+				className="mx-4 mb-2 flex rounded-2xl bg-[var(--rize-surface)] p-1 sm:mx-6"
+			>
 				{data.map((item, index) => (
 					<button
 						{...api.getTriggerProps({ value: value(item) })}
 						key={value(item)}
-						className={`bg-base-100 tab tab-bordered w-1/3 ${value(item) === api.value ? 'tab-active' : ''}`}
+						className={`min-h-10 flex-1 rounded-xl px-3 py-2 text-sm font-semibold transition-all ${
+							value(item) === api.value
+								? 'bg-base-100 text-[var(--rize-text)] shadow-sm'
+								: 'text-[var(--rize-muted)] hover:text-[var(--rize-text)]'
+						}`}
 					>
 						<Label index={index} />
 					</button>

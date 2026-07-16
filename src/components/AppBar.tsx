@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { IonHeader, IonSearchbar, IonToolbar } from '@ionic/react';
 
 import { strs, useTranslation } from '../i18n/i18n';
-import DarkModeButton from './DarkModeButton';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
 import MenuButton from './MenuButton';
 import SelectedTag from './SelectedTag';
-import { FormLabel, HStack, TextInput, Text } from './rize-ui-web';
 import { useMailList } from '../hooks/Dependencies';
 import MagnifyingGlassIcon from './icons/MagnifyingGlassIcon';
 import XMarkIcon from './icons/XMarkIcon';
@@ -51,56 +50,62 @@ function AppBar() {
 	});
 
 	return isOpen ? (
-		<HStack className="h-14 p-2 border-b-1 items-center justify-between">
-			<FormLabel className="w-full justify-between align-middle items-center">
-				<Text className="font-bold w-12">{t(strs.검색)}</Text>
-				<TextInput
-					type="search"
-					name="search"
-					size="sm"
-					width="full"
-					autofocus
-					value={keywordInput}
-					onChange={(e) => {
-						setKeywordInput(e.currentTarget.value);
-					}}
-				/>
-			</FormLabel>
-			<IconButtonWithTooltip
-				onClick={() => {
-					close();
-				}}
-				direction="left"
-				size="sm"
-				icon={<XMarkIcon />}
-				ariaLabel={t(strs.검색창_닫기)}
-			/>
-		</HStack>
+		<IonHeader className="ion-no-border">
+			<IonToolbar className="mail-toolbar">
+				<div className="flex h-20 items-center gap-2 px-3">
+					<IonSearchbar
+						aria-label={t(strs.검색)}
+						className="mail-searchbar"
+						debounce={0}
+						placeholder={t(strs.검색)}
+						value={keywordInput}
+						onIonInput={(event) => setKeywordInput(event.detail.value ?? '')}
+						autoFocus
+					/>
+					<IconButtonWithTooltip
+						onClick={close}
+						direction="left"
+						size="sm"
+						icon={<XMarkIcon />}
+						ariaLabel={t(strs.검색창_닫기)}
+					/>
+				</div>
+			</IonToolbar>
+		</IonHeader>
 	) : (
-		<HStack className="h-14 p-2 border-b-1 items-center justify-between">
-			<MenuButton />
-			<DarkModeButton />
-			<SelectedTag />
-			{current() === paths.MAIL_LIST ? (
-				<IconButtonWithTooltip
-					as={Link}
-					to={paths.ALBUM}
-					variant="ghost"
-					size="sm"
-					icon={<PhotoIcon />}
-					ariaLabel={t(strs.앨범) + '(a)'}
-				/>
-			) : <div className="w-16 h-16"></div>}
-			<IconButtonWithTooltip
-				onClick={() => {
-					open();
-				}}
-				direction="bottom"
-				size="sm"
-				icon={<MagnifyingGlassIcon />}
-				ariaLabel={t(strs.검색) + '(/)'}
-			/>
-		</HStack>
+		<IonHeader className="ion-no-border">
+			<IonToolbar className="mail-toolbar">
+				<div className="flex h-20 items-center gap-2 px-3 sm:px-5">
+					<MenuButton />
+					<div className="min-w-0 flex-1 px-1">
+						<p className="mb-0.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--rize-muted)]">
+							Rize mail
+						</p>
+						<div className="flex items-center gap-2">
+							<h1 className="text-xl font-extrabold tracking-tight text-[var(--rize-text)]">Messages</h1>
+							<SelectedTag />
+						</div>
+					</div>
+					{current() === paths.MAIL_LIST && (
+						<IconButtonWithTooltip
+							as={Link}
+							to={paths.ALBUM}
+							variant="ghost"
+							size="sm"
+							icon={<PhotoIcon />}
+							ariaLabel={t(strs.앨범) + '(a)'}
+						/>
+					)}
+					<IconButtonWithTooltip
+						onClick={open}
+						direction="bottom"
+						size="sm"
+						icon={<MagnifyingGlassIcon />}
+						ariaLabel={t(strs.검색) + '(/)'}
+					/>
+				</div>
+			</IonToolbar>
+		</IonHeader>
 	);
 }
 

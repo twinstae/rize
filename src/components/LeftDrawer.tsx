@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useId, useRef, useState } from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useTranslation } from '../i18n/i18n';
 import { strs } from '../i18n/i18n';
@@ -24,7 +24,6 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 	const drawerSideRef = useRef<HTMLDivElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
 	const lastFocusedRef = useRef<HTMLElement | null>(null);
-	const drawlerId = useId();
 	function handleClose() {
 		setIsOpen(false);
 	}
@@ -54,45 +53,56 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 	);
 	useHotkeys('Esc', () => handleClose());
 	return (
-		<div className="drawer bg-base-100">
-			<input
-				checked={isOpen}
-				id={drawlerId}
-				type="checkbox"
-				className="drawer-toggle"
-				onChange={(e) => {
-					if (e.currentTarget.checked) {
-						handleOpen();
-					} else {
-						handleClose();
-					}
-				}}
-				tabIndex={-1}
-			/>
-			<div className="drawer-content overflow-x-hidden">
+		<div className="min-h-dvh bg-base-100">
+			<div className="min-w-0 overflow-x-hidden">
 				<drawlerContext.Provider value={{ handleOpen }}>{children}</drawlerContext.Provider>
 			</div>
-			<div ref={drawerSideRef} className="drawer-side">
-				<label htmlFor={drawlerId} className="drawer-overlay sr-only">
-					close drawer
-				</label>
-				<div className="menu bg-base-100 pl-4 pr-1 w-2/3 relative  h-screen">
-					<HStack className="w-full justify-between">
-						<h2 className="p-2 text-xl">{t(strs.메뉴)}</h2>
+			<div
+				className={`fixed inset-0 z-50 ${isOpen ? 'visible' : 'invisible'}`}
+				aria-hidden={!isOpen}
+			>
+				<button
+					type="button"
+					aria-label="close drawer"
+					tabIndex={isOpen ? 0 : -1}
+					className={`absolute inset-0 bg-slate-950/35 backdrop-blur-[2px] transition-opacity ${
+						isOpen ? 'opacity-100' : 'opacity-0'
+					}`}
+					onClick={handleClose}
+				/>
+				<div
+					ref={drawerSideRef}
+					className={`absolute inset-y-0 left-0 flex w-[min(82vw,22rem)] flex-col bg-base-100 p-4 shadow-2xl transition-transform duration-300 ${
+						isOpen ? 'translate-x-0' : '-translate-x-full'
+					}`}
+				>
+					<HStack className="mb-3 w-full items-center justify-between">
+						<div className="px-2">
+							<p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--rize-muted)]">
+								Rize mail
+							</p>
+							<h2 className="text-xl font-extrabold text-[var(--rize-text)]">{t(strs.메뉴)}</h2>
+						</div>
 						<IconButtonWithTooltip
 							ref={closeButtonRef}
 							onClick={() => handleClose()}
 							icon={<XMarkIcon />}
-							className="drawer-button right-0 top-0 p-0 focus:border-2 focus:border-primary"
+							className="drawer-button"
 							direction="bottom"
 							circle="circle"
 							ariaLabel={t(strs.닫기)+'(Esc)'}
 							tabIndex={isOpen ? undefined : -1}
 						/>
 					</HStack>
-					<MemberList />
-					<div id="to-config">
-						<Link to={paths.CONFIG} className="mt-4 btn btn-primary btn-sm"  tabIndex={isOpen ? undefined : -1}>
+					<div className="min-h-0 flex-1 overflow-y-auto">
+						<MemberList />
+					</div>
+					<div id="to-config" className="border-t border-slate-100 pt-3">
+						<Link
+							to={paths.CONFIG}
+							className="flex min-h-11 items-center justify-center rounded-xl bg-pink-500 px-4 text-sm font-bold text-white shadow-sm transition hover:bg-pink-600"
+							tabIndex={isOpen ? undefined : -1}
+						>
 							{t(strs.설정)}
 						</Link>
 					</div>
