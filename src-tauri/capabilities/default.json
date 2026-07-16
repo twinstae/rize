@@ -7,6 +7,8 @@
     "core:default",
     "dialog:default",
     "fs:default",
+    "fs:allow-download-read-recursive",
+    "fs:allow-download-write-recursive",
     "http:default",
     "os:default",
     "shell:default",
