@@ -17,8 +17,10 @@ import { setupIonicReact } from '@ionic/react';
 import { Stack } from './router/useStatckNavigation';
 import QueryWrapper, { JotaiQueryWrapper } from './hooks/QueryWrapper';
 import ErrorBoundary from './components/ErrorBoundary';
-import { Provider } from 'jotai';
+import { Provider, getDefaultStore } from 'jotai';
 import { Button } from './components/rize-ui-web';
+
+const appStore = getDefaultStore();
 
 setupIonicReact();
 
@@ -52,7 +54,7 @@ function ErrorFallback({ error }: { error: Error }) {
 
 function App() {
 	return (
-		<Provider>
+		<Provider store={appStore}>
 			<QueryWrapper>
 				<JotaiQueryWrapper>
 					<ErrorBoundary fallback={ErrorFallback}>

@@ -4,11 +4,11 @@ import { useAtom } from 'jotai';
 import InitPage from '../pages/InitPage';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
 import useConfig from '../config/useConfig';
-import { isSplashEndAtom, splashEnd } from '../hooks/splashEndAtom';
+import { isSplashEndAtom } from '../hooks/splashEndAtom';
 
 function SplashOverlay() {
 	const { RizeLogo } = useDependencies();
-	const [splashEnded] = useAtom(isSplashEndAtom);
+	const [splashEnded, setSplashEnded] = useAtom(isSplashEndAtom);
 
 	if (splashEnded) {
 		return null;
@@ -17,7 +17,7 @@ function SplashOverlay() {
 	return (
 		<div className="fixed inset-0 z-50 flex flex-col justify-center align-middle bg-base-100">
 			<div className="mx-auto text-red-400 text-9xl">
-				<RizeLogo onAnimationEnd={splashEnd} />
+				<RizeLogo onAnimationEnd={() => setSplashEnded(true)} />
 			</div>
 		</div>
 	);
