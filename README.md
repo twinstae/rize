@@ -2,9 +2,9 @@
 
 rize는 아이즈원 프라이빗 메일의 백업을 쉽게 검색하고 찾아볼 수 있는 뷰어입니다.
 
-[1.0.0 릴리즈](https://github.com/twinstae/rize/releases/tag/desktop-1.0.0)는 해당 링크에서 다운 받으실 수 있습니다.
+[1.1.0 릴리즈](https://github.com/twinstae/rize/releases/tag/1.1.0)는 해당 링크에서 다운 받으실 수 있습니다.
 
-현재 윈도우와 리눅스 버전을 지원하고 있습니다. 맥 빌드도 곧 배포할 예정이며, 모바일도 지원할 예정입니다.
+Windows, Linux, macOS, Android를 지원합니다.
 
 ## 기술적 세부사항
 

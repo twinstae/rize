@@ -1,0 +1,166 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '1.*'
+      - 'v1.*'
+      - 'desktop-*'
+  workflow_dispatch:
+
+env:
+  CARGO_REGISTRIES_CRATES_IO_PROTOCOL: sparse
+
+jobs:
+  publish-tauri:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            args: '--target aarch64-apple-darwin'
+          - platform: macos-latest
+            args: '--target x86_64-apple-darwin'
+          - platform: ubuntu-22.04
+            args: ''
+          - platform: windows-latest
+            args: ''
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout siheom-ts
+        run: git clone --depth 1 https://github.com/twinstae/siheom-ts.git ../siheom-ts
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: ./src-tauri -> target
+
+      - name: Install Linux dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf xdg-utils
+
+      - name: Install frontend dependencies
+        run: pnpm install --ignore-scripts
+
+      - uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tauriScript: pnpm tauri
+          tagName: ${{ github.ref_name }}
+          releaseName: ${{ github.ref_name }}
+          releaseBody: |
+            # 프메 백업 뷰어 1.1.0
+
+            Windows, Linux, macOS, Android를 지원합니다.
+
+            [프메 백업 AS 카톡방](https://open.kakao.com/o/gPbArZ4c)
+
+            ## 설치 방법
+
+            ### 전처리
+
+            [구형 뷰어](https://github.com/twinstae/izone-pm-viewer)로 처리를 안 하신 분은, 구형 뷰어의 스크립트를 다운 받아 실행해주셔야 합니다. 예를 들어 썸네일 만들기를 하지 않으면 앨범의 이미지가 보이지 않습니다.
+
+            ### 윈도우
+
+            1. 윈도우 10 사용자는 [웹뷰2](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section)를 다운 받습니다.
+            2. Downloads 폴더에 백업한 output 폴더를 넣습니다.
+            3. msi 파일을 다운 받아서 실행하고 설치합니다.
+
+            ### 리눅스
+
+            1. .deb 파일 또는 AppImage를 다운 받아 설치/실행합니다.
+            2. Downloads 폴더에 백업한 output 폴더를 넣습니다.
+
+            ### macOS
+
+            1. Apple Silicon Mac은 aarch64 dmg, Intel Mac은 x64 dmg를 다운 받습니다.
+            2. Downloads 폴더에 백업한 output 폴더를 넣습니다.
+
+            ### Android
+
+            1. apk 파일을 다운 받아 설치합니다.
+            2. 기기 저장소에 백업한 output 폴더를 넣습니다.
+
+            ### 폰트
+
+            프리텐다드 폰트 [기본](https://github.com/orioncactus/pretendard/raw/main/packages/pretendard/dist/public/static/Pretendard-Regular.otf), [볼드](https://github.com/orioncactus/pretendard/blob/main/packages/pretendard/dist/public/static/Pretendard-Bold.otf)를 사용합니다.
+          releaseDraft: false
+          prerelease: false
+          uploadUpdaterJson: false
+          args: ${{ matrix.args }}
+
+  publish-android:
+    needs: publish-tauri
+    permissions:
+      contents: write
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout siheom-ts
+        run: git clone --depth 1 https://github.com/twinstae/siheom-ts.git ../siheom-ts
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: ./src-tauri -> target
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Install NDK
+        run: sdkmanager --install "ndk;28.2.13676358"
+
+      - name: Install frontend dependencies
+        run: pnpm install --ignore-scripts
+
+      - uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.2.13676358
+        with:
+          tauriScript: pnpm tauri
+          mobile: android
+          tagName: ${{ github.ref_name }}
+          releaseDraft: false
+          prerelease: false
+          uploadUpdaterJson: false
+          args: --apk --split-per-abi
