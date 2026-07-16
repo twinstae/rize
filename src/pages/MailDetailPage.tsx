@@ -16,6 +16,7 @@ import ProfileImage from '../components/ProfileImage';
 import { Button } from '../components/rize-ui-web';
 import { Fab, FabButton, FabList, FabToggleButton } from '../components/Fab';
 import RandomMailButton from '../components/RandomMailButton';
+import PapagoIcon from '../components/icons/PapagoIcon';
 
 function MailDetailPage() {
 	const { t } = useTranslation();
@@ -93,13 +94,7 @@ function MailDetailPage() {
 								),
 							)
 						}
-						icon={
-							<img
-								src="https://papago.naver.com/e3bff6deb50f078fe094f764fac152e8.png"
-								alt=""
-								className="h-6 w-6 rounded-full"
-							/>
-						}
+						icon={<PapagoIcon />}
 					/>
 					<BackButton fab direction="top" size="base" />
 			</Fab>

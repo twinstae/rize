@@ -7,6 +7,7 @@ import EmptyStarIcon from './EmptyStarIcon';
 import HamBurgerIcon from './HamBurgerIcon';
 import MagnifyingGlassIcon from './MagnifyingGlassIcon';
 import MoonIcon from './MoonIcon';
+import PapagoIcon from './PapagoIcon';
 import PhotoIcon from './PhotoIcon';
 import ShuffleIcon from './ShuffleIcon';
 import StarIcon from './StarIcon';
@@ -24,6 +25,7 @@ const ICONS = [
 	['HamBurger', HamBurgerIcon],
 	['MagnifyingGlass', MagnifyingGlassIcon],
 	['Moon', MoonIcon],
+	['Papago', PapagoIcon],
 	['Photo', PhotoIcon],
 	['Shuffle', ShuffleIcon],
 	['Star', StarIcon],
