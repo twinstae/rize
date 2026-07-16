@@ -5,7 +5,7 @@ import { rem } from '../theme/rem';
 import { act, fireEvent, waitFor } from '@testing-library/react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-global.ResizeObserver = ResizeObserver;
+globalThis.ResizeObserver = ResizeObserver;
 
 describe('VirtualList', () => {
 	test('should render given dynamic size after scroll', async () => {

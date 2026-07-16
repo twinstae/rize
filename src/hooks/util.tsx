@@ -4,7 +4,7 @@ type ChildrenProps = {
 	children: React.ReactElement<unknown, string | React.JSXElementConstructor<unknown>>;
 };
 
-export type WrapperT = ({ children }: ChildrenProps) => JSX.Element;
+export type WrapperT = ({ children }: ChildrenProps) => React.ReactElement;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createWrapper = <P extends { [key: string]: any }>(Provider: React.FC<P>, props: P): WrapperT => {

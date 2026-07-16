@@ -1,8 +1,9 @@
-import { z } from 'zod';
-export const rawMailSchema = z.object({
-	id: z.string().min(1),
-	member: z.string().min(1),
-	subject: z.string().min(1),
-	preview: z.string(),
-	time: z.string().min(1),
+import * as v from 'valibot';
+
+export const rawMailSchema = v.object({
+	id: v.pipe(v.string(), v.minLength(1)),
+	member: v.pipe(v.string(), v.minLength(1)),
+	subject: v.pipe(v.string(), v.minLength(1)),
+	preview: v.string(),
+	time: v.pipe(v.string(), v.minLength(1)),
 });

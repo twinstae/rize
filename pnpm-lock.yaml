@@ -55,13 +55,13 @@ importers:
         version: 3.0.0
       '@stackflow/plugin-basic-ui':
         specifier: ^1.18.3
-        version: 1.18.3(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(babel-plugin-macros@3.1.0)(react@19.2.7)
+        version: 1.18.3(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(babel-plugin-macros@3.1.0)(react@19.2.7)
       '@stackflow/plugin-renderer-basic':
         specifier: ^1.1.15
-        version: 1.1.15(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
+        version: 1.1.15(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
       '@stackflow/react':
         specifier: ^2.1.2
-        version: 2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)
+        version: 2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)
       '@tanstack/query-core':
         specifier: ^5.101.2
         version: 5.101.2
@@ -164,18 +164,15 @@ importers:
       unocss-preset-daisy:
         specifier: ^7.0.0
         version: 7.0.0(daisyui@5.6.18)(unocss@66.7.5(vite@8.1.5(@types/node@26.1.1)(jiti@2.7.0)(yaml@2.9.0)))
+      valibot:
+        specifier: ^1.4.2
+        version: 1.4.2(typescript@7.0.2)
       wonka:
         specifier: ^6.3.6
         version: 6.3.6
       xstate:
         specifier: ^5.32.5
         version: 5.32.5
-      zod:
-        specifier: ^4.4.3
-        version: 4.4.3
-      zod-to-json-schema:
-        specifier: ^3.25.2
-        version: 3.25.2(zod@4.4.3)
     devDependencies:
       '@babel/core':
         specifier: ^8.0.1
@@ -195,6 +192,9 @@ importers:
       '@jest/types':
         specifier: ^30.4.1
         version: 30.4.1
+      '@stackflow/config':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@stryker-mutator/core':
         specifier: ^9.6.1
         version: 9.6.1(@types/node@26.1.1)
@@ -1992,8 +1992,8 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
-  '@stackflow/config@1.2.2':
-    resolution: {integrity: sha512-q6d02TpLXARCV/ah8ORZixxfszTjWe82CWOP0v+s5xoFQRk0vL2FSqzH9toSF3UaX2x9Gvpgm1TdNxAoESbLuQ==}
+  '@stackflow/config@2.0.0':
+    resolution: {integrity: sha512-EmRyxf124SCuRxx1WhL0leq6WwV7yloejr8WbLq+QhoGFWWRfRY5SyMnvk2zWOuLsUDIDaQWbmFhO+D+xbQorA==}
 
   '@stackflow/core@3.0.0':
     resolution: {integrity: sha512-xK9sl1KTKAVoSrrPtFG8jFlcKJX+L65yII/8cibzQh0JQws+zi8TPOo66Ped9QhWdkx7N7AV+kOsPZ/PliCWtg==}
@@ -3712,6 +3712,7 @@ packages:
     resolution: {integrity: sha512-Quz3MvAwHxVYNXsOByL7xI5EB2WYOeFswqaHIA3qOK3isRWTxiplBEocmmru6XmxDB2L7jDNYtYA4FyimoAFEw==}
     engines: {node: '>=8.17.0'}
     hasBin: true
+    bundledDependencies: []
 
   jsonfile@6.2.1:
     resolution: {integrity: sha512-zwOTdL3rFQ/lRdBnntKVOX6k5cKJwEc1HdilT71BWEu7J41gXIB2MRp+vxduPSwZJPWBxEzv4yH1wYLJGUHX4Q==}
@@ -4939,6 +4940,14 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
+  valibot@1.4.2:
+    resolution: {integrity: sha512-gjdCvJ6d3RyHAneqxMYMW9QMCwYMb3jpOO0IyHZV1bnRHFBHrX3VkIILt5XYR0WhwHiH7Mty8ovuPZ/O3gamrg==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   vite@8.1.5:
     resolution: {integrity: sha512-7ULLwsCdYx/nRyrpiEwvqb5TFHrMVZyBt+rg/OAXT7rgj/z+DtTDyKFeLAdDkubDVDKD8jOsndmy7m55XcfUsw==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -5178,11 +5187,6 @@ packages:
   yoctocolors@2.1.2:
     resolution: {integrity: sha512-CzhO+pFNo8ajLM2d2IW/R93ipy99LWjtwblvC1RsoSUMZgyLbYFr221TnSNT7GjGdYui6P459mw9JH/g/zW2ug==}
     engines: {node: '>=18'}
-
-  zod-to-json-schema@3.25.2:
-    resolution: {integrity: sha512-O/PgfnpT1xKSDeQYSCfRI5Gy3hPf91mKVDuYLUHZJMiDFptvP41MSnWofm8dnCm0256ZNfZIM7DSzuSMAFnjHA==}
-    peerDependencies:
-      zod: ^3.25.28 || ^4
 
   zod@4.4.3:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
@@ -6884,17 +6888,17 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@stackflow/config@1.2.2': {}
+  '@stackflow/config@2.0.0': {}
 
   '@stackflow/core@3.0.0':
     dependencies:
       react-fast-compare: 3.2.2
 
-  '@stackflow/plugin-basic-ui@1.18.3(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(babel-plugin-macros@3.1.0)(react@19.2.7)':
+  '@stackflow/plugin-basic-ui@1.18.3(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(babel-plugin-macros@3.1.0)(react@19.2.7)':
     dependencies:
       '@stackflow/core': 3.0.0
-      '@stackflow/react': 2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)
-      '@stackflow/react-ui-core': 1.3.6(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
+      '@stackflow/react': 2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)
+      '@stackflow/react-ui-core': 1.3.6(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)
       '@types/react': 19.2.17
       '@vanilla-extract/css': 1.21.1(babel-plugin-macros@3.1.0)
       '@vanilla-extract/dynamic': 2.1.5
@@ -6905,23 +6909,23 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@stackflow/plugin-renderer-basic@1.1.15(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)':
+  '@stackflow/plugin-renderer-basic@1.1.15(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)':
     dependencies:
       '@stackflow/core': 3.0.0
-      '@stackflow/react': 2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)
+      '@stackflow/react': 2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)
       '@types/react': 19.2.17
       react: 19.2.7
 
-  '@stackflow/react-ui-core@1.3.6(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)':
+  '@stackflow/react-ui-core@1.3.6(@stackflow/core@3.0.0)(@stackflow/react@2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7))(@types/react@19.2.17)(react@19.2.7)':
     dependencies:
       '@stackflow/core': 3.0.0
-      '@stackflow/react': 2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)
+      '@stackflow/react': 2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)
       '@types/react': 19.2.17
       react: 19.2.7
 
-  '@stackflow/react@2.1.2(@stackflow/config@1.2.2)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)':
+  '@stackflow/react@2.1.2(@stackflow/config@2.0.0)(@stackflow/core@3.0.0)(@types/react@19.2.17)(react@19.2.7)':
     dependencies:
-      '@stackflow/config': 1.2.2
+      '@stackflow/config': 2.0.0
       '@stackflow/core': 3.0.0
       '@types/react': 19.2.17
       react: 19.2.7
@@ -9827,6 +9831,10 @@ snapshots:
 
   utils-merge@1.0.1: {}
 
+  valibot@1.4.2(typescript@7.0.2):
+    optionalDependencies:
+      typescript: 7.0.2
+
   vite@8.1.5(@types/node@26.1.1)(jiti@2.7.0)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.32.0
@@ -10012,9 +10020,5 @@ snapshots:
       fd-slicer: 1.1.0
 
   yoctocolors@2.1.2: {}
-
-  zod-to-json-schema@3.25.2(zod@4.4.3):
-    dependencies:
-      zod: 4.4.3
 
   zod@4.4.3: {}

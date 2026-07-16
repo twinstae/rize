@@ -5,7 +5,7 @@ import { fileList } from '../mailList/fakeMailRepository';
 import { useQueryClient } from '@tanstack/react-query';
 import { splashEnd } from '../hooks/splashEndAtom';
 import invariant from '../invariant';
-import { z } from 'zod';
+import * as v from 'valibot';
 import { rawMailSchema } from '../mailList/schema';
 import { rizeAlert } from '@rize/alert';
 
@@ -104,19 +104,23 @@ const InitPage = () => {
 															throw Error('파일 명이 다릅니다');
 														}
 														const data = JSON.parse(text);
-														const result = name === 'pm_list.json' ? z.array(rawMailSchema).safeParse(data) : { success: true } as const;
+														const result =
+															name === 'pm_list.json'
+																? v.safeParse(v.array(rawMailSchema), data)
+																: ({ success: true } as const);
 														if (result.success) {
 															setUploaded((old) => ({
 																...old,
 																[name]: true,
 															}));
 														} else {
+															const issue = result.issues[0];
 															throw Error(
-																result.error.errors[0].path.join(' -> ') +
+																issue.path?.map((p) => String(p.key)).join(' -> ') +
 																	' 에서 ' +
-																	result.error.errors[0].code +
+																	issue.type +
 																	' ' +
-																	result.error.errors[0].message,
+																	issue.message,
 															);
 														}
 													})

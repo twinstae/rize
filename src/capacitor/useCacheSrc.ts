@@ -78,7 +78,7 @@ const capacitorCacheRepo = {
 		return Http.downloadFile({
 			url,
 			filePath: 'output/' + filePath,
-			fileDirectory: Directory.Cache,
+			fileDirectory: Directory.Cache as never,
 		}).then(result => result.path ? Capacitor.convertFileSrc(result.path) : undefined);
 	},
 	getRemoteSrc(path: string){

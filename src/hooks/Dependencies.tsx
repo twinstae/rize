@@ -24,7 +24,7 @@ type DependencyT = {
 	useMailList?: () => MailListResult;
 	mailRepository?: MailRepository;
 	useProfileList: () => string[];
-	RizeLogo?: (props: { onAnimationEnd?: () => void }) => JSX.Element;
+	RizeLogo?: (props: { onAnimationEnd?: () => void }) => React.ReactElement;
 };
 
 function useColorMode() {

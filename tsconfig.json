@@ -23,7 +23,7 @@
 			"@rize/alert": ["./src/error/fakeRizeAlert.ts"],
 			"@rize/PlatformConfig": ["./src/web/WebConfig.tsx"]
 		},
-		"types": ["vitest/globals"]
+		"types": ["vitest/globals", "node"]
 	},
 	"include": ["src", "vitest", "src/setupTests.ts"]
 }
