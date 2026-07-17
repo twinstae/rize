@@ -3,7 +3,6 @@ import { setupIonicReact } from '@ionic/react';
 import '../src/i18n/i18n';
 import '../src/index.css';
 import '@ionic/react/css/core.css';
-import '@stackflow/plugin-basic-ui/index.css';
 import { withRizeProviders } from '../src/stories/decorators';
 
 setupIonicReact();

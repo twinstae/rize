@@ -11,7 +11,7 @@ Windows, Linux, macOS, Android를 지원합니다.
 - 웹뷰를 기반으로 한 타우리, 캐패시터를 이용해서 데스크탑 앱, 모바일 앱을 모두 지원합니다.
 - unit, component, e2e 테스트와 타입, assertion, mutation testing, schema parsing으로 안정성을 보장합니다.
 - 핵심 로직과 플랫폼에 따른 의존성을 분리합니다
-- stackflow로 모바일 앱과 같은 스택 네비게이션을 지원합니다
+- Ionic React Router로 모바일 앱과 같은 스택 네비게이션을 지원합니다. Ionic 8은 React Router v5에 고정되어 있습니다 ([ionic-team/ionic-framework#24177](https://github.com/ionic-team/ionic-framework/issues/24177)).
 - tanstack virtual로 최적화된 가상 리스트를 지원합니다.
 - korean-regexp로 초성을 포함한 한글 검색을 지원합니다
 - i18next로 영어와 일본어 등 다국어를 지원합니다.

@@ -12,7 +12,7 @@ import { createUseMailList } from '../mailList/useMailList';
 import storageRepo from './storageRepo';
 import useFsProfileList from './useFsProfileList';
 import useNavigation from '../router/useNavigation';
-import { useStackNavigation } from '../router/useStatckNavigation';
+import useRRDNavigation from '../router/useRRDNavigation';
 import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
 import S3Image from './S3Image';
@@ -44,7 +44,7 @@ const Wrapper = DependenciesWrapper({
 		return { platform };
 	},
 	storageRepo,
-	useNavigationImpl: useStackNavigation,
+	useNavigationImpl: useRRDNavigation,
 	Image: S3Image,
 	useColorMode,
 	fsJSON,

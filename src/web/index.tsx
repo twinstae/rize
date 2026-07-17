@@ -5,7 +5,7 @@ import RizeLogo from '../components/RizeLogo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
-import { useStackNavigation } from '../router/useStatckNavigation';
+import useRRDNavigation from '../router/useRRDNavigation';
 import fakeStorageRepo from '../config/fakeStorageRepo';
 import fakeMailRepository, { fakeFsJSON, fakeMailDefaults } from '../mailList/fakeMailRepository';
 import WebImage from './WebImage';
@@ -27,7 +27,7 @@ storageRepo.getItem('lang').then((lang) => {
 const Wrapper = DependenciesWrapper({
 	usePlatform: () => ({ platform: 'web' }),
 	storageRepo,
-	useNavigationImpl: useStackNavigation,
+	useNavigationImpl: useRRDNavigation,
 	Image,
 	useColorMode,
 	fsJSON: fakeFsJSON,

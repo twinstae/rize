@@ -7,7 +7,7 @@ import RizeLogo from '../components/RizeLogo';
 import { DependenciesWrapper } from '../hooks/Dependencies';
 import i18n from '../i18n/i18n';
 import { createUseMailList } from '../mailList/useMailList';
-import { useStackNavigation } from '../router/useStatckNavigation';
+import useRRDNavigation from '../router/useRRDNavigation';
 import fsJSON from './fsJSON';
 import mailRepository from './fsMailRepository';
 import storageRepo from './fsStorageRepo';
@@ -36,7 +36,7 @@ const Wrapper = DependenciesWrapper({
 		return { platform };
 	},
 	storageRepo,
-	useNavigationImpl: useStackNavigation,
+	useNavigationImpl: useRRDNavigation,
 	Image,
 	useColorMode,
 	fsJSON,

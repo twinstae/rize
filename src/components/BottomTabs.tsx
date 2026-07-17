@@ -19,28 +19,21 @@ type BottomTabsProps = {
 };
 
 function BottomTabs({ children, className }: BottomTabsProps) {
-	const { current, redirect } = useNavigation();
+	const { current } = useNavigation();
 	const { t } = useTranslation();
 
 	const activePage = current();
 	const selectedTab = activePage === paths.ALBUM ? TAB_ALBUM : TAB_MAIL;
 
-	function selectTab(tab: typeof TAB_MAIL | typeof TAB_ALBUM) {
-		const path = tab === TAB_ALBUM ? paths.ALBUM : paths.MAIL_LIST;
-		if (activePage !== path) {
-			redirect(path);
-		}
-	}
-
 	return (
 		<IonTabs className={cn('mail-bottom-tabs flex min-h-dvh flex-col', className)}>
 			<IonTab tab={selectedTab}>{children}</IonTab>
 			<IonTabBar slot="bottom" selectedTab={selectedTab} className="mail-tab-bar">
-				<IonTabButton tab={TAB_MAIL} onClick={() => selectTab(TAB_MAIL)}>
+				<IonTabButton tab={TAB_MAIL} href={`/${paths.MAIL_LIST}`}>
 					<IonIcon icon={mail} />
 					<IonLabel>Messages</IonLabel>
 				</IonTabButton>
-				<IonTabButton tab={TAB_ALBUM} onClick={() => selectTab(TAB_ALBUM)}>
+				<IonTabButton tab={TAB_ALBUM} href={`/${paths.ALBUM}`}>
 					<IonIcon icon={images} />
 					<IonLabel>{t(strs.앨범)}</IonLabel>
 				</IonTabButton>

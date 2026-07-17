@@ -1,4 +1,4 @@
-import { AppScreen } from '@stackflow/plugin-basic-ui';
+import { IonPage } from '@ionic/react';
 import React from 'react';
 import { useAtom } from 'jotai';
 import InitPage from '../pages/InitPage';
@@ -41,12 +41,12 @@ function Wait({ children, name }: { children: React.ReactNode; name: string }) {
 export function wrapLayout(OriginalPage: React.FC): React.FC {
 	return function WrappedPage() {
 		return (
-			<AppScreen backgroundColor="bg-base-100">
+			<IonPage className="bg-base-100">
 				<SplashOverlay />
 				<Wait name={OriginalPage.name}>
 					<OriginalPage />
 				</Wait>
-			</AppScreen>
+			</IonPage>
 		);
 	};
 }

@@ -1,11 +1,10 @@
 import './i18n/i18n';
 import '@ionic/react/css/core.css';
-import '@stackflow/plugin-basic-ui/index.css';
 import './index.css';
 
 import React from 'react';
 import { setupIonicReact } from '@ionic/react';
-import { Stack } from './router/useStatckNavigation';
+import AppRouter from './router/AppRouter';
 import QueryWrapper, { JotaiQueryWrapper } from './hooks/QueryWrapper';
 import ErrorBoundary from './components/ErrorBoundary';
 import { TooltipProvider } from './components/Tooltip';
@@ -60,7 +59,7 @@ function App() {
 				<QueryWrapper>
 					<JotaiQueryWrapper>
 						<ErrorBoundary fallback={ErrorFallback}>
-							<Stack />
+							<AppRouter />
 						</ErrorBoundary>
 					</JotaiQueryWrapper>
 				</QueryWrapper>
