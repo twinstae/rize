@@ -46,6 +46,7 @@
 		"@ctrl/tinycolor": "^4.2.0",
 		"@ionic/react": "^8.8.14",
 		"@ionic/storage": "^4.0.0",
+		"@logtape/logtape": "^2.2.4",
 		"@nanostores/react": "^1.1.0",
 		"@stackflow/core": "^3.0.0",
 		"@stackflow/plugin-basic-ui": "^1.18.3",

@@ -12,6 +12,7 @@ import { TooltipProvider } from './components/Tooltip';
 import { Provider, getDefaultStore } from 'jotai';
 import { Button } from './components/rize-ui-web';
 import { useOpenBrowser } from './hooks/Dependencies';
+import { downloadDebugLog } from './debug/debugLog';
 
 const KAKAO_OPEN_CHAT_URL = 'https://open.kakao.com/o/gPbArZ4c';
 
@@ -29,6 +30,15 @@ function ErrorFallback({ error }: { error: Error }) {
 				AS 오픈카톡방
 			</button>
 			을 찾아주세요.
+			<Button
+				circle="circle"
+				className="tooltip-top"
+				onClick={() => {
+					downloadDebugLog(error);
+				}}
+			>
+				Log 다운로드
+			</Button>
 			<Button
 				circle="circle"
 				className="tooltip-top"
