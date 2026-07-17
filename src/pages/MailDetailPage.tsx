@@ -12,7 +12,6 @@ import useNextPrevMail from '../mailList/useNextPrevMail';
 import { IonHeader, IonToolbar } from '@ionic/react';
 import BackButton from '../components/BackButton';
 import FavoriteStar from '../components/FavoriteStar';
-import LeftDrawler from '../components/LeftDrawer';
 import MailBody from '../components/MailBody';
 import ProfileImage from '../components/ProfileImage';
 import { Button } from '../components/rize-ui-web';
@@ -44,7 +43,7 @@ function MailDetailPage() {
 	}).format(date);
 
 	return (
-		<LeftDrawler>
+		<>
 			<IonHeader className="ion-no-border">
 				<IonToolbar className="mail-toolbar">
 					<header className="border-b border-[var(--rize-border)] px-5 pb-4 pt-5">
@@ -97,7 +96,7 @@ function MailDetailPage() {
 					<BackButton fab direction="top" size="base" />
 				</Fab>
 			</div>
-		</LeftDrawler>
+		</>
 	);
 }
 

@@ -3,6 +3,7 @@ import { useLayoutEffect } from 'react';
 
 import BottomTabs from './BottomTabs';
 import AppBar from './AppBar';
+import { AppShell } from './LeftDrawer';
 import paths from '../router/paths';
 import { useFakeNavigation } from '../router/useFakeNavigation';
 
@@ -12,7 +13,11 @@ function BottomTabsOnPath({ path, children }: { path: string; children: React.Re
 		navigation.redirect(path);
 	}, [navigation, path]);
 
-	return <BottomTabs>{children}</BottomTabs>;
+	return (
+		<AppShell>
+			<BottomTabs>{children}</BottomTabs>
+		</AppShell>
+	);
 }
 
 const meta = {

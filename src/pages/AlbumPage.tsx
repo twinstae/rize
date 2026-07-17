@@ -6,7 +6,6 @@ import useNavigation from '../router/useNavigation';
 import { toMailDetail } from '../router/paths';
 import { rem } from '../theme/rem';
 import AppBar from '../components/AppBar';
-import LeftDrawler from '../components/LeftDrawer';
 
 const height = window.innerHeight - rem(7.5) - BOTTOM_TAB_BAR_HEIGHT;
 
@@ -32,10 +31,9 @@ function AlbumPage() {
 	const cellSize = (window.innerWidth - 40) / 4;
 
 	return (
-		<LeftDrawler>
-			<BottomTabs>
-				<AppBar />
-				<VirtualList
+		<BottomTabs>
+			<AppBar />
+			<VirtualList
 				result={result}
 				width={window.innerWidth}
 				height={height}
@@ -68,8 +66,7 @@ function AlbumPage() {
 					</div>
 				}
 			/>
-			</BottomTabs>
-		</LeftDrawler>
+		</BottomTabs>
 	);
 }
 

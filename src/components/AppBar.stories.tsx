@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import AppBar from './AppBar';
+import { AppShell } from './LeftDrawer';
 import paths from '../router/paths';
 import { useFakeNavigation } from '../router/useFakeNavigation';
 import { useLayoutEffect } from 'react';
@@ -9,7 +10,11 @@ function AppBarOnPath({ path }: { path: string }) {
 	useLayoutEffect(() => {
 		navigation.redirect(path);
 	}, [navigation, path]);
-	return <AppBar />;
+	return (
+		<AppShell>
+			<AppBar />
+		</AppShell>
+	);
 }
 
 const meta = {

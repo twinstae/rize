@@ -8,7 +8,6 @@ import { RizeTabs } from '../components/RizeTabs';
 import { strs } from '../i18n/i18n';
 import { modes } from '../mailList/mailListModel';
 import { useMailList } from '../hooks/Dependencies';
-import LeftDrawler from '../components/LeftDrawer';
 import isInArray from '../isInArray';
 import invariant from '../invariant';
 
@@ -17,8 +16,7 @@ function MailListPage() {
 	const tabs = [strs.전체, strs.읽지_않음, strs.중요];
 	const [, setCurrentMode] = useMailList().useCurrentMode();
 	return (
-		<LeftDrawler>
-			<BottomTabs>
+		<BottomTabs>
 				<AppBar />
 				<RizeTabs<string>
 				data={modes}
@@ -39,8 +37,7 @@ function MailListPage() {
 					setCurrentMode(value);
 				}}
 			/>
-			</BottomTabs>
-		</LeftDrawler>
+		</BottomTabs>
 	);
 }
 

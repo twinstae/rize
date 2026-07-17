@@ -1,7 +1,6 @@
 import React from 'react';
 import { VStack } from '../components/rize-ui-web';
 import BackButton from '../components/BackButton';
-import LeftDrawler from '../components/LeftDrawer';
 import LangConfig from './config/LangConfig';
 import NickNameConfig from './config/NickNameConfig';
 import ProfileConfig from './config/ProfileConfig';
@@ -12,7 +11,7 @@ import { IonHeader, IonToolbar } from '@ionic/react';
 
 const Config = () => {
 	return (
-		<LeftDrawler>
+		<>
 			<IonHeader className="ion-no-border">
 				<IonToolbar className="mail-toolbar">
 					<div className="flex h-[4.5rem] items-center gap-1 px-3 sm:px-4">
@@ -25,7 +24,7 @@ const Config = () => {
 					</div>
 				</IonToolbar>
 			</IonHeader>
-			<VStack className="gap-4 bg-[var(--rize-base-200)] p-4 h-[calc(100dvh-8rem)] overflow-y-auto">
+			<VStack className="gap-4 bg-[var(--rize-base-200)] p-4 h-[calc(100dvh-6rem)] overflow-y-auto">
 				<LangConfig />
 				<NickNameConfig />
 				<ShortcutConfig />
@@ -34,7 +33,7 @@ const Config = () => {
 				<TestingButton />
 			</VStack>
 			<BackButton direction="top" variant="primary" circle="circle" size="base" className="absolute bottom-6 right-4" />
-		</LeftDrawler>
+		</>
 	);
 };
 

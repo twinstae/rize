@@ -1,5 +1,6 @@
-import React, { createContext, useEffect, useRef, useState } from 'react';
-import { useHotkeys } from 'react-hotkeys-hook';
+import React, { useEffect } from 'react';
+import { IonApp, IonContent, IonMenu } from '@ionic/react';
+import { menuController } from '@ionic/core';
 import { useTranslation } from '../i18n/i18n';
 import { strs } from '../i18n/i18n';
 import MemberList from './MemberList';
@@ -8,71 +9,48 @@ import useNavigation from '../router/useNavigation';
 import XMarkIcon from './icons/XMarkIcon';
 import { HStack } from './rize-ui-web';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
-import invariant from '../invariant';
-import focusLock from '../hooks/focusLock';
 
-type DrawerContextT = {
-	handleOpen: () => void;
-};
+export const LEFT_MENU_ID = 'left-menu';
+export const MAIN_CONTENT_ID = 'main-content';
 
-export const drawlerContext = createContext<DrawerContextT>({} as DrawerContextT);
+export function openLeftMenu() {
+	return menuController.open(LEFT_MENU_ID);
+}
 
-function LeftDrawler({ children }: { children: React.ReactNode }) {
+export function closeLeftMenu() {
+	return menuController.close(LEFT_MENU_ID);
+}
+
+function LeftMenu() {
 	const { t } = useTranslation();
 	const { Link } = useNavigation();
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const drawerSideRef = useRef<HTMLDivElement>(null);
-	const closeButtonRef = useRef<HTMLButtonElement>(null);
-	const lastFocusedRef = useRef<HTMLElement | null>(null);
-	function handleClose() {
-		setIsOpen(false);
+
+	function closeMenu() {
+		void closeLeftMenu();
 	}
-	function handleOpen() {
-		if (document.activeElement instanceof HTMLElement) {
-			lastFocusedRef.current = document.activeElement;
-		}
-		setIsOpen(true);
-	}
+
 	useEffect(() => {
-		if (isOpen) {
-			closeButtonRef.current?.focus();
-		} else {
-			lastFocusedRef.current?.focus();
-		}
-	}, [isOpen]);
-	useHotkeys(
-		'Tab, Shift+Tab',
-		(e) => {
-			if (isOpen) {
-				invariant(drawerSideRef.current);
-				focusLock(drawerSideRef.current, e);
-				e.preventDefault();
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key !== 'Escape') {
+				return;
 			}
-		},
-		[isOpen],
-	);
-	useHotkeys('Esc', () => handleClose());
+			void menuController.isOpen(LEFT_MENU_ID).then((isOpen) => {
+				if (!isOpen) {
+					return;
+				}
+				event.preventDefault();
+				void closeLeftMenu();
+			});
+		};
+
+		window.addEventListener('keydown', handleKeyDown, true);
+		return () => window.removeEventListener('keydown', handleKeyDown, true);
+	}, []);
+
 	return (
-		<div className="min-h-dvh bg-base-100">
-			<div className="min-w-0 overflow-x-hidden">
-				<drawlerContext.Provider value={{ handleOpen }}>{children}</drawlerContext.Provider>
-			</div>
-			<div className={`fixed inset-0 z-50 ${isOpen ? 'visible' : 'invisible'}`} aria-hidden={!isOpen}>
-				<button
-					type="button"
-					aria-label="close drawer"
-					tabIndex={isOpen ? 0 : -1}
-					className={`absolute inset-0 bg-slate-950/40 backdrop-blur-[3px] transition-opacity ${
-						isOpen ? 'opacity-100' : 'opacity-0'
-					}`}
-					onClick={handleClose}
-				/>
-				<div
-					ref={drawerSideRef}
-					className={`absolute inset-y-0 left-0 flex w-[min(84vw,23rem)] flex-col bg-base-100 shadow-2xl transition-transform duration-300 ${
-						isOpen ? 'translate-x-0' : '-translate-x-full'
-					}`}
-				>
+		<IonMenu menuId={LEFT_MENU_ID} contentId={MAIN_CONTENT_ID} type="overlay" className="mail-menu">
+			<IonContent className="mail-menu-content">
+				<div className="flex h-full flex-col bg-base-100">
 					<div className="border-b border-[var(--rize-border)] px-5 pb-4 pt-5">
 						<HStack className="w-full items-center justify-between">
 							<div>
@@ -82,14 +60,18 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 								<h2 className="mt-0.5 text-xl font-extrabold text-[var(--rize-text)]">{t(strs.메뉴)}</h2>
 							</div>
 							<IconButtonWithTooltip
-								ref={closeButtonRef}
-								onClick={() => handleClose()}
+								onClick={closeMenu}
+								onKeyDown={(event: React.KeyboardEvent<HTMLElement>) => {
+									if (event.key === 'Escape') {
+										event.preventDefault();
+										closeMenu();
+									}
+								}}
 								icon={<XMarkIcon />}
 								direction="bottom"
 								circle="circle"
 								size="sm"
 								ariaLabel={t(strs.닫기) + '(Esc)'}
-								tabIndex={isOpen ? undefined : -1}
 							/>
 						</HStack>
 					</div>
@@ -99,16 +81,33 @@ function LeftDrawler({ children }: { children: React.ReactNode }) {
 					<div id="to-config" className="border-t border-[var(--rize-border)] p-4">
 						<Link
 							to={paths.CONFIG}
+							onClick={closeMenu}
 							className="flex min-h-12 items-center justify-center rounded-2xl bg-pink-500 px-4 text-sm font-bold text-white shadow-[var(--rize-shadow-sm)] transition hover:bg-pink-600"
-							tabIndex={isOpen ? undefined : -1}
 						>
 							{t(strs.설정)}
 						</Link>
 					</div>
 				</div>
-			</div>
-		</div>
+			</IonContent>
+		</IonMenu>
 	);
 }
 
-export default LeftDrawler;
+function MainContent({ children }: { children: React.ReactNode }) {
+	return (
+		<IonContent id={MAIN_CONTENT_ID} className="mail-main-content">
+			{children}
+		</IonContent>
+	);
+}
+
+export function AppShell({ children }: { children: React.ReactNode }) {
+	return (
+		<IonApp className="bg-base-100">
+			<LeftMenu />
+			<MainContent>{children}</MainContent>
+		</IonApp>
+	);
+}
+
+export default AppShell;

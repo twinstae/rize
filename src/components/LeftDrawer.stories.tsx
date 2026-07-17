@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import LeftDrawer from './LeftDrawer';
+import { AppShell } from './LeftDrawer';
 import MenuButton from './MenuButton';
 import AppBar from './AppBar';
 
@@ -12,19 +12,19 @@ type Story = StoryObj;
 
 export const Default: Story = {
 	render: () => (
-		<LeftDrawer>
+		<AppShell>
 			<AppBar />
-		</LeftDrawer>
+		</AppShell>
 	),
 };
 
 export const WithMenuButton: Story = {
 	render: () => (
-		<LeftDrawer>
+		<AppShell>
 			<div className="p-4">
 				<MenuButton />
 				<p className="mt-4">Press m or click the menu button to open the drawer.</p>
 			</div>
-		</LeftDrawer>
+		</AppShell>
 	),
 };

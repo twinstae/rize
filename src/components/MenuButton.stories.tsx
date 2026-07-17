@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import MenuButton from './MenuButton';
-import LeftDrawer from './LeftDrawer';
+import { AppShell } from './LeftDrawer';
 
 const meta = {
 	title: 'Components/MenuButton',
@@ -11,10 +11,10 @@ type Story = StoryObj;
 
 export const Default: Story = {
 	render: () => (
-		<LeftDrawer>
+		<AppShell>
 			<div className="p-4">
 				<MenuButton />
 			</div>
-		</LeftDrawer>
+		</AppShell>
 	),
 };

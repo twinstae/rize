@@ -44,6 +44,7 @@
 		"@capacitor/ios": "^8.4.2",
 		"@capacitor/preferences": "^8.0.1",
 		"@ctrl/tinycolor": "^4.2.0",
+		"@ionic/core": "8.8.14",
 		"@ionic/react": "^8.8.14",
 		"@ionic/storage": "^4.0.0",
 		"@logtape/logtape": "^2.2.4",
