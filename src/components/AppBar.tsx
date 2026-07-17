@@ -10,13 +10,12 @@ import MagnifyingGlassIcon from './icons/MagnifyingGlassIcon';
 import XMarkIcon from './icons/XMarkIcon';
 import useNavigation from '../router/useNavigation';
 import paths from '../router/paths';
-import PhotoIcon from './icons/PhotoIcon';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 function AppBar() {
 	const [initKeyword, search] = useMailList().useSearch();
 	const [keywordInput, setKeywordInput] = useState(initKeyword);
-	const { Link, navigate, current } = useNavigation();
+	const { navigate } = useNavigation();
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useState(false);
 	useEffect(() => {
@@ -84,16 +83,6 @@ function AppBar() {
 							<SelectedTag />
 						</div>
 					</div>
-					{current() === paths.MAIL_LIST && (
-						<IconButtonWithTooltip
-							as={Link}
-							to={paths.ALBUM}
-							variant="ghost"
-							size="sm"
-							icon={<PhotoIcon />}
-							ariaLabel={t(strs.앨범) + '(a)'}
-						/>
-					)}
 					<IconButtonWithTooltip
 						onClick={open}
 						direction="bottom"

@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from '../i18n/i18n';
 
 import AppBar from '../components/AppBar';
+import BottomTabs from '../components/BottomTabs';
 import MailList from '../components/MailList';
 import { RizeTabs } from '../components/RizeTabs';
 import { strs } from '../i18n/i18n';
@@ -17,8 +18,9 @@ function MailListPage() {
 	const [, setCurrentMode] = useMailList().useCurrentMode();
 	return (
 		<LeftDrawler>
-			<AppBar />
-			<RizeTabs<string>
+			<BottomTabs>
+				<AppBar />
+				<RizeTabs<string>
 				data={modes}
 				value={(mode) => mode}
 				Label={({ index }) => {
@@ -37,6 +39,7 @@ function MailListPage() {
 					setCurrentMode(value);
 				}}
 			/>
+			</BottomTabs>
 		</LeftDrawler>
 	);
 }

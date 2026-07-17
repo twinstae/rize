@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { BOTTOM_TAB_BAR_HEIGHT } from './BottomTabs';
 import { rem } from '../theme/rem';
 import MailListItem from './MailListItem';
 import { useMailList } from '../hooks/Dependencies';
@@ -15,7 +16,7 @@ interface Props {
 	index: number;
 }
 
-const height = window.innerHeight - rem(8.25);
+const height = window.innerHeight - rem(8.25) - BOTTOM_TAB_BAR_HEIGHT;
 
 function MailList({ index }: Props) {
 	const { mailList } = useMailList();

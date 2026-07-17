@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDependencies, useMailList } from '../hooks/Dependencies';
 import { HStack, VirtualList, Text } from '../components/rize-ui-web';
-import BackButton from '../components/BackButton';
+import BottomTabs, { BOTTOM_TAB_BAR_HEIGHT } from '../components/BottomTabs';
 import useNavigation from '../router/useNavigation';
 import { toMailDetail } from '../router/paths';
 import { rem } from '../theme/rem';
 import AppBar from '../components/AppBar';
 import LeftDrawler from '../components/LeftDrawer';
 
-const height = window.innerHeight - rem(7.5);
+const height = window.innerHeight - rem(7.5) - BOTTOM_TAB_BAR_HEIGHT;
 
 function chunk<T>(arr: Array<T>, count: number): Array<Array<T>> {
 	const result = [];
@@ -33,8 +33,9 @@ function AlbumPage() {
 
 	return (
 		<LeftDrawler>
-			<AppBar />
-			<VirtualList
+			<BottomTabs>
+				<AppBar />
+				<VirtualList
 				result={result}
 				width={window.innerWidth}
 				height={height}
@@ -67,7 +68,7 @@ function AlbumPage() {
 					</div>
 				}
 			/>
-			<BackButton direction="top" variant="primary" circle="circle" size="base" className="absolute bottom-6 right-4" />
+			</BottomTabs>
 		</LeftDrawler>
 	);
 }
