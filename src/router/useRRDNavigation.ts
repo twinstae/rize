@@ -24,7 +24,7 @@ const useRRDNavigation = (): Navigation => {
 		current: () => toAppPath(location.pathname),
 		navigate: (path: string) => {
 			const { pathname, search } = parseAppPath(path);
-			history.push({ pathname, search });
+			ionRouter.push(`${pathname}${search}`, 'forward', 'push');
 		},
 		goBack: () => {
 			if (ionRouter.canGoBack()) {
@@ -35,7 +35,7 @@ const useRRDNavigation = (): Navigation => {
 		},
 		redirect: (path: string) => {
 			const { pathname, search } = parseAppPath(path);
-			history.replace({ pathname, search });
+			ionRouter.push(`${pathname}${search}`, 'forward', 'replace');
 		},
 		// eslint-disable-next-line react/display-name
 		Link: React.forwardRef(({ to, children, isRedirect = false, className, ...props }: LinkProps, ref) => {

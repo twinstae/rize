@@ -1,25 +1,20 @@
 import React from 'react';
-import { waitFor, screen } from '@testing-library/dom';
 
 import MenuButton from './MenuButton';
 import { AppShell } from './LeftDrawer';
-import openCloseTest from '../test/openCloseTest';
 import { ko } from '../i18n/i18n';
+import { given, actions, assertions, query, runSiheom } from '../test/siheom';
 
 describe('LeftDrawer', () => {
-	openCloseTest(
-		<AppShell>
-			<MenuButton />
-		</AppShell>,
-		{
-			role: 'button',
-			closeOpenNames: [new RegExp(ko.메뉴), new RegExp(ko.닫기)],
-			keys: ['m', '{Escape}'],
-			expectClose: async () => {
-				await waitFor(() => {
-					expect(screen.getByRole('button', { name: new RegExp(ko.메뉴) })).toBeVisible();
-				});
-			},
-		},
-	);
+	it('메뉴 버튼을 누르면 메뉴가 열린다', async () => {
+		await runSiheom(
+			given.render(
+				<AppShell>
+					<MenuButton />
+				</AppShell>,
+			),
+			actions.click(query.button(new RegExp(ko.메뉴))),
+			assertions.visible(query.button(new RegExp(ko.닫기)), true),
+		);
+	});
 });

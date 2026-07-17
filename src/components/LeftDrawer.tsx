@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { IonApp, IonContent, IonMenu } from '@ionic/react';
-import { menuController } from '@ionic/core';
 import { useTranslation } from '../i18n/i18n';
 import { strs } from '../i18n/i18n';
 import MemberList from './MemberList';
@@ -13,15 +12,21 @@ import IconButtonWithTooltip from './IconButtonWithTooltip';
 export const LEFT_MENU_ID = 'left-menu';
 export const MAIN_CONTENT_ID = 'main-content';
 
+function getLeftMenu() {
+	return document.querySelector(`ion-menu[menu-id="${LEFT_MENU_ID}"]`) as HTMLIonMenuElement | null;
+}
+
 export function openLeftMenu() {
-	return menuController.open(LEFT_MENU_ID);
+	const menu = getLeftMenu();
+	return menu?.open();
 }
 
 export function closeLeftMenu() {
-	return menuController.close(LEFT_MENU_ID);
+	const menu = getLeftMenu();
+	return menu?.close();
 }
 
-function LeftMenu() {
+export function LeftMenu() {
 	const { t } = useTranslation();
 	const { navigate } = useNavigation();
 
@@ -34,13 +39,12 @@ function LeftMenu() {
 			if (event.key !== 'Escape') {
 				return;
 			}
-			void menuController.isOpen(LEFT_MENU_ID).then((isOpen) => {
-				if (!isOpen) {
-					return;
-				}
-				event.preventDefault();
-				void closeLeftMenu();
-			});
+			const menu = getLeftMenu();
+			if (!menu?.isOpen) {
+				return;
+			}
+			event.preventDefault();
+			void closeLeftMenu();
 		};
 
 		window.addEventListener('keydown', handleKeyDown, true);
@@ -80,7 +84,7 @@ function LeftMenu() {
 					</div>
 					<div id="to-config" className="border-t border-[var(--rize-border)] p-4">
 						<a
-							href={paths.CONFIG}
+							href={`/${paths.CONFIG}`}
 							onClick={(event) => {
 								event.preventDefault();
 								closeMenu();
@@ -97,7 +101,8 @@ function LeftMenu() {
 	);
 }
 
-function MenuShell({ children }: { children: React.ReactNode }) {
+/** Storybook / tests without page routes */
+export function AppShell({ children }: { children: React.ReactNode }) {
 	return (
 		<IonApp className="bg-base-100">
 			<LeftMenu />
@@ -106,11 +111,6 @@ function MenuShell({ children }: { children: React.ReactNode }) {
 			</div>
 		</IonApp>
 	);
-}
-
-/** Storybook / tests without router */
-export function AppShell({ children }: { children: React.ReactNode }) {
-	return <MenuShell>{children}</MenuShell>;
 }
 
 export default AppShell;

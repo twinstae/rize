@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonRouterOutlet } from '@ionic/react';
+import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 import Config from '../pages/Config';
@@ -9,7 +9,7 @@ import MailListPage from '../pages/MailListPage';
 import AlbumPage from '../pages/AlbumPage';
 import Test from '../test/Test';
 import ChatPage from '../pages/ChatPage';
-import { AppShell } from '../components/LeftDrawer';
+import { LeftMenu, MAIN_CONTENT_ID } from '../components/LeftDrawer';
 import { wrapLayout } from './Layout';
 import paths from './paths';
 
@@ -24,9 +24,10 @@ const routes = {
 
 function AppRouter() {
 	return (
-		<IonReactRouter>
-			<AppShell>
-				<IonRouterOutlet id="main">
+		<IonApp className="bg-base-100">
+			<IonReactRouter>
+				<LeftMenu />
+				<IonRouterOutlet id={MAIN_CONTENT_ID} className="mail-main-content min-h-dvh min-w-0 overflow-x-hidden bg-base-100">
 					<Route exact path={`/${paths.MAIL_LIST}`} component={routes.MailListPage} />
 					<Route exact path={`/${paths.ALBUM}`} component={routes.AlbumPage} />
 					<Route exact path={`/${paths.MAIL_DETAIL}`} component={routes.MailDetailPage} />
@@ -36,8 +37,8 @@ function AppRouter() {
 					<Redirect exact from="/" to={`/${paths.MAIL_LIST}`} />
 					<Redirect exact from={`/${paths.ROOT}`} to={`/${paths.MAIL_LIST}`} />
 				</IonRouterOutlet>
-			</AppShell>
-		</IonReactRouter>
+			</IonReactRouter>
+		</IonApp>
 	);
 }
 
