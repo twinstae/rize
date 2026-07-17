@@ -4,6 +4,8 @@ import { basicUIPlugin } from '@stackflow/plugin-basic-ui';
 import { stackflow, useActivity, useFlow, useStepFlow } from '@stackflow/react';
 import React from 'react';
 
+import { ionMenuPlugin } from '../components/LeftDrawer';
+
 import Config from '../pages/Config';
 import MailDetailPage from '../pages/MailDetailPage';
 import MailListPage from '../pages/MailListPage';
@@ -46,7 +48,7 @@ const config = defineConfig({
 	transitionDuration: 350,
 });
 
-export const { Stack } = stackflow({
+export const { Stack, actions } = stackflow({
 	config,
 	components,
 	plugins: [
@@ -55,6 +57,7 @@ export const { Stack } = stackflow({
 			theme: 'cupertino',
 			dimBackgroundColor: '#fff',
 		}),
+		ionMenuPlugin(),
 	],
 });
 

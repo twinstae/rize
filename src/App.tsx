@@ -8,7 +8,6 @@ import { setupIonicReact } from '@ionic/react';
 import { Stack } from './router/useStatckNavigation';
 import QueryWrapper, { JotaiQueryWrapper } from './hooks/QueryWrapper';
 import ErrorBoundary from './components/ErrorBoundary';
-import { AppShell } from './components/LeftDrawer';
 import { TooltipProvider } from './components/Tooltip';
 import { Provider, getDefaultStore } from 'jotai';
 import { Button } from './components/rize-ui-web';
@@ -61,9 +60,7 @@ function App() {
 				<QueryWrapper>
 					<JotaiQueryWrapper>
 						<ErrorBoundary fallback={ErrorFallback}>
-							<AppShell>
-								<Stack />
-							</AppShell>
+							<Stack />
 						</ErrorBoundary>
 					</JotaiQueryWrapper>
 				</QueryWrapper>

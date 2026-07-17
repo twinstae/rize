@@ -178,7 +178,6 @@ body {
 }
 
 .mail-fab {
-	margin-bottom: calc(1.5rem + var(--ion-safe-area-bottom, 0));
 	margin-right: 1rem;
 }
 
@@ -216,5 +215,5 @@ body {
 }
 
 .mail-main-content {
-	--background: var(--rize-base-100);
+	background: var(--rize-base-100);
 }
