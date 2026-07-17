@@ -1,7 +1,5 @@
 import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import invariant from '../invariant';
-
 import useNavigation, { useSearchParam } from '../router/useNavigation';
 import { useMailList, useOpenBrowser } from '../hooks/Dependencies';
 import { strs, useTranslation } from '../i18n/i18n';
@@ -18,20 +16,28 @@ import { Button } from '../components/rize-ui-web';
 import { Fab, FabButton } from '../components/Fab';
 import RandomMailButton from '../components/RandomMailButton';
 import PapagoIcon from '../components/icons/PapagoIcon';
+import BottomTabs from '../components/BottomTabs';
 
 function MailDetailPage() {
 	const { t } = useTranslation();
 	const { Link } = useNavigation();
-	const mailId = useSearchParam('mailId');
+	const mailIdParam = useSearchParam('mailId');
+	const mailIdRef = React.useRef<string | null>(null);
+	if (mailIdParam) {
+		mailIdRef.current = mailIdParam;
+	}
+	const mailId = mailIdRef.current;
 	const toOriginalName = useMailList().useToOriginalName();
-	invariant(mailId);
-	const mail = useMailList().useMailById(mailId);
-	invariant(mail);
+	const mail = useMailList().useMailById(mailId ?? '');
 	const { lang } = useLang();
 	const openBrowser = useOpenBrowser();
-	const { nextMail, goNext, goPrev } = useNextPrevMail(mailId);
+	const { nextMail, goNext, goPrev } = useNextPrevMail(mailId ?? '');
 	useHotkeys('j', () => goNext());
 	useHotkeys('k', () => goPrev());
+
+	if (!mailId || !mail) {
+		return null;
+	}
 
 	const date = new Date(mail.time.replaceAll('/', '-').replace(' ', 'T'));
 	const formattedDate = new Intl.DateTimeFormat(lang, {
@@ -43,7 +49,7 @@ function MailDetailPage() {
 	}).format(date);
 
 	return (
-		<>
+		<BottomTabs>
 			<IonHeader className="ion-no-border">
 				<IonToolbar className="mail-toolbar">
 					<header className="border-b border-[var(--rize-border)] px-5 pb-4 pt-5">
@@ -96,7 +102,7 @@ function MailDetailPage() {
 					<BackButton fab direction="top" size="base" />
 				</Fab>
 			</div>
-		</>
+		</BottomTabs>
 	);
 }
 
