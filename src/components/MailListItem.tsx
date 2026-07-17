@@ -82,7 +82,7 @@ function MailListItem({ mail, style, index }: MailListItemProps) {
 			>
 				<ItemProfileImage member={mail.member} mailId={mail.id} />
 				<ItemBody labelId={labelId} subject={mail.subject} bodyText={mail.bodyText} />
-				<div className="flex shrink-0 flex-col items-end gap-2 self-stretch py-0.5">
+				<div className="flex shrink-0 flex-col items-end gap-1 self-stretch -mt-1">
 					<time className="text-xs font-medium tabular-nums text-[var(--rize-muted)]" dateTime={date.toISOString()}>
 						<abbr
 							className="no-underline"

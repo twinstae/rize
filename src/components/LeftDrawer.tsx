@@ -3,8 +3,6 @@ import { IonApp, IonContent, IonMenu } from '@ionic/react';
 import { useTranslation } from '../i18n/i18n';
 import { strs } from '../i18n/i18n';
 import MemberList from './MemberList';
-import paths from '../router/paths';
-import useNavigation from '../router/useNavigation';
 import XMarkIcon from './icons/XMarkIcon';
 import { HStack } from './rize-ui-web';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
@@ -28,7 +26,6 @@ export function closeLeftMenu() {
 
 export function LeftMenu() {
 	const { t } = useTranslation();
-	const { navigate } = useNavigation();
 
 	function closeMenu() {
 		void closeLeftMenu();
@@ -81,19 +78,6 @@ export function LeftMenu() {
 					</div>
 					<div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
 						<MemberList />
-					</div>
-					<div id="to-config" className="border-t border-[var(--rize-border)] p-4">
-						<a
-							href={`/${paths.CONFIG}`}
-							onClick={(event) => {
-								event.preventDefault();
-								closeMenu();
-								navigate(paths.CONFIG);
-							}}
-							className="flex min-h-12 items-center justify-center rounded-2xl bg-pink-500 px-4 text-sm font-bold text-white no-underline shadow-[var(--rize-shadow-sm)] transition hover:bg-pink-600"
-						>
-							{t(strs.설정)}
-						</a>
 					</div>
 				</div>
 			</IonContent>

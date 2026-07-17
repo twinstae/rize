@@ -44,3 +44,12 @@ export const AlbumTab: Story = {
 		</BottomTabsOnPath>
 	),
 };
+
+export const ConfigTab: Story = {
+	render: () => (
+		<BottomTabsOnPath path={paths.CONFIG}>
+			<AppBar />
+			<div className="flex flex-1 items-center justify-center p-4 text-sm text-[var(--rize-muted)]">설정</div>
+		</BottomTabsOnPath>
+	),
+};
